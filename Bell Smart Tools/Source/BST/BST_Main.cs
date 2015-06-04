@@ -24,5 +24,16 @@ namespace Bell_Smart_Tools.Source.BST
         {
             Application.Exit();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(Data.Common.test);
+            Class.Common.Message(Data.Common.test);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Data.Common.test = textBox1.Text;
+        }
     }
 }

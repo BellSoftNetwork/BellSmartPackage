@@ -101,6 +101,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\BSN.cs" />
+    <Compile Include="Class\Common.cs" />
+    <Compile Include="Data\Common.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Source\BST\BST_Loader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,7 +152,6 @@
     <Content Include="Photo\Photo_RedBell.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Class\" />
     <Folder Include="Source\BC\" />
   </ItemGroup>
   <ItemGroup>

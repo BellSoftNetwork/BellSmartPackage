@@ -34,10 +34,10 @@
             // 
             // pb_Load
             // 
-            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pb_Load.Location = new System.Drawing.Point(0, 0);
             this.pb_Load.Name = "pb_Load";
-            this.pb_Load.Size = new System.Drawing.Size(414, 23);
+            this.pb_Load.Size = new System.Drawing.Size(414, 60);
             this.pb_Load.TabIndex = 0;
             // 
             // BST_Loader
