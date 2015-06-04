@@ -15,7 +15,8 @@ namespace Bell_Smart_Tools
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BST_Main());
+            //Application.Run(new BST_Main());
+            Application.Run(new Source.BST.BST_Loader());
         }
     }
 }
