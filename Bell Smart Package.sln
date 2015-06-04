@@ -11,14 +11,14 @@ Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://bellsoftnetwork.visualstudio.com/DefaultCollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Bell\u0020Smart\u0020Tools\\Bell\u0020Smart\u0020Tools.csproj
-		SccProjectName1 = Bell\u0020Smart\u0020Tools
-		SccLocalPath1 = Bell\u0020Smart\u0020Tools
-		SccProjectUniqueName2 = Bell\u0020Smart\u0020Server\\Bell\u0020Smart\u0020Server.csproj
-		SccProjectName2 = Bell\u0020Smart\u0020Server
-		SccLocalPath2 = Bell\u0020Smart\u0020Server
+		SccTeamFoundationServer = https://bellsoftnetwork.visualstudio.com/defaultcollection
+		SccProjectUniqueName0 = Bell\u0020Smart\u0020Tools\\Bell\u0020Smart\u0020Tools.csproj
+		SccProjectName0 = Bell\u0020Smart\u0020Tools
+		SccLocalPath0 = Bell\u0020Smart\u0020Tools
+		SccProjectUniqueName1 = Bell\u0020Smart\u0020Server\\Bell\u0020Smart\u0020Server.csproj
+		SccProjectName1 = Bell\u0020Smart\u0020Server
+		SccLocalPath1 = Bell\u0020Smart\u0020Server
+		SccLocalPath2 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
