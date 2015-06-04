@@ -14,14 +14,16 @@ namespace Bell_Smart_Tools.Source.BST
         public BST_Loader()
         {
             InitializeComponent();
+            pb_Load.Value = pb_Load.Maximum;
+            this.Hide();
+            this.WindowState = FormWindowState.Minimized;
+            BST_Main BST = new BST_Main();
+            BST.Show();
         }
 
         private void BST_Loader_Load(object sender, EventArgs e)
         {
-            pb_Load.Value = pb_Load.Maximum;
-            this.Hide();
-            BST_Main BST = new BST_Main();
-            BST.Show();
+            
         }
     }
 }

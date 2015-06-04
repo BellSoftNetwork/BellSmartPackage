@@ -7,13 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Tools
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BST_Main : Form
     {
         public BST_Main()
         {
             InitializeComponent();
+        }
+
+        private void BST_Main_Load(object sender, EventArgs e)
+        {
+
+        }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

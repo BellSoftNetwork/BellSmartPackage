@@ -5,15 +5,20 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Tools", "Bell Smart Tools\Bell Smart Tools.csproj", "{061B2585-757A-4215-B999-361B2120B41B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Server", "Bell Smart Server\Bell Smart Server.csproj", "{7009480F-D3B9-4485-96B5-E2C397A8AAFD}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://bellsoftnetwork.visualstudio.com/DefaultCollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = Bell\u0020Smart\u0020Tools\\Bell\u0020Smart\u0020Tools.csproj
 		SccProjectName1 = Bell\u0020Smart\u0020Tools
 		SccLocalPath1 = Bell\u0020Smart\u0020Tools
+		SccProjectUniqueName2 = Bell\u0020Smart\u0020Server\\Bell\u0020Smart\u0020Server.csproj
+		SccProjectName2 = Bell\u0020Smart\u0020Server
+		SccLocalPath2 = Bell\u0020Smart\u0020Server
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +29,10 @@ Global
 		{061B2585-757A-4215-B999-361B2120B41B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{061B2585-757A-4215-B999-361B2120B41B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{061B2585-757A-4215-B999-361B2120B41B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7009480F-D3B9-4485-96B5-E2C397A8AAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7009480F-D3B9-4485-96B5-E2C397A8AAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7009480F-D3B9-4485-96B5-E2C397A8AAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7009480F-D3B9-4485-96B5-E2C397A8AAFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
