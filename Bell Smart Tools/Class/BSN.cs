@@ -26,10 +26,10 @@ namespace Bell_Smart_Tools.Class
             g_BSNhttp.Timeout = 5000;
             g_BSNhttp.ReadWriteTimeout = 5000;
 
-            //StreamWriter sWriter = new StreamWriter(g_BSNhttp.GetRequestStream);
+            StreamWriter sWriter = new StreamWriter(g_BSNhttp.GetRequestStream());
 
-            //sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL + "%26act%3DdispMemberLoginForm&mid=" + MidURL + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F" + "bellsoft.iptime.org" + "%2Findex.php%3Fmid%3D" + MidURL + "&act=procMemberLogin&xe_validator_id=modules%2Fmember%2Fskin%2Fdefault%2Flogin_form%2F1&user_id=" + Email + "&password=" + PW);
-            //sWriter.Close();
+            sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL + "%26act%3DdispMemberLoginForm&mid=" + MidURL + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F" + "bellsoft.iptime.org" + "%2Findex.php%3Fmid%3D" + MidURL + "&act=procMemberLogin&xe_validator_id=modules%2Fmember%2Fskin%2Fdefault%2Flogin_form%2F1&user_id=" + Email + "&password=" + PW);
+            sWriter.Close();
 
             string ResponseText = null;
 
@@ -50,9 +50,9 @@ namespace Bell_Smart_Tools.Class
                 return false;
                 //비로그인 상태일때
             }
-            //else if (Convert.ToBoolean(Strings.InStr(ResponseText, "<div class=\"login-footer\">")))
+            else if (Convert.ToBoolean(ResponseText.IndexOf("<div class=\"login-footer\">")))
             {
-                //g_Login = False
+                g_Login = false;
 
                 return false;
             }
