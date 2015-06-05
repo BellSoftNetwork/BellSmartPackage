@@ -32,14 +32,28 @@ namespace Bell_Smart_Tools.Source.BST
                 cb_PWSave.Checked = true; // PW 저장 체크박스 활성화
             }
         }
+        private void FormEnable(bool value)
+        {
+            txt_Email.Enabled = value;
+            txt_PW.Enabled = value;
+            btn_Login.Enabled = value;
+            cb_EmailSave.Enabled = value;
+            cb_PWSave.Enabled = value;
+            cb_AutoLogin.Enabled = value;
+            llb_text.Enabled = value;
+        }
         private void btn_Login_Click(object sender, EventArgs e)
         {
+            FormEnable(false);
             if (Class.BSN.BSNLogin(txt_Email.Text,txt_PW.Text)) // BSN 회원 인증 성공시
             {
                 BST_Main BST = new BST_Main(); // BST_Main 인스턴스 생성
                 BST.Show(); // BST_Main 실행
                 this.Hide(); // BST_Login 숨김
+            }else{
+                Class.Common.Message("인증 실패");
             }
+            FormEnable(true);
         }
 
         private void BST_Login_Load(object sender, EventArgs e)

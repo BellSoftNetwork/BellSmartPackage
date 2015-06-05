@@ -53,12 +53,13 @@ namespace Bell_Smart_Tools.Class
                 ResponseText = sReader.ReadToEnd();
                 sReader.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Class.Common.Message(ex.Message);
                 //작업시간이 초과되었습니다.
                 return false;
             }
-
+            Class.Common.Message(ResponseText);
             if (ResponseText == null)
             {
                 return false;
