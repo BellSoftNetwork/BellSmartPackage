@@ -7,11 +7,6 @@ using Newtonsoft.Json;
 
 namespace Bell_Smart_Tools.Class
 {
-    interface IMinecraftLoginInfo
-    {
-        bool a = true;
-    }
-
     public class MCLogin
     {
         public enum LoginType : int
