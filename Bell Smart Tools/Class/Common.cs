@@ -16,5 +16,10 @@ namespace Bell_Smart_Tools.Class
         {
             MessageBox.Show(Text, Caption);
         }
+
+        public static void End()
+        {
+            Application.Exit();
+        }
     }
 }

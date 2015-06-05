@@ -17,7 +17,7 @@ namespace Bell_Smart_Tools.Source.BST
             pb_Load.Value = pb_Load.Maximum;
             this.Hide();
             this.WindowState = FormWindowState.Minimized;
-            BST_Main BST = new BST_Main();
+            BST_Login BST = new BST_Login();
             BST.Show();
         }
 

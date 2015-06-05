@@ -9,21 +9,11 @@ using System.Windows.Forms;
 
 namespace Bell_Smart_Tools.Source.BST
 {
-    public partial class BST_Main : Form
+    public partial class BST_Updater : Form
     {
-        public BST_Main()
+        public BST_Updater()
         {
             InitializeComponent();
         }
-
-        private void BST_Main_Load(object sender, EventArgs e)
-        {
-
-        }
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            Application.Exit();
-        }
-
     }
 }
