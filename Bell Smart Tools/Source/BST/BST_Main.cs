@@ -73,5 +73,10 @@ namespace Bell_Smart_Tools.Source.BST
         {
 
         }
+
+        private void cb_PackList_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.KeyChar = (char)Keys.None;
+        }
     }
 }

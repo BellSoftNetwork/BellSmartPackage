@@ -38,17 +38,17 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.ms_MainMenu = new System.Windows.Forms.MenuStrip();
             this.mi_BST = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_Tool = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_Help = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_AutoTray = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_TopMost = new System.Windows.Forms.ToolStripMenuItem();
-            this.ss_1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mi_Laboratory = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Logout = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Restart = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_End = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_Tool = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_TopMost = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_AutoTray = new System.Windows.Forms.ToolStripMenuItem();
+            this.ss_1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_Laboratory = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_BST_Preferences = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_BC_Preferences = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_FeedBack = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_MainMenu.SuspendLayout();
@@ -81,6 +81,7 @@
             this.cb_PackList.Size = new System.Drawing.Size(216, 20);
             this.cb_PackList.TabIndex = 1;
             this.cb_PackList.Text = "플레이하실 모드팩을 선택해주세요.";
+            this.cb_PackList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_PackList_KeyPress);
             // 
             // btn_GameStart
             // 
@@ -132,6 +133,24 @@
             this.mi_BST.Size = new System.Drawing.Size(39, 20);
             this.mi_BST.Text = "BST";
             // 
+            // mi_Logout
+            // 
+            this.mi_Logout.Name = "mi_Logout";
+            this.mi_Logout.Size = new System.Drawing.Size(146, 22);
+            this.mi_Logout.Text = "BST 로그아웃";
+            // 
+            // mi_Restart
+            // 
+            this.mi_Restart.Name = "mi_Restart";
+            this.mi_Restart.Size = new System.Drawing.Size(146, 22);
+            this.mi_Restart.Text = "BST 재시작";
+            // 
+            // mi_End
+            // 
+            this.mi_End.Name = "mi_End";
+            this.mi_End.Size = new System.Drawing.Size(146, 22);
+            this.mi_End.Text = "BST 종료";
+            // 
             // mi_Tool
             // 
             this.mi_Tool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -145,6 +164,45 @@
             this.mi_Tool.Size = new System.Drawing.Size(43, 20);
             this.mi_Tool.Text = "도구";
             // 
+            // mi_TopMost
+            // 
+            this.mi_TopMost.CheckOnClick = true;
+            this.mi_TopMost.Name = "mi_TopMost";
+            this.mi_TopMost.Size = new System.Drawing.Size(146, 22);
+            this.mi_TopMost.Text = "BST 항상위";
+            this.mi_TopMost.Click += new System.EventHandler(this.mi_TopMost_Click);
+            // 
+            // mi_AutoTray
+            // 
+            this.mi_AutoTray.Name = "mi_AutoTray";
+            this.mi_AutoTray.Size = new System.Drawing.Size(146, 22);
+            this.mi_AutoTray.Text = "자동 트레이";
+            this.mi_AutoTray.Click += new System.EventHandler(this.mi_AutoTray_Click);
+            // 
+            // ss_1
+            // 
+            this.ss_1.Name = "ss_1";
+            this.ss_1.Size = new System.Drawing.Size(143, 6);
+            // 
+            // mi_Laboratory
+            // 
+            this.mi_Laboratory.Name = "mi_Laboratory";
+            this.mi_Laboratory.Size = new System.Drawing.Size(146, 22);
+            this.mi_Laboratory.Text = "실험실";
+            this.mi_Laboratory.Click += new System.EventHandler(this.mi_Laboratory_Click);
+            // 
+            // mi_BST_Preferences
+            // 
+            this.mi_BST_Preferences.Name = "mi_BST_Preferences";
+            this.mi_BST_Preferences.Size = new System.Drawing.Size(146, 22);
+            this.mi_BST_Preferences.Text = "BST 환경설정";
+            // 
+            // mi_BC_Preferences
+            // 
+            this.mi_BC_Preferences.Name = "mi_BC_Preferences";
+            this.mi_BC_Preferences.Size = new System.Drawing.Size(146, 22);
+            this.mi_BC_Preferences.Text = "BC 환경설정";
+            // 
             // mi_Help
             // 
             this.mi_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -154,73 +212,16 @@
             this.mi_Help.Size = new System.Drawing.Size(55, 20);
             this.mi_Help.Text = "도움말";
             // 
-            // mi_AutoTray
-            // 
-            this.mi_AutoTray.Name = "mi_AutoTray";
-            this.mi_AutoTray.Size = new System.Drawing.Size(152, 22);
-            this.mi_AutoTray.Text = "자동 트레이";
-            this.mi_AutoTray.Click += new System.EventHandler(this.mi_AutoTray_Click);
-            // 
-            // mi_TopMost
-            // 
-            this.mi_TopMost.CheckOnClick = true;
-            this.mi_TopMost.Name = "mi_TopMost";
-            this.mi_TopMost.Size = new System.Drawing.Size(152, 22);
-            this.mi_TopMost.Text = "BST 항상위";
-            this.mi_TopMost.Click += new System.EventHandler(this.mi_TopMost_Click);
-            // 
-            // ss_1
-            // 
-            this.ss_1.Name = "ss_1";
-            this.ss_1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // mi_Laboratory
-            // 
-            this.mi_Laboratory.Name = "mi_Laboratory";
-            this.mi_Laboratory.Size = new System.Drawing.Size(152, 22);
-            this.mi_Laboratory.Text = "실험실";
-            this.mi_Laboratory.Click += new System.EventHandler(this.mi_Laboratory_Click);
-            // 
-            // mi_Logout
-            // 
-            this.mi_Logout.Name = "mi_Logout";
-            this.mi_Logout.Size = new System.Drawing.Size(152, 22);
-            this.mi_Logout.Text = "BST 로그아웃";
-            // 
-            // mi_Restart
-            // 
-            this.mi_Restart.Name = "mi_Restart";
-            this.mi_Restart.Size = new System.Drawing.Size(152, 22);
-            this.mi_Restart.Text = "BST 재시작";
-            // 
-            // mi_End
-            // 
-            this.mi_End.Name = "mi_End";
-            this.mi_End.Size = new System.Drawing.Size(152, 22);
-            this.mi_End.Text = "BST 종료";
-            // 
-            // mi_BST_Preferences
-            // 
-            this.mi_BST_Preferences.Name = "mi_BST_Preferences";
-            this.mi_BST_Preferences.Size = new System.Drawing.Size(152, 22);
-            this.mi_BST_Preferences.Text = "BST 환경설정";
-            // 
-            // mi_BC_Preferences
-            // 
-            this.mi_BC_Preferences.Name = "mi_BC_Preferences";
-            this.mi_BC_Preferences.Size = new System.Drawing.Size(152, 22);
-            this.mi_BC_Preferences.Text = "BC 환경설정";
-            // 
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(152, 22);
+            this.mi_Info.Size = new System.Drawing.Size(122, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // BST_Main
