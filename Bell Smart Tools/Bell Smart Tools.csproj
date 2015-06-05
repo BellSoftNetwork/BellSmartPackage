@@ -105,6 +105,7 @@
     <Compile Include="Class\BSN.cs" />
     <Compile Include="Class\Common.cs" />
     <Compile Include="Class\Debug.cs" />
+    <Compile Include="Class\MCLogin.cs" />
     <Compile Include="Data\Base.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Source\BC\BC_Option.cs">
