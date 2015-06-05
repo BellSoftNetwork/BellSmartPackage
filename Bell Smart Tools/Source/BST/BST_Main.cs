@@ -57,5 +57,21 @@ namespace Bell_Smart_Tools.Source.BST
         {
             Class.Common.RegSave("Email", textBox1.Text);
         }
+
+        private void mi_TopMost_Click(object sender, EventArgs e)
+        {
+            this.TopMost = mi_TopMost.Checked;
+        }
+
+        private void mi_Laboratory_Click(object sender, EventArgs e)
+        {
+            BST_Laboratory Lab = new BST_Laboratory();
+            Lab.Show();
+        }
+
+        private void mi_AutoTray_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
