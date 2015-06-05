@@ -25,21 +25,28 @@ namespace Bell_Smart_Tools.Class
             Application.Exit();
         }
 
-        private RegistryKey reg = Registry.LocalMachine.CreateSubKey("Software").CreateSubKey("BSN");
-        public void RegSave(string name, object value)
+        public static void RegSave(string name, object value)
         {
-            reg.SetValue(name, value);
+            RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
+            reg.SetValue(name, value, RegistryValueKind.String);
         }
-        public object RegLoad(string name)
+        public static string RegLoad(string name)
         {
-            return reg.GetValue(name, null);
+            try
+            {
+                RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
+                return (string)reg.GetValue(name, null);
+            } catch { }
+
+            return null;
         }
-        public void RegDelete(string name)
+        public static void RegDelete(string name)
         {
+            RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
             reg.DeleteValue(name);
         }
 
-        public void WriteTextFile(string LocalFilePath, string Data, bool Append = false)
+        public static void WriteTextFile(string LocalFilePath, string Data, bool Append = false)
         {
             bool boolWritten = false;
 

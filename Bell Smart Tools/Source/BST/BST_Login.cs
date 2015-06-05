@@ -19,14 +19,14 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void Initialize() // 폼 초기화
         {
-            string Email = "레지스트리에서 값 받아옴"; // 레지스트리에서 저장된 Email 값 로드
-            string PW = "마찬가지"; // 레지스트리에서 저장된 PW 값 로드
+            string Email = Class.Common.RegLoad("Email"); // 레지스트리에서 저장된 Email 값 로드
+            string PW = Class.Common.RegLoad("PW"); // 레지스트리에서 저장된 PW 값 로드
 
             if (Email != null) { // 레지스트리에 Email 값이 존재한다면,
                 txt_Email.Text = Email; // 이메일 텍스트 박스에 값 대입
                 cb_EmailSave.Checked = true; // 이메일 저장 체크박스 활성화
             }
-            if (PW != "") // 레지스트리에 PW 값이 존재한다면,
+            if (PW != null) // 레지스트리에 PW 값이 존재한다면,
             {
                 txt_PW.Text = PW; // PW 텍스트 박스에 값 대입
                 cb_PWSave.Checked = true; // PW 저장 체크박스 활성화
