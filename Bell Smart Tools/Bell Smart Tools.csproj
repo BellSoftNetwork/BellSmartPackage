@@ -89,6 +89,10 @@
     <StartupObject>Bell_Smart_Tools.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -208,15 +212,14 @@
     <Content Include="Photo\Photo_Bell.ico" />
     <Content Include="Photo\Photo_Random.ico" />
     <Content Include="Photo\Photo_RedBell.ico" />
+    <Content Include="Resource\Newtonsoft.Json.dll" />
     <Content Include="Sound\Sound_alarm.wav" />
     <Content Include="Sound\Sound_end.wav" />
     <Content Include="Sound\Sound_error.wav" />
     <Content Include="Sound\Sound_select.wav" />
     <Content Include="Sound\Sound_start.wav" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resource\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
