@@ -158,13 +158,14 @@
       <DependentUpon>BST_Updater.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Source\BC\BC_Option.resx">
       <DependentUpon>BC_Option.cs</DependentUpon>
@@ -206,8 +207,15 @@
     <Content Include="Photo\Photo_Bell.ico" />
     <Content Include="Photo\Photo_Random.ico" />
     <Content Include="Photo\Photo_RedBell.ico" />
+    <Content Include="Sound\Sound_alarm.wav" />
+    <Content Include="Sound\Sound_end.wav" />
+    <Content Include="Sound\Sound_error.wav" />
+    <Content Include="Sound\Sound_select.wav" />
+    <Content Include="Sound\Sound_start.wav" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resource\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
