@@ -107,6 +107,24 @@
     <Compile Include="Class\Debug.cs" />
     <Compile Include="Data\Base.cs" />
     <Compile Include="Data\User.cs" />
+    <Compile Include="Source\BC\BC_Option.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BC\BC_Option.Designer.cs">
+      <DependentUpon>BC_Option.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BC\BC_Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BC\BC_Preferences.Designer.cs">
+      <DependentUpon>BC_Preferences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BST\BST_Laboratory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BST\BST_Laboratory.Designer.cs">
+      <DependentUpon>BST_Laboratory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\BST\BST_Loader.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +145,12 @@
     <Compile Include="Source\BST\BST_Main.Designer.cs">
       <DependentUpon>BST_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BST\BST_Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BST\BST_Preferences.Designer.cs">
+      <DependentUpon>BST_Preferences.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\BST\BST_Updater.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +166,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Source\BC\BC_Option.resx">
+      <DependentUpon>BC_Option.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BC\BC_Preferences.resx">
+      <DependentUpon>BC_Preferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BST\BST_Laboratory.resx">
+      <DependentUpon>BST_Laboratory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Loader.resx">
       <DependentUpon>BST_Loader.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Main.resx">
       <DependentUpon>BST_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BST\BST_Preferences.resx">
+      <DependentUpon>BST_Preferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Updater.resx">
       <DependentUpon>BST_Updater.cs</DependentUpon>
@@ -171,9 +207,7 @@
     <Content Include="Photo\Photo_Random.ico" />
     <Content Include="Photo\Photo_RedBell.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Source\BC\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>

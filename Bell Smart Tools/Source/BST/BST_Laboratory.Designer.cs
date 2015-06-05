@@ -1,6 +1,6 @@
 ﻿namespace Bell_Smart_Tools.Source.BST
 {
-    partial class BST_Main
+    partial class BST_Laboratory
     {
         /// <summary>
         /// Required designer variable.
@@ -28,27 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Laboratory));
             this.SuspendLayout();
             // 
-            // BST_Main
+            // BST_Laboratory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(514, 251);
+            this.ClientSize = new System.Drawing.Size(271, 174);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "BST_Main";
+            this.Name = "BST_Laboratory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BST 메인";
-            this.Load += new System.EventHandler(this.BST_Main_Load);
+            this.Text = "BST 실험실";
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
     }
 }
