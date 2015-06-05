@@ -7,8 +7,14 @@ using Newtonsoft.Json;
 
 namespace Bell_Smart_Tools.Class
 {
+    /// <summary>
+    /// 마인크래프트 로그인 관련 메서드와 필드, 열거형 목록을 가지고 있는 클래스입니다.
+    /// </summary>
     public class MCLogin
     {
+        /// <summary>
+        /// Minecraft에 로그인할 수 있는 타입이 열거되어 있습니다.
+        /// </summary>
         public enum LoginType : int
         {
             Authenticate = 0,
@@ -18,13 +24,16 @@ namespace Bell_Smart_Tools.Class
             Invalidate
         }
 
-        private static string[] EndPoint =
+        /// <summary>
+        /// LoginType을 Key로 사용하여 Value인 Endpoint를 제공합니다.
+        /// </summary>
+        private static Dictionary<LoginType, string> EndPoint = new Dictionary<LoginType, string>()
         {
-            "/authenticate",
-            "/refresh",
-            "/validate",
-            "/signout",
-            "/invalidate"
+            {LoginType.Authenticate, "/authenticate"},
+            {LoginType.Refresh, "/refresh"},
+            {LoginType.Validate, "/validate"},
+            {LoginType.Signout, "/signout"},
+            {LoginType.Invalidate, "/invalidate"},
         };
 
         //------------------------------------------------------------------------------
@@ -37,11 +46,17 @@ namespace Bell_Smart_Tools.Class
         //Private jsonfile As String
         //Private jsonChared As Char() = ""
 
+        /// <summary>
+        /// 지정된 계정으로 Minecraft에 로그인합니다.
+        /// </summary>
+        /// <param name="id">Minecraft 계정</param>
+        /// <param name="pw">Minecraft 비밀번호</param>
+        /// <param name="type">로그인 할 LoginType</param>
+        /// <returns>성공 여부를 반환합니다.</returns>
         public static bool Login(string id, string pw, LoginType type)
         {
-
             //setting json file for sending.
-            Json_LoginInfo loginInfo = new Json_LoginInfo();
+            JsonLoginData loginInfo = new JsonLoginData();
             loginInfo.agent.name = "Minecraft";
             loginInfo.agent.version = 1;
             loginInfo.username = id;
@@ -51,7 +66,7 @@ namespace Bell_Smart_Tools.Class
             //Debug.Message(Debug.Level.High, output);
 
             //requesting preparation.
-            HttpWebRequest wRequest = (HttpWebRequest)HttpWebRequest.Create("https://authserver.mojang.com" + EndPoint[(int)type]);
+            HttpWebRequest wRequest = (HttpWebRequest)HttpWebRequest.Create("https://authserver.mojang.com" + EndPoint[type]);
             byte[] byteBuffer = Encoding.UTF8.GetBytes(output);
             wRequest.Method = "POST";
             wRequest.ContentType = "application/json";
@@ -82,7 +97,7 @@ namespace Bell_Smart_Tools.Class
             //Debug.Message(Debug.Level.High, responseFromServer);
 
             JsonTextReader jReader = new JsonTextReader(new StringReader(responseFromServer));
-            bool[] jArray = {false, false, false, false, false };
+            bool[] jArray = { false, false, false, false, false };
             //is accessToken Readed
             //is selectedProfile Readed
             //is id Readed
@@ -157,11 +172,11 @@ namespace Bell_Smart_Tools.Class
             }
 
             //Not은 True를 False로, False를 True로 변환함. error가 포함되어 있으면 False 반환. 아니면 True.
-            bool RT = !responseFromServer.Contains("error");
+            bool value = !responseFromServer.Contains("error");
             //로그인 성공시 True
             //BST_Main.btn_BCLaunch.Enabled = RT;
-            Data.User.MC_Login = RT;
-            if (RT)
+            Data.User.MC_Login = value;
+            if (value)
             {
                 Class.Common.RegSave("MC_ID", id);
                 Data.User.MC_ID = id;
@@ -180,21 +195,46 @@ namespace Bell_Smart_Tools.Class
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 실패");
             }
 
-            return RT;
+            return value;
         }
     }
 
-    public class Json_LoginInfo
+    /// <summary>
+    /// Minecraft 로그인 데이터입니다.
+    /// </summary>
+    public class JsonLoginData
     {
-        public Json_LoginInfo_Agent agent = new Json_LoginInfo_Agent();
+        /// <summary>
+        /// 내부 클래스인 JsonLoginDataAgent를 초기화하고 agent로 정의합니다.
+        /// </summary>
+        public JsonLoginDataAgent agent = new JsonLoginDataAgent();
+
+        /// <summary>
+        /// Minecraft에 로그인 할 계정입니다.
+        /// </summary>
         public string username;
+
+        /// <summary>
+        /// Minecraft에 로그인 할 비밀번호입니다.
+        /// </summary>
         public string password;
+
         public string clientToken;
     }
 
-    public class Json_LoginInfo_Agent
+    /// <summary>
+    /// Agent에 대한 데이터입니다.
+    /// </summary>
+    public class JsonLoginDataAgent
     {
+        /// <summary>
+        /// 로그인을 시도할 Agent를 나타냅니다.
+        /// </summary>
         public string name;
+
+        /// <summary>
+        /// 로그인을 시도할 Agent의 버전을 나타냅니다.
+        /// </summary>
         public int version;
     }
 }

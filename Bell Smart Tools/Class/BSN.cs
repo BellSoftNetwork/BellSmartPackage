@@ -4,6 +4,9 @@ using System.Net;
 
 namespace Bell_Smart_Tools.Class
 {
+    /// <summary>
+    /// BSN 로그인 관련 메서드와 필드를 가지고 있는 클래스입니다.
+    /// </summary>
     class BSN
     {
         private const string MidURL = "MC";
@@ -80,7 +83,7 @@ namespace Bell_Smart_Tools.Class
         /// </summary>
         /// <param name="email">로그인에 필요한 이메일</param>
         /// <param name="password">로그인에 필요한 이메일</param>
-        /// <returns></returns>
+        /// <returns>초기화 된 HttpWebRequest 인스턴스를 반환합니다.</returns>
         private static HttpWebRequest GetInstance()
         {
             HttpWebRequest wRequestBSN;
