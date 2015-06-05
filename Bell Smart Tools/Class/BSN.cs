@@ -8,7 +8,7 @@ using System.IO;
 namespace Bell_Smart_Tools.Class
 {
     class BSN
-    {/*
+    {
         private static bool g_Login = false;
         private static HttpWebRequest g_BSNhttp;
         private static CookieContainer g_BSNCookie = new CookieContainer();
@@ -16,7 +16,7 @@ namespace Bell_Smart_Tools.Class
         {
             const string MidURL = "MC";
 
-            g_BSNhttp = HttpWebRequest.Create("http://bellsoft.iptime.org/" + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
+            g_BSNhttp = (HttpWebRequest) HttpWebRequest.Create("http://bellsoft.iptime.org/" + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
             g_BSNhttp.Method = "POST";
             g_BSNhttp.Referer = "http://bellsoft.iptime.org/";
             g_BSNhttp.ContentType = "application/x-www-form-urlencoded";
@@ -35,11 +35,11 @@ namespace Bell_Smart_Tools.Class
 
             try
             {
-                StreamReader sReader = new StreamReader(g_BSNhttp.GetResponse.GetResponseStream, System.Text.Encoding.UTF8);
+                StreamReader sReader = new StreamReader(g_BSNhttp.GetResponse().GetResponseStream(), System.Text.Encoding.UTF8);
                 ResponseText = sReader.ReadToEnd();
                 sReader.Close();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //작업시간이 초과되었습니다.
                 return false;
@@ -59,6 +59,6 @@ namespace Bell_Smart_Tools.Class
             g_Login = true;
 
             return true;
-        }*/
+        }
     }
 }
