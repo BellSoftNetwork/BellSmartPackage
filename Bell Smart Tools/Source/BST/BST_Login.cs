@@ -34,7 +34,7 @@ namespace Bell_Smart_Tools.Source.BST
         }
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            if ("" == "") // BSN 회원 인증 성공시
+            if (Class.BSN.BSNLogin(txt_Email.Text,txt_PW.Text)) // BSN 회원 인증 성공시
             {
                 BST_Main BST = new BST_Main(); // BST_Main 인스턴스 생성
                 BST.Show(); // BST_Main 실행
