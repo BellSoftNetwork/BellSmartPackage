@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Net;
 using System.IO;
+using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 
 namespace Bell_Smart_Tools.Class
 {
+    interface IMinecraftLoginInfo
+    {
+        bool a = true;
+    }
+
     public class MCLogin
     {
-        public enum LoginType : byte
+        public enum LoginType : int
         {
             Authenticate = 0,
             Refresh,
@@ -26,14 +23,15 @@ namespace Bell_Smart_Tools.Class
             Invalidate
         }
 
-        public string[] EndPoint = {
-		"/authenticate",
-		"/refresh",
-		"/validate",
-		"/signout",
-		"/invalidate"
+        private static string[] EndPoint =
+        {
+            "/authenticate",
+            "/refresh",
+            "/validate",
+            "/signout",
+            "/invalidate"
+        };
 
-	};
         //------------------------------------------------------------------------------
         //author : prownill
         //errored : 405 method not allowed.
@@ -44,22 +42,21 @@ namespace Bell_Smart_Tools.Class
         //Private jsonfile As String
         //Private jsonChared As Char() = ""
 
-
-        public object MCLogin(string MCID, string MCPW, LoginType LoginType)
+        public static bool Login(string id, string pw, LoginType type)
         {
 
             //setting json file for sending.
             Json_LoginInfo loginInfo = new Json_LoginInfo();
             loginInfo.agent.name = "Minecraft";
             loginInfo.agent.version = 1;
-            loginInfo.username = MCID;
-            loginInfo.password = MCPW;
+            loginInfo.username = id;
+            loginInfo.password = pw;
 
             string output = JsonConvert.SerializeObject(loginInfo);
             //Debug.Message(Debug.Level.High, output);
 
             //requesting preparation.
-            HttpWebRequest wRequest = HttpWebRequest.Create("https://authserver.mojang.com" + EndPoint(LoginType));
+            HttpWebRequest wRequest = (HttpWebRequest)HttpWebRequest.Create("https://authserver.mojang.com" + EndPoint[(int)type]);
             byte[] byteBuffer = Encoding.UTF8.GetBytes(output);
             wRequest.Method = "POST";
             wRequest.ContentType = "application/json";
@@ -72,37 +69,30 @@ namespace Bell_Smart_Tools.Class
             dataStream.Close();
 
             //get response from server.
-            HttpWebResponse response = default(HttpWebResponse);
+            HttpWebResponse response;
             try
             {
-                response = wRequest.GetResponse();
+                response = (HttpWebResponse)wRequest.GetResponse();
                 //403 에러.
             }
-            catch (WebException ex)
+            catch (WebException)
             {
                 return false;
             }
+
             dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
-            string responseFromServer = reader.ReadToEnd();
+            string responseFromServer = new StreamReader(dataStream).ReadToEnd();
 
             //parsing UUID, playername to save from responsed data
             //Debug.Message(Debug.Level.High, responseFromServer);
 
             JsonTextReader jReader = new JsonTextReader(new StringReader(responseFromServer));
-            byte[] jArray = {
-			false,
-			false,
-			false,
-			false,
-			false
-		};
+            bool[] jArray = {false, false, false, false, false };
             //is accessToken Readed
             //is selectedProfile Readed
             //is id Readed
             //is id value Readed
             //is name Readed
-
 
             while ((jReader.Read()))
             {
@@ -111,54 +101,50 @@ namespace Bell_Smart_Tools.Class
                     //Debug.Message(Debug.Level.High, "Token: " + jReader.TokenType + ", Value: " + jReader.Value.ToString());
                 }
 
-                //jArray(4)이 True면 값은 name의 값. name을 읽어 BC_NickName에 저장한다. 재진입 방지는 필수!
-                if (jArray(4))
+                //jArray[4]이 True면 값은 name의 값. name을 읽어 BC_NickName에 저장한다. 재진입 방지는 필수!
+                if (jArray[4])
                 {
-                    var _with1 = jReader;
-                    if (_with1.TokenType == JsonToken.String)
+                    if (jReader.TokenType == JsonToken.String)
                     {
-                        Data.User.MC_NickName = _with1.Value.ToString();
+                        Data.User.MC_NickName = jReader.Value.ToString();
                     }
-                    jArray(4) = false;
+                    jArray[4] = false;
                 }
 
                 //jArray(3)이 True면 값은 name, jArray(4)을 True로 하고 재진입 방지를 위해 jArray(3)는 False
-                if (jArray(3))
+                if (jArray[3])
                 {
-                    var _with2 = jReader;
-                    if (_with2.TokenType == JsonToken.PropertyName & _with2.Value.ToString() == "name")
-                        jArray(4) = true;
-                    jArray(3) = false;
+                    if (jReader.TokenType == JsonToken.PropertyName & jReader.Value.ToString() == "name")
+                        jArray[4] = true;
+                    jArray[3] = false;
                 }
 
                 //jArray(2)이 True면 값은 id의 값. id를 읽어 MC_UUID에 저장한다. 재진입 방지를 위해 jArray(2)은 False
-                if (jArray(2))
+                if (jArray[2])
                 {
-                    var _with3 = jReader;
-                    if (_with3.TokenType == JsonToken.String)
+                    if (jReader.TokenType == JsonToken.String)
                     {
-                        Data.User.MC_UUID = _with3.Value.ToString();
-                        jArray(3) = true;
+                        Data.User.MC_UUID = jReader.Value.ToString();
+                        jArray[3] = true;
                     }
-                    jArray(2) = false;
+                    jArray[2] = false;
                 }
 
                 //jArray(1)이 True면 값은 id, jArray(2)을 True로 하고 재진입 방지를 위해 jArray(1)은 False
-                if (jArray(1) & jReader.Value != null)
+                if (jArray[1] & jReader.Value != null)
                 {
-                    var _with4 = jReader;
-                    if (_with4.TokenType == JsonToken.PropertyName & _with4.Value.ToString() == "id")
-                        jArray(2) = true;
-                    jArray(1) = false;
+                    if (jReader.TokenType == JsonToken.PropertyName & jReader.Value.ToString() == "id")
+                        jArray[2] = true;
+                    jArray[1] = false;
                 }
 
                 //jArray(0)이 True면 값은 accessToken의 값, 재진입 방지를 위해 jArray(0)은 False
-                if (jArray(0))
+                if (jArray[0])
                 {
-                    var _with5 = jReader;
-                    if (_with5.TokenType == JsonToken.String)
-                        MC_AccessToken = _with5.Value.ToString();
-                    jArray(0) = false;
+                    if (jReader.TokenType == JsonToken.String)
+                        //MC_AccessToken = jReader.Value.ToString();
+                    // 이게 뭡니까? 어디있는겨
+                    jArray[0] = false;
                 }
 
 
@@ -166,11 +152,11 @@ namespace Bell_Smart_Tools.Class
                 {
                     //계속 읽다가 selectedProfile읽히면 jArray(1)이 True
                     if (jReader.TokenType == JsonToken.PropertyName & jReader.Value.ToString() == "selectedProfile")
-                        jArray(1) = true;
+                        jArray[1] = true;
 
                     //계속 읽다가 accessToken읽히면 jArray(0)이 True
                     if (jReader.TokenType == JsonToken.PropertyName & jReader.Value.ToString() == "accessToken")
-                        jArray(0) = true;
+                        jArray[0] = true;
 
                 }
             }
@@ -182,10 +168,10 @@ namespace Bell_Smart_Tools.Class
             Data.User.MC_Login = RT;
             if (RT)
             {
-                Class.Common.RegSave("MC_ID", MCID);
-                Data.User.MC_ID = MCID;
-                Class.Common.RegSave("MC_PW", MCPW);
-                Data.User.MC_PW = MCPW;
+                Class.Common.RegSave("MC_ID", id);
+                Data.User.MC_ID = id;
+                Class.Common.RegSave("MC_PW", pw);
+                Data.User.MC_PW = pw;
 
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 성공");
             }
