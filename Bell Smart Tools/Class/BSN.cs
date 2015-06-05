@@ -9,33 +9,47 @@ namespace Bell_Smart_Tools.Class
 {
     class BSN
     {
-        private static bool g_Login = false;
-        private static HttpWebRequest g_BSNhttp;
-        private static CookieContainer g_BSNCookie = new CookieContainer();
-        public static bool BSNLogin(string Email, string PW)
+        private static const string MidURL = "MC";
+        private static bool LoggedIn = false;
+        private static CookieContainer wCookie = new CookieContainer();
+
+        /// <summary>
+        /// BSN에 로그인 된 상태를 반환합니다.
+        /// </summary>
+        public static bool getLoginStatus
         {
-            const string MidURL = "MC";
+            get { return LoggedIn; }
+        }
 
-            g_BSNhttp = (HttpWebRequest) HttpWebRequest.Create("http://bellsoft.iptime.org/" + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
-            g_BSNhttp.Method = "POST";
-            g_BSNhttp.Referer = "http://bellsoft.iptime.org/";
-            g_BSNhttp.ContentType = "application/x-www-form-urlencoded";
-            g_BSNhttp.CookieContainer = g_BSNCookie;
-            g_BSNhttp.UserAgent = ".NET Application (BST Version : " + "4.0.0.0" + ")";
+        /// <summary>
+        /// BSN에 로그인을 수행합니다.
+        /// </summary>
+        /// <param name="email">로그인에 필요한 패스워드</param>
+        /// <param name="password">로그인에 필요한 패스워드</param>
+        /// <returns>작업 성공 여부를 반환합니다.</returns>
+        public static bool BSNLogin(string email, string password)
+        {
+            HttpWebRequest wRequestBSN = GetInstance();
 
-            g_BSNhttp.Timeout = 5000;
-            g_BSNhttp.ReadWriteTimeout = 5000;
+            // Start to Write Stream.
+            StreamWriter sWriter = new StreamWriter(wRequestBSN.GetRequestStream());
 
-            StreamWriter sWriter = new StreamWriter(g_BSNhttp.GetRequestStream());
-
-            sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL + "%26act%3DdispMemberLoginForm&mid=" + MidURL + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F" + "bellsoft.iptime.org" + "%2Findex.php%3Fmid%3D" + MidURL + "&act=procMemberLogin&xe_validator_id=modules%2Fmember%2Fskin%2Fdefault%2Flogin_form%2F1&user_id=" + Email + "&password=" + PW);
+            sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL
+                + "%26act%3DdispMemberLoginForm&mid=" + MidURL
+                + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F"
+                + "bellsoft.iptime.org"
+                + "%2Findex.php%3Fmid%3D" + MidURL
+                + "&act=procMemberLogin&xe_validator_id=modules%2Fmember%2Fskin%2Fdefault%2Flogin_form%2F1"
+                + "&user_id=" + email
+                + "&password=" + password);
             sWriter.Close();
 
-            string ResponseText = null;
+            // Start to Read Stream.
+            string ResponseText;
 
             try
             {
-                StreamReader sReader = new StreamReader(g_BSNhttp.GetResponse().GetResponseStream(), System.Text.Encoding.UTF8);
+                StreamReader sReader = new StreamReader(wRequestBSN.GetResponse().GetResponseStream(), System.Text.Encoding.UTF8);
                 ResponseText = sReader.ReadToEnd();
                 sReader.Close();
             }
@@ -52,13 +66,39 @@ namespace Bell_Smart_Tools.Class
             }
             else if (Convert.ToBoolean(ResponseText.IndexOf("<div class=\"login-footer\">")))
             {
-                g_Login = false;
+                LoggedIn = false;
 
                 return false;
             }
-            g_Login = true;
+            else
+            {
+                LoggedIn = true;
 
-            return true;
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 로그인을 요청하는 HttpWebRequest 인스턴스를 생성하고 초기화합니다.
+        /// </summary>
+        /// <param name="email">로그인에 필요한 이메일</param>
+        /// <param name="password">로그인에 필요한 이메일</param>
+        /// <returns></returns>
+        private static HttpWebRequest GetInstance()
+        {
+            HttpWebRequest wRequestBSN;
+
+            wRequestBSN = (HttpWebRequest)HttpWebRequest.Create("http://bellsoft.iptime.org/" + "index.php?mid=MC&act=dispMemberLoginForm");
+            wRequestBSN.Method = "POST";
+            wRequestBSN.Referer = "http://bellsoft.iptime.org/";
+            wRequestBSN.ContentType = "application/x-www-form-urlencoded";
+            wRequestBSN.CookieContainer = wCookie;
+            wRequestBSN.UserAgent = ".NET Application (BST Version : " + "4.0.0.0" + ")";
+
+            wRequestBSN.Timeout = 5000;
+            wRequestBSN.ReadWriteTimeout = 5000;
+
+            return wRequestBSN;
         }
     }
 }
