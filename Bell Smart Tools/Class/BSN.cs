@@ -8,7 +8,7 @@ using System.IO;
 namespace Bell_Smart_Tools.Class
 {
     class BSN
-    {
+    {/*
         private static bool g_Login = false;
         private static HttpWebRequest g_BSNhttp;
         private static CookieContainer g_BSNCookie = new CookieContainer();
@@ -59,6 +59,6 @@ namespace Bell_Smart_Tools.Class
             g_Login = true;
 
             return true;
-        }
+        }*/
     }
 }

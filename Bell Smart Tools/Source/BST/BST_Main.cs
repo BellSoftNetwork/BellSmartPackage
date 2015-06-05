@@ -22,7 +22,17 @@ namespace Bell_Smart_Tools.Source.BST
         }
         protected override void OnClosing(CancelEventArgs e)
         {
-            Application.Exit();
+            Class.Common.End();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
