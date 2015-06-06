@@ -38,7 +38,6 @@
             this.lb_PW = new System.Windows.Forms.Label();
             this.lb_Email = new System.Windows.Forms.Label();
             this.llb_text = new System.Windows.Forms.LinkLabel();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cb_PWSave
@@ -136,23 +135,12 @@
             this.llb_text.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.llb_text.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llb_text_LinkClicked);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(236, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(119, 23);
-            this.button1.TabIndex = 111;
-            this.button1.Text = "개발용 슈퍼패스";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // BST_Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(368, 91);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.cb_PWSave);
             this.Controls.Add(this.cb_AutoLogin);
             this.Controls.Add(this.cb_EmailSave);
@@ -186,6 +174,5 @@
         internal System.Windows.Forms.Label lb_PW;
         internal System.Windows.Forms.Label lb_Email;
         internal System.Windows.Forms.LinkLabel llb_text;
-        private System.Windows.Forms.Button button1;
     }
 }

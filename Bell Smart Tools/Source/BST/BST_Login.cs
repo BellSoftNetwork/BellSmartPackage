@@ -112,12 +112,5 @@ namespace Bell_Smart_Tools.Source.BST
         {
             Class.Common.End();
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            BST_Main BST = new BST_Main(); // BST_Main 인스턴스 생성
-            BST.Show(); // BST_Main 실행
-            this.Hide(); // BST_Login 숨김
-        }
     }
 }

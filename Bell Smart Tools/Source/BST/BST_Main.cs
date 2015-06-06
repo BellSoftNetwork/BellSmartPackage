@@ -57,7 +57,9 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Class.Common.RegSave("Email", textBox1.Text);
+            //Class.Common.RegSave("Email", textBox1.Text);
+            Class.BSN.LoginStatus = true;
+            
         }
 
         private void mi_TopMost_Click(object sender, EventArgs e)

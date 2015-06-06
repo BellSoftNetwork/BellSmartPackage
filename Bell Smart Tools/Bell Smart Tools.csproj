@@ -216,7 +216,7 @@
     <Content Include="Photo\Photo_Bell.ico" />
     <Content Include="Photo\Photo_Random.ico" />
     <Content Include="Photo\Photo_RedBell.ico" />
-    <Content Include="Resource\Newtonsoft.Json.dll" />
+    <Resource Include="Resource\Newtonsoft.Json.dll" />
     <Content Include="Sound\Sound_alarm.wav" />
     <Content Include="Sound\Sound_end.wav" />
     <Content Include="Sound\Sound_error.wav" />

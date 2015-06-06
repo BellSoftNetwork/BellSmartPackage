@@ -17,8 +17,9 @@ namespace Bell_Smart_Tools.Class
         /// <summary>
         /// BSN에 로그인 된 상태를 반환합니다.
         /// </summary>
-        public static bool GetLoginStatus
+        public static bool LoginStatus
         {
+            set { LoggedIn = value; }
             get { return LoggedIn; }
         }
 
@@ -59,7 +60,7 @@ namespace Bell_Smart_Tools.Class
                 return false;
             }
 
-            LoggedIn = p;
+            LoginStatus = p;
             return p;
         }
 
