@@ -62,20 +62,19 @@ namespace Bell_Smart_Tools.Class
                 try
                 {
                     if (Append)
-                    {
                         File.AppendAllText(LocalFilePath, Data);
-                    }
                     else
-                    {
                         File.WriteAllText(LocalFilePath, Data);
-                    }
+
                     boolWritten = true;
                 }
-                catch (Exception ex)
+                catch { }
+                /*catch (Exception ex)
                 {
-                    string C_Bal = ex.Message;
+                    //안 쓸거면 왜 넣은겨 게다가 욕이야.
+                    //string C_Bal = ex.Message;
                     //Debug.Message(Debug.Level.High, "WriteTextFile" + Environment.NewLine + ex.Message);
-                }
+                }*/
             }
         }
 
