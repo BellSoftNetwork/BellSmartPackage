@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Bell_Smart_Tools.Class;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -23,7 +24,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            Class.Common.End();
+            Common.End();
         }
 
         private void tmr_NoticeLoader_Tick(object sender, EventArgs e)
@@ -33,21 +34,17 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void NoticeLoad()
         {
-            string Temp = Class.Common.GetStringFromWeb(Data.Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
+            string notice = Class.Common.GetStringFromWeb(Data.Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
 
-            if (Temp != txt_Notice.Text)
-            {
-                if (txt_Notice.Text == null)
+            if (txt_Notice.Text != notice || txt_Notice.Text == null)
+                txt_Notice.Text = notice;
+
+                /*else
                 {
-                    txt_Notice.Text = Temp;
-                }
-                else
-                {
-                    txt_Notice.Text = Temp;
+                    txt_Notice.Text = notice;
                     //BST_Manager.Sound(My.Resources.Sound_error);
                     //F_BASE.FlashWindow(this.Handle, true);
-                }
-            }
+                }*/ // 무슨 의도인..
         }
 
         private void btn_GameStart_Click(object sender, EventArgs e)
@@ -60,6 +57,11 @@ namespace Bell_Smart_Tools.Source.BST
             //Class.Common.RegSave("Email", textBox1.Text);
             Class.BSN.LoginStatus = true;
             
+        }
+
+        private void mi_End_Click(object sender, EventArgs e)
+        {
+            Common.End();
         }
 
         private void mi_TopMost_Click(object sender, EventArgs e)

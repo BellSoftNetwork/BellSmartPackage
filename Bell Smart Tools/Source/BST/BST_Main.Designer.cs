@@ -61,7 +61,7 @@
             this.txt_Notice.Name = "txt_Notice";
             this.txt_Notice.ReadOnly = true;
             this.txt_Notice.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_Notice.Size = new System.Drawing.Size(316, 251);
+            this.txt_Notice.Size = new System.Drawing.Size(320, 250);
             this.txt_Notice.TabIndex = 0;
             // 
             // tmr_NoticeLoader
@@ -76,9 +76,9 @@
             this.cb_PackList.Items.AddRange(new object[] {
             "방울크래프트8",
             "섹시크래프트"});
-            this.cb_PackList.Location = new System.Drawing.Point(322, 233);
+            this.cb_PackList.Location = new System.Drawing.Point(320, 235);
             this.cb_PackList.Name = "cb_PackList";
-            this.cb_PackList.Size = new System.Drawing.Size(216, 20);
+            this.cb_PackList.Size = new System.Drawing.Size(220, 20);
             this.cb_PackList.TabIndex = 1;
             this.cb_PackList.Text = "플레이하실 모드팩을 선택해주세요.";
             this.cb_PackList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_PackList_KeyPress);
@@ -86,9 +86,9 @@
             // btn_GameStart
             // 
             this.btn_GameStart.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btn_GameStart.Location = new System.Drawing.Point(322, 253);
+            this.btn_GameStart.Location = new System.Drawing.Point(320, 255);
             this.btn_GameStart.Name = "btn_GameStart";
-            this.btn_GameStart.Size = new System.Drawing.Size(216, 23);
+            this.btn_GameStart.Size = new System.Drawing.Size(220, 20);
             this.btn_GameStart.TabIndex = 2;
             this.btn_GameStart.Text = "방울크래프트 시작!";
             this.btn_GameStart.UseVisualStyleBackColor = true;
@@ -119,7 +119,7 @@
             this.mi_Help});
             this.ms_MainMenu.Location = new System.Drawing.Point(0, 0);
             this.ms_MainMenu.Name = "ms_MainMenu";
-            this.ms_MainMenu.Size = new System.Drawing.Size(538, 24);
+            this.ms_MainMenu.Size = new System.Drawing.Size(539, 24);
             this.ms_MainMenu.TabIndex = 5;
             this.ms_MainMenu.Text = "메인 메뉴";
             // 
@@ -130,26 +130,27 @@
             this.mi_Restart,
             this.mi_End});
             this.mi_BST.Name = "mi_BST";
-            this.mi_BST.Size = new System.Drawing.Size(39, 20);
+            this.mi_BST.Size = new System.Drawing.Size(41, 20);
             this.mi_BST.Text = "BST";
             // 
             // mi_Logout
             // 
             this.mi_Logout.Name = "mi_Logout";
-            this.mi_Logout.Size = new System.Drawing.Size(146, 22);
+            this.mi_Logout.Size = new System.Drawing.Size(152, 22);
             this.mi_Logout.Text = "BST 로그아웃";
             // 
             // mi_Restart
             // 
             this.mi_Restart.Name = "mi_Restart";
-            this.mi_Restart.Size = new System.Drawing.Size(146, 22);
+            this.mi_Restart.Size = new System.Drawing.Size(152, 22);
             this.mi_Restart.Text = "BST 재시작";
             // 
             // mi_End
             // 
             this.mi_End.Name = "mi_End";
-            this.mi_End.Size = new System.Drawing.Size(146, 22);
+            this.mi_End.Size = new System.Drawing.Size(152, 22);
             this.mi_End.Text = "BST 종료";
+            this.mi_End.Click += new System.EventHandler(this.mi_End_Click);
             // 
             // mi_Tool
             // 
@@ -161,46 +162,46 @@
             this.mi_BST_Preferences,
             this.mi_BC_Preferences});
             this.mi_Tool.Name = "mi_Tool";
-            this.mi_Tool.Size = new System.Drawing.Size(43, 20);
+            this.mi_Tool.Size = new System.Drawing.Size(41, 20);
             this.mi_Tool.Text = "도구";
             // 
             // mi_TopMost
             // 
             this.mi_TopMost.CheckOnClick = true;
             this.mi_TopMost.Name = "mi_TopMost";
-            this.mi_TopMost.Size = new System.Drawing.Size(146, 22);
+            this.mi_TopMost.Size = new System.Drawing.Size(152, 22);
             this.mi_TopMost.Text = "BST 항상위";
             this.mi_TopMost.Click += new System.EventHandler(this.mi_TopMost_Click);
             // 
             // mi_AutoTray
             // 
             this.mi_AutoTray.Name = "mi_AutoTray";
-            this.mi_AutoTray.Size = new System.Drawing.Size(146, 22);
+            this.mi_AutoTray.Size = new System.Drawing.Size(152, 22);
             this.mi_AutoTray.Text = "자동 트레이";
             this.mi_AutoTray.Click += new System.EventHandler(this.mi_AutoTray_Click);
             // 
             // ss_1
             // 
             this.ss_1.Name = "ss_1";
-            this.ss_1.Size = new System.Drawing.Size(143, 6);
+            this.ss_1.Size = new System.Drawing.Size(149, 6);
             // 
             // mi_Laboratory
             // 
             this.mi_Laboratory.Name = "mi_Laboratory";
-            this.mi_Laboratory.Size = new System.Drawing.Size(146, 22);
+            this.mi_Laboratory.Size = new System.Drawing.Size(152, 22);
             this.mi_Laboratory.Text = "실험실";
             this.mi_Laboratory.Click += new System.EventHandler(this.mi_Laboratory_Click);
             // 
             // mi_BST_Preferences
             // 
             this.mi_BST_Preferences.Name = "mi_BST_Preferences";
-            this.mi_BST_Preferences.Size = new System.Drawing.Size(146, 22);
+            this.mi_BST_Preferences.Size = new System.Drawing.Size(152, 22);
             this.mi_BST_Preferences.Text = "BST 환경설정";
             // 
             // mi_BC_Preferences
             // 
             this.mi_BC_Preferences.Name = "mi_BC_Preferences";
-            this.mi_BC_Preferences.Size = new System.Drawing.Size(146, 22);
+            this.mi_BC_Preferences.Size = new System.Drawing.Size(152, 22);
             this.mi_BC_Preferences.Text = "BC 환경설정";
             // 
             // mi_Help
@@ -209,19 +210,19 @@
             this.mi_Info,
             this.mi_FeedBack});
             this.mi_Help.Name = "mi_Help";
-            this.mi_Help.Size = new System.Drawing.Size(55, 20);
+            this.mi_Help.Size = new System.Drawing.Size(53, 20);
             this.mi_Help.Text = "도움말";
             // 
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(122, 22);
+            this.mi_Info.Size = new System.Drawing.Size(152, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // BST_Main
@@ -229,7 +230,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(538, 331);
+            this.ClientSize = new System.Drawing.Size(539, 330);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn_GameStart);
