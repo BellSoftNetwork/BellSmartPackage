@@ -12,13 +12,12 @@ namespace Bell_Smart_Tools.Class
     {
         private const string MidURL = "MC";
         private static bool LoggedIn = false;
-        private static HttpWebRequest wRequestBSN = null;
         private static CookieContainer wCookie = new CookieContainer();
 
         /// <summary>
         /// BSN에 로그인 된 상태를 반환합니다.
         /// </summary>
-        public static bool getLoginStatus
+        public static bool GetLoginStatus
         {
             get { return LoggedIn; }
         }
@@ -29,20 +28,10 @@ namespace Bell_Smart_Tools.Class
         /// <param name="email">로그인에 필요한 패스워드</param>
         /// <param name="password">로그인에 필요한 패스워드</param>
         /// <returns>작업 성공 여부를 반환합니다.</returns>
-        public static bool BSNLogin(string email, string password)
+        public static bool Login(string email, string password)
         {
             ///*HttpWebRequest */wRequestBSN = GetInstance();
-            WebRequest Temp = HttpWebRequest.Create(Data.Base.BSN_WEB_URL + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
-            
-            wRequestBSN = (HttpWebRequest)Temp;
-            wRequestBSN.Method = "POST";
-            wRequestBSN.Referer = Data.Base.BSN_WEB_URL;
-            wRequestBSN.ContentType = "application/x-www-form-urlencoded";
-            wRequestBSN.CookieContainer = wCookie;
-            wRequestBSN.UserAgent = ".NET Application (BST Version : " + "4.0.0.0" + ")";
-
-            wRequestBSN.Timeout = 5000;
-            wRequestBSN.ReadWriteTimeout = 5000;
+            HttpWebRequest wRequestBSN = GetInstance();
             
             // Start to Write Stream.
             StreamWriter sWriter = new StreamWriter(wRequestBSN.GetRequestStream());
@@ -57,41 +46,21 @@ namespace Bell_Smart_Tools.Class
                 + "&password=" + password);
             sWriter.Close();
 
-            // Start to Read Stream.
-            string ResponseText = null;
+            // Parse Data of Stream
+            bool p;
 
             try
             {
-                StreamReader sReader = new StreamReader(wRequestBSN.GetResponse().GetResponseStream(), System.Text.Encoding.UTF8);
-                ResponseText = sReader.ReadToEnd();
-                sReader.Close();
+                p = ParseStatus(wRequestBSN.GetResponse().GetResponseStream());
             }
             catch (Exception ex)
             {
                 Class.Common.Message(ex.Message);
-                //작업시간이 초과되었습니다.
                 return false;
             }
-            //Class.Common.Message(ResponseText);
-            if (ResponseText == null)
-            {
-                // 값 에러
-                return false;
-            }
-            else if (ResponseText.IndexOf("<div class=\"login-footer\">") != -1) //(ResponseText.IndexOf("<p>여기는 로그인에 성공해야 들어올 수 있는 미지의 공간입니다.</p>") == -1)
-            {
-                // 비 로그인 상태
-                LoggedIn = false;
 
-                return false;
-            }
-            else
-            {
-                // 로그인 성공
-                LoggedIn = true;
-
-                return true;
-            }
+            LoggedIn = p;
+            return p;
         }
 
         /// <summary>
@@ -102,9 +71,7 @@ namespace Bell_Smart_Tools.Class
         /// <returns>초기화 된 HttpWebRequest 인스턴스를 반환합니다.</returns>
         private static HttpWebRequest GetInstance()
         {
-            //HttpWebRequest wRequestBSN;
-
-            /*wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Data.Base.BSN_WEB_URL + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
+            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Data.Base.BSN_WEB_URL + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
             wRequestBSN.Method = "POST";
             wRequestBSN.Referer = Data.Base.BSN_WEB_URL;
             wRequestBSN.ContentType = "application/x-www-form-urlencoded";
@@ -114,8 +81,26 @@ namespace Bell_Smart_Tools.Class
             wRequestBSN.Timeout = 5000;
             wRequestBSN.ReadWriteTimeout = 5000;
 
-            return wRequestBSN;*/
-            return null;
+            return wRequestBSN;
+        }
+
+        /// <summary>
+        /// Stream 데이터를 통해 로그인 된 여부를 파싱합니다.
+        /// </summary>
+        /// <param name="s">파싱 할 Stream 데이터</param>
+        /// <returns>로그인 된 여부를 반환합니다.</returns>
+        private static bool ParseStatus(Stream s)
+        {
+            StreamReader sReader = new StreamReader(s, System.Text.Encoding.UTF8);
+            string response = sReader.ReadToEnd();
+            sReader.Close();
+
+            if (response == null) // 값 에러
+                return false;
+            else if (response.IndexOf("<div class=\"login-footer\">") != -1) //(ResponseText.IndexOf("<p>여기는 로그인에 성공해야 들어올 수 있는 미지의 공간입니다.</p>") == -1)
+                return false;
+            else // 로그인 성공
+                return true;
         }
     }
 }
