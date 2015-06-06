@@ -72,5 +72,10 @@ namespace Bell_Smart_Tools.Source.BST
         {
             e.KeyChar = (char)Keys.None;
         }
+
+        private void mi_End_Click(object sender, EventArgs e)
+        {
+            Common.End();
+        }
     }
 }
