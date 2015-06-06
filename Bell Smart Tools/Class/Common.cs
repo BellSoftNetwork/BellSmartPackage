@@ -9,6 +9,9 @@ using Microsoft.Win32;
 
 namespace Bell_Smart_Tools.Class
 {
+    delegate void OnStart();
+    delegate void OnEnd();
+
     class Common
     {
         public static DialogResult Message(string Text, string Caption = "Bell Smart Tools", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
@@ -16,8 +19,14 @@ namespace Bell_Smart_Tools.Class
             return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
         }
 
+        public static void Start()
+        {
+            Program.onStart();
+        }
+
         public static void End()
         {
+            Program.onEnd();
             Application.Exit();
         }
 
@@ -26,6 +35,7 @@ namespace Bell_Smart_Tools.Class
             RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
             reg.SetValue(name, value, RegistryValueKind.String);
         }
+
         public static string RegLoad(string name)
         {
             try
@@ -36,6 +46,7 @@ namespace Bell_Smart_Tools.Class
 
             return null;
         }
+
         public static void RegDelete(string name)
         {
             RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
@@ -68,20 +79,16 @@ namespace Bell_Smart_Tools.Class
             }
         }
 
-
-        public static string WebHTML(string URL)
+        public static string GetStringFromWeb(string URL)
         {
-            WebClient WC = new WebClient();
-            string Temp = null;
-
             try
             {
-                Temp = WC.DownloadString(URL);
+                return new WebClient().DownloadString(URL);
             }
             catch
             {
+                return null;
             }
-            return Temp;
         }
     }
 }

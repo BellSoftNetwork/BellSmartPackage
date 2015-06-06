@@ -20,6 +20,7 @@ namespace Bell_Smart_Tools.Source.BST
         {
             NoticeLoad();
         }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             Class.Common.End();
@@ -29,9 +30,10 @@ namespace Bell_Smart_Tools.Source.BST
         {
             NoticeLoad();
         }
+
         private void NoticeLoad()
         {
-            string Temp = Class.Common.WebHTML(Data.Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
+            string Temp = Class.Common.GetStringFromWeb(Data.Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
 
             if (Temp != txt_Notice.Text)
             {

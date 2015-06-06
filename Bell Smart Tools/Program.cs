@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Bell_Smart_Tools.Class;
 
 namespace Bell_Smart_Tools
 {
     static class Program
     {
+        public static OnStart onStart;
+        public static OnEnd onEnd;
+
         /// <summary>
         /// 해당 응용 프로그램의 주 진입점입니다.
         /// </summary>
