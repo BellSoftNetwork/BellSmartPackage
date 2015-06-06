@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Package", "Bell 
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://bellsoftnetwork.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -25,6 +25,9 @@ Global
 		SccProjectUniqueName2 = Bell\u0020Smart\u0020Server\\Bell\u0020Smart\u0020Server.csproj
 		SccProjectName2 = Bell\u0020Smart\u0020Server
 		SccLocalPath2 = Bell\u0020Smart\u0020Server
+		SccProjectUniqueName3 = Bell\u0020Smart\u0020Package\\Bell\u0020Smart\u0020Package.csproj
+		SccProjectName3 = Bell\u0020Smart\u0020Package
+		SccLocalPath3 = Bell\u0020Smart\u0020Package
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -18,9 +18,17 @@ namespace Bell_Smart_Tools.Class
             return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
         }
 
-        public static void End()
+        public static void End(bool Restart = false)
         {
-            Program.onEnd += Application.Exit;
+            if (Restart)
+            {
+                Program.onEnd += Application.Restart;
+            }
+            else
+            {
+                Program.onEnd += Application.Exit;
+            }
+
             Program.onEnd();
         }
 

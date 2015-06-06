@@ -77,5 +77,10 @@ namespace Bell_Smart_Tools.Source.BST
         {
             Common.End();
         }
+
+        private void mi_Restart_Click(object sender, EventArgs e)
+        {
+            Common.End(true);
+        }
     }
 }

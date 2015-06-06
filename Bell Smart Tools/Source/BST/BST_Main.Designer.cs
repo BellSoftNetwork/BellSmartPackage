@@ -125,6 +125,7 @@
             this.mi_Restart.Name = "mi_Restart";
             this.mi_Restart.Size = new System.Drawing.Size(152, 22);
             this.mi_Restart.Text = "BST 재시작";
+            this.mi_Restart.Click += new System.EventHandler(this.mi_Restart_Click);
             // 
             // mi_End
             // 
@@ -211,7 +212,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(538, 275);
+            this.ClientSize = new System.Drawing.Size(538, 331);
             this.Controls.Add(this.btn_GameStart);
             this.Controls.Add(this.cb_PackList);
             this.Controls.Add(this.txt_Notice);
