@@ -34,8 +34,6 @@
             this.tmr_NoticeLoader = new System.Windows.Forms.Timer(this.components);
             this.cb_PackList = new System.Windows.Forms.ComboBox();
             this.btn_GameStart = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.ms_MainMenu = new System.Windows.Forms.MenuStrip();
             this.mi_BST = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Logout = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,23 +91,6 @@
             this.btn_GameStart.Text = "방울크래프트 시작!";
             this.btn_GameStart.UseVisualStyleBackColor = true;
             this.btn_GameStart.Click += new System.EventHandler(this.btn_GameStart_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(450, 33);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(344, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 4;
             // 
             // ms_MainMenu
             // 
@@ -230,9 +211,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(539, 330);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(538, 331);
             this.Controls.Add(this.btn_GameStart);
             this.Controls.Add(this.cb_PackList);
             this.Controls.Add(this.txt_Notice);
@@ -258,8 +237,6 @@
         private System.Windows.Forms.Timer tmr_NoticeLoader;
         private System.Windows.Forms.ComboBox cb_PackList;
         private System.Windows.Forms.Button btn_GameStart;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.MenuStrip ms_MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mi_BST;
         private System.Windows.Forms.ToolStripMenuItem mi_Tool;

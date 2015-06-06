@@ -19,8 +19,9 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void Initialize() // 폼 초기화
         {
-            string Email = Class.Common.RegLoad("Email"); // 레지스트리에서 저장된 Email 값 로드
-            string PW = Class.Common.RegLoad("PW"); // 레지스트리에서 저장된 PW 값 로드
+            string Email = Class.Common.RegLoad("BSN_Email"); // 레지스트리에서 저장된 Email 값 로드
+            string PW = Class.Common.RegLoad("BSN_Password"); // 레지스트리에서 저장된 PW 값 로드
+            string AutoLogin = Class.Common.RegLoad("BSN_AutoLogin"); // 레지스트리에서 저장된 Auto Login 값 로드
 
             if (Email != null) { // 레지스트리에 Email 값이 존재한다면,
                 txt_Email.Text = Email; // 이메일 텍스트 박스에 값 대입
@@ -31,6 +32,7 @@ namespace Bell_Smart_Tools.Source.BST
                 txt_PW.Text = PW; // PW 텍스트 박스에 값 대입
                 cb_PWSave.Checked = true; // PW 저장 체크박스 활성화
             }
+            if (AutoLogin == "TRUE") { cb_AutoLogin.Checked = true; }
         }
         private void FormEnable(bool value)
         {
@@ -47,10 +49,11 @@ namespace Bell_Smart_Tools.Source.BST
             FormEnable(false);
             if (Class.BSN.Login(txt_Email.Text,txt_PW.Text)) // BSN 회원 인증 성공시
             {
+                Class.BSN.DataSave(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
                 BST_Main BST = new BST_Main(); // BST_Main 인스턴스 생성
                 BST.Show(); // BST_Main 실행
                 this.Hide(); // BST_Login 숨김
-            }else{
+            } else {
                 Class.Common.Message("인증 실패");
             }
             FormEnable(true);

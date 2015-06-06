@@ -8,6 +8,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Server", "Bell Smart Server\Bell Smart Server.csproj", "{7009480F-D3B9-4485-96B5-E2C397A8AAFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Package", "Bell Smart Package\Bell Smart Package.csproj", "{4E30B1DA-39A9-4DAA-80C8-07BFC237B923}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7009480F-D3B9-4485-96B5-E2C397A8AAFD} = {7009480F-D3B9-4485-96B5-E2C397A8AAFD}
+		{061B2585-757A-4215-B999-361B2120B41B} = {061B2585-757A-4215-B999-361B2120B41B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution

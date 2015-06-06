@@ -44,7 +44,11 @@ namespace Bell_Smart_Tools.Class
         public static void RegDelete(string name)
         {
             RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
-            reg.DeleteValue(name);
+            try
+            {
+                reg.DeleteValue(name); // 레지스트리 삭제. 이미 삭제되어있을경우 catch문 실행.
+            }
+            catch { }
         }
 
         public static void WriteTextFile(string LocalFilePath, string Data, bool Append = false)

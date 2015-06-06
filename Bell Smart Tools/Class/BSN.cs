@@ -23,6 +23,31 @@ namespace Bell_Smart_Tools.Class
             get { return LoggedIn; }
         }
 
+        public static void DataSave(bool email, bool password, bool autoLogin)
+        {
+            if (email) {
+                Class.Common.RegSave("BSN_Email", Data.User.BSN_Email);
+            } else {
+                Class.Common.RegDelete("BSN_Email");
+            }
+            if (password) {
+                Class.Common.RegSave("BSN_Password", Data.User.BSN_Password);
+            } else {
+                Class.Common.RegDelete("BSN_Password");
+            }
+            if (autoLogin) {
+                Class.Common.RegSave("BSN_AutoLogin", "TRUE");
+            } else {
+                Class.Common.RegDelete("BSN_AutoLogin");
+            }
+        }
+
+        private static void DataSave(string email, string password)
+        {
+            Data.User.BSN_Email = email;
+            Data.User.BSN_Password = password;
+        }
+
         /// <summary>
         /// BSN에 로그인을 수행합니다.
         /// </summary>
@@ -60,6 +85,7 @@ namespace Bell_Smart_Tools.Class
                 return false;
             }
 
+            if (p) { DataSave(email, password); }
             LoginStatus = p;
             return p;
         }

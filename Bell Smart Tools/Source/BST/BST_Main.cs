@@ -40,7 +40,7 @@ namespace Bell_Smart_Tools.Source.BST
                 txt_Notice.Text = notice;
 
                 /*else
-                {
+            {
                     txt_Notice.Text = notice;
                     //BST_Manager.Sound(My.Resources.Sound_error);
                     //F_BASE.FlashWindow(this.Handle, true);
@@ -50,18 +50,6 @@ namespace Bell_Smart_Tools.Source.BST
         private void btn_GameStart_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //Class.Common.RegSave("Email", textBox1.Text);
-            Class.BSN.LoginStatus = true;
-            
-        }
-
-        private void mi_End_Click(object sender, EventArgs e)
-        {
-            Common.End();
         }
 
         private void mi_TopMost_Click(object sender, EventArgs e)
