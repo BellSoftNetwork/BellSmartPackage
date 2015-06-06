@@ -11,13 +11,9 @@ namespace Bell_Smart_Tools.Class
 {
     class Common
     {
-        public static void Message(string Text)
+        public static DialogResult Message(string Text, string Caption = "Bell Smart Tools", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
-            MessageBox.Show(Text, "Bell Smart Tools");
-        }
-        public static void Message(string Text, string Caption)
-        {
-            MessageBox.Show(Text, Caption);
+            return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
         }
 
         public static void End()
