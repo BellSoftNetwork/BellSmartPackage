@@ -10,7 +10,7 @@ namespace Bell_Smart_Tools.Class
     /// <summary>
     /// 마인크래프트 로그인 관련 메서드와 필드, 열거형 목록을 가지고 있는 클래스입니다.
     /// </summary>
-    public class MCLogin
+    public static class MCLogin
     {
         /// <summary>
         /// Minecraft에 로그인할 수 있는 타입이 열거되어 있습니다.

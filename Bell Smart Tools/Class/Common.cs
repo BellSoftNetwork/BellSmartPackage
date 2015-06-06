@@ -9,7 +9,6 @@ using Microsoft.Win32;
 
 namespace Bell_Smart_Tools.Class
 {
-    delegate void OnStart();
     delegate void OnEnd();
 
     class Common
@@ -19,15 +18,10 @@ namespace Bell_Smart_Tools.Class
             return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
         }
 
-        public static void Start()
-        {
-            Program.onStart();
-        }
-
         public static void End()
         {
+            Program.onEnd += Application.Exit;
             Program.onEnd();
-            Application.Exit();
         }
 
         public static void RegSave(string name, object value)

@@ -8,7 +8,6 @@ namespace Bell_Smart_Tools
 {
     static class Program
     {
-        public static OnStart onStart;
         public static OnEnd onEnd;
 
         /// <summary>
