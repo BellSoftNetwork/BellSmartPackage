@@ -2,36 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BellLib.Class;
+using System.Windows.Forms;
 
 namespace BellLib.Class
 {
-    class Debug
+    public class Debug
     {
-        /*private static Level Mode = Level.Disable;
-        public static string LogFile = Data.User.BSN_Path + "logs\\debug-" + "test.log";//Strings.Format(Now, "yyyy-MM-dd_hh.mm.ss") + ".log";
-        public enum Level
+        private static Level Mode = Level.Disable;
+        public static string LogFile = Data.User.BSN_Path + "logs\\debug-" + string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now) + ".log";
+        public enum Level : int
         {
-	        Disable,
-	        //디버깅 사용 안함 (로그 작성안함)
-	        Low,
-	        //디버깅에 중요한 메시지만 출력 / 중대한 문제가 자주 발생하거나 이 부분때문에 프로그램의 흐름에 문제가 생길 가능성이 있는 부분은 Low로 설정
-	        Middle,
-	        //너무 자잘한 메시지는 제외 / 중요하지만 간혹 문제를 일으키는 부분은 Middle로 설정
-	        High,
-	        //모든 디버깅 메시지를 출력 / 중요하지 않은 모든 메시지는 전부 High 레벨로 설정, 잦은 루프를 도는 부분은 High 레벨로 설정
-	        Log
-	        //메시지는 출력하지 않고 로그파일만 작성 / 프로그램 사용중에 메시지를 확인할 필요는 없고, 매우 자주 루프를 도는 부분일 경우 Log 레벨로 설정
-        }/*
+	        Disable = 0, // 디버깅 사용 안함 (로그 작성안함)
+	        Low, // 디버깅에 중요한 메시지만 출력 / 중대한 문제가 자주 발생하거나 이 부분때문에 프로그램의 흐름에 문제가 생길 가능성이 있는 부분은 Low로 설정
+	        Middle, // 너무 자잘한 메시지는 제외 / 중요하지만 간혹 문제를 일으키는 부분은 Middle로 설정
+	        High, // 모든 디버깅 메시지를 출력 / 중요하지 않은 모든 메시지는 전부 High 레벨로 설정, 잦은 루프를 도는 부분은 High 레벨로 설정
+	        Log // 메시지는 출력하지 않고 로그파일만 작성 / 프로그램 사용중에 메시지를 확인할 필요는 없고, 매우 자주 루프를 도는 부분일 경우 Log 레벨로 설정
+        }
         public void New()
         {
-	        string strTemp = RegLoad("Debug");
+	        string strTemp = Common.RegLoad("Debug");
 	        try {
-		        if (strTemp == Level.High | strTemp == Level.Middle | strTemp == Level.Low) {
-			        Mode = strTemp;
+                if (strTemp == Convert.ToString(Level.High) | strTemp == Convert.ToString(Level.Middle) | strTemp == Convert.ToString(Level.Low))
+                {
+			        Mode = (Level)Convert.ToInt32(strTemp);
 		        } else {
 			        Mode = Level.Disable;
 		        }
-	        } catch (Exception ex) {
+	        } catch {
 		        Mode = Level.Disable;
 	        }
         }
@@ -39,15 +37,15 @@ namespace BellLib.Class
         {
 	        try {
 		        //System.IO.File.Delete(DATA_USER.BSN_Path & "logs\Debug.log")
-		        F_BASE.WriteTextFile(LogFile, "[" + Now + " - Initialize Bell Smart Debug Tools]" + Constants.vbCrLf, true);
+		        Common.WriteTextFile(LogFile, "[" + DateTime.Now + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
 	        } catch {
-		        F_BASE.CreateDefaultForder();
+                Common.CreateDefaultForder();
 	        }
         }
         public static Level Debugger {
 	        get { return Mode; }
 	        set {
-		        RegSave("Debug", value);
+		        Common.RegSave("Debug", value);
 		        Mode = value;
 	        }
         }
@@ -66,12 +64,12 @@ namespace BellLib.Class
         private static void TxtWrite(string strText, string Info = null)
         {
 	        //string strTab = Environment.ta + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab;
-	        string strTemp = "[" + Now;
+	        string strTemp = "[" + DateTime.Now;
 	        if (!(Info == null)) {
 		        strTemp += " " + Info;
 	        }
 	        strTemp += "] ";
-	        F_BASE.WriteTextFile(LogFile, strTemp + strText.Replace(Constants.vbCrLf, Constants.vbCrLf + strTab).Replace("\\n", Constants.vbCrLf) + Constants.vbCrLf, true);
-        }*/
+            Common.WriteTextFile(LogFile, strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
+        }
     }
 }

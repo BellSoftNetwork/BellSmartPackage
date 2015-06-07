@@ -82,7 +82,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Process.Start(Application.StartupPath);
+            
         }
 
         private void mi_BST_Preferences_Click(object sender, EventArgs e)

@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using BellLib.Class;
 
 namespace Bell_Smart_Package.Source.BSP
 {
@@ -93,6 +94,64 @@ namespace Bell_Smart_Package.Source.BSP
         private void button1_Click(object sender, EventArgs e)
         {
             InstallUpdateSyncWithInfo();
+        }
+
+
+
+
+
+
+        public void BST_Update()
+        {
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                this.Visible = true;
+                this.ShowInTaskbar = true;
+                ApplicationDeployment AD = ApplicationDeployment.CurrentDeployment;
+                
+                try
+                {
+                    Debug.Message(Debug.Level.High, "Start Update");
+                    //BST_Main.Hide(); // 업데이트중이므로 폼 하이드
+                    AD.UpdateAsync();
+                    //AD.Update()
+                    Debug.Message(Debug.Level.High, "Update Async Start");
+                }
+                catch // (DeploymentDownloadException dde)
+                {
+                    Common.Message("Cannot install the latest version of the application. " + Environment.NewLine + Environment.NewLine + "Please check your network connection, or try again later.");
+                }
+            }
+            else
+            {
+                Debug.Message(Debug.Level.High, "BST_Update" + Environment.NewLine + "This program is not deployed.");
+            }
+        }
+
+        public bool Initialize()
+        {
+            //최신버전 확인 후 업데이트 가능시 버전로더 실행하지 않고 바로 업데이트 후 종료
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                //Application.Deployment.UpdateProgressChanged += this.ProgressChanged;
+                //Application.Deployment.UpdateCompleted += this.UpdateCompleted;
+            }
+            return true;
+            //초기화 성공. 가던길 가시오.
+        }
+
+
+        private void UpdateCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            Debug.Message(Debug.Level.Middle, "UpdateCompleted");
+            Common.End(true);
+        }
+        private void ProgressChanged(object sender, System.Deployment.Application.DeploymentProgressChangedEventArgs e)
+        {
+            lb_Info.Text = e.ProgressPercentage + "%";
+            pb_Down.Maximum = (int)e.BytesTotal;
+            pb_Down.Value = (int)e.BytesCompleted;
+            Application.DoEvents();
         }
 
     }

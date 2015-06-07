@@ -98,5 +98,21 @@ namespace BellLib.Class
                 return null;
             }
         }
+
+
+        public static void CreateDefaultForder(string Default_PATH = null)
+        {
+            if (Default_PATH == null)
+                Default_PATH = Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
+
+            CreateFolder(Default_PATH);
+            CreateFolder(Default_PATH + "Temp\\");
+            CreateFolder(Default_PATH + "logs\\");
+            CreateFolder(Default_PATH + "Utilities\\");
+        }
+        private static void CreateFolder(string FolderURL)
+        {
+            System.IO.Directory.CreateDirectory(FolderURL);
+        }
     }
 }
