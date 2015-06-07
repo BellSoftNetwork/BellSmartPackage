@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Win32;
 
-namespace Bell_Smart_Tools.Data
+namespace Library.Info
 {
-    class Base
+    public class Base
     {
         // 상수는 가독성을 위해 변수명을 전부 대문자로 선언할것.
         public const string BELL_BLOG_URL = "http://BellLife.tistory.com/";

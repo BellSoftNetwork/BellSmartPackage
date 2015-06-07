@@ -12,9 +12,9 @@ using Library.Info;
 
 namespace Bell_Smart_Tools.Source.BST
 {
-    public partial class BST_Login : Form
+    public partial class BSP_Login : Form
     {
-        public BST_Login()
+        public BSP_Login()
         {
             InitializeComponent();
         }

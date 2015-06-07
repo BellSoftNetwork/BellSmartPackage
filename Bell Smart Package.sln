@@ -12,9 +12,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Package", "Bell 
 		{061B2585-757A-4215-B999-361B2120B41B} = {061B2585-757A-4215-B999-361B2120B41B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{FB765DD6-BC7C-4179-AD34-CCC73F32A176}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://bellsoftnetwork.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -27,6 +29,9 @@ Global
 		SccProjectUniqueName3 = Bell\u0020Smart\u0020Package\\Bell\u0020Smart\u0020Package.csproj
 		SccProjectName3 = Bell\u0020Smart\u0020Package
 		SccLocalPath3 = Bell\u0020Smart\u0020Package
+		SccProjectUniqueName4 = Library\\Library.csproj
+		SccProjectName4 = Library
+		SccLocalPath4 = Library
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +50,10 @@ Global
 		{4E30B1DA-39A9-4DAA-80C8-07BFC237B923}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E30B1DA-39A9-4DAA-80C8-07BFC237B923}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E30B1DA-39A9-4DAA-80C8-07BFC237B923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB765DD6-BC7C-4179-AD34-CCC73F32A176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB765DD6-BC7C-4179-AD34-CCC73F32A176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB765DD6-BC7C-4179-AD34-CCC73F32A176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB765DD6-BC7C-4179-AD34-CCC73F32A176}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

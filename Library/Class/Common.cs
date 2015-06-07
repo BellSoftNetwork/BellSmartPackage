@@ -7,11 +7,11 @@ using System.Windows.Forms;
 using System.Net;
 using Microsoft.Win32;
 
-namespace Bell_Smart_Tools.Class
+namespace Library.Class
 {
-    delegate void OnEnd();
+    //delegate void OnEnd();
 
-    class Common
+    public class Common
     {
         public static DialogResult Message(string Text, string Caption = "Bell Smart Tools", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
@@ -22,14 +22,16 @@ namespace Bell_Smart_Tools.Class
         {
             if (Restart)
             {
-                Program.onEnd += Application.Restart;
+                //Program.onEnd += Application.Restart;
+                Application.Restart();
             }
             else
             {
-                Program.onEnd += Application.Exit;
+                //Program.onEnd += Application.Exit;
+                Application.Exit();
             }
 
-            Program.onEnd();
+            //Program.onEnd();
         }
 
         public static void RegSave(string name, object value)
@@ -44,7 +46,8 @@ namespace Bell_Smart_Tools.Class
             {
                 RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
                 return (string)reg.GetValue(name, null);
-            } catch { }
+            }
+            catch { }
 
             return null;
         }

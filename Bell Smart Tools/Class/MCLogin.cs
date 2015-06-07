@@ -4,6 +4,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
+using Library.Class;
+using Library.Info;
 
 namespace Bell_Smart_Tools.Class
 {
@@ -116,7 +118,7 @@ namespace Bell_Smart_Tools.Class
                 {
                     if (jReader.TokenType == JsonToken.String)
                     {
-                        Data.User.MC_NickName = jReader.Value.ToString();
+                        User.MC_NickName = jReader.Value.ToString();
                     }
                     jArray[4] = false;
                 }
@@ -134,7 +136,7 @@ namespace Bell_Smart_Tools.Class
                 {
                     if (jReader.TokenType == JsonToken.String)
                     {
-                        Data.User.MC_UUID = jReader.Value.ToString();
+                        User.MC_UUID = jReader.Value.ToString();
                         jArray[3] = true;
                     }
                     jArray[2] = false;
@@ -175,22 +177,22 @@ namespace Bell_Smart_Tools.Class
             bool value = !responseFromServer.Contains("error");
             //로그인 성공시 True
             //BST_Main.btn_BCLaunch.Enabled = RT;
-            Data.User.MC_Login = value;
+            User.MC_Login = value;
             if (value)
             {
-                Class.Common.RegSave("MC_ID", id);
-                Data.User.MC_ID = id;
-                Class.Common.RegSave("MC_PW", pw);
-                Data.User.MC_PW = pw;
+                Common.RegSave("MC_ID", id);
+                User.MC_ID = id;
+                Common.RegSave("MC_PW", pw);
+                User.MC_PW = pw;
 
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 성공");
             }
             else
             {
-                Class.Common.RegSave("MC_ID", null);
-                Data.User.MC_ID = null;
-                Class.Common.RegSave("MC_PW", null);
-                Data.User.MC_PW = null;
+                Common.RegSave("MC_ID", null);
+                User.MC_ID = null;
+                Common.RegSave("MC_PW", null);
+                User.MC_PW = null;
 
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 실패");
             }

@@ -2,13 +2,15 @@
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
+using Library.Class;
+using Library.Info;
 
-namespace Bell_Smart_Tools.Class
+namespace Library.Class
 {
     /// <summary>
     /// BSN 로그인 관련 메서드와 필드를 가지고 있는 클래스입니다.
     /// </summary>
-    class BSN
+    public class BSN
     {
         private const string MidURL = "MC";
         private static bool LoggedIn = false;
@@ -26,26 +28,26 @@ namespace Bell_Smart_Tools.Class
         public static void DataSave(bool email, bool password, bool autoLogin)
         {
             if (email) {
-                Class.Common.RegSave("BSN_Email", Data.User.BSN_Email);
+                Common.RegSave("BSN_Email", User.BSN_Email);
             } else {
-                Class.Common.RegDelete("BSN_Email");
+                Common.RegDelete("BSN_Email");
             }
             if (password) {
-                Class.Common.RegSave("BSN_Password", Data.User.BSN_Password);
+                Common.RegSave("BSN_Password", User.BSN_Password);
             } else {
-                Class.Common.RegDelete("BSN_Password");
+                Common.RegDelete("BSN_Password");
             }
             if (autoLogin) {
-                Class.Common.RegSave("BSN_AutoLogin", "TRUE");
+                Common.RegSave("BSN_AutoLogin", "TRUE");
             } else {
-                Class.Common.RegDelete("BSN_AutoLogin");
+                Common.RegDelete("BSN_AutoLogin");
             }
         }
 
         private static void DataSave(string email, string password)
         {
-            Data.User.BSN_Email = email;
-            Data.User.BSN_Password = password;
+            User.BSN_Email = email;
+            User.BSN_Password = password;
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace Bell_Smart_Tools.Class
             sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL
                 + "%26act%3DdispMemberLoginForm&mid=" + MidURL
                 + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F"
-                + Data.Base.SERVER_IP
+                + Base.SERVER_IP
                 + "%2Findex.php%3Fmid%3D" + MidURL
                 + "&act=procMemberLogin&xe_validator_id=modules%2Fmember%2Fskin%2Fdefault%2Flogin_form%2F1"
                 + "&user_id=" + email
@@ -81,7 +83,7 @@ namespace Bell_Smart_Tools.Class
             }
             catch (Exception ex)
             {
-                Class.Common.Message(ex.Message);
+                Common.Message(ex.Message);
                 return false;
             }
 
@@ -98,9 +100,9 @@ namespace Bell_Smart_Tools.Class
         /// <returns>초기화 된 HttpWebRequest 인스턴스를 반환합니다.</returns>
         private static HttpWebRequest GetInstance()
         {
-            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Data.Base.BSN_WEB_URL + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
+            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Base.BSN_WEB_URL + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
             wRequestBSN.Method = "POST";
-            wRequestBSN.Referer = Data.Base.BSN_WEB_URL;
+            wRequestBSN.Referer = Base.BSN_WEB_URL;
             wRequestBSN.ContentType = "application/x-www-form-urlencoded";
             wRequestBSN.CookieContainer = wCookie;
             wRequestBSN.UserAgent = ".NET Application (BST Version : " + "4.0.0.0" + ")";

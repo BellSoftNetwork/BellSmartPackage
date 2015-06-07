@@ -6,8 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Bell_Smart_Tools.Class;
 using System.Diagnostics;
+using Library.Class;
+using Library.Info;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -35,7 +36,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void NoticeLoad()
         {
-            string notice = Class.Common.GetStringFromWeb(Data.Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
+            string notice = Common.GetStringFromWeb(Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
 
             if (txt_Notice.Text != notice || txt_Notice.Text == null)
                 txt_Notice.Text = notice;
