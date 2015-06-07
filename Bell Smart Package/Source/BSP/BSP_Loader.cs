@@ -68,19 +68,19 @@ namespace Bell_Smart_Package.Source.BSP
                     switch (Parameter[1]) // 파라미터 분석
                     {
                         case "0":
-                            Debug.Debugger = Debug.Level.Log; // 디버그 모드 설정
+                            Debug.DebuggerMode = Debug.Level.Log; // 디버그 모드 설정
                             break;
 
                         case "1":
-                            Debug.Debugger = Debug.Level.Low;
+                            Debug.DebuggerMode = Debug.Level.Low;
                             break;
 
                         case "2":
-                            Debug.Debugger = Debug.Level.Middle;
+                            Debug.DebuggerMode = Debug.Level.Middle;
                             break;
 
                         case "3":
-                            Debug.Debugger = Debug.Level.High;
+                            Debug.DebuggerMode = Debug.Level.High;
                             break;
                     }
                     Log("Program parameter debug mode active.");

@@ -101,7 +101,7 @@ namespace Bell_Smart_Tools.Source.BST
             mi_High.Checked = false;
             mi_Log.Checked = false;
 
-            switch (Debug.Debugger)
+            switch (Debug.DebuggerMode)
             {
                 case Debug.Level.Disable:
                     mi_Disable.Checked = true;
@@ -124,60 +124,60 @@ namespace Bell_Smart_Tools.Source.BST
         private void mi_Disable_CheckedChanged(object sender, EventArgs e)
         {
             if (mi_Disable.Checked)
-                Debug.Debugger = Debug.Level.Disable;
+                Debug.DebuggerMode = Debug.Level.Disable;
         }
 
         private void mi_Low_CheckedChanged(object sender, EventArgs e)
         {
             if (mi_Low.Checked)
-                Debug.Debugger = Debug.Level.Low;
+                Debug.DebuggerMode = Debug.Level.Low;
         }
 
         private void mi_Middle_CheckedChanged(object sender, EventArgs e)
         {
             if (mi_Middle.Checked)
-                Debug.Debugger = Debug.Level.Middle;
+                Debug.DebuggerMode = Debug.Level.Middle;
         }
 
         private void mi_High_CheckedChanged(object sender, EventArgs e)
         {
             if (mi_High.Checked)
-                Debug.Debugger = Debug.Level.High;
+                Debug.DebuggerMode = Debug.Level.High;
         }
 
         private void mi_Log_CheckedChanged(object sender, EventArgs e)
         {
             if (mi_Log.Checked)
-                Debug.Debugger = Debug.Level.Log;
+                Debug.DebuggerMode = Debug.Level.Log;
         }
 
         private void mi_Disable_Click(object sender, EventArgs e)
         {
-            Debug.Debugger = Debug.Level.Disable;
+            Debug.DebuggerMode = Debug.Level.Disable;
             DebugModeLoad();
         }
 
         private void mi_Low_Click(object sender, EventArgs e)
         {
-            Debug.Debugger = Debug.Level.Low;
+            Debug.DebuggerMode = Debug.Level.Low;
             DebugModeLoad();
         }
 
         private void mi_Middle_Click(object sender, EventArgs e)
         {
-            Debug.Debugger = Debug.Level.Middle;
+            Debug.DebuggerMode = Debug.Level.Middle;
             DebugModeLoad();
         }
 
         private void mi_High_Click(object sender, EventArgs e)
         {
-            Debug.Debugger = Debug.Level.High;
+            Debug.DebuggerMode = Debug.Level.High;
             DebugModeLoad();
         }
 
         private void mi_Log_Click(object sender, EventArgs e)
         {
-            Debug.Debugger = Debug.Level.Log;
+            Debug.DebuggerMode = Debug.Level.Log;
             DebugModeLoad();
         }
 

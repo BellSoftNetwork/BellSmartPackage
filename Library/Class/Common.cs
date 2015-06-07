@@ -62,20 +62,25 @@ namespace BellLib.Class
             catch { }
         }
 
-        public static void WriteTextFile(string LocalFilePath, string Data, bool Append = false)
+        public static void WriteTextFile(string localFilePath, string data, bool append = false)
         {
-            while (!boolWritten) // 이 구문 현재 LocalFilePath 경로가 존재하지 않으면(폴더가 생성되있지 않으면), 무한루프 도는 구조. 수정 요망
+            bool written = false;
+            while (!written) // 이 구문 현재 LocalFilePath 경로가 존재하지 않으면(폴더가 생성되있지 않으면), 무한루프 도는 구조. 수정 요망
             {
                 try
                 {
-                    if (Append)
-                        File.AppendAllText(LocalFilePath, Data);
+                    if (append)
+                        File.AppendAllText(localFilePath, data);
                     else
-                        File.WriteAllText(LocalFilePath, Data);
+                        File.WriteAllText(localFilePath, data);
+
+                    written = true;
                 }
                 catch (Exception ex)
                 {
                     Debug.Message(Debug.Level.High, "WriteTextFile" + Environment.NewLine + ex.Message);
+                    Debug.Message(Debug.Level.High, "Trying to create folder.");
+                    Directory.CreateDirectory(localFilePath);
                 }
             }
         }
@@ -93,19 +98,20 @@ namespace BellLib.Class
         }
 
 
-        public static void CreateDefaultForder(string Default_PATH = null)
+        public static void CreateDefaultForder(string defaultPath = null)
         {
-            if (Default_PATH == null)
-                Default_PATH = Data.User.BSN_Path; //Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
+            if (defaultPath == null)
+                defaultPath = Data.User.BSN_Path;
+            //Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
 
-            CreateFolder(Default_PATH);
-            CreateFolder(Default_PATH + "Temp\\");
-            CreateFolder(Default_PATH + "logs\\");
-            CreateFolder(Default_PATH + "Utilities\\");
+            CreateFolder(defaultPath);
+            CreateFolder(defaultPath + "Temp\\");
+            CreateFolder(defaultPath + "logs\\");
+            CreateFolder(defaultPath + "Utilities\\");
         }
-        private static void CreateFolder(string FolderURL)
+        private static void CreateFolder(string folderPath)
         {
-            System.IO.Directory.CreateDirectory(FolderURL);
+            System.IO.Directory.CreateDirectory(folderPath);
         }
     }
 }

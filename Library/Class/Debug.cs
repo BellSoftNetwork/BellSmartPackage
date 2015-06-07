@@ -15,7 +15,8 @@ namespace BellLib.Class
     public class Debug
     {
         private static Level Mode;
-        public static string LogFile = Data.User.BSN_Path + "logs\\debug-" + DateTime.Now.ToString("yyyy-MM-dd_hh.mm.ss") +".log"; // string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now)
+        public static string LogFile =
+            Data.User.BSN_Path + "logs\\debug-" + DateTime.Now.ToString("yyyy-MM-dd_hh.mm.ss") +".log"; // string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now)
 
         public enum Level : int
         {
@@ -47,26 +48,34 @@ namespace BellLib.Class
 
 	        try {
 		        //System.IO.File.Delete(DATA_USER.BSN_Path & "logs\Debug.log")
-		        Common.WriteTextFile(LogFile, "[" + DateTime.Now + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
+		        Common.WriteTextFile(LogFile, "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
+                // Example: [2015/6/6 01:23:45 PM - Initialize Bell Smart Debug Tools]
 	        } catch {
                 Common.CreateDefaultForder();
 	        }
         }
-        public static Level Debugger {
+
+        public static Level DebuggerMode {
 	        get { return Mode; }
-	        set {
-		        /*Common.RegSave("Debug", value);*/
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    BinaryFormatter bf = new BinaryFormatter();
-                    bf.Serialize(ms, Mode);
-                    byte[] data = ms.ToArray();
-                    using (RegistryManager rm = new RegistryManager("DebugMode", data, RegKind.Binary))
-                        rm.SetValue();
-                }
+	        set
+            {
+                SaveDebugMode();
 		        Mode = value;
 	        }
         }
+
+        private static void SaveDebugMode()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                bf.Serialize(ms, Mode);
+                byte[] data = ms.ToArray();
+                using (RegistryManager rm = new RegistryManager("DebugMode", data, RegKind.Binary))
+                    rm.SetValue();
+            }
+        }
+
         public static DialogResult Message(Level OutputLevel, string Text, string Caption = "Bell Smart Debug Tools",
             MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information,
             MessageBoxDefaultButton DefaultButton = MessageBoxDefaultButton.Button1, string Info = "Debug")
@@ -81,6 +90,7 @@ namespace BellLib.Class
 
 	        return DialogResult.None;
         }
+
         private static void TxtWrite(string strText, string Info = null)
         {
 	        //string strTab = Environment.ta + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab;
