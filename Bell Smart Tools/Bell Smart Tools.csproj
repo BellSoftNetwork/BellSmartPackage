@@ -119,6 +119,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Source\BST\BST_Debug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BST\BST_Debug.Designer.cs">
+      <DependentUpon>BST_Debug.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\MCL\MC_Option.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BST\BST_Debug.resx">
+      <DependentUpon>BST_Debug.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\MCL\MC_Option.resx">
       <DependentUpon>MC_Option.cs</DependentUpon>

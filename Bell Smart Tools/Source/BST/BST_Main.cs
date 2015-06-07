@@ -186,5 +186,11 @@ namespace Bell_Smart_Tools.Source.BST
             Source.MCL.MC_Preferences MCP = new MCL.MC_Preferences();
             MCP.ShowDialog();
         }
+
+        private void mi_DebugTool_Click(object sender, EventArgs e)
+        {
+            BST_Debug BSTD = new BST_Debug();
+            BSTD.Show();
+        }
     }
 }

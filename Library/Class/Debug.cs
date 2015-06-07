@@ -46,13 +46,18 @@ namespace BellLib.Class
                 Mode = Level.Disable;
             }
 
-	        try {
-		        //System.IO.File.Delete(DATA_USER.BSN_Path & "logs\Debug.log")
-		        Common.WriteTextFile(LogFile, "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
-                // Example: [2015/6/6 01:23:45 PM - Initialize Bell Smart Debug Tools]
-	        } catch {
-                Common.CreateDefaultForder();
-	        }
+            if (Mode != Level.Disable)
+            {
+                try
+                {
+                    Common.WriteTextFile(LogFile, "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
+                    // Example: [2015/6/6 01:23:45 PM - Initialize Bell Smart Debug Tools]
+                }
+                catch
+                {
+                    Common.CreateDefaultForder();
+                }
+            }
         }
 
         public static Level DebuggerMode {

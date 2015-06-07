@@ -94,26 +94,26 @@
             this.mi_Restart,
             this.mi_End});
             this.mi_BST.Name = "mi_BST";
-            this.mi_BST.Size = new System.Drawing.Size(41, 20);
+            this.mi_BST.Size = new System.Drawing.Size(39, 20);
             this.mi_BST.Text = "BST";
             // 
             // mi_Logout
             // 
             this.mi_Logout.Name = "mi_Logout";
-            this.mi_Logout.Size = new System.Drawing.Size(152, 22);
+            this.mi_Logout.Size = new System.Drawing.Size(146, 22);
             this.mi_Logout.Text = "BST 로그아웃";
             // 
             // mi_Restart
             // 
             this.mi_Restart.Name = "mi_Restart";
-            this.mi_Restart.Size = new System.Drawing.Size(152, 22);
+            this.mi_Restart.Size = new System.Drawing.Size(146, 22);
             this.mi_Restart.Text = "BST 재시작";
             this.mi_Restart.Click += new System.EventHandler(this.mi_Restart_Click);
             // 
             // mi_End
             // 
             this.mi_End.Name = "mi_End";
-            this.mi_End.Size = new System.Drawing.Size(152, 22);
+            this.mi_End.Size = new System.Drawing.Size(146, 22);
             this.mi_End.Text = "BST 종료";
             this.mi_End.Click += new System.EventHandler(this.mi_End_Click);
             // 
@@ -126,40 +126,40 @@
             this.mi_Laboratory,
             this.mi_BST_Preferences});
             this.mi_Tool.Name = "mi_Tool";
-            this.mi_Tool.Size = new System.Drawing.Size(41, 20);
+            this.mi_Tool.Size = new System.Drawing.Size(43, 20);
             this.mi_Tool.Text = "도구";
             // 
             // mi_TopMost
             // 
             this.mi_TopMost.CheckOnClick = true;
             this.mi_TopMost.Name = "mi_TopMost";
-            this.mi_TopMost.Size = new System.Drawing.Size(152, 22);
+            this.mi_TopMost.Size = new System.Drawing.Size(146, 22);
             this.mi_TopMost.Text = "BST 항상위";
             this.mi_TopMost.Click += new System.EventHandler(this.mi_TopMost_Click);
             // 
             // mi_AutoTray
             // 
             this.mi_AutoTray.Name = "mi_AutoTray";
-            this.mi_AutoTray.Size = new System.Drawing.Size(152, 22);
+            this.mi_AutoTray.Size = new System.Drawing.Size(146, 22);
             this.mi_AutoTray.Text = "자동 트레이";
             this.mi_AutoTray.Click += new System.EventHandler(this.mi_AutoTray_Click);
             // 
             // ss_1
             // 
             this.ss_1.Name = "ss_1";
-            this.ss_1.Size = new System.Drawing.Size(149, 6);
+            this.ss_1.Size = new System.Drawing.Size(143, 6);
             // 
             // mi_Laboratory
             // 
             this.mi_Laboratory.Name = "mi_Laboratory";
-            this.mi_Laboratory.Size = new System.Drawing.Size(152, 22);
+            this.mi_Laboratory.Size = new System.Drawing.Size(146, 22);
             this.mi_Laboratory.Text = "실험실";
             this.mi_Laboratory.Click += new System.EventHandler(this.mi_Laboratory_Click);
             // 
             // mi_BST_Preferences
             // 
             this.mi_BST_Preferences.Name = "mi_BST_Preferences";
-            this.mi_BST_Preferences.Size = new System.Drawing.Size(152, 22);
+            this.mi_BST_Preferences.Size = new System.Drawing.Size(146, 22);
             this.mi_BST_Preferences.Text = "BST 환경설정";
             this.mi_BST_Preferences.Click += new System.EventHandler(this.mi_BST_Preferences_Click);
             // 
@@ -170,7 +170,7 @@
             this.mi_FeedBack,
             this.mi_DebugMenu});
             this.mi_Help.Name = "mi_Help";
-            this.mi_Help.Size = new System.Drawing.Size(41, 20);
+            this.mi_Help.Size = new System.Drawing.Size(43, 20);
             this.mi_Help.Text = "정보";
             // 
             // mi_Info
@@ -203,58 +203,59 @@
             // mi_Disable
             // 
             this.mi_Disable.Name = "mi_Disable";
-            this.mi_Disable.Size = new System.Drawing.Size(204, 22);
+            this.mi_Disable.Size = new System.Drawing.Size(201, 22);
             this.mi_Disable.Text = "Disable";
-            this.mi_Disable.Click += new System.EventHandler(this.mi_Disable_Click);
             this.mi_Disable.CheckedChanged += new System.EventHandler(this.mi_Disable_CheckedChanged);
+            this.mi_Disable.Click += new System.EventHandler(this.mi_Disable_Click);
             // 
             // mi_SS1
             // 
             this.mi_SS1.Name = "mi_SS1";
-            this.mi_SS1.Size = new System.Drawing.Size(201, 6);
+            this.mi_SS1.Size = new System.Drawing.Size(198, 6);
             // 
             // mi_Low
             // 
             this.mi_Low.Name = "mi_Low";
-            this.mi_Low.Size = new System.Drawing.Size(204, 22);
+            this.mi_Low.Size = new System.Drawing.Size(201, 22);
             this.mi_Low.Text = "Low Level";
-            this.mi_Low.Click += new System.EventHandler(this.mi_Low_Click);
             this.mi_Low.CheckedChanged += new System.EventHandler(this.mi_Low_CheckedChanged);
+            this.mi_Low.Click += new System.EventHandler(this.mi_Low_Click);
             // 
             // mi_Middle
             // 
             this.mi_Middle.Name = "mi_Middle";
-            this.mi_Middle.Size = new System.Drawing.Size(204, 22);
+            this.mi_Middle.Size = new System.Drawing.Size(201, 22);
             this.mi_Middle.Text = "Middle Level";
-            this.mi_Middle.Click += new System.EventHandler(this.mi_Middle_Click);
             this.mi_Middle.CheckedChanged += new System.EventHandler(this.mi_Middle_CheckedChanged);
+            this.mi_Middle.Click += new System.EventHandler(this.mi_Middle_Click);
             // 
             // mi_High
             // 
             this.mi_High.Name = "mi_High";
-            this.mi_High.Size = new System.Drawing.Size(204, 22);
+            this.mi_High.Size = new System.Drawing.Size(201, 22);
             this.mi_High.Text = "High Level";
-            this.mi_High.Click += new System.EventHandler(this.mi_High_Click);
             this.mi_High.CheckedChanged += new System.EventHandler(this.mi_High_CheckedChanged);
+            this.mi_High.Click += new System.EventHandler(this.mi_High_Click);
             // 
             // mi_Log
             // 
             this.mi_Log.Name = "mi_Log";
-            this.mi_Log.Size = new System.Drawing.Size(204, 22);
+            this.mi_Log.Size = new System.Drawing.Size(201, 22);
             this.mi_Log.Text = "Log Level";
-            this.mi_Log.Click += new System.EventHandler(this.mi_Log_Click);
             this.mi_Log.CheckedChanged += new System.EventHandler(this.mi_Log_CheckedChanged);
+            this.mi_Log.Click += new System.EventHandler(this.mi_Log_Click);
             // 
             // mi_SS2
             // 
             this.mi_SS2.Name = "mi_SS2";
-            this.mi_SS2.Size = new System.Drawing.Size(201, 6);
+            this.mi_SS2.Size = new System.Drawing.Size(198, 6);
             // 
             // mi_DebugTool
             // 
             this.mi_DebugTool.Name = "mi_DebugTool";
-            this.mi_DebugTool.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugTool.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
+            this.mi_DebugTool.Click += new System.EventHandler(this.mi_DebugTool_Click);
             // 
             // button1
             // 
