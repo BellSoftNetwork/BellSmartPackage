@@ -183,7 +183,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Source.MCL.MC_Preferences MCP = new MCL.MC_Preferences();
+            Source.MCL.BSL_Preferences MCP = new MCL.BSL_Preferences();
             MCP.ShowDialog();
         }
 

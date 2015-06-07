@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Bell_Smart_Tools.Source.MCL
 {
-    public partial class MC_Option : Form
+    public partial class BSL_Option : Form
     {
-        public MC_Option()
+        public BSL_Option()
         {
             InitializeComponent();
         }

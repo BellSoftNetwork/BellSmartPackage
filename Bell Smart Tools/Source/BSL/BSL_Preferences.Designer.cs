@@ -1,6 +1,6 @@
 ﻿namespace Bell_Smart_Tools.Source.MCL
 {
-    partial class MC_Preferences
+    partial class BSL_Preferences
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MC_Preferences));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSL_Preferences));
             this.gb_MCAccount = new System.Windows.Forms.GroupBox();
             this.btn_MCLogout = new System.Windows.Forms.Button();
             this.btn_MCLogin = new System.Windows.Forms.Button();
@@ -256,7 +256,7 @@
             this.btn_Save.UseVisualStyleBackColor = true;
             this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
-            // MC_Preferences
+            // BSL_Preferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -269,7 +269,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "MC_Preferences";
+            this.Name = "BSL_Preferences";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "마인크래프트 환경설정";
             this.Load += new System.EventHandler(this.MC_Preferences_Load);

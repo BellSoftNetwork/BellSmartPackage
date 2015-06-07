@@ -125,17 +125,23 @@
     <Compile Include="Source\BST\BST_Debug.Designer.cs">
       <DependentUpon>BST_Debug.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\MCL\MC_Option.cs">
+    <Compile Include="Source\BSL\BSL_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\MCL\MC_Option.Designer.cs">
-      <DependentUpon>MC_Option.cs</DependentUpon>
+    <Compile Include="Source\BSL\BSL_Main.Designer.cs">
+      <DependentUpon>BSL_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\MCL\MC_Preferences.cs">
+    <Compile Include="Source\BSL\BSL_Option.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\MCL\MC_Preferences.Designer.cs">
-      <DependentUpon>MC_Preferences.cs</DependentUpon>
+    <Compile Include="Source\BSL\BSL_Option.Designer.cs">
+      <DependentUpon>BSL_Option.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Preferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Preferences.Designer.cs">
+      <DependentUpon>BSL_Preferences.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\BST\BST_Laboratory.cs">
       <SubType>Form</SubType>
@@ -177,11 +183,14 @@
     <EmbeddedResource Include="Source\BST\BST_Debug.resx">
       <DependentUpon>BST_Debug.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\MCL\MC_Option.resx">
-      <DependentUpon>MC_Option.cs</DependentUpon>
+    <EmbeddedResource Include="Source\BSL\BSL_Main.resx">
+      <DependentUpon>BSL_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\MCL\MC_Preferences.resx">
-      <DependentUpon>MC_Preferences.cs</DependentUpon>
+    <EmbeddedResource Include="Source\BSL\BSL_Option.resx">
+      <DependentUpon>BSL_Option.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSL\BSL_Preferences.resx">
+      <DependentUpon>BSL_Preferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Laboratory.resx">
       <DependentUpon>BST_Laboratory.cs</DependentUpon>

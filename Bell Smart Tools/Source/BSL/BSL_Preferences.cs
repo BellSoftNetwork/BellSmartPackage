@@ -11,9 +11,9 @@ using BellLib.Data;
 
 namespace Bell_Smart_Tools.Source.MCL
 {
-    public partial class MC_Preferences : Form
+    public partial class BSL_Preferences : Form
     {
-        public MC_Preferences()
+        public BSL_Preferences()
         {
             InitializeComponent();
         }
