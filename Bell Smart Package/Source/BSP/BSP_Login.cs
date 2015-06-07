@@ -130,8 +130,9 @@ namespace Bell_Smart_Package.Source.BSP
             }
         }
 
-        private void BST_Login_FormClosing(object sender, FormClosingEventArgs e)
+        private void BSP_Login_FormClosing(object sender, FormClosingEventArgs e)
         {
+            MessageBox.Show(e.CloseReason.ToString());
             Common.End();
         }
 

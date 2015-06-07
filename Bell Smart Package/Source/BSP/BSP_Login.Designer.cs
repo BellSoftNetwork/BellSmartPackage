@@ -156,7 +156,7 @@
             this.Name = "BSP_Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bell Soft Network 회원 인증";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BST_Login_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BSP_Login_FormClosing);
             this.Load += new System.EventHandler(this.BST_Login_Load);
             this.Shown += new System.EventHandler(this.BSP_Login_Shown);
             this.ResumeLayout(false);

@@ -13,6 +13,8 @@ namespace BellLib.Class
 
     public class Common
     {
+        static bool onExit = false;
+
         static OnEnd onEnd;
 
         public static DialogResult Message(string Text, string Caption = "Bell Smart Tools", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
@@ -23,11 +25,22 @@ namespace BellLib.Class
 
         public static void End(bool Restart = false)
         {
+            // 콜백에 프로그램 종료를 알린다.
+            onEnd += new OnEnd(() => {
+                if (!onExit)
+                    Debug.Message(Debug.Level.Log, "End point of program. Exiting.");
+            });
+
+            // 콜백이 한번만 실행되도록 한다.
+            onEnd += new OnEnd(() => onExit = true);
+
+            // 콜백에 프로그램 종료를 체인한다.
             if (Restart)
                 onEnd += Application.Restart;
             else
                 onEnd += Application.Exit;
 
+            // 콜백을 호출한다.
             onEnd();
         }
 
@@ -91,10 +104,7 @@ namespace BellLib.Class
             {
                 return new WebClient().DownloadString(URL);
             }
-            catch
-            {
-                return null;
-            }
+            catch { return null; }
         }
 
 
