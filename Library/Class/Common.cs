@@ -9,10 +9,12 @@ using Microsoft.Win32;
 
 namespace BellLib.Class
 {
-    //delegate void OnEnd();
+    delegate void OnEnd();
 
     public class Common
     {
+        static OnEnd onEnd;
+
         public static DialogResult Message(string Text, string Caption = "Bell Smart Tools", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
             return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
@@ -21,26 +23,22 @@ namespace BellLib.Class
         public static void End(bool Restart = false)
         {
             if (Restart)
-            {
-                //Program.onEnd += Application.Restart;
-                Application.Restart();
-            }
+                onEnd += Application.Restart;
             else
-            {
-                //Program.onEnd += Application.Exit;
-                Application.Exit();
-            }
+                onEnd += Application.Exit;
 
-            //Program.onEnd();
+            onEnd();
         }
 
+        [Obsolete("RegistryManager 클래스를 사용하십시오.")]
         public static void RegSave(string name, object value)
         {
             RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
             reg.SetValue(name, value, RegistryValueKind.String);
         }
 
-        public static string RegLoad(string name)
+        [Obsolete("RegistryReader 클래스를 사용하십시오.")]
+        public static string RegLoad(string name, object defaultValue = null, bool throwException = false)
         {
             try
             {
@@ -52,6 +50,7 @@ namespace BellLib.Class
             return null;
         }
 
+        [Obsolete("RegistryManager 클래스를 사용하십시오.")]
         public static void RegDelete(string name)
         {
             RegistryKey reg = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");

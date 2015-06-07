@@ -25,10 +25,17 @@ namespace Bell_Smart_Tools.Source.BST
             lb_PW.Text = "비밀번호 저장 : Loading";
             btn_DisAuto.Enabled = false;
             // 기본 설정으로 초기화 끝
-            
-            string email = Common.RegLoad("BSN_Email");
-            string pw = Common.RegLoad("BSN_Password");
-            string auto = Common.RegLoad("BSN_AutoLogin");
+
+            RegistryReader rReader = new RegistryReader();
+
+            rReader.Key = "BSN_Email";
+            string email = (string)rReader.GetValue();
+
+            rReader.Key = "BSN_Password";
+            string pw = (string)rReader.GetValue();
+
+            rReader.Key = "BSN_AutoLogin";
+            string auto = (string)rReader.GetValue();
 
             if (email != null)
             {
@@ -52,7 +59,8 @@ namespace Bell_Smart_Tools.Source.BST
         }
         private void btn_DisAuto_Click(object sender, EventArgs e)
         {
-            Common.RegDelete("BSN_AutoLogin");
+            using (RegistryManager rm = new RegistryManager("BSN_AutoLogin"))
+                rm.DeleteValue();
             Initialize(); // 폼 새로고침
             //Common.Message("자동 로그인 설정이 정상적으로 해제되었습니다.");
         }

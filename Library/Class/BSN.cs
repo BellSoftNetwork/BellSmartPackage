@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using BellLib.Class;
 using BellLib.Data;
+using RegKind = Microsoft.Win32.RegistryValueKind;
 
 namespace BellLib.Class
 {
@@ -25,23 +27,34 @@ namespace BellLib.Class
             get { return LoggedIn; }
         }
 
-        public static void DataSave(bool email, bool password, bool autoLogin)
+        public static void SaveUserdata(bool email, bool password, bool autoLogin)
         {
-            if (email) {
-                Common.RegSave("BSN_Email", User.BSN_Email);
-            } else {
-                Common.RegDelete("BSN_Email");
+            using (RegistryManager rManager = new RegistryManager())
+            {
+                rManager.RegKind = RegKind.String; // 모든 레지스트리 기록에는 String!
+
+                // email
+                rManager.RegPair = new KeyValuePair<string, object>("BSN_Email", User.BSN_Email);
+                if (email)
+                    rManager.SetValue();
+                else
+                    rManager.DeleteValue();
+
+                // password
+                rManager.RegPair = new KeyValuePair<string, object>("BSN_Password", User.BSN_Password);
+                if (password)
+                    rManager.SetValue();
+                else
+                    rManager.DeleteValue();
+
+                // autoLogin
+                rManager.RegPair = new KeyValuePair<string, object>("BSN_AutoLogin", Boolean.TrueString.ToUpper());
+                if (autoLogin)
+                    rManager.SetValue();
+                else
+                    rManager.DeleteValue();
             }
-            if (password) {
-                Common.RegSave("BSN_Password", User.BSN_Password);
-            } else {
-                Common.RegDelete("BSN_Password");
-            }
-            if (autoLogin) {
-                Common.RegSave("BSN_AutoLogin", "TRUE");
-            } else {
-                Common.RegDelete("BSN_AutoLogin");
-            }
+
         }
 
         private static void DataSave(string email, string password)

@@ -22,10 +22,24 @@ namespace Bell_Smart_Package.Source.BSP
 
         private void Initialize() // 폼 초기화
         {
+            string Email;
+            string PW;
+            string AutoLogin;
+
+            RegistryReader rReader = new RegistryReader();
+
+            rReader.Key = "BSN_Email";
+            Email = (string)rReader.GetValue();
+            rReader.Key = "BSN_Password";
+            PW = (string)rReader.GetValue();
+            rReader.Key = "BSN_AutoLogin";
+            AutoLogin = (string)rReader.GetValue();
+
+            /*
             string Email = Common.RegLoad("BSN_Email"); // 레지스트리에서 저장된 Email 값 로드
             string PW = Common.RegLoad("BSN_Password"); // 레지스트리에서 저장된 PW 값 로드
             string AutoLogin = Common.RegLoad("BSN_AutoLogin"); // 레지스트리에서 저장된 Auto Login 값 로드
-
+            */
             if (Email != null) { // 레지스트리에 Email 값이 존재한다면,
                 txt_Email.Text = Email; // 이메일 텍스트 박스에 값 대입
                 cb_EmailSave.Checked = true; // 이메일 저장 체크박스 활성화
@@ -37,6 +51,7 @@ namespace Bell_Smart_Package.Source.BSP
             }
             if (AutoLogin == "TRUE") { cb_AutoLogin.Checked = true; }
         }
+
         private void FormEnable(bool value)
         {
             txt_Email.Enabled = value;
@@ -47,12 +62,13 @@ namespace Bell_Smart_Package.Source.BSP
             cb_AutoLogin.Enabled = value;
             llb_text.Enabled = value;
         }
+
         private void btn_Login_Click(object sender, EventArgs e)
         {
             FormEnable(false);
             if (BSN.Login(txt_Email.Text,txt_PW.Text)) // BSN 회원 인증 성공시
             {
-                BSN.DataSave(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
+                BSN.SaveUserdata(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
                 BSP_Selector BSP = new BSP_Selector(); // BSP_Selector 인스턴스 생성
                 BSP.Show(); // BSP_Selector 실행
                 this.Hide(); // BST_Login 숨김

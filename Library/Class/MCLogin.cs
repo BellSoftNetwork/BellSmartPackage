@@ -178,20 +178,30 @@ namespace BellLib.Class
             //로그인 성공시 True
             //BST_Main.btn_BCLaunch.Enabled = RT;
             User.MC_Login = value;
+
+            RegistryManager rmID = new RegistryManager("MC_ID", value ? id : null);
+            RegistryManager rmPW = new RegistryManager("MC_PW", value ? pw : null);
+
             if (value)
             {
-                Common.RegSave("MC_ID", id);
+                rmID.SetValue();
+                rmID.Dispose();
                 User.MC_ID = id;
-                Common.RegSave("MC_PW", pw);
+
+                rmPW.SetValue();
+                rmPW.Dispose();
                 User.MC_PW = pw;
 
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 성공");
             }
             else
             {
-                Common.RegSave("MC_ID", null);
+                rmID.SetValue();
+                rmID.Dispose();
                 User.MC_ID = null;
-                Common.RegSave("MC_PW", null);
+
+                rmPW.SetValue();
+                rmPW.Dispose();
                 User.MC_PW = null;
 
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 실패");
