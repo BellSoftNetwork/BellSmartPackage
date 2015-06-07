@@ -120,5 +120,32 @@ namespace BellLib.Class
         {
             System.IO.Directory.CreateDirectory(folderPath);
         }
+        /// <summary>
+        /// 해당 디렉토리의 파일 포맷을 가진 모든 파일을 삭제합니다.
+        /// </summary>
+        /// <param name="DirPath"></param>
+        /// <param name="Format"></param>
+        /// <returns>파일 존재 여부</returns>
+        public static bool DeleteDirectoryFile(string DirPath, string Format = "*.*")
+        {
+            DirectoryInfo dir = new DirectoryInfo(DirPath);
+            System.IO.FileInfo[] files;
+
+            files = dir.GetFiles(Format, SearchOption.AllDirectories);
+            if (files.Length <= 0)
+            {
+                return false;
+            }
+
+            foreach (System.IO.FileInfo file in files)
+            {
+                // 만약 ReadOnly 속성이 있는 파일이 있다면 지울때 에러가 나므로 속성을 Normal로 바꿔놓는다.
+                if (file.Attributes == FileAttributes.ReadOnly)
+                    file.Attributes = FileAttributes.Normal;
+                file.Delete();
+            }
+
+            return true;
+        }
     }
 }

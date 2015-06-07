@@ -49,7 +49,7 @@ namespace Bell_Smart_Package.Source.BSP
                 txt_PW.Text = PW; // PW 텍스트 박스에 값 대입
                 cb_PWSave.Checked = true; // PW 저장 체크박스 활성화
             }
-            if (AutoLogin == "TRUE") { cb_AutoLogin.Checked = true; }
+            if (AutoLogin == "TRUE") { cb_AutoLogin.Checked = true; FormEnable(false); }
         }
 
         private void FormEnable(bool value)
