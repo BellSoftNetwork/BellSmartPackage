@@ -43,7 +43,6 @@
             this.ss_1 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_Laboratory = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_BST_Preferences = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_BC_Preferences = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_FeedBack = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,7 +116,7 @@
             this.ss_1,
             this.mi_Laboratory,
             this.mi_BST_Preferences,
-            this.mi_BC_Preferences});
+            });
             this.mi_Tool.Name = "mi_Tool";
             this.mi_Tool.Size = new System.Drawing.Size(43, 20);
             this.mi_Tool.Text = "도구";
@@ -155,12 +154,6 @@
             this.mi_BST_Preferences.Size = new System.Drawing.Size(152, 22);
             this.mi_BST_Preferences.Text = "BST 환경설정";
             this.mi_BST_Preferences.Click += new System.EventHandler(this.mi_BST_Preferences_Click);
-            // 
-            // mi_BC_Preferences
-            // 
-            this.mi_BC_Preferences.Name = "mi_BC_Preferences";
-            this.mi_BC_Preferences.Size = new System.Drawing.Size(152, 22);
-            this.mi_BC_Preferences.Text = "BC 환경설정";
             // 
             // mi_Help
             // 
@@ -233,7 +226,6 @@
         private System.Windows.Forms.ToolStripMenuItem mi_Restart;
         private System.Windows.Forms.ToolStripMenuItem mi_End;
         private System.Windows.Forms.ToolStripMenuItem mi_BST_Preferences;
-        private System.Windows.Forms.ToolStripMenuItem mi_BC_Preferences;
         private System.Windows.Forms.ToolStripMenuItem mi_Info;
         private System.Windows.Forms.ToolStripMenuItem mi_FeedBack;
         private System.Windows.Forms.Button button1;
