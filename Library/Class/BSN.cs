@@ -57,7 +57,7 @@ namespace BellLib.Class
 
         }
 
-        private static void DataSave(string email, string password)
+        private static void GetUserdata(string email, string password)
         {
             User.BSN_Email = email;
             User.BSN_Password = password;
@@ -100,7 +100,7 @@ namespace BellLib.Class
                 return false;
             }
 
-            if (p) { DataSave(email, password); }
+            if (p) { GetUserdata(email, password); }
             LoginStatus = p;
             return p;
         }
