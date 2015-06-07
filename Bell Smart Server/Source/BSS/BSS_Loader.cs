@@ -20,6 +20,8 @@ namespace Bell_Smart_Server.Source.BSS
         {
             BSS_Main Main = new BSS_Main();
             Main.Show();
+            //this.Hide();
+            this.Close();
         }
     }
 }

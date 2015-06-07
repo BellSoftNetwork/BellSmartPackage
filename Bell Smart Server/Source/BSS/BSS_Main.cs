@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Library.Class;
 
 namespace Bell_Smart_Server.Source.BSS
 {
@@ -14,6 +15,11 @@ namespace Bell_Smart_Server.Source.BSS
         public BSS_Main()
         {
             InitializeComponent();
+        }
+
+        private void BSS_Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Common.End();
         }
     }
 }

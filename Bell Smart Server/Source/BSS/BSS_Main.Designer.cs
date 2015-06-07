@@ -43,6 +43,7 @@
             this.Name = "BSS_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BSS 메인";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BSS_Main_FormClosing);
             this.ResumeLayout(false);
 
         }

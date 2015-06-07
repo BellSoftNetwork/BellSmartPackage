@@ -38,7 +38,8 @@ namespace Bell_Smart_Tools.Source.BST
             pb_Load.Value = pb_Load.Maximum;
             BST_Main BST = new BST_Main(); //new BST_Login();
             BST.Show();
-            this.Hide();
+            //this.Hide();
+            this.Close();
         }
     }
 }
