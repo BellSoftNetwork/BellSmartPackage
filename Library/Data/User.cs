@@ -17,9 +17,7 @@ namespace BellLib.Data
         {
             get
             {
-                RegistryReader RR = new RegistryReader();
-                RR.Key = "MC_ID";
-
+                RegistryReader RR = new RegistryReader("MC_ID");
                 return (string)RR.GetValue();
             }
 
@@ -27,22 +25,22 @@ namespace BellLib.Data
             {
                 RegistryManager RM = new RegistryManager("MC_ID", value);
                 RM.SetValue();
+                RM.Dispose();
             }
         }
         public static string MC_PW
         {
             get
             {
-                RegistryReader RR = new RegistryReader();
-                RR.Key = "MC_PW";
-                                
-                return (string)RR.GetValue();
+                RegistryReader rReader = new RegistryReader("MC_PW");
+                return (string)rReader.GetValue();
             }
 
             set
             {
                 RegistryManager RM = new RegistryManager("MC_PW", value);
                 RM.SetValue();
+                RM.Dispose();
             }
         }
         public static bool MC_Login = false;
