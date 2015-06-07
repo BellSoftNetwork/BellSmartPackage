@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Windows.Forms;
-using BellLib.Class;
 using BellLib.Data;
 using RegKind = Microsoft.Win32.RegistryValueKind;
 
