@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Tools.Source.BST
+﻿namespace Bell_Smart_Package.Source.BSP
 {
     partial class BSP_Login
     {

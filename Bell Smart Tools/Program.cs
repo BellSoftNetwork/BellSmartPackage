@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Bell_Smart_Tools.Class;
 
 namespace Bell_Smart_Tools
 {

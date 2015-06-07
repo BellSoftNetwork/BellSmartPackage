@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Bell_Smart_Package.Source.BSP;
 
 
 namespace Bell_Smart_Package.Source.BSP
@@ -19,8 +20,8 @@ namespace Bell_Smart_Package.Source.BSP
 
         private void BSP_Loader_Shown(object sender, EventArgs e)
         {
-            Bell_Smart_Tools.Source.BST.BST_Loader BST = new Bell_Smart_Tools.Source.BST.BST_Loader(); // 존나기네;;
-            BST.Show();
+            BSP_Login BSP = new BSP_Login();
+            BSP.Show();
 
             this.Hide();
 

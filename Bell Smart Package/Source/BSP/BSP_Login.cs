@@ -9,8 +9,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Library.Class;
 using Library.Info;
+using Bell_Smart_Tools.Source.BST;
 
-namespace Bell_Smart_Tools.Source.BST
+namespace Bell_Smart_Package.Source.BSP
 {
     public partial class BSP_Login : Form
     {
@@ -52,8 +53,8 @@ namespace Bell_Smart_Tools.Source.BST
             if (BSN.Login(txt_Email.Text,txt_PW.Text)) // BSN 회원 인증 성공시
             {
                 BSN.DataSave(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
-                BST_Main BST = new BST_Main(); // BST_Main 인스턴스 생성
-                BST.Show(); // BST_Main 실행
+                BSP_Selector BSP = new BSP_Selector(); // BSP_Selector 인스턴스 생성
+                BSP.Show(); // BSP_Selector 실행
                 this.Hide(); // BST_Login 숨김
             } else {
                 Common.Message("인증 실패");
