@@ -18,25 +18,47 @@ namespace Bell_Smart_Package.Source.BSP
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// BSP 로딩 상태를 String으로 유저에게 나타내줍니다.
+        /// </summary>
+        /// <param name="Text"></param>
+        private void Log(string Text)
+        {
+            lb_Log.Text = "진행상황 : " + Text;
+        }
         private void BSP_Loader_Shown(object sender, EventArgs e)
         {
-            Initialize(); // 프로그램 초기화
+            Log("Initialize");
+            if (Initialize())
+            {
+                Log("Initialize complete.");
+                BSP_Management BSPM = new BSP_Management();
+                BSP_Login BSP = new BSP_Login();
+                Log("Instance generation complete.");
 
-            BSP_Login BSP = new BSP_Login();
-            BSP.Show();
+                BSPM.Show();
+                BSP.Show();
+                Log("Instance show complete.");
 
-            this.Hide();
-
+                this.Hide();
+                Log("Hide BSP_Loader");
+            } else {
+                Log("Initialize fail.");
+            }
         }
 
-        private void Initialize()
+        private bool Initialize()
         {
+            Application.DoEvents();
+
+            Log("Debug Initilaize");
             Debug dbg = new Debug();
             dbg.Initialize();
+            Log("Debug Initialize complete.");
 
             try {
                 // 되는지 안되는지는 모르는 소스.
+                Log("Program parameter loading");
                 string[] tmp = Environment.GetCommandLineArgs(); // 프로그램 파라미터 로드
                 string[] Parameter = tmp[0].Split('='); // 파라미터 파싱
                 if (Parameter[0] == "Debug") // 파라미터가 디버그일경우
@@ -58,11 +80,23 @@ namespace Bell_Smart_Package.Source.BSP
                         case "3":
                             Debug.Debugger = Debug.Level.High;
                             break;
-                    }    
+                    }
+                    Log("Program parameter debug mode active.");
                 }
             } catch {
-
+                Log("Program parameter analysis fail.");
             }
+
+            if (Deployment.UpdateAvailable()) // 최신버전 발견시
+            {
+                BSP_Updater BSPU = new BSP_Updater();
+                BSPU.Show(); // 업데이트 실행
+                this.Hide();
+
+                return false; // 프로그램 실행 중단.
+            }
+
+            return true;
         }
     }
 }

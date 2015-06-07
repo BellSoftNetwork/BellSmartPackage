@@ -23,6 +23,7 @@ namespace Bell_Smart_Tools.Source.BST
         {
             NoticeLoad();
             DebugModeLoad(); // 디버그 모드 로드
+            
         }
         private void BST_Main_Load(object sender, EventArgs e)
         {
@@ -89,13 +90,6 @@ namespace Bell_Smart_Tools.Source.BST
         {
             BST_Preferences BSTP = new BST_Preferences();
             BSTP.ShowDialog();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.Low, "디버그1");
-            BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.Middle, "디버그2");
-            BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.High, "디버그3");
         }
         private void DebugModeLoad()
         {

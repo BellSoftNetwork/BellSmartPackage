@@ -10,7 +10,7 @@ namespace BellLib.Class
     public class Debug
     {
         private static Level Mode = Level.Disable;
-        public static string LogFile = Data.User.BSN_Path + "logs\\debug-" + string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now) + ".log";
+        public static string LogFile = Data.User.BSN_Path + "logs\\debug-" + DateTime.Now.ToString("yyyy-MM-dd_hh.mm.ss") +".log"; // string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now)
         public enum Level : int
         {
 	        Disable = 0, // 디버깅 사용 안함 (로그 작성안함)

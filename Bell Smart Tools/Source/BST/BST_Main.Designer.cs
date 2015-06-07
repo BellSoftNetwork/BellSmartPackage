@@ -46,7 +46,6 @@
             this.mi_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_FeedBack = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.mi_DebugMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Disable = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS1 = new System.Windows.Forms.ToolStripSeparator();
@@ -176,24 +175,14 @@
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(152, 22);
+            this.mi_Info.Size = new System.Drawing.Size(122, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
             this.mi_FeedBack.Text = "피드백";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(396, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // mi_DebugMenu
             // 
@@ -207,7 +196,7 @@
             this.mi_SS2,
             this.mi_DebugTool});
             this.mi_DebugMenu.Name = "mi_DebugMenu";
-            this.mi_DebugMenu.Size = new System.Drawing.Size(152, 22);
+            this.mi_DebugMenu.Size = new System.Drawing.Size(122, 22);
             this.mi_DebugMenu.Text = "Debug";
             // 
             // mi_Disable
@@ -267,7 +256,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(538, 275);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.txt_Notice);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -303,7 +291,6 @@
         private System.Windows.Forms.ToolStripMenuItem mi_BST_Preferences;
         private System.Windows.Forms.ToolStripMenuItem mi_Info;
         private System.Windows.Forms.ToolStripMenuItem mi_FeedBack;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugMenu;
         private System.Windows.Forms.ToolStripMenuItem mi_Disable;
         private System.Windows.Forms.ToolStripSeparator mi_SS1;

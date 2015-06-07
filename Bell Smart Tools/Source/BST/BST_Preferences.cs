@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BellLib.Class;
+using BellLib.Data;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -56,6 +57,7 @@ namespace Bell_Smart_Tools.Source.BST
             {
                 btn_DisAuto.Enabled = true;
             }
+            cb_AutoUpdate.Checked = User.BSP_AutoUpdate;
         }
         private void btn_DisAuto_Click(object sender, EventArgs e)
         {
@@ -68,6 +70,11 @@ namespace Bell_Smart_Tools.Source.BST
         private void BST_Preferences_Load(object sender, EventArgs e)
         {
             Initialize(); // 폼 초기화
+        }
+
+        private void cb_AutoUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            User.BSP_AutoUpdate = cb_AutoUpdate.Checked;
         }
     }
 }

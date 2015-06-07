@@ -32,6 +32,7 @@
             this.btn_DisAuto = new System.Windows.Forms.Button();
             this.lb_email = new System.Windows.Forms.Label();
             this.lb_PW = new System.Windows.Forms.Label();
+            this.cb_AutoUpdate = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btn_DisAuto
@@ -61,12 +62,24 @@
             this.lb_PW.TabIndex = 2;
             this.lb_PW.Text = "비밀번호 저장 : Loading..";
             // 
+            // cb_AutoUpdate
+            // 
+            this.cb_AutoUpdate.AutoSize = true;
+            this.cb_AutoUpdate.Location = new System.Drawing.Point(1, 31);
+            this.cb_AutoUpdate.Name = "cb_AutoUpdate";
+            this.cb_AutoUpdate.Size = new System.Drawing.Size(128, 16);
+            this.cb_AutoUpdate.TabIndex = 3;
+            this.cb_AutoUpdate.Text = "BSP 자동 업데이트";
+            this.cb_AutoUpdate.UseVisualStyleBackColor = true;
+            this.cb_AutoUpdate.CheckedChanged += new System.EventHandler(this.cb_AutoUpdate_CheckedChanged);
+            // 
             // BST_Preferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(338, 180);
+            this.Controls.Add(this.cb_AutoUpdate);
             this.Controls.Add(this.lb_PW);
             this.Controls.Add(this.lb_email);
             this.Controls.Add(this.btn_DisAuto);
@@ -78,6 +91,7 @@
             this.Text = "BST 환경설정";
             this.Load += new System.EventHandler(this.BST_Preferences_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -86,5 +100,6 @@
         private System.Windows.Forms.Button btn_DisAuto;
         private System.Windows.Forms.Label lb_email;
         private System.Windows.Forms.Label lb_PW;
+        private System.Windows.Forms.CheckBox cb_AutoUpdate;
     }
 }
