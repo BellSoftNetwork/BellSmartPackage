@@ -159,19 +159,19 @@
             this.mi_Info,
             this.mi_FeedBack});
             this.mi_Help.Name = "mi_Help";
-            this.mi_Help.Size = new System.Drawing.Size(55, 20);
-            this.mi_Help.Text = "도움말";
+            this.mi_Help.Size = new System.Drawing.Size(43, 20);
+            this.mi_Help.Text = "정보";
             // 
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(122, 22);
+            this.mi_Info.Size = new System.Drawing.Size(152, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // BST_Main
