@@ -15,6 +15,7 @@ namespace BellLib.Class
     {
         private string key;
         private RegistryKey baseRegKey = Registry.CurrentUser.CreateSubKey("SoftWare").CreateSubKey("BSN");
+        private RegistryValueKind regKind;
 
         #region *** 속성 ***
 
@@ -36,6 +37,15 @@ namespace BellLib.Class
             set { baseRegKey = value; }
         }
 
+        /// <summary>
+        /// 기록에 사용할 RegistryValueKind 속성입니다.
+        /// </summary>
+        public RegistryValueKind RegKind
+        {
+            get { return regKind; }
+            set { regKind = value; }
+        }
+
         #endregion *** 속성 ***
 
         #region *** 생성자 ***
@@ -53,12 +63,10 @@ namespace BellLib.Class
         /// RegistryReader 클래스를 Key를 사용하여 초기화합니다.
         /// </summary>
         /// <param name="_key">Registry Key</param>
-        public RegistryReader(string _key)
+        public RegistryReader(string _key, RegistryValueKind _regKind = RegistryValueKind.String)
         {
-            if (_key == null)
-                throw new ArgumentException();
-            else
-                key = _key;
+            key = _key;
+            regKind = _regKind;
         }
 
         /// <summary>
@@ -66,17 +74,14 @@ namespace BellLib.Class
         /// </summary>
         /// <param name="_key">Registry Key</param>
         /// <param name="baseKey">Base RegistryKey</param>
-        public RegistryReader(string _key, RegistryKey baseKey)
+        public RegistryReader(string _key, RegistryKey baseKey, RegistryValueKind _regKind = RegistryValueKind.String)
         {
-            if (_key == null)
-                throw new ArgumentException();
-            else
-                key = _key;
-
+            key = _key;
             baseRegKey = baseKey;
+            regKind = _regKind;
         }
-
-#endregion *** 생성자 ***
+        
+        #endregion *** 생성자 ***
 
         /// <summary>
         /// 인스턴스의 Key를 가지고 Key의 Value를 반환합니다.
@@ -86,7 +91,7 @@ namespace BellLib.Class
         /// <returns>Key의 Value를 반환합니다. 값이 없거나 예외 발생 시 defaultValue을 반환합니다.</returns>
         public object GetValue(object defaultValue = null, bool throwException = false)
         {
-            RegistryManager rm = new RegistryManager(key);
+            RegistryManager rm = new RegistryManager(key, regKind);
 
             object value = rm.GetValue(defaultValue, throwException);
 
@@ -145,17 +150,19 @@ namespace BellLib.Class
         /// <summary>
         /// RegistryManager 클래스 초기화합니다. Key와 Value는 null입니다.
         /// </summary>
-        public RegistryManager()
+        public RegistryManager(RegistryValueKind _regKind = RegistryValueKind.String)
         {
             regPair = new KeyValuePair<string, object>(null, null);
+            regKind = _regKind;
         }
 
         /// <summary>
         /// RegistryManager 클래스를 Key를 사용하여 초기화합니다. Value는 null입니다.
         /// </summary>
-        public RegistryManager(string key)
+        public RegistryManager(string key, RegistryValueKind _regKind = RegistryValueKind.String)
         {
             regPair = new KeyValuePair<string, object>(key, null);
+            regKind = _regKind;
         }
 
         /// <summary>

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using BellLib.Class;
 using BellLib.Data;
+using Debug = BellLib.Class.Debug;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -91,6 +92,7 @@ namespace Bell_Smart_Tools.Source.BST
             BST_Preferences BSTP = new BST_Preferences();
             BSTP.ShowDialog();
         }
+
         private void DebugModeLoad()
         {
             mi_Disable.Checked = false;
@@ -99,40 +101,84 @@ namespace Bell_Smart_Tools.Source.BST
             mi_High.Checked = false;
             mi_Log.Checked = false;
 
-            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Disable) { mi_Disable.Checked = true; }
-            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Low) { mi_Low.Checked = true; }
-            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Middle) { mi_Middle.Checked = true; }
-            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.High) { mi_High.Checked = true; }
-            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Log) { mi_Log.Checked = true; }
+            switch (Debug.Debugger)
+            {
+                case Debug.Level.Disable:
+                    mi_Disable.Checked = true;
+                    break;
+                case Debug.Level.Low:
+                    mi_Low.Checked = true;
+                    break;
+                case Debug.Level.Middle:
+                    mi_Middle.Checked = true;
+                    break;
+                case Debug.Level.High:
+                    mi_High.Checked = true;
+                    break;
+                case Debug.Level.Log:
+                    mi_Log.Checked = true;
+                    break;
+            }
         }
+
+        private void mi_Disable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mi_Disable.Checked)
+                Debug.Debugger = Debug.Level.Disable;
+        }
+
+        private void mi_Low_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mi_Low.Checked)
+                Debug.Debugger = Debug.Level.Low;
+        }
+
+        private void mi_Middle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mi_Middle.Checked)
+                Debug.Debugger = Debug.Level.Middle;
+        }
+
+        private void mi_High_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mi_High.Checked)
+                Debug.Debugger = Debug.Level.High;
+        }
+
+        private void mi_Log_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mi_Log.Checked)
+                Debug.Debugger = Debug.Level.Log;
+        }
+
         private void mi_Disable_Click(object sender, EventArgs e)
         {
-            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Disable;
-            DebugModeLoad(); // 디버그 모드 로드
+            Debug.Debugger = Debug.Level.Disable;
+            DebugModeLoad();
         }
 
         private void mi_Low_Click(object sender, EventArgs e)
         {
-            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Low;
-            DebugModeLoad(); // 디버그 모드 로드
+            Debug.Debugger = Debug.Level.Low;
+            DebugModeLoad();
         }
 
         private void mi_Middle_Click(object sender, EventArgs e)
         {
-            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Middle;
-            DebugModeLoad(); // 디버그 모드 로드
+            Debug.Debugger = Debug.Level.Middle;
+            DebugModeLoad();
         }
 
         private void mi_High_Click(object sender, EventArgs e)
         {
-            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.High;
-            DebugModeLoad(); // 디버그 모드 로드
+            Debug.Debugger = Debug.Level.High;
+            DebugModeLoad();
         }
 
         private void mi_Log_Click(object sender, EventArgs e)
         {
-            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Log;
-            DebugModeLoad(); // 디버그 모드 로드
+            Debug.Debugger = Debug.Level.Log;
+            DebugModeLoad();
         }
     }
 }

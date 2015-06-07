@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using BellLib.Class;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using BellLib.Class;
+using RegKind = Microsoft.Win32.RegistryValueKind;
 
 namespace BellLib.Class
 {
+    [Serializable]
     public class Debug
     {
-        private static Level Mode = Level.Disable;
+        private static Level Mode;
         public static string LogFile = Data.User.BSN_Path + "logs\\debug-" + DateTime.Now.ToString("yyyy-MM-dd_hh.mm.ss") +".log"; // string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now)
+
         public enum Level : int
         {
 	        Disable = 0, // 디버깅 사용 안함 (로그 작성안함)
@@ -19,35 +24,22 @@ namespace BellLib.Class
 	        High, // 모든 디버깅 메시지를 출력 / 중요하지 않은 모든 메시지는 전부 High 레벨로 설정, 잦은 루프를 도는 부분은 High 레벨로 설정
 	        Log // 메시지는 출력하지 않고 로그파일만 작성 / 프로그램 사용중에 메시지를 확인할 필요는 없고, 매우 자주 루프를 도는 부분일 경우 Log 레벨로 설정
         }
+
         public void Initialize()
         {
-            string strTemp = Common.RegLoad("Debug");
+            RegistryReader rReader = new RegistryReader("DebugMode", RegKind.Binary);
+
+            var obj = (byte[])rReader.GetValue();
+
             try
             {
-                switch (strTemp)
+                using (MemoryStream ms = new MemoryStream(obj))
                 {
-                    case "High":
-                        Mode = Level.High;
-                        break;
-
-                    case "Middle":
-                        Mode = Level.Middle;
-                        break;
-
-                    case "Low":
-                        Mode = Level.Low;
-                        break;
-
-                    case "Log":
-                        Mode = Level.Log;
-                        break;
-
-                    default:
-                        Mode = Level.Disable;
-                        break;
+                    BinaryFormatter bf = new BinaryFormatter();
+                    Mode = (Level)bf.Deserialize(ms);
                 }
             }
-            catch
+            catch (ArgumentException)
             {
                 Mode = Level.Disable;
             }
@@ -62,7 +54,15 @@ namespace BellLib.Class
         public static Level Debugger {
 	        get { return Mode; }
 	        set {
-		        Common.RegSave("Debug", value);
+		        /*Common.RegSave("Debug", value);*/
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(ms, Mode);
+                    byte[] data = ms.ToArray();
+                    using (RegistryManager rm = new RegistryManager("DebugMode", data, RegKind.Binary))
+                        rm.SetValue();
+                }
 		        Mode = value;
 	        }
         }
