@@ -16,7 +16,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>M:\Server\WebData\BSN\publish\BSP\</PublishUrl>
+    <PublishUrl>ftp://bellsoft.iptime.org/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -37,7 +37,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationRevision>17</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -115,6 +115,12 @@
     <Compile Include="Source\BSP\BSP_Loader.Designer.cs">
       <DependentUpon>BSP_Loader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BSP\BSP_Updater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSP\BSP_Updater.Designer.cs">
+      <DependentUpon>BSP_Updater.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -127,6 +133,9 @@
     </Compile>
     <EmbeddedResource Include="Source\BSP\BSP_Loader.resx">
       <DependentUpon>BSP_Loader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSP\BSP_Updater.resx">
+      <DependentUpon>BSP_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Bell Smart Package_Key.pfx" />
     <None Include="Properties\app.manifest" />

@@ -32,8 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Main));
             this.txt_Notice = new System.Windows.Forms.TextBox();
             this.tmr_NoticeLoader = new System.Windows.Forms.Timer(this.components);
-            this.cb_PackList = new System.Windows.Forms.ComboBox();
-            this.btn_GameStart = new System.Windows.Forms.Button();
             this.ms_MainMenu = new System.Windows.Forms.MenuStrip();
             this.mi_BST = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Logout = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,6 +47,7 @@
             this.mi_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_FeedBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.ms_MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,30 +66,6 @@
             this.tmr_NoticeLoader.Enabled = true;
             this.tmr_NoticeLoader.Interval = 1000;
             this.tmr_NoticeLoader.Tick += new System.EventHandler(this.tmr_NoticeLoader_Tick);
-            // 
-            // cb_PackList
-            // 
-            this.cb_PackList.FormattingEnabled = true;
-            this.cb_PackList.Items.AddRange(new object[] {
-            "방울크래프트8",
-            "섹시크래프트"});
-            this.cb_PackList.Location = new System.Drawing.Point(320, 235);
-            this.cb_PackList.Name = "cb_PackList";
-            this.cb_PackList.Size = new System.Drawing.Size(220, 20);
-            this.cb_PackList.TabIndex = 1;
-            this.cb_PackList.Text = "플레이하실 모드팩을 선택해주세요.";
-            this.cb_PackList.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cb_PackList_KeyPress);
-            // 
-            // btn_GameStart
-            // 
-            this.btn_GameStart.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btn_GameStart.Location = new System.Drawing.Point(320, 255);
-            this.btn_GameStart.Name = "btn_GameStart";
-            this.btn_GameStart.Size = new System.Drawing.Size(220, 20);
-            this.btn_GameStart.TabIndex = 2;
-            this.btn_GameStart.Text = "방울크래프트 시작!";
-            this.btn_GameStart.UseVisualStyleBackColor = true;
-            this.btn_GameStart.Click += new System.EventHandler(this.btn_GameStart_Click);
             // 
             // ms_MainMenu
             // 
@@ -117,20 +92,20 @@
             // mi_Logout
             // 
             this.mi_Logout.Name = "mi_Logout";
-            this.mi_Logout.Size = new System.Drawing.Size(152, 22);
+            this.mi_Logout.Size = new System.Drawing.Size(146, 22);
             this.mi_Logout.Text = "BST 로그아웃";
             // 
             // mi_Restart
             // 
             this.mi_Restart.Name = "mi_Restart";
-            this.mi_Restart.Size = new System.Drawing.Size(152, 22);
+            this.mi_Restart.Size = new System.Drawing.Size(146, 22);
             this.mi_Restart.Text = "BST 재시작";
             this.mi_Restart.Click += new System.EventHandler(this.mi_Restart_Click);
             // 
             // mi_End
             // 
             this.mi_End.Name = "mi_End";
-            this.mi_End.Size = new System.Drawing.Size(152, 22);
+            this.mi_End.Size = new System.Drawing.Size(146, 22);
             this.mi_End.Text = "BST 종료";
             this.mi_End.Click += new System.EventHandler(this.mi_End_Click);
             // 
@@ -207,14 +182,23 @@
             this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(397, 36);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // BST_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(538, 331);
-            this.Controls.Add(this.btn_GameStart);
-            this.Controls.Add(this.cb_PackList);
+            this.ClientSize = new System.Drawing.Size(538, 275);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.txt_Notice);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -236,8 +220,6 @@
 
         private System.Windows.Forms.TextBox txt_Notice;
         private System.Windows.Forms.Timer tmr_NoticeLoader;
-        private System.Windows.Forms.ComboBox cb_PackList;
-        private System.Windows.Forms.Button btn_GameStart;
         private System.Windows.Forms.MenuStrip ms_MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mi_BST;
         private System.Windows.Forms.ToolStripMenuItem mi_Tool;
@@ -253,6 +235,7 @@
         private System.Windows.Forms.ToolStripMenuItem mi_BC_Preferences;
         private System.Windows.Forms.ToolStripMenuItem mi_Info;
         private System.Windows.Forms.ToolStripMenuItem mi_FeedBack;
+        private System.Windows.Forms.Button button1;
 
     }
 }

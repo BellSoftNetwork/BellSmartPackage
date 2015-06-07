@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Bell_Smart_Tools.Class;
+using System.Diagnostics;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -81,6 +82,11 @@ namespace Bell_Smart_Tools.Source.BST
         private void mi_Restart_Click(object sender, EventArgs e)
         {
             Common.End(true);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Process.Start(Application.StartupPath);
         }
     }
 }
