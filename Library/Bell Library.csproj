@@ -58,8 +58,8 @@
     <Compile Include="Class\BSN.cs" />
     <Compile Include="Class\Debug.cs" />
     <Compile Include="Class\MCLogin.cs" />
-    <Compile Include="Info\Base.cs" />
-    <Compile Include="Info\User.cs" />
+    <Compile Include="Data\Base.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class\Common.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Forms;
 using Library.Class;
-using Library.Info;
+using Library.Data;
 
 namespace Library.Class
 {

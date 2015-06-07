@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Library.Info
+namespace Library.Data
 {
     public class User
     {

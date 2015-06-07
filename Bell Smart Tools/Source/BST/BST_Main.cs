@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Library.Class;
-using Library.Info;
+using Library.Data;
 
 namespace Bell_Smart_Tools.Source.BST
 {
