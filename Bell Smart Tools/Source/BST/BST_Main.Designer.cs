@@ -174,13 +174,13 @@
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(122, 22);
+            this.mi_Info.Size = new System.Drawing.Size(152, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // button1
@@ -208,7 +208,7 @@
             this.MaximizeBox = false;
             this.Name = "BST_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BST 메인";
+            this.Text = "Bell Smart Tools";
             this.Load += new System.EventHandler(this.BST_Main_Load);
             this.ms_MainMenu.ResumeLayout(false);
             this.ms_MainMenu.PerformLayout();

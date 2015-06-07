@@ -33,7 +33,9 @@ namespace Bell_Smart_Tools.Source.BST
             if (email != null)
             {
                 lb_email.Text = "이메일 저장 : " + email;
-            } else {
+            } 
+            else 
+            {
                 lb_email.Text = "이메일 저장 : 사용안함";
             }
             if (pw != null) {
