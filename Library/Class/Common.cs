@@ -66,7 +66,7 @@ namespace BellLib.Class
         {
             bool boolWritten = false;
 
-            while (!boolWritten)
+            while (!boolWritten) // 이 구문 현재 LocalFilePath 경로가 존재하지 않으면(폴더가 생성되있지 않으면), 무한루프 도는 구조. 수정 요망
             {
                 try
                 {
@@ -77,13 +77,10 @@ namespace BellLib.Class
 
                     boolWritten = true;
                 }
-                catch { }
-                /*catch (Exception ex)
+                catch (Exception ex)
                 {
-                    //안 쓸거면 왜 넣은겨 게다가 욕이야.
-                    //string C_Bal = ex.Message;
-                    //Debug.Message(Debug.Level.High, "WriteTextFile" + Environment.NewLine + ex.Message);
-                }*/
+                    Debug.Message(Debug.Level.High, "WriteTextFile" + Environment.NewLine + ex.Message);
+                }
             }
         }
 
@@ -103,7 +100,7 @@ namespace BellLib.Class
         public static void CreateDefaultForder(string Default_PATH = null)
         {
             if (Default_PATH == null)
-                Default_PATH = Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
+                Default_PATH = Data.User.BSN_Path; //Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
 
             CreateFolder(Default_PATH);
             CreateFolder(Default_PATH + "Temp\\");

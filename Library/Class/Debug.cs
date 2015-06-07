@@ -19,22 +19,39 @@ namespace BellLib.Class
 	        High, // 모든 디버깅 메시지를 출력 / 중요하지 않은 모든 메시지는 전부 High 레벨로 설정, 잦은 루프를 도는 부분은 High 레벨로 설정
 	        Log // 메시지는 출력하지 않고 로그파일만 작성 / 프로그램 사용중에 메시지를 확인할 필요는 없고, 매우 자주 루프를 도는 부분일 경우 Log 레벨로 설정
         }
-        public void New()
-        {
-	        string strTemp = Common.RegLoad("Debug");
-	        try {
-                if (strTemp == Convert.ToString(Level.High) | strTemp == Convert.ToString(Level.Middle) | strTemp == Convert.ToString(Level.Low))
-                {
-			        Mode = (Level)Convert.ToInt32(strTemp);
-		        } else {
-			        Mode = Level.Disable;
-		        }
-	        } catch {
-		        Mode = Level.Disable;
-	        }
-        }
         public void Initialize()
         {
+            string strTemp = Common.RegLoad("Debug");
+            try
+            {
+                switch (strTemp)
+                {
+                    case "High":
+                        Mode = Level.High;
+                        break;
+
+                    case "Middle":
+                        Mode = Level.Middle;
+                        break;
+
+                    case "Low":
+                        Mode = Level.Low;
+                        break;
+
+                    case "Log":
+                        Mode = Level.Log;
+                        break;
+
+                    default:
+                        Mode = Level.Disable;
+                        break;
+                }
+            }
+            catch
+            {
+                Mode = Level.Disable;
+            }
+
 	        try {
 		        //System.IO.File.Delete(DATA_USER.BSN_Path & "logs\Debug.log")
 		        Common.WriteTextFile(LogFile, "[" + DateTime.Now + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);

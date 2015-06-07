@@ -19,9 +19,14 @@ namespace Bell_Smart_Tools.Source.BST
             InitializeComponent();
         }
 
-        private void BST_Main_Load(object sender, EventArgs e)
+        private void Initialize() // 폼 초기화
         {
             NoticeLoad();
+            DebugModeLoad(); // 디버그 모드 로드
+        }
+        private void BST_Main_Load(object sender, EventArgs e)
+        {
+            Initialize();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -80,15 +85,60 @@ namespace Bell_Smart_Tools.Source.BST
             Common.End(true);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void mi_BST_Preferences_Click(object sender, EventArgs e)
         {
             BST_Preferences BSTP = new BST_Preferences();
             BSTP.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.Low, "디버그1");
+            BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.Middle, "디버그2");
+            BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.High, "디버그3");
+        }
+        private void DebugModeLoad()
+        {
+            mi_Disable.Checked = false;
+            mi_Low.Checked = false;
+            mi_Middle.Checked = false;
+            mi_High.Checked = false;
+            mi_Log.Checked = false;
+
+            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Disable) { mi_Disable.Checked = true; }
+            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Low) { mi_Low.Checked = true; }
+            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Middle) { mi_Middle.Checked = true; }
+            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.High) { mi_High.Checked = true; }
+            if (BellLib.Class.Debug.Debugger == BellLib.Class.Debug.Level.Log) { mi_Log.Checked = true; }
+        }
+        private void mi_Disable_Click(object sender, EventArgs e)
+        {
+            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Disable;
+            DebugModeLoad(); // 디버그 모드 로드
+        }
+
+        private void mi_Low_Click(object sender, EventArgs e)
+        {
+            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Low;
+            DebugModeLoad(); // 디버그 모드 로드
+        }
+
+        private void mi_Middle_Click(object sender, EventArgs e)
+        {
+            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Middle;
+            DebugModeLoad(); // 디버그 모드 로드
+        }
+
+        private void mi_High_Click(object sender, EventArgs e)
+        {
+            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.High;
+            DebugModeLoad(); // 디버그 모드 로드
+        }
+
+        private void mi_Log_Click(object sender, EventArgs e)
+        {
+            BellLib.Class.Debug.Debugger = BellLib.Class.Debug.Level.Log;
+            DebugModeLoad(); // 디버그 모드 로드
         }
     }
 }

@@ -118,5 +118,14 @@ namespace Bell_Smart_Package.Source.BSP
         {
             Common.End();
         }
+
+        private void BSP_Login_Shown(object sender, EventArgs e)
+        {
+            Application.DoEvents();
+
+            if (cb_AutoLogin.Checked) {
+                btn_Login_Click(sender,e);
+            }
+        }
     }
 }

@@ -46,6 +46,16 @@
             this.mi_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_FeedBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.mi_DebugMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_Disable = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_SS1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_Low = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_Middle = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_High = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_Log = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_SS2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
             this.ms_MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,7 +167,8 @@
             // 
             this.mi_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mi_Info,
-            this.mi_FeedBack});
+            this.mi_FeedBack,
+            this.mi_DebugMenu});
             this.mi_Help.Name = "mi_Help";
             this.mi_Help.Size = new System.Drawing.Size(43, 20);
             this.mi_Help.Text = "정보";
@@ -174,12 +185,89 @@
             this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(396, 41);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // mi_DebugMenu
+            // 
+            this.mi_DebugMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_Disable,
+            this.mi_SS1,
+            this.mi_Low,
+            this.mi_Middle,
+            this.mi_High,
+            this.mi_Log,
+            this.mi_SS2,
+            this.mi_DebugTool});
+            this.mi_DebugMenu.Name = "mi_DebugMenu";
+            this.mi_DebugMenu.Size = new System.Drawing.Size(152, 22);
+            this.mi_DebugMenu.Text = "Debug";
+            // 
+            // mi_Disable
+            // 
+            this.mi_Disable.Name = "mi_Disable";
+            this.mi_Disable.Size = new System.Drawing.Size(201, 22);
+            this.mi_Disable.Text = "Disable";
+            this.mi_Disable.Click += new System.EventHandler(this.mi_Disable_Click);
+            // 
+            // mi_SS1
+            // 
+            this.mi_SS1.Name = "mi_SS1";
+            this.mi_SS1.Size = new System.Drawing.Size(198, 6);
+            // 
+            // mi_Low
+            // 
+            this.mi_Low.Name = "mi_Low";
+            this.mi_Low.Size = new System.Drawing.Size(201, 22);
+            this.mi_Low.Text = "Low Level";
+            this.mi_Low.Click += new System.EventHandler(this.mi_Low_Click);
+            // 
+            // mi_Middle
+            // 
+            this.mi_Middle.Name = "mi_Middle";
+            this.mi_Middle.Size = new System.Drawing.Size(201, 22);
+            this.mi_Middle.Text = "Middle Level";
+            this.mi_Middle.Click += new System.EventHandler(this.mi_Middle_Click);
+            // 
+            // mi_High
+            // 
+            this.mi_High.Name = "mi_High";
+            this.mi_High.Size = new System.Drawing.Size(201, 22);
+            this.mi_High.Text = "High Level";
+            this.mi_High.Click += new System.EventHandler(this.mi_High_Click);
+            // 
+            // mi_Log
+            // 
+            this.mi_Log.Name = "mi_Log";
+            this.mi_Log.Size = new System.Drawing.Size(201, 22);
+            this.mi_Log.Text = "Log Level";
+            this.mi_Log.Click += new System.EventHandler(this.mi_Log_Click);
+            // 
+            // mi_SS2
+            // 
+            this.mi_SS2.Name = "mi_SS2";
+            this.mi_SS2.Size = new System.Drawing.Size(198, 6);
+            // 
+            // mi_DebugTool
+            // 
+            this.mi_DebugTool.Name = "mi_DebugTool";
+            this.mi_DebugTool.Size = new System.Drawing.Size(201, 22);
+            this.mi_DebugTool.Text = "Bell Smart Debug Tools";
+            // 
             // BST_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(538, 275);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.txt_Notice);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -215,6 +303,16 @@
         private System.Windows.Forms.ToolStripMenuItem mi_BST_Preferences;
         private System.Windows.Forms.ToolStripMenuItem mi_Info;
         private System.Windows.Forms.ToolStripMenuItem mi_FeedBack;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugMenu;
+        private System.Windows.Forms.ToolStripMenuItem mi_Disable;
+        private System.Windows.Forms.ToolStripSeparator mi_SS1;
+        private System.Windows.Forms.ToolStripMenuItem mi_Low;
+        private System.Windows.Forms.ToolStripMenuItem mi_Middle;
+        private System.Windows.Forms.ToolStripMenuItem mi_High;
+        private System.Windows.Forms.ToolStripMenuItem mi_Log;
+        private System.Windows.Forms.ToolStripSeparator mi_SS2;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugTool;
 
     }
 }

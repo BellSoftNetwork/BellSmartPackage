@@ -93,7 +93,8 @@ namespace Bell_Smart_Package.Source.BSP
 
         private void button1_Click(object sender, EventArgs e)
         {
-            InstallUpdateSyncWithInfo();
+            //InstallUpdateSyncWithInfo();
+            BST_Update();
         }
 
 
@@ -105,8 +106,6 @@ namespace Bell_Smart_Package.Source.BSP
         {
             if (ApplicationDeployment.IsNetworkDeployed)
             {
-                this.Visible = true;
-                this.ShowInTaskbar = true;
                 ApplicationDeployment AD = ApplicationDeployment.CurrentDeployment;
                 
                 try
