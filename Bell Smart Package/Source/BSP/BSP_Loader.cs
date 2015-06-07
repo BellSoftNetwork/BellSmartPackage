@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Bell_Smart_Package.Source.BSP;
+using Bell_Smart_Server.Source.BSS;
+using Bell_Smart_Tools.Source.BST;
 using BellLib.Class;
 
 
@@ -97,6 +99,16 @@ namespace Bell_Smart_Package.Source.BSP
             }
 
             return true;
+        }
+        
+        private void mi_End_Click(object sender, EventArgs e)
+        {
+            Common.End();
+        }
+
+        private void mi_Restart_Click(object sender, EventArgs e)
+        {
+            Common.End(true);
         }
     }
 }

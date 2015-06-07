@@ -192,6 +192,8 @@ namespace BellLib.Class
                 rmPW.Dispose();
                 User.MC_PW = pw;
 
+                User.MC_Login = true;
+
                 //BST_Manager.BST_Status("마인크래프트 계정 로그인 성공");
             }
             else

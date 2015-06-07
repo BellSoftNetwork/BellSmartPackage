@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Tools.Source.BC
+namespace Bell_Smart_Tools.Source.MCL
 {
-    public partial class BC_Option : Form
+    public partial class MC_Option : Form
     {
-        public BC_Option()
+        public MC_Option()
         {
             InitializeComponent();
         }

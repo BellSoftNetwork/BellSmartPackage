@@ -180,5 +180,11 @@ namespace Bell_Smart_Tools.Source.BST
             Debug.Debugger = Debug.Level.Log;
             DebugModeLoad();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Source.MCL.MC_Preferences MCP = new MCL.MC_Preferences();
+            MCP.ShowDialog();
+        }
     }
 }

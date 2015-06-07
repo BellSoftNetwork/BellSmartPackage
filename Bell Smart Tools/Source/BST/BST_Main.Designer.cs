@@ -55,6 +55,7 @@
             this.mi_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS2 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.ms_MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,20 +100,20 @@
             // mi_Logout
             // 
             this.mi_Logout.Name = "mi_Logout";
-            this.mi_Logout.Size = new System.Drawing.Size(146, 22);
+            this.mi_Logout.Size = new System.Drawing.Size(152, 22);
             this.mi_Logout.Text = "BST 로그아웃";
             // 
             // mi_Restart
             // 
             this.mi_Restart.Name = "mi_Restart";
-            this.mi_Restart.Size = new System.Drawing.Size(146, 22);
+            this.mi_Restart.Size = new System.Drawing.Size(152, 22);
             this.mi_Restart.Text = "BST 재시작";
             this.mi_Restart.Click += new System.EventHandler(this.mi_Restart_Click);
             // 
             // mi_End
             // 
             this.mi_End.Name = "mi_End";
-            this.mi_End.Size = new System.Drawing.Size(146, 22);
+            this.mi_End.Size = new System.Drawing.Size(152, 22);
             this.mi_End.Text = "BST 종료";
             this.mi_End.Click += new System.EventHandler(this.mi_End_Click);
             // 
@@ -132,33 +133,33 @@
             // 
             this.mi_TopMost.CheckOnClick = true;
             this.mi_TopMost.Name = "mi_TopMost";
-            this.mi_TopMost.Size = new System.Drawing.Size(146, 22);
+            this.mi_TopMost.Size = new System.Drawing.Size(152, 22);
             this.mi_TopMost.Text = "BST 항상위";
             this.mi_TopMost.Click += new System.EventHandler(this.mi_TopMost_Click);
             // 
             // mi_AutoTray
             // 
             this.mi_AutoTray.Name = "mi_AutoTray";
-            this.mi_AutoTray.Size = new System.Drawing.Size(146, 22);
+            this.mi_AutoTray.Size = new System.Drawing.Size(152, 22);
             this.mi_AutoTray.Text = "자동 트레이";
             this.mi_AutoTray.Click += new System.EventHandler(this.mi_AutoTray_Click);
             // 
             // ss_1
             // 
             this.ss_1.Name = "ss_1";
-            this.ss_1.Size = new System.Drawing.Size(143, 6);
+            this.ss_1.Size = new System.Drawing.Size(149, 6);
             // 
             // mi_Laboratory
             // 
             this.mi_Laboratory.Name = "mi_Laboratory";
-            this.mi_Laboratory.Size = new System.Drawing.Size(146, 22);
+            this.mi_Laboratory.Size = new System.Drawing.Size(152, 22);
             this.mi_Laboratory.Text = "실험실";
             this.mi_Laboratory.Click += new System.EventHandler(this.mi_Laboratory_Click);
             // 
             // mi_BST_Preferences
             // 
             this.mi_BST_Preferences.Name = "mi_BST_Preferences";
-            this.mi_BST_Preferences.Size = new System.Drawing.Size(146, 22);
+            this.mi_BST_Preferences.Size = new System.Drawing.Size(152, 22);
             this.mi_BST_Preferences.Text = "BST 환경설정";
             this.mi_BST_Preferences.Click += new System.EventHandler(this.mi_BST_Preferences_Click);
             // 
@@ -255,12 +256,23 @@
             this.mi_DebugTool.Size = new System.Drawing.Size(204, 22);
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(406, 27);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(132, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "MC 환경설정 (임시)";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // BST_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(538, 275);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.txt_Notice);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -305,6 +317,7 @@
         private System.Windows.Forms.ToolStripMenuItem mi_Log;
         private System.Windows.Forms.ToolStripSeparator mi_SS2;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugTool;
+        private System.Windows.Forms.Button button1;
 
     }
 }

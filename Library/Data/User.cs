@@ -13,7 +13,7 @@ namespace BellLib.Data
         public static string BSN_Path = Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
         public static string BSN_Email, BSN_Password;
         public static string MC_NickName, MC_UUID, MC_ID, MC_PW = null;
-        public static bool MC_Login;
+        public static bool MC_Login = false;
         public static bool BSP_AutoUpdate = true;
     }
 }
