@@ -200,9 +200,9 @@
       <Project>{061b2585-757a-4215-b999-361b2120b41b}</Project>
       <Name>Bell Smart Tools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Library\Library.csproj">
+    <ProjectReference Include="..\Library\Bell Library.csproj">
       <Project>{fb765dd6-bc7c-4179-ad34-ccc73f32a176}</Project>
-      <Name>Library</Name>
+      <Name>Bell Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

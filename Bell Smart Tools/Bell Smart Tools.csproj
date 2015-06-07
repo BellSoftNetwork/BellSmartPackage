@@ -228,9 +228,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\Library.csproj">
+    <ProjectReference Include="..\Library\Bell Library.csproj">
       <Project>{fb765dd6-bc7c-4179-ad34-ccc73f32a176}</Project>
-      <Name>Library</Name>
+      <Name>Bell Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

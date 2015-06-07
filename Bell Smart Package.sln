@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Tools", "Bell Smart Tools\Bell Smart Tools.csproj", "{061B2585-757A-4215-B999-361B2120B41B}"
 EndProject
@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Package", "Bell 
 		{061B2585-757A-4215-B999-361B2120B41B} = {061B2585-757A-4215-B999-361B2120B41B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{FB765DD6-BC7C-4179-AD34-CCC73F32A176}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Library", "Library\Bell Library.csproj", "{FB765DD6-BC7C-4179-AD34-CCC73F32A176}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -29,7 +29,7 @@ Global
 		SccProjectUniqueName3 = Bell\u0020Smart\u0020Package\\Bell\u0020Smart\u0020Package.csproj
 		SccProjectName3 = Bell\u0020Smart\u0020Package
 		SccLocalPath3 = Bell\u0020Smart\u0020Package
-		SccProjectUniqueName4 = Library\\Library.csproj
+		SccProjectUniqueName4 = Library\\Bell\u0020Library.csproj
 		SccProjectName4 = Library
 		SccLocalPath4 = Library
 	EndGlobalSection
