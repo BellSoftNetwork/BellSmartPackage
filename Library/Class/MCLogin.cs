@@ -4,10 +4,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
-using Library.Class;
-using Library.Data;
+using BellLib.Class;
+using BellLib.Data;
 
-namespace Library.Class
+namespace BellLib.Class
 {
     /// <summary>
     /// 마인크래프트 로그인 관련 메서드와 필드, 열거형 목록을 가지고 있는 클래스입니다.

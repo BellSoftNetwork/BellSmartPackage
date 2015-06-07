@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Library;
+using BellLib;
 
 namespace Bell_Smart_Package
 {

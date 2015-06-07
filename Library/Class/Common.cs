@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Net;
 using Microsoft.Win32;
 
-namespace Library.Class
+namespace BellLib.Class
 {
     //delegate void OnEnd();
 

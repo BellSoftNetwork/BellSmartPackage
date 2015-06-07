@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
-using Library.Class;
-using Library.Data;
+using BellLib.Class;
+using BellLib.Data;
 using Bell_Smart_Tools.Source.BST;
 
 namespace Bell_Smart_Package.Source.BSP

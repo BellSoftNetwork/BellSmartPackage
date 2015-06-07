@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Library.Class
+namespace BellLib.Class
 {
     class Debug
     {

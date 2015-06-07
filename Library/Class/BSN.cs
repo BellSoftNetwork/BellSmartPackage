@@ -2,10 +2,10 @@
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
-using Library.Class;
-using Library.Data;
+using BellLib.Class;
+using BellLib.Data;
 
-namespace Library.Class
+namespace BellLib.Class
 {
     /// <summary>
     /// BSN 로그인 관련 메서드와 필드를 가지고 있는 클래스입니다.

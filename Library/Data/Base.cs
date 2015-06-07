@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Win32;
 
-namespace Library.Data
+namespace BellLib.Data
 {
     public class Base
     {
