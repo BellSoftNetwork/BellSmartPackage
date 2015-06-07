@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using BellLib.Class;
 using RegKind = Microsoft.Win32.RegistryValueKind;
+using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace BellLib.Class
 {
@@ -66,13 +67,15 @@ namespace BellLib.Class
 		        Mode = value;
 	        }
         }
-        public static System.Windows.Forms.DialogResult Message(Level OutputLevel, string Text, string Caption = "Bell Smart Debug Tools", MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information, MessageBoxDefaultButton DefaultButton = MessageBoxDefaultButton.Button1, string Info = "Debug")
+        public static DialogResult Message(Level OutputLevel, string Text, string Caption = "Bell Smart Debug Tools",
+            MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.Information,
+            MessageBoxDefaultButton DefaultButton = MessageBoxDefaultButton.Button1, string Info = "Debug")
         {
-	        if (!(Mode == Level.Disable)) {
+	        if (Mode != Level.Disable) {
 		        TxtWrite(Text, Info);
 	        }
 	        //디버그모드가 활성화 되어있을때
-	        if (Mode >= OutputLevel & Mode < Level.Log) {
+	        if (Mode >= OutputLevel && Mode < Level.Log) {
 		        return MessageBox.Show(Text, Caption, Buttons, Icon, DefaultButton);
 	        }
 

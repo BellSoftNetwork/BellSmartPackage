@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using System.Net;
+using System.Windows.Forms;
 using Microsoft.Win32;
 
 namespace BellLib.Class
@@ -64,8 +64,6 @@ namespace BellLib.Class
 
         public static void WriteTextFile(string LocalFilePath, string Data, bool Append = false)
         {
-            bool boolWritten = false;
-
             while (!boolWritten) // 이 구문 현재 LocalFilePath 경로가 존재하지 않으면(폴더가 생성되있지 않으면), 무한루프 도는 구조. 수정 요망
             {
                 try
@@ -74,8 +72,6 @@ namespace BellLib.Class
                         File.AppendAllText(LocalFilePath, Data);
                     else
                         File.WriteAllText(LocalFilePath, Data);
-
-                    boolWritten = true;
                 }
                 catch (Exception ex)
                 {
