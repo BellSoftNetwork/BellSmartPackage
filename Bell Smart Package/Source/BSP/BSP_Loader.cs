@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+
 namespace Bell_Smart_Package.Source.BSP
 {
     public partial class BSP_Loader : Form
@@ -22,6 +23,7 @@ namespace Bell_Smart_Package.Source.BSP
             BST.Show();
 
             this.Hide();
+
         }
     }
 }

@@ -61,6 +61,36 @@ namespace Bell_Smart_Tools.Properties {
         }
         
         /// <summary>
+        ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Icon Photo_Bell {
+            get {
+                object obj = ResourceManager.GetObject("Photo_Bell", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Icon Photo_Random {
+            get {
+                object obj = ResourceManager.GetObject("Photo_Random", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Icon Photo_RedBell {
+            get {
+                object obj = ResourceManager.GetObject("Photo_RedBell", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   System.IO.MemoryStream과(와) 유사한 System.IO.UnmanagedMemoryStream 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
         public static System.IO.UnmanagedMemoryStream Sound_alarm {

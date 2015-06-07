@@ -16,7 +16,8 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>M:\Server\WebData\BSN\publish\BST_New\</PublishUrl>
+    <TargetFrameworkProfile />
+    <PublishUrl>M:\Server\WebData\BSN\publish\BSP\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -26,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <InstallUrl>http://bellsoft.iptime.org/publish/BST4/</InstallUrl>
+    <InstallUrl>http://bellsoft.iptime.org/publish/BSP/</InstallUrl>
     <SupportUrl>http://BellLife.tistory.com/</SupportUrl>
     <ErrorReportUrl>http://bellsoft.iptime.org/</ErrorReportUrl>
     <TargetCulture>ko-KR</TargetCulture>
@@ -44,7 +45,6 @@
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,10 +74,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>689286D7FCE70FCA74C62ACD39DBDD16DEB031C8</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0B99792724FFCA429E25E243C1FBA86A470E65D6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Bell Smart Tools_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Bell Smart Tools_Key.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -90,6 +90,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Bell_Smart_Tools.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Bell Smart Tools_Key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -200,7 +206,7 @@
       <DependentUpon>BST_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Bell Smart Tools_TemporaryKey.pfx" />
+    <None Include="Bell Smart Tools_Key.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

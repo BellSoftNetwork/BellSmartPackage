@@ -31,13 +31,13 @@
     <ErrorReportUrl>http://bellsoft.iptime.org/</ErrorReportUrl>
     <TargetCulture>ko-KR</TargetCulture>
     <ProductName>Bell Smart Package</ProductName>
-    <PublisherName>방울</PublisherName>
-    <SuiteName>Bell Soft Network</SuiteName>
+    <PublisherName>Bell Soft Network</PublisherName>
+    <SuiteName>Bell Smart Package</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -80,13 +80,19 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B3AC4C9792890D2C1C19AB4B32BBEFEC2B7ABAEA</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>10F5EB431B461C69CC470218EBA54F815AB4D37A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Bell Smart Package_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Bell Smart Package_Key.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Bell Smart Package_Key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -117,11 +123,12 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Source\BSP\BSP_Loader.resx">
       <DependentUpon>BSP_Loader.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Bell Smart Package_TemporaryKey.pfx" />
+    <None Include="Bell Smart Package_Key.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -132,16 +139,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bell Smart Server\Bell Smart Server.csproj">
-      <Project>{7009480f-d3b9-4485-96b5-e2c397a8aafd}</Project>
-      <Name>Bell Smart Server</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bell Smart Tools\Bell Smart Tools.csproj">
-      <Project>{061b2585-757a-4215-b999-361b2120b41b}</Project>
-      <Name>Bell Smart Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Photo\Photo_Bell.ico" />
@@ -175,6 +172,17 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bell Smart Server\Bell Smart Server.csproj">
+      <Project>{7009480f-d3b9-4485-96b5-e2c397a8aafd}</Project>
+      <Name>Bell Smart Server</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Bell Smart Tools\Bell Smart Tools.csproj">
+      <Project>{061b2585-757a-4215-b999-361b2120b41b}</Project>
+      <Name>Bell Smart Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
