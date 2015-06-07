@@ -29,7 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSS_Loader));
+            this.pb_Load = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
+            // 
+            // pb_Load
+            // 
+            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_Load.Location = new System.Drawing.Point(0, 0);
+            this.pb_Load.Name = "pb_Load";
+            this.pb_Load.Size = new System.Drawing.Size(422, 55);
+            this.pb_Load.TabIndex = 0;
             // 
             // BSS_Loader
             // 
@@ -37,6 +46,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(422, 55);
+            this.Controls.Add(this.pb_Load);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BSS_Loader";
@@ -48,5 +58,7 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.ProgressBar pb_Load;
     }
 }

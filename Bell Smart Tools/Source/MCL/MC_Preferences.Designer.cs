@@ -36,7 +36,7 @@
             this.txt_ID = new System.Windows.Forms.TextBox();
             this.lb_PW = new System.Windows.Forms.Label();
             this.lb_ID = new System.Windows.Forms.Label();
-            this.gb_BCSetting = new System.Windows.Forms.GroupBox();
+            this.gb_MCSetting = new System.Windows.Forms.GroupBox();
             this.txt_ClientURL = new System.Windows.Forms.TextBox();
             this.lb_JVM = new System.Windows.Forms.Label();
             this.txt_JAVAURL = new System.Windows.Forms.TextBox();
@@ -48,7 +48,7 @@
             this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_Save = new System.Windows.Forms.Button();
             this.gb_MCAccount.SuspendLayout();
-            this.gb_BCSetting.SuspendLayout();
+            this.gb_MCSetting.SuspendLayout();
             this.SuspendLayout();
             // 
             // gb_MCAccount
@@ -131,25 +131,25 @@
             this.lb_ID.TabIndex = 0;
             this.lb_ID.Text = "이메일 또는 닉네임 : ";
             // 
-            // gb_BCSetting
+            // gb_MCSetting
             // 
-            this.gb_BCSetting.Controls.Add(this.txt_ClientURL);
-            this.gb_BCSetting.Controls.Add(this.lb_JVM);
-            this.gb_BCSetting.Controls.Add(this.txt_JAVAURL);
-            this.gb_BCSetting.Controls.Add(this.lb_Java);
-            this.gb_BCSetting.Controls.Add(this.btn_JavaSearch);
-            this.gb_BCSetting.Controls.Add(this.lb_Client);
-            this.gb_BCSetting.Controls.Add(this.cb_Console);
-            this.gb_BCSetting.Controls.Add(this.txt_Parameter);
-            this.gb_BCSetting.Enabled = false;
-            this.gb_BCSetting.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.gb_BCSetting.ForeColor = System.Drawing.Color.Blue;
-            this.gb_BCSetting.Location = new System.Drawing.Point(0, 97);
-            this.gb_BCSetting.Name = "gb_BCSetting";
-            this.gb_BCSetting.Size = new System.Drawing.Size(585, 111);
-            this.gb_BCSetting.TabIndex = 71;
-            this.gb_BCSetting.TabStop = false;
-            this.gb_BCSetting.Text = "방울크래프트 설정";
+            this.gb_MCSetting.Controls.Add(this.txt_ClientURL);
+            this.gb_MCSetting.Controls.Add(this.lb_JVM);
+            this.gb_MCSetting.Controls.Add(this.txt_JAVAURL);
+            this.gb_MCSetting.Controls.Add(this.lb_Java);
+            this.gb_MCSetting.Controls.Add(this.btn_JavaSearch);
+            this.gb_MCSetting.Controls.Add(this.lb_Client);
+            this.gb_MCSetting.Controls.Add(this.cb_Console);
+            this.gb_MCSetting.Controls.Add(this.txt_Parameter);
+            this.gb_MCSetting.Enabled = false;
+            this.gb_MCSetting.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.gb_MCSetting.ForeColor = System.Drawing.Color.Blue;
+            this.gb_MCSetting.Location = new System.Drawing.Point(0, 97);
+            this.gb_MCSetting.Name = "gb_MCSetting";
+            this.gb_MCSetting.Size = new System.Drawing.Size(585, 111);
+            this.gb_MCSetting.TabIndex = 71;
+            this.gb_MCSetting.TabStop = false;
+            this.gb_MCSetting.Text = "마인크래프트 설정";
             // 
             // txt_ClientURL
             // 
@@ -264,7 +264,7 @@
             this.ClientSize = new System.Drawing.Size(585, 236);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Save);
-            this.Controls.Add(this.gb_BCSetting);
+            this.Controls.Add(this.gb_MCSetting);
             this.Controls.Add(this.gb_MCAccount);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -275,8 +275,8 @@
             this.Load += new System.EventHandler(this.MC_Preferences_Load);
             this.gb_MCAccount.ResumeLayout(false);
             this.gb_MCAccount.PerformLayout();
-            this.gb_BCSetting.ResumeLayout(false);
-            this.gb_BCSetting.PerformLayout();
+            this.gb_MCSetting.ResumeLayout(false);
+            this.gb_MCSetting.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -290,7 +290,7 @@
         internal System.Windows.Forms.TextBox txt_ID;
         internal System.Windows.Forms.Label lb_PW;
         internal System.Windows.Forms.Label lb_ID;
-        internal System.Windows.Forms.GroupBox gb_BCSetting;
+        internal System.Windows.Forms.GroupBox gb_MCSetting;
         internal System.Windows.Forms.TextBox txt_ClientURL;
         internal System.Windows.Forms.Label lb_JVM;
         internal System.Windows.Forms.TextBox txt_JAVAURL;

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using BellLib.Class;
+using BellLib.Data;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -17,8 +18,11 @@ namespace Bell_Smart_Tools.Source.BST
         {
             InitializeComponent();
         }
-
-        private void BST_Loader_Shown(object sender, EventArgs e)
+        /// <summary>
+        /// BST를 초기화합니다.
+        /// </summary>
+        /// <returns></returns>
+        private bool Initialize()
         {
             // GUID 대신 사용자 임의대로 뮤텍스 이름 사용
             string mtxName = "Bell Smart Tools";
@@ -33,13 +37,42 @@ namespace Bell_Smart_Tools.Source.BST
             {
                 Common.Message("BST가 이미 실행중입니다." + Environment.NewLine + "BST는 중복실행이 불가능 합니다.");
                 Common.End();
-                return;
+                return false;
             }
-            pb_Load.Value = pb_Load.Maximum;
-            BST_Main BST = new BST_Main(); //new BST_Login();
-            BST.Show();
-            //this.Hide();
-            this.Close();
+
+            var actions = new Dictionary<Action, int> 
+            {
+                {MCL, 1},
+            };
+
+            pb_Load.Minimum = 0;
+            pb_Load.Maximum = actions.Select(kvp => kvp.Value).Sum();
+            pb_Load.Value = 0;
+            foreach (var action in actions)
+            {
+                action.Key();
+                pb_Load.Value += action.Value;
+                Application.DoEvents();
+            }
+            return true;
+        }
+
+        private void MCL()
+        {
+            if (User.MC_ID != null && User.MC_PW != null) // 레지스트리에 MC 계정정보가 저장되어있으면 로그인 실행
+            {
+                MCLogin.Login(User.MC_ID, User.MC_PW, MCLogin.LoginType.Authenticate);
+            }
+        }
+        private void BST_Loader_Shown(object sender, EventArgs e)
+        {
+            if (Initialize())
+            {
+                BST_Main BST = new BST_Main(); //new BST_Login();
+                BST.Show();
+                //this.Hide();
+                this.Close();
+            }
         }
     }
 }

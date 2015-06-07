@@ -33,6 +33,10 @@ namespace Bell_Smart_Tools.Source.MCL
             {
                 txt_PW.Text = PW;
             }
+            if (User.MC_Login)
+            {
+                FormSet(true);
+            }
         }
         private void FormSet(bool Login)
         {
@@ -42,12 +46,15 @@ namespace Bell_Smart_Tools.Source.MCL
             btn_MCLogout.Enabled = Login;
             btn_JavaSearch.Enabled = Login;
             cb_Console.Enabled = Login;
+            btn_Save.Enabled = Login;
+            gb_MCSetting.Enabled = Login;
 
             lb_ID.Enabled = !Login;
             lb_PW.Enabled = !Login;
             txt_ID.Enabled = !Login;
             txt_PW.Enabled = !Login;
             btn_MCLogin.Enabled = !Login;
+            gb_MCAccount.Enabled = !Login;
         }
         private void btn_MCLogin_Click(object sender, EventArgs e)
         {

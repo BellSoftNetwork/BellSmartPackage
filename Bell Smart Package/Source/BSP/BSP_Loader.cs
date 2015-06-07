@@ -34,6 +34,7 @@ namespace Bell_Smart_Package.Source.BSP
             if (Initialize())
             {
                 Log("Initialize complete.");
+                Application.DoEvents();
                 BSP_Management BSPM = new BSP_Management();
                 BSP_Login BSP = new BSP_Login();
                 Log("Instance generation complete.");
@@ -52,13 +53,46 @@ namespace Bell_Smart_Package.Source.BSP
         private bool Initialize()
         {
             Application.DoEvents();
+            var actions = new Dictionary<Action, int> 
+            {
+                {InitDebug, 1},
+                {InitParameter, 1},
+            };
 
+            pb_Load.Minimum = 0;
+            pb_Load.Maximum = actions.Select(kvp => kvp.Value).Sum();
+            pb_Load.Value = 0;
+            foreach (var action in actions)
+            {
+                action.Key();
+                pb_Load.Value += action.Value;
+                Application.DoEvents();
+            }
+
+            if (Deployment.UpdateAvailable()) // 최신버전 발견시
+            {
+                BSP_Updater BSPU = new BSP_Updater();
+                BSPU.Show(); // 업데이트 실행
+                this.Hide();
+
+                return false; // 프로그램 실행 중단.
+            }
+
+            return true;
+        }
+
+        private void InitDebug()
+        {
             Log("Debug Initilaize");
             Debug dbg = new Debug();
             dbg.Initialize();
             Log("Debug Initialize complete.");
+        }
 
-            try {
+        private void InitParameter()
+        {
+            try
+            {
                 // 되는지 안되는지는 모르는 소스.
                 Log("Program parameter loading");
                 string[] tmp = Environment.GetCommandLineArgs(); // 프로그램 파라미터 로드
@@ -85,22 +119,12 @@ namespace Bell_Smart_Package.Source.BSP
                     }
                     Log("Program parameter debug mode active.");
                 }
-            } catch {
+            }
+            catch
+            {
                 Log("Program parameter analysis fail.");
             }
-
-            if (Deployment.UpdateAvailable()) // 최신버전 발견시
-            {
-                BSP_Updater BSPU = new BSP_Updater();
-                BSPU.Show(); // 업데이트 실행
-                this.Hide();
-
-                return false; // 프로그램 실행 중단.
-            }
-
-            return true;
         }
-        
         private void mi_End_Click(object sender, EventArgs e)
         {
             Common.End();
