@@ -31,5 +31,12 @@ namespace Bell_Smart_Package.Source.BSP
             BSS.Show();
             this.Close();
         }
+
+        private void btn_Updater_Click(object sender, EventArgs e)
+        {
+            BSP_Updater BSPU = new BSP_Updater();
+            BSPU.Show();
+            this.Close();
+        }
     }
 }

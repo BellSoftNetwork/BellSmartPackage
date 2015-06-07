@@ -31,12 +31,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSP_Selector));
             this.btn_BSS = new System.Windows.Forms.Button();
             this.btn_BST = new System.Windows.Forms.Button();
+            this.btn_Updater = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_BSS
             // 
             this.btn_BSS.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_BSS.Location = new System.Drawing.Point(0, 22);
+            this.btn_BSS.Location = new System.Drawing.Point(0, 49);
             this.btn_BSS.Name = "btn_BSS";
             this.btn_BSS.Size = new System.Drawing.Size(206, 23);
             this.btn_BSS.TabIndex = 0;
@@ -55,12 +56,25 @@
             this.btn_BST.UseVisualStyleBackColor = true;
             this.btn_BST.Click += new System.EventHandler(this.btn_BST_Click);
             // 
+            // btn_Updater
+            // 
+            this.btn_Updater.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_Updater.Location = new System.Drawing.Point(0, 23);
+            this.btn_Updater.Name = "btn_Updater";
+            this.btn_Updater.Size = new System.Drawing.Size(206, 26);
+            this.btn_Updater.TabIndex = 2;
+            this.btn_Updater.Text = "Bell Smart Package Updater";
+            this.btn_Updater.UseVisualStyleBackColor = true;
+            this.btn_Updater.Click += new System.EventHandler(this.btn_Updater_Click);
+            // 
             // BSP_Selector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(206, 45);
+            this.ClientSize = new System.Drawing.Size(206, 72);
+            this.ControlBox = false;
+            this.Controls.Add(this.btn_Updater);
             this.Controls.Add(this.btn_BST);
             this.Controls.Add(this.btn_BSS);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -78,5 +92,6 @@
 
         private System.Windows.Forms.Button btn_BSS;
         private System.Windows.Forms.Button btn_BST;
+        private System.Windows.Forms.Button btn_Updater;
     }
 }

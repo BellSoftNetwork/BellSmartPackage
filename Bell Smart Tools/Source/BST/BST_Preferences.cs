@@ -16,6 +16,9 @@ namespace Bell_Smart_Tools.Source.BST
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// BST_Preferences 폼 내용을 초기화 합니다.
+        /// </summary>
         private void Initialize()
         {
             lb_email.Text = "이메일 저장 : Loading..";
