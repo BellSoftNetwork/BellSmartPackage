@@ -49,11 +49,6 @@ namespace Bell_Smart_Tools.Source.BST
                 }*/ // 무슨 의도인..
         }
 
-        private void btn_GameStart_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void mi_TopMost_Click(object sender, EventArgs e)
         {
             this.TopMost = mi_TopMost.Checked;
@@ -88,6 +83,12 @@ namespace Bell_Smart_Tools.Source.BST
         private void button1_Click(object sender, EventArgs e)
         {
             Process.Start(Application.StartupPath);
+        }
+
+        private void mi_BST_Preferences_Click(object sender, EventArgs e)
+        {
+            BST_Preferences BSTP = new BST_Preferences();
+            BSTP.ShowDialog();
         }
     }
 }
