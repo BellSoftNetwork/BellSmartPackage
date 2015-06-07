@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Library.Class;
 using Library.Info;
 
-namespace Bell_Smart_Tools.Class
+namespace Library.Class
 {
     /// <summary>
     /// 마인크래프트 로그인 관련 메서드와 필드, 열거형 목록을 가지고 있는 클래스입니다.

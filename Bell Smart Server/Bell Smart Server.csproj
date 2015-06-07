@@ -63,7 +63,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Photo\Photo_RedBell.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Bell_Smart_Server.Program</StartupObject>
@@ -148,11 +149,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Photo\Photo_Bell.ico" />
-    <Content Include="Photo\Photo_Random.ico" />
-    <Content Include="Photo\Photo_RedBell.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4%28x86 및 x64%29</ProductName>
@@ -174,10 +170,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Resource\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Library\Library.csproj">
       <Project>{fb765dd6-bc7c-4179-ad34-ccc73f32a176}</Project>

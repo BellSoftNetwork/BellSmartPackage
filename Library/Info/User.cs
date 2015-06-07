@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Library.Info
 {
-    class User
+    public class User
     {
         public static Version BST_Current_Verion = new Version(4, 0, 0, 0);
         public static Version BST_Latest_Version = new Version(4, 0, 0, 0);
