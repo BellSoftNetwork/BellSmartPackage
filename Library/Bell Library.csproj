@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\BSN.cs" />
+    <Compile Include="Class\Protection.cs" />
     <Compile Include="Class\RegistryManager.cs" />
     <Compile Include="Class\Debug.cs" />
     <Compile Include="Class\Deployment.cs" />
