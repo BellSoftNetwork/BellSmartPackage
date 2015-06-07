@@ -92,7 +92,6 @@
             this.txt_PW.PasswordChar = 'l';
             this.txt_PW.Size = new System.Drawing.Size(248, 21);
             this.txt_PW.TabIndex = 103;
-            this.txt_PW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_PW_KeyDown);
             // 
             // txt_Email
             // 
@@ -101,7 +100,6 @@
             this.txt_Email.Name = "txt_Email";
             this.txt_Email.Size = new System.Drawing.Size(248, 21);
             this.txt_Email.TabIndex = 102;
-            this.txt_Email.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Email_KeyDown);
             // 
             // lb_PW
             // 

@@ -10,26 +10,38 @@ namespace BellLib.Class
     /// </summary>
     class Protection
     {
-        public string Base64(string Content, bool Encoding, byte Count = 1)
+        public enum ProtectionType
+        {
+            PROTECTION_ENCODE,
+            PROTECTION_DECODE
+        }
+
+        public string Base64(string Content, ProtectionType pType, byte Count = 1)
         {
             byte TC = 1;
-            if (Encoding == true)
+            string contect = Content;
+
+            switch (pType)
             {
-                for (TC = 1; TC <= Count; TC++)
-                {
-                    Content = (string)Base64Encode(Content);
-                }
-            }
-            else
-            {
-                for (TC = 1; TC <= Count; TC++)
-                {
-                    Content = (string)Base64Decode(Content);
-                }
+                case ProtectionType.PROTECTION_ENCODE:
+                    for (TC = 1; TC <= Count; TC++)
+                    {
+                        contect = (string)Base64Encode(contect);
+                    }
+                    break;
+                case ProtectionType.PROTECTION_DECODE:
+                    for (TC = 1; TC <= Count; TC++)
+                    {
+                        contect = (string)Base64Decode(contect);
+                    }
+                    break;
+                default:
+                    return null;
             }
 
-            return Content;
+            return contect;
         }
+
         private object Base64Encode(string Content)
         {
             try
@@ -44,10 +56,9 @@ namespace BellLib.Class
                 //콘텐츠 반환
             }
         }
+
         private object Base64Decode(string Content)
         {
-            //GoTo 문은 매우 비권장되는 문법 사항
-
             try
             {
                 return Encoding.UTF8.GetString(Convert.FromBase64String(Content));

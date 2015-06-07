@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
+using Bell_Smart_Tools.Source.BST;
 using BellLib.Class;
 using BellLib.Data;
-using Bell_Smart_Tools.Source.BST;
 
 namespace Bell_Smart_Package.Source.BSP
 {
@@ -18,6 +18,8 @@ namespace Bell_Smart_Package.Source.BSP
         public BSP_Login()
         {
             InitializeComponent();
+            this.txt_PW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);
+            this.txt_Email.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);
         }
 
         private void Initialize() // 폼 초기화
@@ -83,15 +85,7 @@ namespace Bell_Smart_Package.Source.BSP
             Initialize(); // 계정 정보 로드 및 초기화
         }
 
-        private void txt_Email_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btn_Login_Click(sender, e); // 로그인 버튼 클릭
-            }
-        }
-
-        private void txt_PW_KeyDown(object sender, KeyEventArgs e)
+        private void txt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -132,7 +126,6 @@ namespace Bell_Smart_Package.Source.BSP
 
         private void BSP_Login_FormClosing(object sender, FormClosingEventArgs e)
         {
-            MessageBox.Show(e.CloseReason.ToString());
             Common.End();
         }
 

@@ -104,7 +104,6 @@ namespace BellLib.Class
             catch { return null; }
         }
 
-
         public static void CreateDefaultForder(string defaultPath = null)
         {
             if (defaultPath == null)
@@ -116,22 +115,24 @@ namespace BellLib.Class
             CreateFolder(defaultPath + "logs\\");
             CreateFolder(defaultPath + "Utilities\\");
         }
+
         private static void CreateFolder(string folderPath)
         {
             System.IO.Directory.CreateDirectory(folderPath);
         }
+
         /// <summary>
         /// 해당 디렉토리의 파일 포맷을 가진 모든 파일을 삭제합니다.
         /// </summary>
-        /// <param name="DirPath"></param>
+        /// <param name="dirPath"></param>
         /// <param name="Format"></param>
         /// <returns>파일 존재 여부</returns>
-        public static bool DeleteDirectoryFile(string DirPath, string Format = "*.*")
+        public static bool DeleteDirectoryFile(string dirPath, string format = "*.*")
         {
-            DirectoryInfo dir = new DirectoryInfo(DirPath);
+            DirectoryInfo dir = new DirectoryInfo(dirPath);
             System.IO.FileInfo[] files;
 
-            files = dir.GetFiles(Format, SearchOption.AllDirectories);
+            files = dir.GetFiles(format, SearchOption.AllDirectories);
             if (files.Length <= 0)
             {
                 return false;
