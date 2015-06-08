@@ -169,6 +169,10 @@
     <Compile Include="Source\BST\BST_Preferences.Designer.cs">
       <DependentUpon>BST_Preferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BST\BST_TicTacToe.cs" />
+    <Compile Include="Source\BST\BST_TicTacToe.Designer.cs">
+      <DependentUpon>BST_TicTacToe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\BST\BST_Updater.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,11 +208,15 @@
     <EmbeddedResource Include="Source\BST\BST_Preferences.resx">
       <DependentUpon>BST_Preferences.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\BST\BST_TicTacToe.resx">
+      <DependentUpon>BST_TicTacToe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Updater.resx">
       <DependentUpon>BST_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Bell Smart Tools_Key.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
