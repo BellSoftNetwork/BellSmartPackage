@@ -18,8 +18,8 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void Button_TicTacToe_Click(object sender, EventArgs e)
         {
-            //var game = new BST_TicTacToe();
-            //game.Show();
+            var game = new BST_TicTacToe();
+            game.Show()
         }
     }
 }
