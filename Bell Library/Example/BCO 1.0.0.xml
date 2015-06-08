@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BCO>
+  <Option>
+    <Opt Name="NEI" MUID="NEI" Default="true"/>
+    <Opt Name="MapWriter" MUID="MiniMap" Default="false"/>
+    <Opt Name="Rei's MiniMap" MUID="MiniMap" Default="false"/>
+  </Option>
+  <Directory>
+    <Dir>mods</Dir>
+    <Dir>flan</Dir>
+  </Directory>
+  <Hash>
+    <File Name="NEI" loc="mods\NEI.jar">파일 해시 asdfasdf</File>
+    <File Name="MapWriter" loc="mods\MapWriter.jar">파일 해시 asdfasdf</File>
+    <File Name="Rei's MiniMap" loc="mods\Rei_MiniMap.jar">파일 해시 asdfasdf</File>
+  </Hash>
+</BCO>

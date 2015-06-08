@@ -25,14 +25,18 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button1_Click(object sender, EventArgs e)
         {
-            XmlTextReader XTR = new XmlTextReader(textBox1.Text);
+            XmlDocument XD = new XmlDocument();
+            XD.LoadXml(BellLib.Properties.Resources.BellCraft8);
+            
+            XmlNodeReader XNR = new XmlNodeReader(XD);
             string Temp = null;
-            while (XTR.Read())
+            while (XNR.Read())
             {
-                Temp += XTR.Value;
+                if (XNR.NodeType == XmlNodeType.Element)
+                    Temp += XNR.Name + Environment.NewLine;
             }
             textBox2.Text = Temp;
-            XTR.Close();
+            XNR.Close();
         }
     }
 }

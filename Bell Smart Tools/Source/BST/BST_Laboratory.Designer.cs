@@ -56,7 +56,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(216, 110);
+            this.button1.Location = new System.Drawing.Point(341, 81);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -68,7 +68,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(5, 83);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(286, 21);
+            this.textBox1.Size = new System.Drawing.Size(330, 21);
             this.textBox1.TabIndex = 3;
             this.textBox1.Text = "M:\\Server\\WebData\\MainServer\\BellCraft\\test.xml";
             // 
@@ -77,7 +77,8 @@
             this.textBox2.Location = new System.Drawing.Point(5, 110);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(205, 117);
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox2.Size = new System.Drawing.Size(411, 241);
             this.textBox2.TabIndex = 4;
             // 
             // BST_Laboratory
@@ -85,7 +86,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(293, 229);
+            this.ClientSize = new System.Drawing.Size(444, 363);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);

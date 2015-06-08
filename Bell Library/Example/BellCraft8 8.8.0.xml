@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BellCraft>
+  <Version>
+    <Option>Latest</Option>
+    <Base>Recommended</Base>
+  </Version>
+
+  <Directory>
+    <Dir>config</Dir>
+    <Dir>mods</Dir>
+    <Dir>flan</Dir>
+  </Directory>
+  <Hash>
+    <File loc="mods\buildcraft.jar">asasdfasdfasdf파일해시</File>
+    <File loc="mods\industrialcraft.jar">asasddffasdfasdf파일해시</File>
+    <File loc="mods\appliedenergetics2.jar">asasdfasdfaasdfwaesdf파일해시</File>
+  </Hash>
+</BellCraft>

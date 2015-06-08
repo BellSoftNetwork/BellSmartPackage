@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Belllib.Properties {
+namespace BellLib.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Belllib.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Belllib.Properties {
         ///   이 클래스에서 사용하는 캐시된 ResourceManager 인스턴스를 반환합니다.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Belllib.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BellLib.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Belllib.Properties {
         ///   속성을 재정의합니다.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,143 @@ namespace Belllib.Properties {
         }
         
         /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;BCO&gt;
+        ///  &lt;Info&gt;
+        ///    &lt;Latest&gt;1.0.0&lt;/Latest&gt;
+        ///    &lt;Recommended&gt;1.0.0&lt;/Recommended&gt;
+        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Option/BCO/&lt;/Down&gt;
+        ///  &lt;/Info&gt;
+        ///  &lt;Version&gt;
+        ///    &lt;Ver&gt;1.0.0&lt;/Ver&gt;
+        ///  &lt;/Version&gt;
+        ///&lt;/BCO&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string BCO {
+            get {
+                return ResourceManager.GetString("BCO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;BCO&gt;
+        ///  &lt;Option&gt;
+        ///    &lt;Opt Name=&quot;NEI&quot; MUID=&quot;NEI&quot; Default=&quot;true&quot;/&gt;
+        ///    &lt;Opt Name=&quot;MapWriter&quot; MUID=&quot;MiniMap&quot; Default=&quot;false&quot;/&gt;
+        ///    &lt;Opt Name=&quot;Rei&apos;s MiniMap&quot; MUID=&quot;MiniMap&quot; Default=&quot;false&quot;/&gt;
+        ///  &lt;/Option&gt;
+        ///  &lt;Directory&gt;
+        ///    &lt;Dir&gt;mods&lt;/Dir&gt;
+        ///    &lt;Dir&gt;flan&lt;/Dir&gt;
+        ///  &lt;/Directory&gt;
+        ///  &lt;Hash&gt;
+        ///    &lt;File Name=&quot;NEI&quot; loc=&quot;mods\NEI.jar&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
+        ///    &lt;File Name=&quot;MapWriter&quot; loc=&quot;mods\MapWriter.jar&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
+        ///    &lt;File Name=&quot;Rei&apos;s MiniMap&quot; loc=&quot;mods\Rei_[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string BCO_1_0_0 {
+            get {
+                return ResourceManager.GetString("BCO_1_0_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;BCP_1.7.10&gt; &lt;!-- BellCraft Pack --&gt;
+        ///  &lt;Info&gt;
+        ///    &lt;Latest&gt;1.0.0&lt;/Latest&gt;
+        ///    &lt;Recommended&gt;1.0.0&lt;/Recommended&gt;
+        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Base/BCP_1.7.10/&lt;/Down&gt;
+        ///  &lt;/Info&gt;
+        ///  &lt;Version&gt;
+        ///    &lt;Ver&gt;1.0.0&lt;/Ver&gt;
+        ///  &lt;/Version&gt;
+        ///&lt;/BCP_1.7.10&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string BCP {
+            get {
+                return ResourceManager.GetString("BCP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;BCP&gt;
+        ///  &lt;Directory&gt;
+        ///    &lt;Dir&gt;assets&lt;/Dir&gt;
+        ///    &lt;Dir&gt;resource&lt;/Dir&gt;
+        ///  &lt;/Directory&gt;
+        ///  &lt;Hash&gt;
+        ///    &lt;File loc=&quot;assets\어쩌구저쩌구.txt&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
+        ///    &lt;File loc=&quot;assets\이러쿵저러쿵.log&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
+        ///    &lt;File loc=&quot;resource\리소스.txt&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
+        ///  &lt;/Hash&gt;
+        ///&lt;/BCP&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string BCP_1_0_0 {
+            get {
+                return ResourceManager.GetString("BCP_1_0_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;BellCraft8&gt;
+        ///  &lt;Info&gt;
+        ///    &lt;Name&gt;방울크래프트&lt;/Name&gt;
+        ///    &lt;Recommended&gt;1.7.10&lt;/Recommended&gt;
+        ///    &lt;Latest&gt;8.8.0&lt;/Latest&gt;
+        ///    &lt;Base&gt;BCP 1.7.10&lt;/Base&gt;
+        ///    &lt;Option&gt;BCO&lt;/Option&gt;
+        ///    &lt;News&gt;http://bellsoft.iptime.org:88/News/BC.html&lt;/News&gt;
+        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Pack/BellCraft/&lt;/Down&gt;
+        ///  &lt;/Info&gt;
+        ///  &lt;Version&gt;
+        ///    &lt;Ver&gt;8.0.0&lt;/Ver&gt;
+        ///    &lt;Ver&gt;8.1.0&lt;/Ver&gt;
+        ///    &lt;Ver&gt;8.2.0&lt;/Ver&gt;
+        ///    &lt;Ver&gt;8.3.0&lt;/Ver&gt;
+        ///    &lt;Ver&gt;8.4.0&lt;/Ver&gt;
+        ///    &lt;Ver&gt;8.5.0&lt;/Ver&gt;
+        ///   [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string BellCraft8 {
+            get {
+                return ResourceManager.GetString("BellCraft8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;BellCraft&gt;
+        ///  &lt;Version&gt;
+        ///    &lt;Option&gt;Latest&lt;/Option&gt;
+        ///    &lt;Base&gt;Recommended&lt;/Base&gt;
+        ///  &lt;/Version&gt;
+        ///
+        ///  &lt;Directory&gt;
+        ///    &lt;Dir&gt;config&lt;/Dir&gt;
+        ///    &lt;Dir&gt;mods&lt;/Dir&gt;
+        ///    &lt;Dir&gt;flan&lt;/Dir&gt;
+        ///  &lt;/Directory&gt;
+        ///  &lt;Hash&gt;
+        ///    &lt;File loc=&quot;mods\buildcraft.jar&quot;&gt;asasdfasdfasdf파일해시&lt;/File&gt;
+        ///    &lt;File loc=&quot;mods\industrialcraft.jar&quot;&gt;asasddffasdfasdf파일해시&lt;/File&gt;
+        ///    &lt;File loc=&quot;mods\appliedenergetics2.jar&quot;&gt;asasdfasdfaasdfwaesdf파일해시&lt;/File&gt;
+        ///  &lt;/Hash&gt;
+        ///&lt;/BellCraft&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        public static string BellCraft8_8_8_0 {
+            get {
+                return ResourceManager.GetString("BellCraft8_8_8_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Icon Photo_Bell {
+        public static System.Drawing.Icon Photo_Bell {
             get {
                 object obj = ResourceManager.GetObject("Photo_Bell", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -73,7 +207,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Icon Photo_Random {
+        public static System.Drawing.Icon Photo_Random {
             get {
                 object obj = ResourceManager.GetObject("Photo_Random", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -83,7 +217,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   (아이콘)과(와) 유사한 System.Drawing.Icon 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Icon Photo_RedBell {
+        public static System.Drawing.Icon Photo_RedBell {
             get {
                 object obj = ResourceManager.GetObject("Photo_RedBell", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -93,7 +227,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   System.IO.MemoryStream과(와) 유사한 System.IO.UnmanagedMemoryStream 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Sound_alarm {
+        public static System.IO.UnmanagedMemoryStream Sound_alarm {
             get {
                 return ResourceManager.GetStream("Sound_alarm", resourceCulture);
             }
@@ -102,7 +236,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   System.IO.MemoryStream과(와) 유사한 System.IO.UnmanagedMemoryStream 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Sound_end {
+        public static System.IO.UnmanagedMemoryStream Sound_end {
             get {
                 return ResourceManager.GetStream("Sound_end", resourceCulture);
             }
@@ -111,7 +245,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   System.IO.MemoryStream과(와) 유사한 System.IO.UnmanagedMemoryStream 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Sound_error {
+        public static System.IO.UnmanagedMemoryStream Sound_error {
             get {
                 return ResourceManager.GetStream("Sound_error", resourceCulture);
             }
@@ -120,7 +254,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   System.IO.MemoryStream과(와) 유사한 System.IO.UnmanagedMemoryStream 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Sound_select {
+        public static System.IO.UnmanagedMemoryStream Sound_select {
             get {
                 return ResourceManager.GetStream("Sound_select", resourceCulture);
             }
@@ -129,7 +263,7 @@ namespace Belllib.Properties {
         /// <summary>
         ///   System.IO.MemoryStream과(와) 유사한 System.IO.UnmanagedMemoryStream 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Sound_start {
+        public static System.IO.UnmanagedMemoryStream Sound_start {
             get {
                 return ResourceManager.GetStream("Sound_start", resourceCulture);
             }

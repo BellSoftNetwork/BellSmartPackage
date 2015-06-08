@@ -118,6 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BCO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\example\bco.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BCO_1_0_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\example\bco 1.0.0.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BCP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\example\bcp.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BCP_1_0_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\example\bcp 1.0.0.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BellCraft8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\example\bellcraft8.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="BellCraft8_8_8_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\example\bellcraft8 8.8.0.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Photo_Bell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\photo\photo_bell.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

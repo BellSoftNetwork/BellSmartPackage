@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BCP>
+  <Directory>
+    <Dir>assets</Dir>
+    <Dir>resource</Dir>
+  </Directory>
+  <Hash>
+    <File loc="assets\어쩌구저쩌구.txt">파일 해시 asdfasdf</File>
+    <File loc="assets\이러쿵저러쿵.log">파일 해시 asdfasdf</File>
+    <File loc="resource\리소스.txt">파일 해시 asdfasdf</File>
+  </Hash>
+</BCP>

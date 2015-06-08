@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<BellCraft8>
+  <Info>
+    <Name>방울크래프트</Name>
+    <Recommended>1.7.10</Recommended>
+    <Latest>8.8.0</Latest>
+    <Base>BCP 1.7.10</Base>
+    <Option>BCO</Option>
+    <News>http://bellsoft.iptime.org:88/News/BC.html</News>
+    <Down>http://bellsoft.iptime.org:4135/FileServer/BSL/Pack/BellCraft/</Down>
+  </Info>
+  <Version>
+    <Ver>8.0.0</Ver>
+    <Ver>8.1.0</Ver>
+    <Ver>8.2.0</Ver>
+    <Ver>8.3.0</Ver>
+    <Ver>8.4.0</Ver>
+    <Ver>8.5.0</Ver>
+    <Ver>8.6.0</Ver>
+    <Ver>8.7.0</Ver>
+    <Ver>8.8.0</Ver>
+  </Version>
+</BellCraft8>

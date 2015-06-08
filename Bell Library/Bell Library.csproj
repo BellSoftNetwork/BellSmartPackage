@@ -7,7 +7,7 @@
     <ProjectGuid>{DC04AD6B-647F-4AB9-890A-C8D276D3F8B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Belllib</RootNamespace>
+    <RootNamespace>BellLib</RootNamespace>
     <AssemblyName>Bell Library</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -74,6 +74,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Example\BCO 1.0.0.xml" />
+    <Content Include="Example\BCO.xml" />
+    <Content Include="Example\BCP 1.0.0.xml" />
+    <Content Include="Example\BCP.xml" />
+    <Content Include="Example\BellCraft8.xml" />
     <Content Include="Photo\Photo_Bell.ico" />
     <Content Include="Photo\Photo_Random.ico" />
     <Content Include="Photo\Photo_RedBell.ico" />
@@ -86,10 +91,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Bell Library_Key.pfx" />
+    <Content Include="Example\BellCraft8 8.8.0.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
