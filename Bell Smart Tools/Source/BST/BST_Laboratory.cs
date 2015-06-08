@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Windows.Forms;
+using System.Net;
+using BellLib.Class;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -27,16 +29,82 @@ namespace Bell_Smart_Tools.Source.BST
         {
             XmlDocument XD = new XmlDocument();
             XD.LoadXml(BellLib.Properties.Resources.BellCraft8);
+            //XmlNodeReader XNR = new XmlNodeReader(XD);
+            XmlNode root = XD;
+            textBox2.Text = null;
+
             
-            XmlNodeReader XNR = new XmlNodeReader(XD);
-            string Temp = null;
-            while (XNR.Read())
+            if (root.HasChildNodes)
             {
-                if (XNR.NodeType == XmlNodeType.Element)
-                    Temp += XNR.Name + Environment.NewLine;
+                foreach (XmlNode no in root.ChildNodes)
+                {
+                    if (no.Name == "BellCraft8")
+                    {
+                        foreach (XmlNode child in no)
+                        {
+                            if (child.Name == "Info")
+                            {
+                                foreach (XmlNode ch in child)
+                                {
+                                    switch (ch.Name)
+                                    {
+                                        case "Name":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+
+                                        case "Recommended":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+
+                                        case "Latest":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+
+                                        case "Base":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+
+                                        case "Option":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+
+                                        case "News":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+
+                                        case "Down":
+                                            textBox2.Text += ch.InnerText + Environment.NewLine;
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                /*for (int i = 0; i < childnode.Count; i++)
+                {
+                    XmlNode child = childnode[i];
+                    textBox2.Text += child.OuterXml + "의 값 : " + child.InnerText + Environment.NewLine;
+                }*/
             }
-            textBox2.Text = Temp;
-            XNR.Close();
+
+            /*while (XNR.Read())
+            {
+                if (XNR.Name == "Ver")
+                {
+                    textBox2.Text += XNR.Value + Environment.NewLine;
+                }
+                if (XNR.NodeType == XmlNodeType.Element)
+                {
+                    textBox2.Text += XNR.Name + Environment.NewLine;
+                }
+            }
+            XNR.Close();*/
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ModAnalysis MA = new ModAnalysis("BellCraft8");
         }
     }
 }
