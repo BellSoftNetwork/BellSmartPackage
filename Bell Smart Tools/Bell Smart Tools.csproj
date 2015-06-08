@@ -76,6 +76,9 @@
   <PropertyGroup>
     <ManifestKeyFile>Bell Smart Tools_Key.pfx</ManifestKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Bell_Smart_Tools.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net40\MahApps.Metro.dll</HintPath>
