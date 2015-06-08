@@ -33,8 +33,17 @@ namespace Bell_Smart_Tools.Source.BST
             XmlNode root = XD;
             textBox2.Text = null;
 
+            XmlNodeList xnList = XD.SelectNodes("/BellCraft8/Version/Ver");
+            foreach (XmlNode xn in xnList)
+            {
+                //textBox2.Text += xn.Name + " = " + xn.InnerText + Environment.NewLine;
+                textBox2.Text += xn.InnerText + Environment.NewLine;
+                //string firstName = xn["FirstName"].InnerText;
+                //string lastName = xn["LastName"].InnerText;
+            }
             
-            if (root.HasChildNodes)
+
+            /*if (root.HasChildNodes)
             {
                 foreach (XmlNode no in root.ChildNodes)
                 {
@@ -80,7 +89,7 @@ namespace Bell_Smart_Tools.Source.BST
                             }
                         }
                     }
-                }
+                }*/
                 /*for (int i = 0; i < childnode.Count; i++)
                 {
                     XmlNode child = childnode[i];
@@ -88,23 +97,10 @@ namespace Bell_Smart_Tools.Source.BST
                 }*/
             }
 
-            /*while (XNR.Read())
-            {
-                if (XNR.Name == "Ver")
-                {
-                    textBox2.Text += XNR.Value + Environment.NewLine;
-                }
-                if (XNR.NodeType == XmlNodeType.Element)
-                {
-                    textBox2.Text += XNR.Name + Environment.NewLine;
-                }
-            }
-            XNR.Close();*/
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             ModAnalysis MA = new ModAnalysis("BellCraft8");
+            textBox2.Text = MA.ModInfo();
         }
     }
 }
