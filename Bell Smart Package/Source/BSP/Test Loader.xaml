@@ -1,0 +1,8 @@
+﻿<Window x:Class="Bell_Smart_Package.Source.BSP.Test_Loader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Test_Loader" Height="300" Width="300">
+    <Grid Initialized="Grid_Initialized">
+        
+    </Grid>
+</Window>
