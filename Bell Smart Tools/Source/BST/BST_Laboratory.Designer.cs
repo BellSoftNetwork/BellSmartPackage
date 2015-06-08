@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Laboratory));
             this.Button_TicTacToe = new System.Windows.Forms.Button();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // Button_TicTacToe
@@ -42,12 +44,20 @@
             this.Button_TicTacToe.UseVisualStyleBackColor = true;
             this.Button_TicTacToe.Click += new System.EventHandler(this.Button_TicTacToe_Click);
             // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(13, 43);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(246, 42);
+            this.trackBar1.TabIndex = 1;
+            // 
             // BST_Laboratory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(271, 174);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.Button_TicTacToe);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -55,12 +65,15 @@
             this.Name = "BST_Laboratory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BST 실험실";
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button Button_TicTacToe;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }
