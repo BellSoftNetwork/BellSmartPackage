@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Xml;
 using BellLib.Data;
+
+#pragma warning disable 649
 
 namespace BellLib.Class
 {
@@ -12,9 +15,9 @@ namespace BellLib.Class
     /// </summary>
     public class ModAnalysis
     {
+        private string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down;
+        private string[] _Version;
 
-        private string Name, Recommended, Latest, Base, Option, News, Down;
-        private string[] Version = null;
         #region 생성자
 
         /// <summary>
@@ -24,48 +27,53 @@ namespace BellLib.Class
         public ModAnalysis(string MUID)
         {
             XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
             doc.LoadXml(BellLib.Properties.Resources.BellCraft8);
-            XmlNodeList xnList = doc.SelectNodes("/" + MUID + "/Info");
+            
+            xnList = doc.SelectNodes("/" + MUID + "/Info");
 
             foreach (XmlNode xn in xnList)
-            {
-                Name = xn["Name"].InnerText;
-                Recommended = xn["Recommended"].InnerText;
-                Latest = xn["Latest"].InnerText;
-                Base = xn["Base"].InnerText;
-                Option = xn["Option"].InnerText;
-                News = xn["News"].InnerText;
-                Down = xn["Down"].InnerText;
-            }
+                foreach (var field in typeof(ModAnalysis).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+                    if (field.FieldType == typeof(string))
+                        field.SetValue(this, xn[field.Name.Replace("_", String.Empty)].InnerText);
 
-            string Temp = null;
             xnList = doc.SelectNodes("/" + MUID + "/Version/Ver");
+
+            StringBuilder str = new StringBuilder();
             foreach (XmlNode xn in xnList)
             {
-                Temp += xn.InnerText + Environment.NewLine;
-                //Version[i] += xn.InnerText;
+                str.AppendLine(xn.InnerText);
             }
-            Version = Temp.Split('\n');
+            _Version = str.ToString().Split('\n');
         }
 
         #endregion
 
-        public string ModInfo()
+        /// <summary>
+        /// 모드팩 정보를 반환합니다.
+        /// </summary>
+        /// <returns>모드팩 정보</returns>
+        public string GetModInfo()
         {
-            string Temp = Name + Environment.NewLine;
-            Temp += Recommended + Environment.NewLine;
-            Temp += Latest + Environment.NewLine;
-            Temp += Base + Environment.NewLine;
-            Temp += Option + Environment.NewLine;
-            Temp += News + Environment.NewLine;
-            Temp += Down + Environment.NewLine;
-            Temp += Environment.NewLine;
-            foreach (string tmp in Version)
+            StringBuilder str = new StringBuilder();
+
+            // Default Info
+            str.AppendLine(_Name);
+            str.AppendLine(_Recommended);
+            str.AppendLine(_Latest);
+            str.AppendLine(_Base);
+            str.AppendLine(_Option);
+            str.AppendLine(_News);
+            str.AppendLine(_Down);
+            str.AppendLine();
+
+            // Version Info
+            foreach (string v in _Version)
             {
-                Temp += tmp + Environment.NewLine;
+                str.AppendLine(v);
             }
 
-            return Temp;
+            return str.ToString();
         }
     }
 }

@@ -100,7 +100,7 @@ namespace Bell_Smart_Tools.Source.BST
         private void button2_Click(object sender, EventArgs e)
         {
             ModAnalysis MA = new ModAnalysis("BellCraft8");
-            textBox2.Text = MA.ModInfo();
+            textBox2.Text = MA.GetModInfo();
         }
     }
 }
