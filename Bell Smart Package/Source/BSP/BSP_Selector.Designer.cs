@@ -71,6 +71,7 @@
             this.Name = "BSP_Selector";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BSP 선택";
+            this.Shown += new System.EventHandler(this.BSP_Selector_Shown);
             this.ResumeLayout(false);
 
         }

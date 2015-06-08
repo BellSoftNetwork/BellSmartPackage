@@ -31,5 +31,17 @@ namespace Bell_Smart_Package.Source.BSP
             BSS.Show();
             this.Close();
         }
+
+        /// <summary>
+        /// 지금 한창 BST만 개발중인데 개발할때 계속 BST 선택 눌러서 들어가기 귀찮으니까 개발중에만 임시로 BST 자동선택!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BSP_Selector_Shown(object sender, EventArgs e)
+        {
+            BST_Loader BST = new BST_Loader();
+            BST.Show();
+            this.Close();
+        }
     }
 }
