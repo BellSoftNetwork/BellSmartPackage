@@ -10,6 +10,7 @@ using System.Diagnostics;
 using BellLib.Class;
 using BellLib.Data;
 using Debug = BellLib.Class.Debug;
+using Bell_Smart_Tools.Source.MCL;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -200,5 +201,16 @@ namespace Bell_Smart_Tools.Source.BST
             Test_WPF TWPF = new Test_WPF();
             TWPF.Show();
         }
+
+        private void mi_Help_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+            {
+                BSL_Main BSLM = new BSL_Main();
+                BSLM.Show();
+            }
     }
 }
