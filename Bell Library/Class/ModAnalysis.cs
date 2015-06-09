@@ -28,11 +28,17 @@ namespace BellLib.Class
 
         // 사용하거든!
         #pragma warning disable 169
-        private string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down;
+        private string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down; // 모드팩 정보  'M_값이름'
+        private string B_Latest, B_Recommended, B_Down;// 베이스팩 정보  'B_값이름'
+        private string O_Latest, O_Recommended, O_Down;// 옵션팩 정보  'O_값이름'
         #pragma warning restore 169
 
-        private string[] _Version;
-        private string _MUID;
+        private string[] M_Version; // 모드팩 버전리스트
+        private string[] B_Version; // 베이스팩 버전리스트
+        private string[] O_Version; // 옵션팩 버전리스트
+        private string _MUID; // Modpack UID
+        private string _BUID; // Basepack UID
+        private string _OUID; // Optionpack UID
         private bool _Parsed = false;
 
         #endregion
@@ -79,7 +85,7 @@ namespace BellLib.Class
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
-            doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8/BellCraft8.xml");
+            doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/" + _MUID + "/" + _MUID + ".xml");
             //doc.LoadXml(BellLib.Properties.Resources.BellCraft8); // 추후 이 구문을 지우고 웹에서 MUID.xml 파일을 받아와서 로드함.
 
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
@@ -90,7 +96,8 @@ namespace BellLib.Class
                     // 만약 필드 타입이 string이면..! (string[]도 있으니까..)
                     if (field.FieldType == typeof(string))
                         // this(이 클래스)의 필드값을 xn[필드이름에서 _제거].InnerText로 설정한다.]
-                        field.SetValue(this, xn[field.Name.Replace("_", String.Empty)].InnerText);
+                        try { field.SetValue(this, xn[field.Name.Replace("_", String.Empty)].InnerText); }
+                        catch { }
 
             xnList = doc.SelectNodes("/" + _MUID + "/Version/Ver");
 
@@ -99,7 +106,7 @@ namespace BellLib.Class
             {
                 str.AppendLine(xn.InnerText);
             }
-            _Version = str.ToString().Split('\n');
+            M_Version = str.ToString().Split('\n');
 
             // [CLASS] BCP(Base.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
             // [CLASS] BCO(Option.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
@@ -111,7 +118,7 @@ namespace BellLib.Class
         }
 
         /// <summary>
-        /// 모드팩 정보를 반환합니다.
+        /// 모드팩 정보를 반환합니다. 개발 중 테스트용 (반환값 확인)
         /// </summary>
         /// <returns>모드팩 정보</returns>
         public string GetModInfo()
@@ -129,7 +136,7 @@ namespace BellLib.Class
             str.AppendLine();
 
             // Version Info
-            foreach (string v in _Version)
+            foreach (string v in M_Version)
                 str.AppendLine(v);
 
             return str.ToString();
