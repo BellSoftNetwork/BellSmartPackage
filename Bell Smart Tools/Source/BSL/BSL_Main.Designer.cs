@@ -75,8 +75,8 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "BellCraft8",
-            "TestPack"});
+            "Latest",
+            "Recommended"});
             this.comboBox1.Location = new System.Drawing.Point(455, 237);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(181, 20);

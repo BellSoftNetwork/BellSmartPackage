@@ -148,16 +148,18 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(123, 84);
+            this.textBox4.Location = new System.Drawing.Point(123, 64);
+            this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 21);
+            this.textBox4.Size = new System.Drawing.Size(100, 41);
             this.textBox4.TabIndex = 12;
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(123, 113);
+            this.textBox5.Location = new System.Drawing.Point(123, 105);
+            this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 21);
+            this.textBox5.Size = new System.Drawing.Size(100, 37);
             this.textBox5.TabIndex = 13;
             // 
             // button6

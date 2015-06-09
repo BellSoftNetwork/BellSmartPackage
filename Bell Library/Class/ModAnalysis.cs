@@ -58,7 +58,14 @@ namespace BellLib.Class
 
     public struct Info_ClientMod
     {
+        public string _ModVersion, _BaseVersion, _OptionVersion;
 
+        public Info_ClientMod(string _ModVersion = null, string _BaseVersion = null, string _OptionVersion = null)
+        {
+            this._ModVersion = _ModVersion;
+            this._BaseVersion = _BaseVersion;
+            this._OptionVersion = _OptionVersion;
+        }
     }
 
     /// <summary>
@@ -85,6 +92,7 @@ namespace BellLib.Class
         private Info_Modpack InfoModpack = new Info_Modpack();
         private Info_Basepack InfoBasepack = new Info_Basepack();
         private Info_Optionpack InfoOptionpack = new Info_Optionpack();
+        private Info_ClientMod InfoClientMod = new Info_ClientMod();
         #pragma warning restore 169
 
         private string _MUID; // Modpack UID
@@ -236,8 +244,19 @@ namespace BellLib.Class
             {
                 string Temp = File.ReadAllText(clientPath);
                 Protection pt = new Protection();
-                Temp = pt.Base64(Temp, Protection.ProtectionType.PROTECTION_DECODE, 2);
+                Temp = pt.Base64(Temp, Protection.ProtectionType.PROTECTION_DECODE, 2); // 클라이언트 정보파일의 데이터를 2회 복호화
                 string[] Data = Temp.Split('\n');
+
+                TypedReference _tr = __makeref(InfoClientMod);
+                int i = 0;
+
+                // foreach문으로 ModAnalysis 클래스의 필드를 모두 구한다.
+                foreach (var fieldInfo in typeof(Info_ClientMod).GetFields(BindingFlags.Public | BindingFlags.Instance))
+                {
+                    string value = Data[i].Split('=')[1].Replace("_", String.Empty);
+                    fieldInfo.SetValueDirect(_tr, value);
+                    i++;
+                }
             }
         }
 
@@ -297,6 +316,15 @@ namespace BellLib.Class
             str.AppendLine("*** OptionPack Version Info ***");
             foreach (string v in InfoOptionpack._Version)
                 str.AppendLine(v);
+
+            str.AppendLine();
+
+            // ClientMod Info
+            str.AppendLine("*** ClientMod Info ***");
+            Type _ClientAnalysis = typeof(Info_ClientMod);
+            foreach (var field in _ClientAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                if (field.FieldType == typeof(string))
+                    str.AppendLine((string)field.GetValue(this.InfoClientMod));
 
             return str.ToString();
         }
