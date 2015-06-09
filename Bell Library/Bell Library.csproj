@@ -79,6 +79,7 @@
     <Content Include="Example\BCP_1.7.10 1.0.0.xml" />
     <Content Include="Example\BCP_1.7.10.xml" />
     <Content Include="Example\BellCraft8.xml" />
+    <Content Include="Example\PackList.xml" />
     <Content Include="Photo\Photo_Bell.ico" />
     <Content Include="Photo\Photo_Random.ico" />
     <Content Include="Photo\Photo_RedBell.ico" />

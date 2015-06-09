@@ -13,6 +13,17 @@ namespace BellLib.Class
     /// </summary>
     public class ModAnalysis
     {
+        /* 임시로 생성한 xml 파일 웹 주소. 분석시 사용.
+         * Base.TOTAL_WEB_URL + "BSL/Pack/PackList.xml" // 팩 리스트
+         * Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8/BellCraft8.xml" // 팩 정보
+         * Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8/Version/8.8.0.xml" // 팩 설치 정보
+         * 
+         * Base.TOTAL_WEB_URL + "BSL/Option/BCO_1.7.10/BCO_1.7.10.xml" // 옵션 정보
+         * Base.TOTAL_WEB_URL + "BSL/Option/BCO_1.7.10/Version/1.0.0.xml" // 옵션 설치 정보
+         * 
+         * Base.TOTAL_WEB_URL + "BSL/Base/BCP_1.7.10/BCP_1.7.10.xml" // 베이스 정보
+         * Base.TOTAL_WEB_URL + "BSL/Base/BCP_1.7.10/Version/1.0.0.xml" // 베이스 설치 정보
+         */
         #region 필드
 
         // 사용하거든!
@@ -68,7 +79,7 @@ namespace BellLib.Class
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
-            doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8.xml");
+            doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8/BellCraft8.xml");
             //doc.LoadXml(BellLib.Properties.Resources.BellCraft8); // 추후 이 구문을 지우고 웹에서 MUID.xml 파일을 받아와서 로드함.
 
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
