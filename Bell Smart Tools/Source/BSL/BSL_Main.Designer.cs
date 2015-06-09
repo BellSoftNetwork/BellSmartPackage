@@ -33,6 +33,11 @@
             this.wb_PackNews = new System.Windows.Forms.WebBrowser();
             this.btn_Launch = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.mCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lb_ModPack
@@ -78,6 +83,37 @@
             this.comboBox1.TabIndex = 3;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.cb_SelectedIndexChanged);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mCToolStripMenuItem,
+            this.도구ToolStripMenuItem,
+            this.정보ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(648, 24);
+            this.menuStrip1.TabIndex = 4;
+            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ms_ItemClicked);
+            // 
+            // mCToolStripMenuItem
+            // 
+            this.mCToolStripMenuItem.Name = "mCToolStripMenuItem";
+            this.mCToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+            this.mCToolStripMenuItem.Text = "MC";
+            // 
+            // 도구ToolStripMenuItem
+            // 
+            this.도구ToolStripMenuItem.Name = "도구ToolStripMenuItem";
+            this.도구ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.도구ToolStripMenuItem.Text = "도구";
+            // 
+            // 정보ToolStripMenuItem
+            // 
+            this.정보ToolStripMenuItem.Name = "정보ToolStripMenuItem";
+            this.정보ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.정보ToolStripMenuItem.Text = "정보";
+            // 
             // BSL_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -89,14 +125,19 @@
             this.Controls.Add(this.btn_Launch);
             this.Controls.Add(this.wb_PackNews);
             this.Controls.Add(this.lb_ModPack);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "BSL_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bell Smart Launcher";
             this.Load += new System.EventHandler(this.BSL_Main_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -106,5 +147,9 @@
         private System.Windows.Forms.WebBrowser wb_PackNews;
         private System.Windows.Forms.Button btn_Launch;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem mCToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
     }
 }

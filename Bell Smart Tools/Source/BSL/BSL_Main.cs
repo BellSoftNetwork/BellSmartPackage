@@ -36,5 +36,10 @@ namespace Bell_Smart_Tools.Source.BSL
         {
 
         }
+
+        private void ms_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }
