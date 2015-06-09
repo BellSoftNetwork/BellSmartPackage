@@ -74,10 +74,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Example\BCO 1.0.0.xml" />
-    <Content Include="Example\BCO.xml" />
-    <Content Include="Example\BCP 1.0.0.xml" />
-    <Content Include="Example\BCP.xml" />
+    <Content Include="Example\BCO_1.7.10 1.0.0.xml" />
+    <Content Include="Example\BCO_1.7.10.xml" />
+    <Content Include="Example\BCP_1.7.10 1.0.0.xml" />
+    <Content Include="Example\BCP_1.7.10.xml" />
     <Content Include="Example\BellCraft8.xml" />
     <Content Include="Photo\Photo_Bell.ico" />
     <Content Include="Photo\Photo_Random.ico" />
@@ -97,6 +97,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

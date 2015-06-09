@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<BCO>
+<BCO_1.7.10>
   <Info>
     <Latest>1.0.0</Latest>
     <Recommended>1.0.0</Recommended>
-    <Down>http://bellsoft.iptime.org:4135/FileServer/BSL/Option/BCO/</Down>
+    <Down>http://bellsoft.iptime.org:4135/FileServer/BSL/Option/BCO_1.7.10/</Down>
   </Info>
   <Version>
     <Ver>1.0.0</Ver>
   </Version>
-</BCO>
+</BCO_1.7.10>

@@ -62,26 +62,26 @@ namespace BellLib.Properties {
         
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;BCO&gt;
+        ///&lt;BCO_1.7.10&gt;
         ///  &lt;Info&gt;
         ///    &lt;Latest&gt;1.0.0&lt;/Latest&gt;
         ///    &lt;Recommended&gt;1.0.0&lt;/Recommended&gt;
-        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Option/BCO/&lt;/Down&gt;
+        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Option/BCO_1.7.10/&lt;/Down&gt;
         ///  &lt;/Info&gt;
         ///  &lt;Version&gt;
         ///    &lt;Ver&gt;1.0.0&lt;/Ver&gt;
         ///  &lt;/Version&gt;
-        ///&lt;/BCO&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///&lt;/BCO_1.7.10&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
-        public static string BCO {
+        public static string BCO_1_7_10 {
             get {
-                return ResourceManager.GetString("BCO", resourceCulture);
+                return ResourceManager.GetString("BCO_1_7_10", resourceCulture);
             }
         }
         
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;BCO&gt;
+        ///&lt;BCO_1.7.10&gt;
         ///  &lt;Option&gt;
         ///    &lt;Opt Name=&quot;NEI&quot; MUID=&quot;NEI&quot; Default=&quot;true&quot;/&gt;
         ///    &lt;Opt Name=&quot;MapWriter&quot; MUID=&quot;MiniMap&quot; Default=&quot;false&quot;/&gt;
@@ -94,11 +94,11 @@ namespace BellLib.Properties {
         ///  &lt;Hash&gt;
         ///    &lt;File Name=&quot;NEI&quot; loc=&quot;mods\NEI.jar&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
         ///    &lt;File Name=&quot;MapWriter&quot; loc=&quot;mods\MapWriter.jar&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
-        ///    &lt;File Name=&quot;Rei&apos;s MiniMap&quot; loc=&quot;mods\Rei_[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///    &lt;File Name=&quot;Rei&apos;s MiniMap&quot; loc=&quot;mo[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
-        public static string BCO_1_0_0 {
+        public static string BCO_1_7_10_1_0_0 {
             get {
-                return ResourceManager.GetString("BCO_1_0_0", resourceCulture);
+                return ResourceManager.GetString("BCO_1_7_10_1_0_0", resourceCulture);
             }
         }
         
@@ -115,15 +115,15 @@ namespace BellLib.Properties {
         ///  &lt;/Version&gt;
         ///&lt;/BCP_1.7.10&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
-        public static string BCP {
+        public static string BCP_1_7_10 {
             get {
-                return ResourceManager.GetString("BCP", resourceCulture);
+                return ResourceManager.GetString("BCP_1_7_10", resourceCulture);
             }
         }
         
         /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;BCP&gt;
+        ///&lt;BCP_1.7.10&gt;
         ///  &lt;Directory&gt;
         ///    &lt;Dir&gt;assets&lt;/Dir&gt;
         ///    &lt;Dir&gt;resource&lt;/Dir&gt;
@@ -133,11 +133,11 @@ namespace BellLib.Properties {
         ///    &lt;File loc=&quot;assets\이러쿵저러쿵.log&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
         ///    &lt;File loc=&quot;resource\리소스.txt&quot;&gt;파일 해시 asdfasdf&lt;/File&gt;
         ///  &lt;/Hash&gt;
-        ///&lt;/BCP&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///&lt;/BCP_1.7.10&gt;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
-        public static string BCP_1_0_0 {
+        public static string BCP_1_7_10_1_0_0 {
             get {
-                return ResourceManager.GetString("BCP_1_0_0", resourceCulture);
+                return ResourceManager.GetString("BCP_1_7_10_1_0_0", resourceCulture);
             }
         }
         
@@ -146,12 +146,12 @@ namespace BellLib.Properties {
         ///&lt;BellCraft8&gt;
         ///  &lt;Info&gt;
         ///    &lt;Name&gt;방울크래프트&lt;/Name&gt;
-        ///    &lt;Recommended&gt;1.7.10&lt;/Recommended&gt;
+        ///    &lt;Recommended&gt;8.5.0&lt;/Recommended&gt;
         ///    &lt;Latest&gt;8.8.0&lt;/Latest&gt;
-        ///    &lt;Base&gt;BCP 1.7.10&lt;/Base&gt;
-        ///    &lt;Option&gt;BCO&lt;/Option&gt;
-        ///    &lt;News&gt;http://bellsoft.iptime.org:88/News/BC.html&lt;/News&gt;
-        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Pack/BellCraft/&lt;/Down&gt;
+        ///    &lt;Base&gt;BCP_1.7.10&lt;/Base&gt;
+        ///    &lt;Option&gt;BCO_1.7.10&lt;/Option&gt;
+        ///    &lt;News&gt;http://bellsoft.iptime.org:88/BSL/Pack/BellCraft8/News.html&lt;/News&gt;
+        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Pack/BellCraft8/&lt;/Down&gt;
         ///  &lt;/Info&gt;
         ///  &lt;Version&gt;
         ///    &lt;Ver&gt;8.0.0&lt;/Ver&gt;
@@ -159,8 +159,7 @@ namespace BellLib.Properties {
         ///    &lt;Ver&gt;8.2.0&lt;/Ver&gt;
         ///    &lt;Ver&gt;8.3.0&lt;/Ver&gt;
         ///    &lt;Ver&gt;8.4.0&lt;/Ver&gt;
-        ///    &lt;Ver&gt;8.5.0&lt;/Ver&gt;
-        ///   [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string BellCraft8 {
             get {

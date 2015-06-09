@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<BCP>
+<BCP_1.7.10>
   <Directory>
     <Dir>assets</Dir>
     <Dir>resource</Dir>
@@ -9,4 +9,4 @@
     <File loc="assets\이러쿵저러쿵.log">파일 해시 asdfasdf</File>
     <File loc="resource\리소스.txt">파일 해시 asdfasdf</File>
   </Hash>
-</BCP>
+</BCP_1.7.10>

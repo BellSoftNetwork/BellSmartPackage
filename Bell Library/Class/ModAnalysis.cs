@@ -65,7 +65,8 @@ namespace BellLib.Class
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
-            doc.LoadXml(BellLib.Properties.Resources.BellCraft8);
+            doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8.xml");
+            //doc.LoadXml(BellLib.Properties.Resources.BellCraft8); // 추후 이 구문을 지우고 웹에서 MUID.xml 파일을 받아와서 로드함.
 
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
 
@@ -85,6 +86,12 @@ namespace BellLib.Class
                 str.AppendLine(xn.InnerText);
             }
             _Version = str.ToString().Split('\n');
+
+            // [CLASS] BCP(Base.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
+            // [CLASS] BCO(Option.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
+            // [BSL]   클라이언트 설정파일 로드 및 분석 (선택된 모드팩 MUID, 설치된 버전, 유지 희망 버전 (권장 or 최신 or 직접 선택)
+            //            분석된 MUID를 바탕으로 서버와 클라 버전 대조
+            // [CLASS] 클라이언트 설정파일이 로드되지 않았을경우(미설치), ModPack {버전}.xml 로드 및 분석 후 설치 진행
 
             _Parsed = true;
         }
