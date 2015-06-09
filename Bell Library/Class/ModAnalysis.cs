@@ -33,8 +33,11 @@ namespace BellLib.Class
             xnList = doc.SelectNodes("/" + MUID + "/Info");
 
             foreach (XmlNode xn in xnList)
+                // foreach문으로 ModAnalysis 클래스의 필드를 모두 구한다.
                 foreach (var field in typeof(ModAnalysis).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+                    // 만약 필드 타입이 string이면..! (string[]도 있으니까..)
                     if (field.FieldType == typeof(string))
+                        // this(이 클래스)의 필드값을 xn[필드이름에서 _제거].InnerText로 설정한다.]
                         field.SetValue(this, xn[field.Name.Replace("_", String.Empty)].InnerText);
 
             xnList = doc.SelectNodes("/" + MUID + "/Version/Ver");
@@ -57,21 +60,16 @@ namespace BellLib.Class
         {
             StringBuilder str = new StringBuilder();
 
-            // Default Info
-            str.AppendLine(_Name);
-            str.AppendLine(_Recommended);
-            str.AppendLine(_Latest);
-            str.AppendLine(_Base);
-            str.AppendLine(_Option);
-            str.AppendLine(_News);
-            str.AppendLine(_Down);
+            Type _ModAnalysis = typeof(ModAnalysis);
+            foreach (var field in _ModAnalysis.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+                if (field.FieldType == typeof(string))
+                    str.AppendLine((string)field.GetValue(this));
+
             str.AppendLine();
 
             // Version Info
             foreach (string v in _Version)
-            {
                 str.AppendLine(v);
-            }
 
             return str.ToString();
         }
