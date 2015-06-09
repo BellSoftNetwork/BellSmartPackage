@@ -8,7 +8,7 @@ namespace BellLib.Class
     /// <summary>
     /// 암호화 메서드들의 집합입니다.
     /// </summary>
-    class Protection
+    public class Protection
     {
         public enum ProtectionType
         {

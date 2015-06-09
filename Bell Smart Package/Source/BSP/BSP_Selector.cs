@@ -39,9 +39,9 @@ namespace Bell_Smart_Package.Source.BSP
         /// <param name="e"></param>
         private void BSP_Selector_Shown(object sender, EventArgs e)
         {
-            BST_Loader BST = new BST_Loader();
+            /*BST_Loader BST = new BST_Loader();
             BST.Show();
-            this.Close();
+            this.Close();*/
         }
     }
 }

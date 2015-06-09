@@ -21,5 +21,11 @@ namespace Bell_Smart_Server.Source.BSS
         {
             Common.End();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BSU.BSU_ModManager MM = new BSU.BSU_ModManager();
+            MM.Show();
+        }
     }
 }

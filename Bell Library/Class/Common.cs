@@ -104,16 +104,14 @@ namespace BellLib.Class
             catch { return null; }
         }
 
-        public static void CreateDefaultForder(string defaultPath = null)
+        public static void CreateDefaultForder()
         {
-            if (defaultPath == null)
-                defaultPath = Data.User.BSN_Path;
-            //Environment.GetEnvironmentVariable("SYSTEMDRIVE") + "\\BSN\\";
+            string defaultPath = Data.User.BSN_Path;
 
             CreateFolder(defaultPath);
-            CreateFolder(defaultPath + "Temp\\");
             CreateFolder(defaultPath + "logs\\");
-            CreateFolder(defaultPath + "Utilities\\");
+            CreateFolder(defaultPath + "ModPack");
+            CreateFolder(defaultPath + "Base");
         }
 
         private static void CreateFolder(string folderPath)

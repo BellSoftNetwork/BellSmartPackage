@@ -64,6 +64,7 @@
     <Compile Include="Class\ModAnalysis.cs" />
     <Compile Include="Class\Protection.cs" />
     <Compile Include="Class\RegistryManager.cs" />
+    <Compile Include="Class\Socket.cs" />
     <Compile Include="Data\Base.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Xml;
+using System.IO;
 using BellLib.Data;
 
 namespace BellLib.Class
@@ -41,12 +42,12 @@ namespace BellLib.Class
         }
     }
 
-    public struct Info_OptionPack
+    public struct Info_Optionpack
     {
         public string _Latest, _Recommended, _Down;
         public string[] _Version;
 
-        public Info_OptionPack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
+        public Info_Optionpack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
         {
             this._Latest = _Latest;
             this._Recommended = _Recommended;
@@ -55,8 +56,14 @@ namespace BellLib.Class
         }
     }
 
+    public struct Info_ClientMod
+    {
+
+    }
+
     /// <summary>
-    /// 모드팩 정보 분석을 시행합니다.
+    /// 클라이언트 전용
+    /// 웹 XML 데이터를 바탕으로 모드팩, 베이스팩, 옵션팩 정보 분석을 시행합니다.
     /// </summary>
     public class ModAnalysis
     {
@@ -77,7 +84,7 @@ namespace BellLib.Class
         #pragma warning disable 169
         private Info_Modpack InfoModpack = new Info_Modpack();
         private Info_Basepack InfoBasepack = new Info_Basepack();
-        private Info_OptionPack InfoOptionpack = new Info_OptionPack();
+        private Info_Optionpack InfoOptionpack = new Info_Optionpack();
         #pragma warning restore 169
 
         private string _MUID; // Modpack UID
@@ -130,8 +137,6 @@ namespace BellLib.Class
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/" + _MUID + "/" + _MUID + ".xml");
-            //doc.LoadXml(BellLib.Properties.Resources.BellCraft8); // 추후 이 구문을 지우고 웹에서 MUID.xml 파일을 받아와서 로드함.
-
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
 
             TypedReference _tr = __makeref(InfoModpack);
@@ -153,13 +158,87 @@ namespace BellLib.Class
             }
             InfoModpack._Version = str.ToString().Split('\n');
 
-            // [CLASS] BCP(Base.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
-            // [CLASS] BCO(Option.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
-            // [BSL]   클라이언트 설정파일 로드 및 분석 (선택된 모드팩 MUID, 설치된 버전, 유지 희망 버전 (권장 or 최신 or 직접 선택)
-            //            분석된 MUID를 바탕으로 서버와 클라 버전 대조
+
+            _BUID = InfoModpack._Base;
+            _OUID = InfoModpack._Option;
+
+            ParseBaseInfo(); // [CLASS] BCP(Base.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
             // [CLASS] 클라이언트 설정파일이 로드되지 않았을경우(미설치), ModPack {버전}.xml 로드 및 분석 후 설치 진행
 
+            //_Parsed = true;
+        }
+
+        private void ParseBaseInfo()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            doc.Load(Base.TOTAL_WEB_URL + "BSL/Base/" + _BUID + "/" + _BUID + ".xml");
+            xnList = doc.SelectNodes("/" + _BUID + "/Info");
+
+            TypedReference _tr = __makeref(InfoBasepack);
+
+            foreach (XmlNode xn in xnList)
+                // foreach문으로 ModAnalysis 클래스의 필드를 모두 구한다.
+                foreach (var fieldInfo in typeof(Info_Basepack).GetFields(BindingFlags.Public | BindingFlags.Instance))
+                    // 만약 필드 타입이 string이면..! (string[]도 있으니까..)
+                    if (fieldInfo.FieldType == typeof(string))
+                        // _tr의 필드값을 xn[필드이름에서 _제거].InnerText로 설정한다.]
+                        fieldInfo.SetValueDirect(_tr, xn[fieldInfo.Name.Replace("_", String.Empty)].InnerText);
+
+            xnList = doc.SelectNodes("/" + _BUID + "/Version/Ver");
+
+            StringBuilder str = new StringBuilder();
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+            InfoBasepack._Version = str.ToString().Split('\n');
+
+            ParseOptionInfo(); // [CLASS] BCO(Option.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
+        }
+
+        private void ParseOptionInfo()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            doc.Load(Base.TOTAL_WEB_URL + "BSL/Option/" + _OUID + "/" + _OUID + ".xml");
+            xnList = doc.SelectNodes("/" + _OUID + "/Info");
+
+            TypedReference _tr = __makeref(InfoOptionpack);
+
+            foreach (XmlNode xn in xnList)
+                // foreach문으로 ModAnalysis 클래스의 필드를 모두 구한다.
+                foreach (var fieldInfo in typeof(Info_Optionpack).GetFields(BindingFlags.Public | BindingFlags.Instance))
+                    // 만약 필드 타입이 string이면..! (string[]도 있으니까..)
+                    if (fieldInfo.FieldType == typeof(string))
+                        // _tr의 필드값을 xn[필드이름에서 _제거].InnerText로 설정한다.]
+                        fieldInfo.SetValueDirect(_tr, xn[fieldInfo.Name.Replace("_", String.Empty)].InnerText);
+
+            xnList = doc.SelectNodes("/" + _OUID + "/Version/Ver");
+
+            StringBuilder str = new StringBuilder();
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+            InfoOptionpack._Version = str.ToString().Split('\n');
+
             _Parsed = true;
+
+            ClientLoad(); // [BSL]   클라이언트 설정파일 로드 및 분석 (선택된 모드팩 MUID, 설치된 버전, 유지 희망 버전 (권장 or 최신 or 직접 선택)
+            //            분석된 MUID를 바탕으로 서버와 클라 버전 대조
+        }
+
+        public void ClientLoad()
+        {
+            string clientPath = User.BSL_Root + "ModPack\\" + _MUID + "\\" + _MUID + ".bsn";
+            if (File.Exists(clientPath))
+            {
+                string Temp = File.ReadAllText(clientPath);
+                Protection pt = new Protection();
+                Temp = pt.Base64(Temp, Protection.ProtectionType.PROTECTION_DECODE, 2);
+                string[] Data = Temp.Split('\n');
+            }
         }
 
         /// <summary>
@@ -173,6 +252,8 @@ namespace BellLib.Class
 
             StringBuilder str = new StringBuilder();
 
+            // ModPack Info
+            str.AppendLine("*** ModPack Info ***");
             Type _ModAnalysis = typeof(Info_Modpack);
             foreach (var field in _ModAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
                 if (field.FieldType == typeof(string))
@@ -180,13 +261,56 @@ namespace BellLib.Class
 
             str.AppendLine();
 
-            // Version Info
+            // ModPack Version Info
+            str.AppendLine("*** ModPack Version Info ***");
             foreach (string v in InfoModpack._Version)
+                str.AppendLine(v);
+
+            str.AppendLine();
+
+            // BasePack Info
+            str.AppendLine("*** BasePack Info ***");
+            Type _BaseAnalysis = typeof(Info_Basepack);
+            foreach (var field in _BaseAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                if (field.FieldType == typeof(string))
+                    str.AppendLine((string)field.GetValue(this.InfoBasepack));
+
+            str.AppendLine();
+
+            // BasePack Version Info
+            str.AppendLine("*** BasePack Version Info ***");
+            foreach (string v in InfoBasepack._Version)
+                str.AppendLine(v);
+
+            str.AppendLine();
+
+            // OptionPack Info
+            str.AppendLine("*** OptionPack Info ***");
+            Type _OptionAnalysis = typeof(Info_Optionpack);
+            foreach (var field in _OptionAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
+                if (field.FieldType == typeof(string))
+                    str.AppendLine((string)field.GetValue(this.InfoOptionpack));
+
+            str.AppendLine();
+
+            // OptionPack Version Info
+            str.AppendLine("*** OptionPack Version Info ***");
+            foreach (string v in InfoOptionpack._Version)
                 str.AppendLine(v);
 
             return str.ToString();
         }
 
         #endregion
+    }
+
+
+    /// <summary>
+    /// 서버 전용
+    /// 모드팩, 베이스팩, 옵션팩 정보 분석 및 XML 작성을 시행합니다.
+    /// </summary>
+    public class ModAnalysisServer
+    {
+
     }
 }
