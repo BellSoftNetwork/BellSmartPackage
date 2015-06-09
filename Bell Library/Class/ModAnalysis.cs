@@ -8,6 +8,53 @@ using BellLib.Data;
 
 namespace BellLib.Class
 {
+    public struct Info_Modpack
+    {
+        public string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down;
+        public string[] _Version;
+
+        public Info_Modpack(string _Name = null, string _Recommended = null, string _Latest = null, string _Base = null,
+                            string _Option = null, string _News = null, string _Down = null, string[] _Version = null)
+        {
+            this._Name = _Name;
+            this._Recommended = _Recommended;
+            this._Latest = _Latest;
+            this._Base = _Base;
+            this._Option = _Option;
+            this._News = _News;
+            this._Down = _Down;
+            this._Version = _Version;
+        }
+    }
+
+    public struct Info_Basepack
+    {
+        public string _Latest, _Recommended, _Down;
+        public string[] _Version;
+
+        public Info_Basepack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
+        {
+            this._Latest = _Latest;
+            this._Recommended = _Recommended;
+            this._Down = _Down;
+            this._Version = _Version;
+        }
+    }
+
+    public struct Info_OptionPack
+    {
+        public string _Latest, _Recommended, _Down;
+        public string[] _Version;
+
+        public Info_OptionPack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
+        {
+            this._Latest = _Latest;
+            this._Recommended = _Recommended;
+            this._Down = _Down;
+            this._Version = _Version;
+        }
+    }
+
     /// <summary>
     /// 모드팩 정보 분석을 시행합니다.
     /// </summary>
@@ -28,14 +75,11 @@ namespace BellLib.Class
 
         // 사용하거든!
         #pragma warning disable 169
-        private string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down; // 모드팩 정보  'M_값이름'
-        private string B_Latest, B_Recommended, B_Down;// 베이스팩 정보  'B_값이름'
-        private string O_Latest, O_Recommended, O_Down;// 옵션팩 정보  'O_값이름'
+        private Info_Modpack InfoModpack = new Info_Modpack();
+        private Info_Basepack InfoBasepack = new Info_Basepack();
+        private Info_OptionPack InfoOptionpack = new Info_OptionPack();
         #pragma warning restore 169
 
-        private string[] M_Version; // 모드팩 버전리스트
-        private string[] B_Version; // 베이스팩 버전리스트
-        private string[] O_Version; // 옵션팩 버전리스트
         private string _MUID; // Modpack UID
         private string _BUID; // Basepack UID
         private string _OUID; // Optionpack UID
@@ -90,14 +134,15 @@ namespace BellLib.Class
 
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
 
+            TypedReference _tr = __makeref(InfoModpack);
+
             foreach (XmlNode xn in xnList)
                 // foreach문으로 ModAnalysis 클래스의 필드를 모두 구한다.
-                foreach (var field in typeof(ModAnalysis).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+                foreach (var fieldInfo in typeof(Info_Modpack).GetFields(BindingFlags.Public | BindingFlags.Instance))
                     // 만약 필드 타입이 string이면..! (string[]도 있으니까..)
-                    if (field.FieldType == typeof(string))
-                        // this(이 클래스)의 필드값을 xn[필드이름에서 _제거].InnerText로 설정한다.]
-                        try { field.SetValue(this, xn[field.Name.Replace("_", String.Empty)].InnerText); }
-                        catch { }
+                    if (fieldInfo.FieldType == typeof(string))
+                        // _tr의 필드값을 xn[필드이름에서 _제거].InnerText로 설정한다.]
+                        fieldInfo.SetValueDirect(_tr, xn[fieldInfo.Name.Replace("_", String.Empty)].InnerText);
 
             xnList = doc.SelectNodes("/" + _MUID + "/Version/Ver");
 
@@ -106,7 +151,7 @@ namespace BellLib.Class
             {
                 str.AppendLine(xn.InnerText);
             }
-            M_Version = str.ToString().Split('\n');
+            InfoModpack._Version = str.ToString().Split('\n');
 
             // [CLASS] BCP(Base.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
             // [CLASS] BCO(Option.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
@@ -128,15 +173,15 @@ namespace BellLib.Class
 
             StringBuilder str = new StringBuilder();
 
-            Type _ModAnalysis = typeof(ModAnalysis);
-            foreach (var field in _ModAnalysis.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+            Type _ModAnalysis = typeof(Info_Modpack);
+            foreach (var field in _ModAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
                 if (field.FieldType == typeof(string))
-                    str.AppendLine((string)field.GetValue(this));
+                    str.AppendLine((string)field.GetValue(this.InfoModpack));
 
             str.AppendLine();
 
             // Version Info
-            foreach (string v in M_Version)
+            foreach (string v in InfoModpack._Version)
                 str.AppendLine(v);
 
             return str.ToString();
