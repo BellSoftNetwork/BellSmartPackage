@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Tools.Source.MCL
+﻿namespace Bell_Smart_Tools.Source.BSL
 {
     partial class BSL_Preferences
     {

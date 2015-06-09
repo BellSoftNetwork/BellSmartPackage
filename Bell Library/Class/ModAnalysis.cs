@@ -31,7 +31,10 @@ namespace BellLib.Class
         /// <summary>
         /// 빈 ModAnalysis 인스턴스를 만듭니다. SelectModpack(string MUID) 메서드를 사용하십시오.
         /// </summary>
-        public ModAnalysis();
+        public ModAnalysis()
+        {
+
+        }
 
         /// <summary>
         /// MUID로 모드팩.xml을 로드하여 분석합니다.

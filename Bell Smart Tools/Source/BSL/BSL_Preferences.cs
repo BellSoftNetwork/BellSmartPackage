@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using BellLib.Class;
 using BellLib.Data;
 
-namespace Bell_Smart_Tools.Source.MCL
+namespace Bell_Smart_Tools.Source.BSL
 {
     public partial class BSL_Preferences : Form
     {
