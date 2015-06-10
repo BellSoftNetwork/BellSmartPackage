@@ -19,8 +19,19 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Set_Click(object sender, EventArgs e)
         {
-            if ("로드성공" == "로드성공")
+            ModAnalysisRead MAR = new ModAnalysisRead(txt_MUID.Text);
+            
+            if (MAR.Availability())
             {
+                lst_Mod_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Mod));
+                txt_Mod_Name.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name");
+                txt_Mod_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest");
+                txt_Mod_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended");
+                cb_Mod_Base.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
+                cb_Mod_Option.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
+                txt_Mod_News.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
+                txt_Mod_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
+
                 txt_MUID.ReadOnly = true;
                 gb_Mod_Info.Enabled = false;
                 gb_Mod_Setting.Enabled = true;
@@ -54,11 +65,9 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_Save_Click(object sender, EventArgs e)
         {
-            ModAnalysisServer MAS = new ModAnalysisServer(ModAnalysisServer.Type.ModPack, "BellCraft8");
-            string[] Version = null;
-            Version[0] = "8.0.0";
-            Version[1] = "8.1.0";
-            MAS.WriteXML(txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, cb_Mod_Base.SelectedText, cb_Mod_Option.SelectedText, txt_Mod_News.Text, txt_Mod_Down.Text, Version);
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, "BellCraft8");
+            string[] Version = {"8.2.0", "8.0.0"};
+            MAW.WriteXML(txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, cb_Mod_Base.SelectedText, cb_Mod_Option.SelectedText, txt_Mod_News.Text, txt_Mod_Down.Text, Version);
         }
     }
 }

@@ -104,7 +104,10 @@ namespace BellLib.Class
 		        strTemp += " " + Info;
 	        }
 	        strTemp += "] ";
-            Common.WriteTextFile(LogFile, strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
+            try
+            {
+                Common.WriteTextFile(LogFile, strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
+            } catch { }
         }
     }
 }
