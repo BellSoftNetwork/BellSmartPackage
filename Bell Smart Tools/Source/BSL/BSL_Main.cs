@@ -41,5 +41,12 @@ namespace Bell_Smart_Tools.Source.BSL
         {
 
         }
+
+        private void ms_BSL_PreferenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BSL_Preferences BSLP = new BSL_Preferences();
+            BSLP.ShowDialog();
+        }
+
     }
 }

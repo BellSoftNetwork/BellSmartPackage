@@ -110,5 +110,10 @@ namespace Bell_Smart_Tools.Source.BSL
         {
             this.Close();
         }
+
+        private void gb_MCAccount_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

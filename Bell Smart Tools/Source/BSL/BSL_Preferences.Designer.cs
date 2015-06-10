@@ -67,6 +67,7 @@
             this.gb_MCAccount.TabIndex = 70;
             this.gb_MCAccount.TabStop = false;
             this.gb_MCAccount.Text = "마인크래프트 계정인증";
+            this.gb_MCAccount.Enter += new System.EventHandler(this.gb_MCAccount_Enter);
             // 
             // btn_MCLogout
             // 

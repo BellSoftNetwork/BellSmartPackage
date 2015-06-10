@@ -37,6 +37,7 @@
             this.mCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mC환경설정ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,6 +105,8 @@
             // 
             // 도구ToolStripMenuItem
             // 
+            this.도구ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mC환경설정ToolStripMenuItem});
             this.도구ToolStripMenuItem.Name = "도구ToolStripMenuItem";
             this.도구ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.도구ToolStripMenuItem.Text = "도구";
@@ -113,6 +116,13 @@
             this.정보ToolStripMenuItem.Name = "정보ToolStripMenuItem";
             this.정보ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.정보ToolStripMenuItem.Text = "정보";
+            // 
+            // mC환경설정ToolStripMenuItem
+            // 
+            this.mC환경설정ToolStripMenuItem.Name = "mC환경설정ToolStripMenuItem";
+            this.mC환경설정ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mC환경설정ToolStripMenuItem.Text = "MC환경설정";
+            this.mC환경설정ToolStripMenuItem.Click += new System.EventHandler(this.ms_BSL_PreferenceToolStripMenuItem_Click);
             // 
             // BSL_Main
             // 
@@ -141,6 +151,8 @@
 
         }
 
+       
+
         #endregion
 
         private System.Windows.Forms.ListBox lb_ModPack;
@@ -151,5 +163,6 @@
         private System.Windows.Forms.ToolStripMenuItem mCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mC환경설정ToolStripMenuItem;
     }
 }
