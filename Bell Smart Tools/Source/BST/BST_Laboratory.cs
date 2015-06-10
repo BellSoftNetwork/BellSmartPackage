@@ -23,6 +23,7 @@ namespace Bell_Smart_Tools.Source.BST
         {
             //var game = new BST_TicTacToe();
             //game.Show();
+            ReflectionExample.Example();
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -63,6 +63,7 @@
     <Compile Include="Class\MCLogin.cs" />
     <Compile Include="Class\ModAnalysis.cs" />
     <Compile Include="Class\Protection.cs" />
+    <Compile Include="Class\ReflectionExample.cs" />
     <Compile Include="Class\RegistryManager.cs" />
     <Compile Include="Class\Socket.cs" />
     <Compile Include="Data\Base.cs" />
