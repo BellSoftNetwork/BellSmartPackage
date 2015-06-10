@@ -728,7 +728,7 @@ namespace BellLib.Class
         /// <summary>
         /// 모드분석 후 XML 작성합니다.
         /// </summary>
-        public ModAnalysisWrite(Type Typ, string UID, string Name, string Recommended, string Latest, string Base, string Option, string News, string Down, string[] Version)
+        public ModAnalysisWrite(Type Typ, string UID, string Name, string Latest, string Recommended, string Base, string Option, string News, string Down, string[] Version)
         {
             this.Pack = Typ;
             this.UID = UID;
@@ -744,7 +744,14 @@ namespace BellLib.Class
                     DM.Down = Down;
                     DM.Version = Version;
                     break;
-
+            }
+        }
+        public ModAnalysisWrite(Type Typ, string UID, string Latest, string Recommended, string Down, string[] Version)
+        {
+            this.Pack = Typ;
+            this.UID = UID;
+            switch (Typ)
+            {
                 case Type.BasePack:
                     DB.Recommended = Recommended;
                     DB.Latest = Latest;

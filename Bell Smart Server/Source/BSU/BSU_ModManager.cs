@@ -57,6 +57,10 @@ namespace Bell_Smart_Server.Source.BSU
                 btn_Base_Set_Click(sender, e);
                 btn_Option_Set_Click(sender, e);
             }
+            else
+            {
+                Common.Message("존재하지 않는 MUID 입니다.");
+            }
         }
 
         private void lst_Mod_File_DragDrop(object sender, DragEventArgs e)
@@ -85,7 +89,20 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_Save_Click(object sender, EventArgs e)
         {
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
+            bool stop = false;
+            if (txt_Mod_Latest.Text == string.Empty) stop = true;
+            if (txt_Mod_Recommended.Text == string.Empty) stop = true;
+            if (txt_Mod_Name.Text == string.Empty) stop = true;
+            if (txt_Mod_News.Text == string.Empty) stop = true;
+            if ((string)cb_Mod_Base.SelectedItem == string.Empty) stop = true;
+            if ((string)cb_Mod_Option.SelectedItem == string.Empty) stop = true;
+
+            if (stop)
+            {
+                Common.Message("모든 필드에 값을 입력해 주세요.");
+                return;
+            }
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
             Common.Message("XML 작성 성공!");
         }
@@ -107,7 +124,14 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_DelVer_Click(object sender, EventArgs e)
         {
-            lst_Mod_Version.Items.Remove(lst_Mod_Version.SelectedItem);
+            if (lst_Mod_Version.Items.Count > 1)
+            {
+                lst_Mod_Version.Items.Remove(lst_Mod_Version.SelectedItem);
+            }
+            else
+            {
+                Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
+            }
         }
 
         private void lst_Mod_Version_SelectedIndexChanged(object sender, EventArgs e)
@@ -137,6 +161,10 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Base_Setting.Enabled = true;
                 gb_Base_Upload.Enabled = true;
             }
+            else
+            {
+                Common.Message("존재하지 않는 BUID 입니다.");
+            }
         }
 
         private void btn_Option_Set_Click(object sender, EventArgs e)
@@ -154,16 +182,83 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Option_Setting.Enabled = true;
                 gb_Option_Upload.Enabled = true;
             }
+            else
+            {
+                Common.Message("존재하지 않는 OUID 입니다.");
+            }
         }
 
         private void btn_Base_DelVer_Click(object sender, EventArgs e)
         {
-            lst_Base_Version.Items.Remove(lst_Base_Version.SelectedItem);
+            if (lst_Base_Version.Items.Count > 1)
+            {
+                lst_Base_Version.Items.Remove(lst_Base_Version.SelectedItem);
+            }
+            else
+            {
+                Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
+            }
         }
 
         private void btn_Option_DelVer_Click(object sender, EventArgs e)
         {
-            lst_Option_Version.Items.Remove(lst_Option_Version.SelectedItem);
+            if (lst_Option_Version.Items.Count > 1)
+            {
+                lst_Option_Version.Items.Remove(lst_Option_Version.SelectedItem);
+            }
+            else
+            {
+                Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
+            }
+        }
+
+        private void txt_BUID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) { btn_Base_Set_Click(sender, e); }
+        }
+
+        private void txt_OUID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) { btn_Option_Set_Click(sender, e); }
+        }
+
+        private void btn_Mod_SelectSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Base_Save_Click(object sender, EventArgs e)
+        {
+            bool stop = false;
+            if (txt_Base_Down.Text == string.Empty) stop = true;
+            if (txt_Base_Latest.Text == string.Empty) stop = true;
+            if (txt_Base_Recommended.Text == string.Empty) stop = true;
+
+            if (stop)
+            {
+                Common.Message("모든 필드에 값을 입력해 주세요.");
+                return;
+            }
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
+            MAW.WriteXML();
+            Common.Message("XML 작성 성공!");
+        }
+
+        private void btn_Option_Save_Click(object sender, EventArgs e)
+        {
+            bool stop = false;
+            if (txt_Option_Down.Text == string.Empty) stop = true;
+            if (txt_Option_Latest.Text == string.Empty) stop = true;
+            if (txt_Option_Recommended.Text == string.Empty) stop = true;
+
+            if (stop)
+            {
+                Common.Message("모든 필드에 값을 입력해 주세요.");
+                return;
+            }
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
+            MAW.WriteXML();
+            Common.Message("XML 작성 성공!");
         }
     }
 }

@@ -43,6 +43,8 @@
             this.cb_Mod_Latest = new System.Windows.Forms.CheckBox();
             this.pb_Mod_Upload = new System.Windows.Forms.ProgressBar();
             this.lst_Mod_File = new System.Windows.Forms.ListBox();
+            this.cms_File = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mi_Exclusion = new System.Windows.Forms.ToolStripMenuItem();
             this.lb_Mod_Version = new System.Windows.Forms.Label();
             this.txt_Mod_Version = new System.Windows.Forms.TextBox();
             this.gb_Mod_Info = new System.Windows.Forms.GroupBox();
@@ -50,6 +52,7 @@
             this.lb_MUID = new System.Windows.Forms.Label();
             this.txt_MUID = new System.Windows.Forms.TextBox();
             this.gb_Mod_Setting = new System.Windows.Forms.GroupBox();
+            this.btn_Mod_DelVer = new System.Windows.Forms.Button();
             this.btn_Mod_SelectSave = new System.Windows.Forms.Button();
             this.cb_Mod_Option_Ver = new System.Windows.Forms.ComboBox();
             this.cb_Mod_Base_Ver = new System.Windows.Forms.ComboBox();
@@ -57,6 +60,8 @@
             this.lb_Mod_Base_Ver = new System.Windows.Forms.Label();
             this.btn_Mod_Save = new System.Windows.Forms.Button();
             this.lst_Mod_Version = new System.Windows.Forms.ListBox();
+            this.cms_Version = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mi_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.txt_Mod_Down = new System.Windows.Forms.TextBox();
             this.lb_Mod_Down = new System.Windows.Forms.Label();
             this.txt_Mod_News = new System.Windows.Forms.TextBox();
@@ -86,6 +91,7 @@
             this.lb_BUID = new System.Windows.Forms.Label();
             this.txt_BUID = new System.Windows.Forms.TextBox();
             this.gb_Base_Setting = new System.Windows.Forms.GroupBox();
+            this.btn_Base_DelVer = new System.Windows.Forms.Button();
             this.btn_Base_Save = new System.Windows.Forms.Button();
             this.lst_Base_Version = new System.Windows.Forms.ListBox();
             this.txt_Base_Down = new System.Windows.Forms.TextBox();
@@ -113,6 +119,7 @@
             this.lb_OUID = new System.Windows.Forms.Label();
             this.txt_OUID = new System.Windows.Forms.TextBox();
             this.gb_Option_Setting = new System.Windows.Forms.GroupBox();
+            this.btn_Option_DelVer = new System.Windows.Forms.Button();
             this.btn_Option_Save = new System.Windows.Forms.Button();
             this.lst_Option_Version = new System.Windows.Forms.ListBox();
             this.txt_Option_Down = new System.Windows.Forms.TextBox();
@@ -121,18 +128,13 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
-            this.mi_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.cms_Version = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mi_Exclusion = new System.Windows.Forms.ToolStripMenuItem();
-            this.cms_File = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btn_Mod_DelVer = new System.Windows.Forms.Button();
-            this.btn_Base_DelVer = new System.Windows.Forms.Button();
-            this.btn_Option_DelVer = new System.Windows.Forms.Button();
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.gb_Mod_Upload.SuspendLayout();
+            this.cms_File.SuspendLayout();
             this.gb_Mod_Info.SuspendLayout();
             this.gb_Mod_Setting.SuspendLayout();
+            this.cms_Version.SuspendLayout();
             this.tp_BasePack.SuspendLayout();
             this.gb_Base_Upload.SuspendLayout();
             this.gb_Base_Info.SuspendLayout();
@@ -141,8 +143,6 @@
             this.gb_Option_Upload.SuspendLayout();
             this.gb_Option_Info.SuspendLayout();
             this.gb_Option_Setting.SuspendLayout();
-            this.cms_Version.SuspendLayout();
-            this.cms_File.SuspendLayout();
             this.SuspendLayout();
             // 
             // tc_Pack
@@ -290,6 +290,20 @@
             this.lst_Mod_File.DragDrop += new System.Windows.Forms.DragEventHandler(this.lst_Mod_File_DragDrop);
             this.lst_Mod_File.DragOver += new System.Windows.Forms.DragEventHandler(this.lst_Mod_File_DragOver);
             // 
+            // cms_File
+            // 
+            this.cms_File.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_Exclusion});
+            this.cms_File.Name = "cms_File";
+            this.cms_File.Size = new System.Drawing.Size(99, 26);
+            // 
+            // mi_Exclusion
+            // 
+            this.mi_Exclusion.Name = "mi_Exclusion";
+            this.mi_Exclusion.Size = new System.Drawing.Size(98, 22);
+            this.mi_Exclusion.Text = "제외";
+            this.mi_Exclusion.Click += new System.EventHandler(this.mi_Exclusion_Click);
+            // 
             // lb_Mod_Version
             // 
             this.lb_Mod_Version.AutoSize = true;
@@ -378,6 +392,17 @@
             this.gb_Mod_Setting.TabStop = false;
             this.gb_Mod_Setting.Text = "설정";
             // 
+            // btn_Mod_DelVer
+            // 
+            this.btn_Mod_DelVer.Enabled = false;
+            this.btn_Mod_DelVer.Location = new System.Drawing.Point(613, 143);
+            this.btn_Mod_DelVer.Name = "btn_Mod_DelVer";
+            this.btn_Mod_DelVer.Size = new System.Drawing.Size(96, 23);
+            this.btn_Mod_DelVer.TabIndex = 21;
+            this.btn_Mod_DelVer.Text = "선택 버전 삭제";
+            this.btn_Mod_DelVer.UseVisualStyleBackColor = true;
+            this.btn_Mod_DelVer.Click += new System.EventHandler(this.btn_Mod_DelVer_Click);
+            // 
             // btn_Mod_SelectSave
             // 
             this.btn_Mod_SelectSave.Enabled = false;
@@ -387,6 +412,7 @@
             this.btn_Mod_SelectSave.TabIndex = 20;
             this.btn_Mod_SelectSave.Text = "선택버전 저장";
             this.btn_Mod_SelectSave.UseVisualStyleBackColor = true;
+            this.btn_Mod_SelectSave.Click += new System.EventHandler(this.btn_Mod_SelectSave_Click);
             // 
             // cb_Mod_Option_Ver
             // 
@@ -446,6 +472,20 @@
             this.lst_Mod_Version.Size = new System.Drawing.Size(409, 76);
             this.lst_Mod_Version.TabIndex = 14;
             this.lst_Mod_Version.SelectedIndexChanged += new System.EventHandler(this.lst_Mod_Version_SelectedIndexChanged);
+            // 
+            // cms_Version
+            // 
+            this.cms_Version.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_Delete});
+            this.cms_Version.Name = "cms_Version";
+            this.cms_Version.Size = new System.Drawing.Size(155, 26);
+            // 
+            // mi_Delete
+            // 
+            this.mi_Delete.Name = "mi_Delete";
+            this.mi_Delete.Size = new System.Drawing.Size(154, 22);
+            this.mi_Delete.Text = "해당 버전 삭제";
+            this.mi_Delete.Click += new System.EventHandler(this.mi_Delete_Click);
             // 
             // txt_Mod_Down
             // 
@@ -708,6 +748,7 @@
             this.txt_BUID.Name = "txt_BUID";
             this.txt_BUID.Size = new System.Drawing.Size(688, 21);
             this.txt_BUID.TabIndex = 0;
+            this.txt_BUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_BUID_KeyDown);
             // 
             // gb_Base_Setting
             // 
@@ -728,6 +769,16 @@
             this.gb_Base_Setting.TabStop = false;
             this.gb_Base_Setting.Text = "설정";
             // 
+            // btn_Base_DelVer
+            // 
+            this.btn_Base_DelVer.Location = new System.Drawing.Point(629, 84);
+            this.btn_Base_DelVer.Name = "btn_Base_DelVer";
+            this.btn_Base_DelVer.Size = new System.Drawing.Size(96, 23);
+            this.btn_Base_DelVer.TabIndex = 16;
+            this.btn_Base_DelVer.Text = "선택 버전 삭제";
+            this.btn_Base_DelVer.UseVisualStyleBackColor = true;
+            this.btn_Base_DelVer.Click += new System.EventHandler(this.btn_Base_DelVer_Click);
+            // 
             // btn_Base_Save
             // 
             this.btn_Base_Save.Location = new System.Drawing.Point(731, 84);
@@ -736,6 +787,7 @@
             this.btn_Base_Save.TabIndex = 15;
             this.btn_Base_Save.Text = "저장";
             this.btn_Base_Save.UseVisualStyleBackColor = true;
+            this.btn_Base_Save.Click += new System.EventHandler(this.btn_Base_Save_Click);
             // 
             // lst_Base_Version
             // 
@@ -953,6 +1005,7 @@
             this.txt_OUID.Name = "txt_OUID";
             this.txt_OUID.Size = new System.Drawing.Size(688, 21);
             this.txt_OUID.TabIndex = 0;
+            this.txt_OUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_OUID_KeyDown);
             // 
             // gb_Option_Setting
             // 
@@ -973,6 +1026,16 @@
             this.gb_Option_Setting.TabStop = false;
             this.gb_Option_Setting.Text = "설정";
             // 
+            // btn_Option_DelVer
+            // 
+            this.btn_Option_DelVer.Location = new System.Drawing.Point(631, 84);
+            this.btn_Option_DelVer.Name = "btn_Option_DelVer";
+            this.btn_Option_DelVer.Size = new System.Drawing.Size(97, 23);
+            this.btn_Option_DelVer.TabIndex = 16;
+            this.btn_Option_DelVer.Text = "선택 버전 삭제";
+            this.btn_Option_DelVer.UseVisualStyleBackColor = true;
+            this.btn_Option_DelVer.Click += new System.EventHandler(this.btn_Option_DelVer_Click);
+            // 
             // btn_Option_Save
             // 
             this.btn_Option_Save.Location = new System.Drawing.Point(731, 84);
@@ -981,6 +1044,7 @@
             this.btn_Option_Save.TabIndex = 15;
             this.btn_Option_Save.Text = "저장";
             this.btn_Option_Save.UseVisualStyleBackColor = true;
+            this.btn_Option_Save.Click += new System.EventHandler(this.btn_Option_Save_Click);
             // 
             // lst_Option_Version
             // 
@@ -1039,65 +1103,6 @@
             this.lb_Option_Latest.TabIndex = 2;
             this.lb_Option_Latest.Text = "최신버전 :";
             // 
-            // mi_Delete
-            // 
-            this.mi_Delete.Name = "mi_Delete";
-            this.mi_Delete.Size = new System.Drawing.Size(154, 22);
-            this.mi_Delete.Text = "해당 버전 삭제";
-            this.mi_Delete.Click += new System.EventHandler(this.mi_Delete_Click);
-            // 
-            // cms_Version
-            // 
-            this.cms_Version.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_Delete});
-            this.cms_Version.Name = "cms_Version";
-            this.cms_Version.Size = new System.Drawing.Size(155, 26);
-            // 
-            // mi_Exclusion
-            // 
-            this.mi_Exclusion.Name = "mi_Exclusion";
-            this.mi_Exclusion.Size = new System.Drawing.Size(98, 22);
-            this.mi_Exclusion.Text = "제외";
-            this.mi_Exclusion.Click += new System.EventHandler(this.mi_Exclusion_Click);
-            // 
-            // cms_File
-            // 
-            this.cms_File.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_Exclusion});
-            this.cms_File.Name = "cms_File";
-            this.cms_File.Size = new System.Drawing.Size(99, 26);
-            // 
-            // btn_Mod_DelVer
-            // 
-            this.btn_Mod_DelVer.Enabled = false;
-            this.btn_Mod_DelVer.Location = new System.Drawing.Point(613, 143);
-            this.btn_Mod_DelVer.Name = "btn_Mod_DelVer";
-            this.btn_Mod_DelVer.Size = new System.Drawing.Size(96, 23);
-            this.btn_Mod_DelVer.TabIndex = 21;
-            this.btn_Mod_DelVer.Text = "선택 버전 삭제";
-            this.btn_Mod_DelVer.UseVisualStyleBackColor = true;
-            this.btn_Mod_DelVer.Click += new System.EventHandler(this.btn_Mod_DelVer_Click);
-            // 
-            // btn_Base_DelVer
-            // 
-            this.btn_Base_DelVer.Location = new System.Drawing.Point(629, 84);
-            this.btn_Base_DelVer.Name = "btn_Base_DelVer";
-            this.btn_Base_DelVer.Size = new System.Drawing.Size(96, 23);
-            this.btn_Base_DelVer.TabIndex = 16;
-            this.btn_Base_DelVer.Text = "선택 버전 삭제";
-            this.btn_Base_DelVer.UseVisualStyleBackColor = true;
-            this.btn_Base_DelVer.Click += new System.EventHandler(this.btn_Base_DelVer_Click);
-            // 
-            // btn_Option_DelVer
-            // 
-            this.btn_Option_DelVer.Location = new System.Drawing.Point(631, 84);
-            this.btn_Option_DelVer.Name = "btn_Option_DelVer";
-            this.btn_Option_DelVer.Size = new System.Drawing.Size(97, 23);
-            this.btn_Option_DelVer.TabIndex = 16;
-            this.btn_Option_DelVer.Text = "선택 버전 삭제";
-            this.btn_Option_DelVer.UseVisualStyleBackColor = true;
-            this.btn_Option_DelVer.Click += new System.EventHandler(this.btn_Option_DelVer_Click);
-            // 
             // BSU_ModManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1116,10 +1121,12 @@
             this.tp_ModPack.ResumeLayout(false);
             this.gb_Mod_Upload.ResumeLayout(false);
             this.gb_Mod_Upload.PerformLayout();
+            this.cms_File.ResumeLayout(false);
             this.gb_Mod_Info.ResumeLayout(false);
             this.gb_Mod_Info.PerformLayout();
             this.gb_Mod_Setting.ResumeLayout(false);
             this.gb_Mod_Setting.PerformLayout();
+            this.cms_Version.ResumeLayout(false);
             this.tp_BasePack.ResumeLayout(false);
             this.gb_Base_Upload.ResumeLayout(false);
             this.gb_Base_Upload.PerformLayout();
@@ -1134,8 +1141,6 @@
             this.gb_Option_Info.PerformLayout();
             this.gb_Option_Setting.ResumeLayout(false);
             this.gb_Option_Setting.PerformLayout();
-            this.cms_Version.ResumeLayout(false);
-            this.cms_File.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
