@@ -425,7 +425,21 @@ namespace BellLib.Class
         #endregion
     }
 
-
+    public struct Data_Mod
+    {
+        public string Name, Recommended, Latest, Base, Option, News, Down;
+        public string[] Version;
+    }
+    public struct Data_Base
+    {
+        public string Recommended, Latest, Down;
+        public string[] Version;
+    }
+    public struct Data_Option
+    {
+        public string Recommended, Latest, Down;
+        public string[] Version;
+    }
     /// <summary>
     /// 서버 전용
     /// 모드팩, 베이스팩, 옵션팩 정보 분석 및 XML 작성을 시행합니다.
@@ -440,44 +454,105 @@ namespace BellLib.Class
         }
         private string UID;
         private Type Pack;
+        private Data_Mod DM = new Data_Mod();
+        private Data_Base DB = new Data_Base();
+        private Data_Option DO = new Data_Option();
 
         #region 생성자
         /// <summary>
         /// 모드분석 후 XML 작성합니다.
         /// </summary>
-        public ModAnalysisWrite(Type Typ, string UID)
+        public ModAnalysisWrite(Type Typ, string UID, string Name, string Recommended, string Latest, string Base, string Option, string News, string Down, string[] Version)
         {
             this.Pack = Typ;
             this.UID = UID;
-        }
+            switch (Typ)
+            {
+                case Type.ModPack:
+                    DM.Name = Name;
+                    DM.Recommended = Recommended;
+                    DM.Latest = Latest;
+                    DM.Base = Base;
+                    DM.Option = Option;
+                    DM.News = News;
+                    DM.Down = Down;
+                    DM.Version = Version;
+                    break;
 
+                case Type.BasePack:
+                    DB.Recommended = Recommended;
+                    DB.Latest = Latest;
+                    DB.Down = Down;
+                    DB.Version = Version;
+                    break;
+
+                case Type.OptionPack:
+                    DO.Recommended = Recommended;
+                    DO.Latest = Latest;
+                    DO.Down = Down;
+                    DO.Version = Version;
+                    break;
+            }
+        }
         #endregion
 
-        public void WriteXML(string UID, string Name, string Recommended, string Latest, string Base, string Option, string News, string Down, string[] Version)
+        public void InsertData(string Name, string Recommended, string Latest, string Base, string Option, string News, string Down, string[] Version)
         {
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
-            XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
-            XTW.WriteStartDocument(); // XML 문서 시작
-            XTW.WriteStartElement(UID); // UID 엘리먼트 시작
+            DM.Name = Name;
+            DM.Recommended = Recommended;
+            DM.Latest = Latest;
+            DM.Base = Base;
+            DM.Option = Option;
+            DM.News = News;
+            DM.Down = Down;
+            DM.Version = Version;
+        }
+        public void InsertData(string Recommended, string Latest, string Down, string[] Version)
+        {
+            DM.Recommended = Recommended;
+            DM.Latest = Latest;
+            DM.Down = Down;
+            DM.Version = Version;
+        }
 
-            XTW.WriteStartElement("Info"); // Info 엘리먼트 닫음
-            XTW.WriteElementString("Name", Name);
-            XTW.WriteElementString("Recommended", Recommended);
-            XTW.WriteElementString("Latest", Latest);
-            XTW.WriteElementString("Base", Base);
-            XTW.WriteElementString("Option", Option);
-            XTW.WriteElementString("News", News);
-            XTW.WriteElementString("Down", Down);
-            XTW.WriteEndElement(); // Info 엘리먼트 닫음
+        public void WriteXML()
+        {
+            switch (Pack)
+            {
+                case Type.ModPack:
+                    XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+                    XTW.WriteStartDocument(); // XML 문서 시작
+                    XTW.WriteStartElement(UID); // UID 엘리먼트 시작
 
-            XTW.WriteStartElement("Version");
-            foreach (string tmp in Version)
-                XTW.WriteElementString("Ver", tmp);
+                    XTW.WriteStartElement("Info"); // Info 엘리먼트 시작
+                    XTW.WriteElementString("Name", DM.Name);
+                    XTW.WriteElementString("Recommended", DM.Recommended);
+                    XTW.WriteElementString("Latest", DM.Latest);
+                    XTW.WriteElementString("Base", DM.Base);
+                    XTW.WriteElementString("Option", DM.Option);
+                    XTW.WriteElementString("News", DM.News);
+                    XTW.WriteElementString("Down", DM.Down);
+                    XTW.WriteEndElement(); // Info 엘리먼트 닫음
 
-            XTW.WriteEndElement();
-            XTW.WriteEndDocument();
-            XTW.Flush();
-            XTW.Close();
+                    XTW.WriteStartElement("Version");
+                    foreach (string tmp in DM.Version)
+                        XTW.WriteElementString("Ver", tmp);
+
+                    XTW.WriteEndElement();
+                    XTW.WriteEndDocument();
+                    XTW.Flush();
+                    XTW.Close();
+                    break;
+
+                case Type.BasePack:
+
+                    break;
+
+                case Type.OptionPack:
+
+                    break;
+            }
         }
     }
 }

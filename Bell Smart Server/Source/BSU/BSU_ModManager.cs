@@ -31,7 +31,7 @@ namespace Bell_Smart_Server.Source.BSU
                 cb_Mod_Option.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
                 txt_Mod_News.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
                 txt_Mod_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
-
+                
                 txt_MUID.ReadOnly = true;
                 gb_Mod_Info.Enabled = false;
                 gb_Mod_Setting.Enabled = true;
@@ -65,9 +65,10 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_Save_Click(object sender, EventArgs e)
         {
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, "BellCraft8");
-            string[] Version = {"8.2.0", "8.0.0"};
-            MAW.WriteXML(txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, cb_Mod_Base.SelectedText, cb_Mod_Option.SelectedText, txt_Mod_News.Text, txt_Mod_Down.Text, Version);
+            string[] Version = { "8.2.0", "8.0.0" };
+            //Version = lst_Mod_Version. //lst_Mod_Version 아이템 전부 아래 생성자에 직접 대입
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, cb_Mod_Base.SelectedText, cb_Mod_Option.SelectedText, txt_Mod_News.Text, txt_Mod_Down.Text, Version);
+            MAW.WriteXML();
         }
     }
 }

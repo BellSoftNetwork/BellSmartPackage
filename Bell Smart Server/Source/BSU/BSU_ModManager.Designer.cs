@@ -375,6 +375,7 @@
             // 
             // cb_Mod_Option
             // 
+            this.cb_Mod_Option.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_Mod_Option.FormattingEnabled = true;
             this.cb_Mod_Option.Location = new System.Drawing.Point(100, 98);
             this.cb_Mod_Option.Name = "cb_Mod_Option";
@@ -383,6 +384,7 @@
             // 
             // cb_Mod_Base
             // 
+            this.cb_Mod_Base.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_Mod_Base.FormattingEnabled = true;
             this.cb_Mod_Base.Location = new System.Drawing.Point(100, 77);
             this.cb_Mod_Base.Name = "cb_Mod_Base";
@@ -798,6 +800,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(516, 122);
             this.comboBox1.Name = "comboBox1";
@@ -806,6 +809,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(516, 101);
             this.comboBox2.Name = "comboBox2";
@@ -1046,6 +1050,7 @@
             // 
             // comboBox3
             // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Location = new System.Drawing.Point(117, 56);
             this.comboBox3.Name = "comboBox3";
@@ -1054,6 +1059,7 @@
             // 
             // comboBox4
             // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Location = new System.Drawing.Point(117, 35);
             this.comboBox4.Name = "comboBox4";
