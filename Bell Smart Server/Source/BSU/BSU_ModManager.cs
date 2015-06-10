@@ -51,5 +51,14 @@ namespace Bell_Smart_Server.Source.BSU
         {
             
         }
+
+        private void btn_Mod_Save_Click(object sender, EventArgs e)
+        {
+            ModAnalysisServer MAS = new ModAnalysisServer(ModAnalysisServer.Type.ModPack, "BellCraft8");
+            string[] Version = null;
+            Version[0] = "8.0.0";
+            Version[1] = "8.1.0";
+            MAS.WriteXML(txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, cb_Mod_Base.SelectedText, cb_Mod_Option.SelectedText, txt_Mod_News.Text, txt_Mod_Down.Text, Version);
+        }
     }
 }

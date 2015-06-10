@@ -339,6 +339,50 @@ namespace BellLib.Class
     /// </summary>
     public class ModAnalysisServer
     {
+        public enum Type
+        {
+            ModPack,
+            BasePack,
+            OptionPack
+        }
+        private string UID;
+        private Type Pack;
 
+        #region 생성자
+        /// <summary>
+        /// 모드분석 후 XML 작성합니다.
+        /// </summary>
+        public ModAnalysisServer(Type Typ, string UID)
+        {
+            this.Pack = Typ;
+            this.UID = UID;
+        }
+
+        #endregion
+
+        public void WriteXML(string UID, string Name, string Recommended, string Latest, string Base, string Option, string News, string Down, string[] Version)
+        {
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여 
+            XTW.WriteStartDocument(); // XML 문서 시작
+            XTW.WriteStartElement(UID); // UID 엘리먼트 시작
+
+            XTW.WriteStartElement("Info"); // Info 엘리먼트 닫음
+            XTW.WriteElementString("Name", Name);
+            XTW.WriteElementString("Recommended", Recommended);
+            XTW.WriteElementString("Latest", Latest);
+            XTW.WriteElementString("Base", Base);
+            XTW.WriteElementString("Option", Option);
+            XTW.WriteElementString("News", News);
+            XTW.WriteElementString("Down", Down);
+            XTW.WriteEndElement(); // Info 엘리먼트 닫음
+
+            XTW.WriteStartElement("Version");
+            foreach (string tmp in Version)
+                XTW.WriteElementString("Ver", tmp);
+
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+        }
     }
 }

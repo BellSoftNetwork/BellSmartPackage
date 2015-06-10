@@ -106,12 +106,10 @@ namespace BellLib.Class
 
         public static void CreateDefaultForder()
         {
-            string defaultPath = Data.User.BSN_Path;
-
-            CreateFolder(defaultPath);
-            CreateFolder(defaultPath + "logs\\");
-            CreateFolder(defaultPath + "ModPack");
-            CreateFolder(defaultPath + "Base");
+            CreateFolder(Data.User.BSN_Path);
+            CreateFolder(Data.User.BSN_Path + "logs\\");
+            CreateFolder(Data.User.BSL_Root + "ModPack");
+            CreateFolder(Data.User.BSL_Root + "Base");
         }
 
         private static void CreateFolder(string folderPath)
