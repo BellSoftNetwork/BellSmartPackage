@@ -33,9 +33,16 @@
             this.tc_Pack = new System.Windows.Forms.TabControl();
             this.tp_ModPack = new System.Windows.Forms.TabPage();
             this.gb_Mod_Upload = new System.Windows.Forms.GroupBox();
+            this.cb_Mod_Option_Upload = new System.Windows.Forms.ComboBox();
+            this.cb_Mod_Base_Upload = new System.Windows.Forms.ComboBox();
+            this.lb_Mod_Option_Upload = new System.Windows.Forms.Label();
+            this.lb_Mod_Base_Upload = new System.Windows.Forms.Label();
+            this.btn_Mod_Upload = new System.Windows.Forms.Button();
+            this.cb_Mod_Active = new System.Windows.Forms.CheckBox();
+            this.cb_Mod_Recommended = new System.Windows.Forms.CheckBox();
+            this.cb_Mod_Latest = new System.Windows.Forms.CheckBox();
+            this.pb_Mod_Upload = new System.Windows.Forms.ProgressBar();
             this.lst_Mod_File = new System.Windows.Forms.ListBox();
-            this.cms_File = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mi_Exclusion = new System.Windows.Forms.ToolStripMenuItem();
             this.lb_Mod_Version = new System.Windows.Forms.Label();
             this.txt_Mod_Version = new System.Windows.Forms.TextBox();
             this.gb_Mod_Info = new System.Windows.Forms.GroupBox();
@@ -43,10 +50,13 @@
             this.lb_MUID = new System.Windows.Forms.Label();
             this.txt_MUID = new System.Windows.Forms.TextBox();
             this.gb_Mod_Setting = new System.Windows.Forms.GroupBox();
+            this.btn_Mod_SelectSave = new System.Windows.Forms.Button();
+            this.cb_Mod_Option_Ver = new System.Windows.Forms.ComboBox();
+            this.cb_Mod_Base_Ver = new System.Windows.Forms.ComboBox();
+            this.lb_Mod_Option_Ver = new System.Windows.Forms.Label();
+            this.lb_Mod_Base_Ver = new System.Windows.Forms.Label();
             this.btn_Mod_Save = new System.Windows.Forms.Button();
             this.lst_Mod_Version = new System.Windows.Forms.ListBox();
-            this.cms_Version = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.mi_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.txt_Mod_Down = new System.Windows.Forms.TextBox();
             this.lb_Mod_Down = new System.Windows.Forms.Label();
             this.txt_Mod_News = new System.Windows.Forms.TextBox();
@@ -63,6 +73,14 @@
             this.lb_Mod_Name = new System.Windows.Forms.Label();
             this.tp_BasePack = new System.Windows.Forms.TabPage();
             this.gb_Base_Upload = new System.Windows.Forms.GroupBox();
+            this.btn_Base_Upload = new System.Windows.Forms.Button();
+            this.cb_Base_Active = new System.Windows.Forms.CheckBox();
+            this.cb_Base_Recommended = new System.Windows.Forms.CheckBox();
+            this.cb_Base_Latest = new System.Windows.Forms.CheckBox();
+            this.pb_Base_Upload = new System.Windows.Forms.ProgressBar();
+            this.lst_Base_File = new System.Windows.Forms.ListBox();
+            this.lb_Base_Version = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.gb_Base_Info = new System.Windows.Forms.GroupBox();
             this.btn_Base_Set = new System.Windows.Forms.Button();
             this.lb_BUID = new System.Windows.Forms.Label();
@@ -76,10 +94,20 @@
             this.txt_Base_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Base_Latest = new System.Windows.Forms.TextBox();
             this.lb_Base_Latest = new System.Windows.Forms.Label();
-            this.txt_Base_Name = new System.Windows.Forms.TextBox();
-            this.lb_Base_Name = new System.Windows.Forms.Label();
             this.tp_OptionPack = new System.Windows.Forms.TabPage();
             this.gb_Option_Upload = new System.Windows.Forms.GroupBox();
+            this.lst_Option_File = new System.Windows.Forms.ListView();
+            this.ch_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_OUID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_Default = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_Path = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btn_Option_Upload = new System.Windows.Forms.Button();
+            this.cb_Option_Active = new System.Windows.Forms.CheckBox();
+            this.cb_Option_Recommended = new System.Windows.Forms.CheckBox();
+            this.cb_Option_Latest = new System.Windows.Forms.CheckBox();
+            this.pb_Option_Upload = new System.Windows.Forms.ProgressBar();
+            this.lb_Option_Version = new System.Windows.Forms.Label();
+            this.txt_Option_Version = new System.Windows.Forms.TextBox();
             this.gb_Option_Info = new System.Windows.Forms.GroupBox();
             this.btn_Option_Set = new System.Windows.Forms.Button();
             this.lb_OUID = new System.Windows.Forms.Label();
@@ -93,49 +121,18 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
-            this.txt_Option_Name = new System.Windows.Forms.TextBox();
-            this.lb_Option_Name = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pb_Mod_Upload = new System.Windows.Forms.ProgressBar();
-            this.cb_Mod_Latest = new System.Windows.Forms.CheckBox();
-            this.cb_Mod_Recommended = new System.Windows.Forms.CheckBox();
-            this.cb_Mod_Active = new System.Windows.Forms.CheckBox();
-            this.btn_Mod_Upload = new System.Windows.Forms.Button();
-            this.btn_Base_Upload = new System.Windows.Forms.Button();
-            this.cb_Base_Active = new System.Windows.Forms.CheckBox();
-            this.cb_Base_Recommended = new System.Windows.Forms.CheckBox();
-            this.cb_Base_Latest = new System.Windows.Forms.CheckBox();
-            this.pb_Base_Upload = new System.Windows.Forms.ProgressBar();
-            this.lst_Base_File = new System.Windows.Forms.ListBox();
-            this.lb_Base_Version = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btn_Option_Upload = new System.Windows.Forms.Button();
-            this.cb_Option_Active = new System.Windows.Forms.CheckBox();
-            this.cb_Option_Recommended = new System.Windows.Forms.CheckBox();
-            this.cb_Option_Latest = new System.Windows.Forms.CheckBox();
-            this.pb_Option_Upload = new System.Windows.Forms.ProgressBar();
-            this.lb_Option_Version = new System.Windows.Forms.Label();
-            this.txt_Option_Version = new System.Windows.Forms.TextBox();
-            this.lst_Option_File = new System.Windows.Forms.ListView();
-            this.ch_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_OUID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_Default = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_Path = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btn_Mod_SelectSave = new System.Windows.Forms.Button();
+            this.mi_Delete = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms_Version = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mi_Exclusion = new System.Windows.Forms.ToolStripMenuItem();
+            this.cms_File = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btn_Mod_DelVer = new System.Windows.Forms.Button();
+            this.btn_Base_DelVer = new System.Windows.Forms.Button();
+            this.btn_Option_DelVer = new System.Windows.Forms.Button();
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.gb_Mod_Upload.SuspendLayout();
-            this.cms_File.SuspendLayout();
             this.gb_Mod_Info.SuspendLayout();
             this.gb_Mod_Setting.SuspendLayout();
-            this.cms_Version.SuspendLayout();
             this.tp_BasePack.SuspendLayout();
             this.gb_Base_Upload.SuspendLayout();
             this.gb_Base_Info.SuspendLayout();
@@ -144,6 +141,8 @@
             this.gb_Option_Upload.SuspendLayout();
             this.gb_Option_Info.SuspendLayout();
             this.gb_Option_Setting.SuspendLayout();
+            this.cms_Version.SuspendLayout();
+            this.cms_File.SuspendLayout();
             this.SuspendLayout();
             // 
             // tc_Pack
@@ -173,10 +172,10 @@
             // 
             // gb_Mod_Upload
             // 
-            this.gb_Mod_Upload.Controls.Add(this.comboBox3);
-            this.gb_Mod_Upload.Controls.Add(this.comboBox4);
-            this.gb_Mod_Upload.Controls.Add(this.label3);
-            this.gb_Mod_Upload.Controls.Add(this.label4);
+            this.gb_Mod_Upload.Controls.Add(this.cb_Mod_Option_Upload);
+            this.gb_Mod_Upload.Controls.Add(this.cb_Mod_Base_Upload);
+            this.gb_Mod_Upload.Controls.Add(this.lb_Mod_Option_Upload);
+            this.gb_Mod_Upload.Controls.Add(this.lb_Mod_Base_Upload);
             this.gb_Mod_Upload.Controls.Add(this.btn_Mod_Upload);
             this.gb_Mod_Upload.Controls.Add(this.cb_Mod_Active);
             this.gb_Mod_Upload.Controls.Add(this.cb_Mod_Recommended);
@@ -194,6 +193,89 @@
             this.gb_Mod_Upload.TabStop = false;
             this.gb_Mod_Upload.Text = "업로드";
             // 
+            // cb_Mod_Option_Upload
+            // 
+            this.cb_Mod_Option_Upload.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Mod_Option_Upload.FormattingEnabled = true;
+            this.cb_Mod_Option_Upload.Location = new System.Drawing.Point(117, 56);
+            this.cb_Mod_Option_Upload.Name = "cb_Mod_Option_Upload";
+            this.cb_Mod_Option_Upload.Size = new System.Drawing.Size(117, 20);
+            this.cb_Mod_Option_Upload.TabIndex = 23;
+            // 
+            // cb_Mod_Base_Upload
+            // 
+            this.cb_Mod_Base_Upload.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Mod_Base_Upload.FormattingEnabled = true;
+            this.cb_Mod_Base_Upload.Location = new System.Drawing.Point(117, 35);
+            this.cb_Mod_Base_Upload.Name = "cb_Mod_Base_Upload";
+            this.cb_Mod_Base_Upload.Size = new System.Drawing.Size(117, 20);
+            this.cb_Mod_Base_Upload.TabIndex = 22;
+            // 
+            // lb_Mod_Option_Upload
+            // 
+            this.lb_Mod_Option_Upload.AutoSize = true;
+            this.lb_Mod_Option_Upload.Location = new System.Drawing.Point(10, 59);
+            this.lb_Mod_Option_Upload.Name = "lb_Mod_Option_Upload";
+            this.lb_Mod_Option_Upload.Size = new System.Drawing.Size(101, 12);
+            this.lb_Mod_Option_Upload.TabIndex = 21;
+            this.lb_Mod_Option_Upload.Text = "옵션팩 필요버전 :";
+            // 
+            // lb_Mod_Base_Upload
+            // 
+            this.lb_Mod_Base_Upload.AutoSize = true;
+            this.lb_Mod_Base_Upload.Location = new System.Drawing.Point(-2, 38);
+            this.lb_Mod_Base_Upload.Name = "lb_Mod_Base_Upload";
+            this.lb_Mod_Base_Upload.Size = new System.Drawing.Size(113, 12);
+            this.lb_Mod_Base_Upload.TabIndex = 20;
+            this.lb_Mod_Base_Upload.Text = "베이스팩 필요버전 :";
+            // 
+            // btn_Mod_Upload
+            // 
+            this.btn_Mod_Upload.Location = new System.Drawing.Point(159, 127);
+            this.btn_Mod_Upload.Name = "btn_Mod_Upload";
+            this.btn_Mod_Upload.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_Upload.TabIndex = 7;
+            this.btn_Mod_Upload.Text = "업로드";
+            this.btn_Mod_Upload.UseVisualStyleBackColor = true;
+            // 
+            // cb_Mod_Active
+            // 
+            this.cb_Mod_Active.AutoSize = true;
+            this.cb_Mod_Active.Location = new System.Drawing.Point(0, 126);
+            this.cb_Mod_Active.Name = "cb_Mod_Active";
+            this.cb_Mod_Active.Size = new System.Drawing.Size(104, 16);
+            this.cb_Mod_Active.TabIndex = 6;
+            this.cb_Mod_Active.Text = "이 버전 활성화";
+            this.cb_Mod_Active.UseVisualStyleBackColor = true;
+            // 
+            // cb_Mod_Recommended
+            // 
+            this.cb_Mod_Recommended.AutoSize = true;
+            this.cb_Mod_Recommended.Location = new System.Drawing.Point(0, 104);
+            this.cb_Mod_Recommended.Name = "cb_Mod_Recommended";
+            this.cb_Mod_Recommended.Size = new System.Drawing.Size(152, 16);
+            this.cb_Mod_Recommended.TabIndex = 5;
+            this.cb_Mod_Recommended.Text = "이 버전을 권장버전으로";
+            this.cb_Mod_Recommended.UseVisualStyleBackColor = true;
+            // 
+            // cb_Mod_Latest
+            // 
+            this.cb_Mod_Latest.AutoSize = true;
+            this.cb_Mod_Latest.Location = new System.Drawing.Point(0, 82);
+            this.cb_Mod_Latest.Name = "cb_Mod_Latest";
+            this.cb_Mod_Latest.Size = new System.Drawing.Size(152, 16);
+            this.cb_Mod_Latest.TabIndex = 4;
+            this.cb_Mod_Latest.Text = "이 버전을 최신버전으로";
+            this.cb_Mod_Latest.UseVisualStyleBackColor = true;
+            // 
+            // pb_Mod_Upload
+            // 
+            this.pb_Mod_Upload.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pb_Mod_Upload.Location = new System.Drawing.Point(3, 159);
+            this.pb_Mod_Upload.Name = "pb_Mod_Upload";
+            this.pb_Mod_Upload.Size = new System.Drawing.Size(806, 14);
+            this.pb_Mod_Upload.TabIndex = 3;
+            // 
             // lst_Mod_File
             // 
             this.lst_Mod_File.AllowDrop = true;
@@ -207,20 +289,6 @@
             this.lst_Mod_File.TabIndex = 2;
             this.lst_Mod_File.DragDrop += new System.Windows.Forms.DragEventHandler(this.lst_Mod_File_DragDrop);
             this.lst_Mod_File.DragOver += new System.Windows.Forms.DragEventHandler(this.lst_Mod_File_DragOver);
-            // 
-            // cms_File
-            // 
-            this.cms_File.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_Exclusion});
-            this.cms_File.Name = "cms_File";
-            this.cms_File.Size = new System.Drawing.Size(99, 26);
-            // 
-            // mi_Exclusion
-            // 
-            this.mi_Exclusion.Name = "mi_Exclusion";
-            this.mi_Exclusion.Size = new System.Drawing.Size(98, 22);
-            this.mi_Exclusion.Text = "제외";
-            this.mi_Exclusion.Click += new System.EventHandler(this.mi_Exclusion_Click);
             // 
             // lb_Mod_Version
             // 
@@ -259,7 +327,7 @@
             this.btn_Mod_Set.TabIndex = 2;
             this.btn_Mod_Set.Text = "불러오기";
             this.btn_Mod_Set.UseVisualStyleBackColor = true;
-            this.btn_Mod_Set.Click += new System.EventHandler(this.btn_Set_Click);
+            this.btn_Mod_Set.Click += new System.EventHandler(this.btn_Mod_Set_Click);
             // 
             // lb_MUID
             // 
@@ -276,14 +344,16 @@
             this.txt_MUID.Name = "txt_MUID";
             this.txt_MUID.Size = new System.Drawing.Size(688, 21);
             this.txt_MUID.TabIndex = 0;
+            this.txt_MUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_MUID_KeyDown);
             // 
             // gb_Mod_Setting
             // 
+            this.gb_Mod_Setting.Controls.Add(this.btn_Mod_DelVer);
             this.gb_Mod_Setting.Controls.Add(this.btn_Mod_SelectSave);
-            this.gb_Mod_Setting.Controls.Add(this.comboBox1);
-            this.gb_Mod_Setting.Controls.Add(this.comboBox2);
-            this.gb_Mod_Setting.Controls.Add(this.label1);
-            this.gb_Mod_Setting.Controls.Add(this.label2);
+            this.gb_Mod_Setting.Controls.Add(this.cb_Mod_Option_Ver);
+            this.gb_Mod_Setting.Controls.Add(this.cb_Mod_Base_Ver);
+            this.gb_Mod_Setting.Controls.Add(this.lb_Mod_Option_Ver);
+            this.gb_Mod_Setting.Controls.Add(this.lb_Mod_Base_Ver);
             this.gb_Mod_Setting.Controls.Add(this.btn_Mod_Save);
             this.gb_Mod_Setting.Controls.Add(this.lst_Mod_Version);
             this.gb_Mod_Setting.Controls.Add(this.txt_Mod_Down);
@@ -308,6 +378,54 @@
             this.gb_Mod_Setting.TabStop = false;
             this.gb_Mod_Setting.Text = "설정";
             // 
+            // btn_Mod_SelectSave
+            // 
+            this.btn_Mod_SelectSave.Enabled = false;
+            this.btn_Mod_SelectSave.Location = new System.Drawing.Point(715, 143);
+            this.btn_Mod_SelectSave.Name = "btn_Mod_SelectSave";
+            this.btn_Mod_SelectSave.Size = new System.Drawing.Size(91, 23);
+            this.btn_Mod_SelectSave.TabIndex = 20;
+            this.btn_Mod_SelectSave.Text = "선택버전 저장";
+            this.btn_Mod_SelectSave.UseVisualStyleBackColor = true;
+            // 
+            // cb_Mod_Option_Ver
+            // 
+            this.cb_Mod_Option_Ver.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Mod_Option_Ver.Enabled = false;
+            this.cb_Mod_Option_Ver.FormattingEnabled = true;
+            this.cb_Mod_Option_Ver.Location = new System.Drawing.Point(516, 122);
+            this.cb_Mod_Option_Ver.Name = "cb_Mod_Option_Ver";
+            this.cb_Mod_Option_Ver.Size = new System.Drawing.Size(290, 20);
+            this.cb_Mod_Option_Ver.TabIndex = 19;
+            // 
+            // cb_Mod_Base_Ver
+            // 
+            this.cb_Mod_Base_Ver.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Mod_Base_Ver.Enabled = false;
+            this.cb_Mod_Base_Ver.FormattingEnabled = true;
+            this.cb_Mod_Base_Ver.Location = new System.Drawing.Point(516, 101);
+            this.cb_Mod_Base_Ver.Name = "cb_Mod_Base_Ver";
+            this.cb_Mod_Base_Ver.Size = new System.Drawing.Size(290, 20);
+            this.cb_Mod_Base_Ver.TabIndex = 18;
+            // 
+            // lb_Mod_Option_Ver
+            // 
+            this.lb_Mod_Option_Ver.AutoSize = true;
+            this.lb_Mod_Option_Ver.Location = new System.Drawing.Point(409, 125);
+            this.lb_Mod_Option_Ver.Name = "lb_Mod_Option_Ver";
+            this.lb_Mod_Option_Ver.Size = new System.Drawing.Size(101, 12);
+            this.lb_Mod_Option_Ver.TabIndex = 17;
+            this.lb_Mod_Option_Ver.Text = "옵션팩 필요버전 :";
+            // 
+            // lb_Mod_Base_Ver
+            // 
+            this.lb_Mod_Base_Ver.AutoSize = true;
+            this.lb_Mod_Base_Ver.Location = new System.Drawing.Point(397, 104);
+            this.lb_Mod_Base_Ver.Name = "lb_Mod_Base_Ver";
+            this.lb_Mod_Base_Ver.Size = new System.Drawing.Size(113, 12);
+            this.lb_Mod_Base_Ver.TabIndex = 16;
+            this.lb_Mod_Base_Ver.Text = "베이스팩 필요버전 :";
+            // 
             // btn_Mod_Save
             // 
             this.btn_Mod_Save.Location = new System.Drawing.Point(397, 143);
@@ -327,19 +445,7 @@
             this.lst_Mod_Version.Name = "lst_Mod_Version";
             this.lst_Mod_Version.Size = new System.Drawing.Size(409, 76);
             this.lst_Mod_Version.TabIndex = 14;
-            // 
-            // cms_Version
-            // 
-            this.cms_Version.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_Delete});
-            this.cms_Version.Name = "cms_Version";
-            this.cms_Version.Size = new System.Drawing.Size(155, 26);
-            // 
-            // mi_Delete
-            // 
-            this.mi_Delete.Name = "mi_Delete";
-            this.mi_Delete.Size = new System.Drawing.Size(154, 22);
-            this.mi_Delete.Text = "해당 버전 삭제";
+            this.lst_Mod_Version.SelectedIndexChanged += new System.EventHandler(this.lst_Mod_Version_SelectedIndexChanged);
             // 
             // txt_Mod_Down
             // 
@@ -489,398 +595,6 @@
             this.gb_Base_Upload.TabStop = false;
             this.gb_Base_Upload.Text = "업로드";
             // 
-            // gb_Base_Info
-            // 
-            this.gb_Base_Info.Controls.Add(this.btn_Base_Set);
-            this.gb_Base_Info.Controls.Add(this.lb_BUID);
-            this.gb_Base_Info.Controls.Add(this.txt_BUID);
-            this.gb_Base_Info.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gb_Base_Info.Location = new System.Drawing.Point(3, 3);
-            this.gb_Base_Info.Name = "gb_Base_Info";
-            this.gb_Base_Info.Size = new System.Drawing.Size(812, 43);
-            this.gb_Base_Info.TabIndex = 4;
-            this.gb_Base_Info.TabStop = false;
-            this.gb_Base_Info.Text = "정보";
-            // 
-            // btn_Base_Set
-            // 
-            this.btn_Base_Set.Location = new System.Drawing.Point(743, 12);
-            this.btn_Base_Set.Name = "btn_Base_Set";
-            this.btn_Base_Set.Size = new System.Drawing.Size(63, 23);
-            this.btn_Base_Set.TabIndex = 2;
-            this.btn_Base_Set.Text = "불러오기";
-            this.btn_Base_Set.UseVisualStyleBackColor = true;
-            // 
-            // lb_BUID
-            // 
-            this.lb_BUID.AutoSize = true;
-            this.lb_BUID.Location = new System.Drawing.Point(0, 17);
-            this.lb_BUID.Name = "lb_BUID";
-            this.lb_BUID.Size = new System.Drawing.Size(40, 12);
-            this.lb_BUID.TabIndex = 1;
-            this.lb_BUID.Text = "BUID :";
-            // 
-            // txt_BUID
-            // 
-            this.txt_BUID.Location = new System.Drawing.Point(49, 14);
-            this.txt_BUID.Name = "txt_BUID";
-            this.txt_BUID.Size = new System.Drawing.Size(688, 21);
-            this.txt_BUID.TabIndex = 0;
-            // 
-            // gb_Base_Setting
-            // 
-            this.gb_Base_Setting.Controls.Add(this.btn_Base_Save);
-            this.gb_Base_Setting.Controls.Add(this.lst_Base_Version);
-            this.gb_Base_Setting.Controls.Add(this.txt_Base_Down);
-            this.gb_Base_Setting.Controls.Add(this.lb_Base_Down);
-            this.gb_Base_Setting.Controls.Add(this.lb_Base_Recommended);
-            this.gb_Base_Setting.Controls.Add(this.txt_Base_Recommended);
-            this.gb_Base_Setting.Controls.Add(this.txt_Base_Latest);
-            this.gb_Base_Setting.Controls.Add(this.lb_Base_Latest);
-            this.gb_Base_Setting.Controls.Add(this.txt_Base_Name);
-            this.gb_Base_Setting.Controls.Add(this.lb_Base_Name);
-            this.gb_Base_Setting.Enabled = false;
-            this.gb_Base_Setting.Location = new System.Drawing.Point(3, 52);
-            this.gb_Base_Setting.Name = "gb_Base_Setting";
-            this.gb_Base_Setting.Size = new System.Drawing.Size(812, 112);
-            this.gb_Base_Setting.TabIndex = 3;
-            this.gb_Base_Setting.TabStop = false;
-            this.gb_Base_Setting.Text = "설정";
-            // 
-            // btn_Base_Save
-            // 
-            this.btn_Base_Save.Location = new System.Drawing.Point(731, 84);
-            this.btn_Base_Save.Name = "btn_Base_Save";
-            this.btn_Base_Save.Size = new System.Drawing.Size(75, 23);
-            this.btn_Base_Save.TabIndex = 15;
-            this.btn_Base_Save.Text = "저장";
-            this.btn_Base_Save.UseVisualStyleBackColor = true;
-            // 
-            // lst_Base_Version
-            // 
-            this.lst_Base_Version.FormattingEnabled = true;
-            this.lst_Base_Version.ItemHeight = 12;
-            this.lst_Base_Version.Location = new System.Drawing.Point(397, 14);
-            this.lst_Base_Version.Name = "lst_Base_Version";
-            this.lst_Base_Version.Size = new System.Drawing.Size(409, 64);
-            this.lst_Base_Version.TabIndex = 14;
-            // 
-            // txt_Base_Down
-            // 
-            this.txt_Base_Down.Location = new System.Drawing.Point(100, 77);
-            this.txt_Base_Down.Name = "txt_Base_Down";
-            this.txt_Base_Down.Size = new System.Drawing.Size(291, 21);
-            this.txt_Base_Down.TabIndex = 13;
-            // 
-            // lb_Base_Down
-            // 
-            this.lb_Base_Down.AutoSize = true;
-            this.lb_Base_Down.Location = new System.Drawing.Point(5, 80);
-            this.lb_Base_Down.Name = "lb_Base_Down";
-            this.lb_Base_Down.Size = new System.Drawing.Size(89, 12);
-            this.lb_Base_Down.TabIndex = 12;
-            this.lb_Base_Down.Text = "파일서버 주소 :";
-            // 
-            // lb_Base_Recommended
-            // 
-            this.lb_Base_Recommended.AutoSize = true;
-            this.lb_Base_Recommended.Location = new System.Drawing.Point(33, 59);
-            this.lb_Base_Recommended.Name = "lb_Base_Recommended";
-            this.lb_Base_Recommended.Size = new System.Drawing.Size(61, 12);
-            this.lb_Base_Recommended.TabIndex = 5;
-            this.lb_Base_Recommended.Text = "권장버전 :";
-            // 
-            // txt_Base_Recommended
-            // 
-            this.txt_Base_Recommended.Location = new System.Drawing.Point(100, 56);
-            this.txt_Base_Recommended.Name = "txt_Base_Recommended";
-            this.txt_Base_Recommended.Size = new System.Drawing.Size(291, 21);
-            this.txt_Base_Recommended.TabIndex = 4;
-            // 
-            // txt_Base_Latest
-            // 
-            this.txt_Base_Latest.Location = new System.Drawing.Point(100, 35);
-            this.txt_Base_Latest.Name = "txt_Base_Latest";
-            this.txt_Base_Latest.Size = new System.Drawing.Size(291, 21);
-            this.txt_Base_Latest.TabIndex = 3;
-            // 
-            // lb_Base_Latest
-            // 
-            this.lb_Base_Latest.AutoSize = true;
-            this.lb_Base_Latest.Location = new System.Drawing.Point(33, 38);
-            this.lb_Base_Latest.Name = "lb_Base_Latest";
-            this.lb_Base_Latest.Size = new System.Drawing.Size(61, 12);
-            this.lb_Base_Latest.TabIndex = 2;
-            this.lb_Base_Latest.Text = "최신버전 :";
-            // 
-            // txt_Base_Name
-            // 
-            this.txt_Base_Name.Location = new System.Drawing.Point(100, 14);
-            this.txt_Base_Name.Name = "txt_Base_Name";
-            this.txt_Base_Name.Size = new System.Drawing.Size(291, 21);
-            this.txt_Base_Name.TabIndex = 1;
-            // 
-            // lb_Base_Name
-            // 
-            this.lb_Base_Name.AutoSize = true;
-            this.lb_Base_Name.Location = new System.Drawing.Point(5, 17);
-            this.lb_Base_Name.Name = "lb_Base_Name";
-            this.lb_Base_Name.Size = new System.Drawing.Size(89, 12);
-            this.lb_Base_Name.TabIndex = 0;
-            this.lb_Base_Name.Text = "베이스팩 이름 :";
-            // 
-            // tp_OptionPack
-            // 
-            this.tp_OptionPack.Controls.Add(this.gb_Option_Upload);
-            this.tp_OptionPack.Controls.Add(this.gb_Option_Info);
-            this.tp_OptionPack.Controls.Add(this.gb_Option_Setting);
-            this.tp_OptionPack.Location = new System.Drawing.Point(4, 22);
-            this.tp_OptionPack.Name = "tp_OptionPack";
-            this.tp_OptionPack.Size = new System.Drawing.Size(818, 409);
-            this.tp_OptionPack.TabIndex = 2;
-            this.tp_OptionPack.Text = "옵션팩";
-            this.tp_OptionPack.UseVisualStyleBackColor = true;
-            // 
-            // gb_Option_Upload
-            // 
-            this.gb_Option_Upload.Controls.Add(this.lst_Option_File);
-            this.gb_Option_Upload.Controls.Add(this.btn_Option_Upload);
-            this.gb_Option_Upload.Controls.Add(this.cb_Option_Active);
-            this.gb_Option_Upload.Controls.Add(this.cb_Option_Recommended);
-            this.gb_Option_Upload.Controls.Add(this.cb_Option_Latest);
-            this.gb_Option_Upload.Controls.Add(this.pb_Option_Upload);
-            this.gb_Option_Upload.Controls.Add(this.lb_Option_Version);
-            this.gb_Option_Upload.Controls.Add(this.txt_Option_Version);
-            this.gb_Option_Upload.Enabled = false;
-            this.gb_Option_Upload.Location = new System.Drawing.Point(3, 170);
-            this.gb_Option_Upload.Name = "gb_Option_Upload";
-            this.gb_Option_Upload.Size = new System.Drawing.Size(812, 236);
-            this.gb_Option_Upload.TabIndex = 8;
-            this.gb_Option_Upload.TabStop = false;
-            this.gb_Option_Upload.Text = "업로드";
-            // 
-            // gb_Option_Info
-            // 
-            this.gb_Option_Info.Controls.Add(this.btn_Option_Set);
-            this.gb_Option_Info.Controls.Add(this.lb_OUID);
-            this.gb_Option_Info.Controls.Add(this.txt_OUID);
-            this.gb_Option_Info.Location = new System.Drawing.Point(3, 3);
-            this.gb_Option_Info.Name = "gb_Option_Info";
-            this.gb_Option_Info.Size = new System.Drawing.Size(812, 43);
-            this.gb_Option_Info.TabIndex = 7;
-            this.gb_Option_Info.TabStop = false;
-            this.gb_Option_Info.Text = "정보";
-            // 
-            // btn_Option_Set
-            // 
-            this.btn_Option_Set.Location = new System.Drawing.Point(743, 12);
-            this.btn_Option_Set.Name = "btn_Option_Set";
-            this.btn_Option_Set.Size = new System.Drawing.Size(63, 23);
-            this.btn_Option_Set.TabIndex = 2;
-            this.btn_Option_Set.Text = "불러오기";
-            this.btn_Option_Set.UseVisualStyleBackColor = true;
-            // 
-            // lb_OUID
-            // 
-            this.lb_OUID.AutoSize = true;
-            this.lb_OUID.Location = new System.Drawing.Point(0, 17);
-            this.lb_OUID.Name = "lb_OUID";
-            this.lb_OUID.Size = new System.Drawing.Size(33, 12);
-            this.lb_OUID.TabIndex = 1;
-            this.lb_OUID.Text = "OUID";
-            // 
-            // txt_OUID
-            // 
-            this.txt_OUID.Location = new System.Drawing.Point(49, 14);
-            this.txt_OUID.Name = "txt_OUID";
-            this.txt_OUID.Size = new System.Drawing.Size(688, 21);
-            this.txt_OUID.TabIndex = 0;
-            // 
-            // gb_Option_Setting
-            // 
-            this.gb_Option_Setting.Controls.Add(this.btn_Option_Save);
-            this.gb_Option_Setting.Controls.Add(this.lst_Option_Version);
-            this.gb_Option_Setting.Controls.Add(this.txt_Option_Down);
-            this.gb_Option_Setting.Controls.Add(this.lb_Option_Down);
-            this.gb_Option_Setting.Controls.Add(this.lb_Option_Recommended);
-            this.gb_Option_Setting.Controls.Add(this.txt_Option_Recommended);
-            this.gb_Option_Setting.Controls.Add(this.txt_Option_Latest);
-            this.gb_Option_Setting.Controls.Add(this.lb_Option_Latest);
-            this.gb_Option_Setting.Controls.Add(this.txt_Option_Name);
-            this.gb_Option_Setting.Controls.Add(this.lb_Option_Name);
-            this.gb_Option_Setting.Enabled = false;
-            this.gb_Option_Setting.Location = new System.Drawing.Point(3, 52);
-            this.gb_Option_Setting.Name = "gb_Option_Setting";
-            this.gb_Option_Setting.Size = new System.Drawing.Size(812, 112);
-            this.gb_Option_Setting.TabIndex = 6;
-            this.gb_Option_Setting.TabStop = false;
-            this.gb_Option_Setting.Text = "설정";
-            // 
-            // btn_Option_Save
-            // 
-            this.btn_Option_Save.Location = new System.Drawing.Point(731, 84);
-            this.btn_Option_Save.Name = "btn_Option_Save";
-            this.btn_Option_Save.Size = new System.Drawing.Size(75, 23);
-            this.btn_Option_Save.TabIndex = 15;
-            this.btn_Option_Save.Text = "저장";
-            this.btn_Option_Save.UseVisualStyleBackColor = true;
-            // 
-            // lst_Option_Version
-            // 
-            this.lst_Option_Version.FormattingEnabled = true;
-            this.lst_Option_Version.ItemHeight = 12;
-            this.lst_Option_Version.Location = new System.Drawing.Point(397, 14);
-            this.lst_Option_Version.Name = "lst_Option_Version";
-            this.lst_Option_Version.Size = new System.Drawing.Size(409, 64);
-            this.lst_Option_Version.TabIndex = 14;
-            // 
-            // txt_Option_Down
-            // 
-            this.txt_Option_Down.Location = new System.Drawing.Point(100, 77);
-            this.txt_Option_Down.Name = "txt_Option_Down";
-            this.txt_Option_Down.Size = new System.Drawing.Size(291, 21);
-            this.txt_Option_Down.TabIndex = 13;
-            // 
-            // lb_Option_Down
-            // 
-            this.lb_Option_Down.AutoSize = true;
-            this.lb_Option_Down.Location = new System.Drawing.Point(5, 80);
-            this.lb_Option_Down.Name = "lb_Option_Down";
-            this.lb_Option_Down.Size = new System.Drawing.Size(89, 12);
-            this.lb_Option_Down.TabIndex = 12;
-            this.lb_Option_Down.Text = "파일서버 주소 :";
-            // 
-            // lb_Option_Recommended
-            // 
-            this.lb_Option_Recommended.AutoSize = true;
-            this.lb_Option_Recommended.Location = new System.Drawing.Point(33, 59);
-            this.lb_Option_Recommended.Name = "lb_Option_Recommended";
-            this.lb_Option_Recommended.Size = new System.Drawing.Size(61, 12);
-            this.lb_Option_Recommended.TabIndex = 5;
-            this.lb_Option_Recommended.Text = "권장버전 :";
-            // 
-            // txt_Option_Recommended
-            // 
-            this.txt_Option_Recommended.Location = new System.Drawing.Point(100, 56);
-            this.txt_Option_Recommended.Name = "txt_Option_Recommended";
-            this.txt_Option_Recommended.Size = new System.Drawing.Size(291, 21);
-            this.txt_Option_Recommended.TabIndex = 4;
-            // 
-            // txt_Option_Latest
-            // 
-            this.txt_Option_Latest.Location = new System.Drawing.Point(100, 35);
-            this.txt_Option_Latest.Name = "txt_Option_Latest";
-            this.txt_Option_Latest.Size = new System.Drawing.Size(291, 21);
-            this.txt_Option_Latest.TabIndex = 3;
-            // 
-            // lb_Option_Latest
-            // 
-            this.lb_Option_Latest.AutoSize = true;
-            this.lb_Option_Latest.Location = new System.Drawing.Point(33, 38);
-            this.lb_Option_Latest.Name = "lb_Option_Latest";
-            this.lb_Option_Latest.Size = new System.Drawing.Size(61, 12);
-            this.lb_Option_Latest.TabIndex = 2;
-            this.lb_Option_Latest.Text = "최신버전 :";
-            // 
-            // txt_Option_Name
-            // 
-            this.txt_Option_Name.Location = new System.Drawing.Point(100, 14);
-            this.txt_Option_Name.Name = "txt_Option_Name";
-            this.txt_Option_Name.Size = new System.Drawing.Size(291, 21);
-            this.txt_Option_Name.TabIndex = 1;
-            // 
-            // lb_Option_Name
-            // 
-            this.lb_Option_Name.AutoSize = true;
-            this.lb_Option_Name.Location = new System.Drawing.Point(17, 17);
-            this.lb_Option_Name.Name = "lb_Option_Name";
-            this.lb_Option_Name.Size = new System.Drawing.Size(77, 12);
-            this.lb_Option_Name.TabIndex = 0;
-            this.lb_Option_Name.Text = "옵션팩 이름 :";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(516, 122);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(290, 20);
-            this.comboBox1.TabIndex = 19;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(516, 101);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(290, 20);
-            this.comboBox2.TabIndex = 18;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(409, 125);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 12);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "옵션팩 필요버전 :";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(397, 104);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 12);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "베이스팩 필요버전 :";
-            // 
-            // pb_Mod_Upload
-            // 
-            this.pb_Mod_Upload.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pb_Mod_Upload.Location = new System.Drawing.Point(3, 159);
-            this.pb_Mod_Upload.Name = "pb_Mod_Upload";
-            this.pb_Mod_Upload.Size = new System.Drawing.Size(806, 14);
-            this.pb_Mod_Upload.TabIndex = 3;
-            // 
-            // cb_Mod_Latest
-            // 
-            this.cb_Mod_Latest.AutoSize = true;
-            this.cb_Mod_Latest.Location = new System.Drawing.Point(0, 82);
-            this.cb_Mod_Latest.Name = "cb_Mod_Latest";
-            this.cb_Mod_Latest.Size = new System.Drawing.Size(152, 16);
-            this.cb_Mod_Latest.TabIndex = 4;
-            this.cb_Mod_Latest.Text = "이 버전을 최신버전으로";
-            this.cb_Mod_Latest.UseVisualStyleBackColor = true;
-            // 
-            // cb_Mod_Recommended
-            // 
-            this.cb_Mod_Recommended.AutoSize = true;
-            this.cb_Mod_Recommended.Location = new System.Drawing.Point(0, 104);
-            this.cb_Mod_Recommended.Name = "cb_Mod_Recommended";
-            this.cb_Mod_Recommended.Size = new System.Drawing.Size(152, 16);
-            this.cb_Mod_Recommended.TabIndex = 5;
-            this.cb_Mod_Recommended.Text = "이 버전을 권장버전으로";
-            this.cb_Mod_Recommended.UseVisualStyleBackColor = true;
-            // 
-            // cb_Mod_Active
-            // 
-            this.cb_Mod_Active.AutoSize = true;
-            this.cb_Mod_Active.Location = new System.Drawing.Point(0, 126);
-            this.cb_Mod_Active.Name = "cb_Mod_Active";
-            this.cb_Mod_Active.Size = new System.Drawing.Size(104, 16);
-            this.cb_Mod_Active.TabIndex = 6;
-            this.cb_Mod_Active.Text = "이 버전 활성화";
-            this.cb_Mod_Active.UseVisualStyleBackColor = true;
-            // 
-            // btn_Mod_Upload
-            // 
-            this.btn_Mod_Upload.Location = new System.Drawing.Point(159, 127);
-            this.btn_Mod_Upload.Name = "btn_Mod_Upload";
-            this.btn_Mod_Upload.Size = new System.Drawing.Size(75, 23);
-            this.btn_Mod_Upload.TabIndex = 7;
-            this.btn_Mod_Upload.Text = "업로드";
-            this.btn_Mod_Upload.UseVisualStyleBackColor = true;
-            // 
             // btn_Base_Upload
             // 
             this.btn_Base_Upload.Location = new System.Drawing.Point(162, 190);
@@ -956,6 +670,189 @@
             this.textBox1.Size = new System.Drawing.Size(187, 21);
             this.textBox1.TabIndex = 8;
             // 
+            // gb_Base_Info
+            // 
+            this.gb_Base_Info.Controls.Add(this.btn_Base_Set);
+            this.gb_Base_Info.Controls.Add(this.lb_BUID);
+            this.gb_Base_Info.Controls.Add(this.txt_BUID);
+            this.gb_Base_Info.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gb_Base_Info.Location = new System.Drawing.Point(3, 3);
+            this.gb_Base_Info.Name = "gb_Base_Info";
+            this.gb_Base_Info.Size = new System.Drawing.Size(812, 43);
+            this.gb_Base_Info.TabIndex = 4;
+            this.gb_Base_Info.TabStop = false;
+            this.gb_Base_Info.Text = "정보";
+            // 
+            // btn_Base_Set
+            // 
+            this.btn_Base_Set.Location = new System.Drawing.Point(743, 12);
+            this.btn_Base_Set.Name = "btn_Base_Set";
+            this.btn_Base_Set.Size = new System.Drawing.Size(63, 23);
+            this.btn_Base_Set.TabIndex = 2;
+            this.btn_Base_Set.Text = "불러오기";
+            this.btn_Base_Set.UseVisualStyleBackColor = true;
+            this.btn_Base_Set.Click += new System.EventHandler(this.btn_Base_Set_Click);
+            // 
+            // lb_BUID
+            // 
+            this.lb_BUID.AutoSize = true;
+            this.lb_BUID.Location = new System.Drawing.Point(0, 17);
+            this.lb_BUID.Name = "lb_BUID";
+            this.lb_BUID.Size = new System.Drawing.Size(40, 12);
+            this.lb_BUID.TabIndex = 1;
+            this.lb_BUID.Text = "BUID :";
+            // 
+            // txt_BUID
+            // 
+            this.txt_BUID.Location = new System.Drawing.Point(49, 14);
+            this.txt_BUID.Name = "txt_BUID";
+            this.txt_BUID.Size = new System.Drawing.Size(688, 21);
+            this.txt_BUID.TabIndex = 0;
+            // 
+            // gb_Base_Setting
+            // 
+            this.gb_Base_Setting.Controls.Add(this.btn_Base_DelVer);
+            this.gb_Base_Setting.Controls.Add(this.btn_Base_Save);
+            this.gb_Base_Setting.Controls.Add(this.lst_Base_Version);
+            this.gb_Base_Setting.Controls.Add(this.txt_Base_Down);
+            this.gb_Base_Setting.Controls.Add(this.lb_Base_Down);
+            this.gb_Base_Setting.Controls.Add(this.lb_Base_Recommended);
+            this.gb_Base_Setting.Controls.Add(this.txt_Base_Recommended);
+            this.gb_Base_Setting.Controls.Add(this.txt_Base_Latest);
+            this.gb_Base_Setting.Controls.Add(this.lb_Base_Latest);
+            this.gb_Base_Setting.Enabled = false;
+            this.gb_Base_Setting.Location = new System.Drawing.Point(3, 52);
+            this.gb_Base_Setting.Name = "gb_Base_Setting";
+            this.gb_Base_Setting.Size = new System.Drawing.Size(812, 112);
+            this.gb_Base_Setting.TabIndex = 3;
+            this.gb_Base_Setting.TabStop = false;
+            this.gb_Base_Setting.Text = "설정";
+            // 
+            // btn_Base_Save
+            // 
+            this.btn_Base_Save.Location = new System.Drawing.Point(731, 84);
+            this.btn_Base_Save.Name = "btn_Base_Save";
+            this.btn_Base_Save.Size = new System.Drawing.Size(75, 23);
+            this.btn_Base_Save.TabIndex = 15;
+            this.btn_Base_Save.Text = "저장";
+            this.btn_Base_Save.UseVisualStyleBackColor = true;
+            // 
+            // lst_Base_Version
+            // 
+            this.lst_Base_Version.FormattingEnabled = true;
+            this.lst_Base_Version.ItemHeight = 12;
+            this.lst_Base_Version.Location = new System.Drawing.Point(397, 14);
+            this.lst_Base_Version.Name = "lst_Base_Version";
+            this.lst_Base_Version.Size = new System.Drawing.Size(409, 64);
+            this.lst_Base_Version.TabIndex = 14;
+            // 
+            // txt_Base_Down
+            // 
+            this.txt_Base_Down.Location = new System.Drawing.Point(100, 56);
+            this.txt_Base_Down.Name = "txt_Base_Down";
+            this.txt_Base_Down.Size = new System.Drawing.Size(291, 21);
+            this.txt_Base_Down.TabIndex = 13;
+            // 
+            // lb_Base_Down
+            // 
+            this.lb_Base_Down.AutoSize = true;
+            this.lb_Base_Down.Location = new System.Drawing.Point(5, 59);
+            this.lb_Base_Down.Name = "lb_Base_Down";
+            this.lb_Base_Down.Size = new System.Drawing.Size(89, 12);
+            this.lb_Base_Down.TabIndex = 12;
+            this.lb_Base_Down.Text = "파일서버 주소 :";
+            // 
+            // lb_Base_Recommended
+            // 
+            this.lb_Base_Recommended.AutoSize = true;
+            this.lb_Base_Recommended.Location = new System.Drawing.Point(33, 38);
+            this.lb_Base_Recommended.Name = "lb_Base_Recommended";
+            this.lb_Base_Recommended.Size = new System.Drawing.Size(61, 12);
+            this.lb_Base_Recommended.TabIndex = 5;
+            this.lb_Base_Recommended.Text = "권장버전 :";
+            // 
+            // txt_Base_Recommended
+            // 
+            this.txt_Base_Recommended.Location = new System.Drawing.Point(100, 35);
+            this.txt_Base_Recommended.Name = "txt_Base_Recommended";
+            this.txt_Base_Recommended.Size = new System.Drawing.Size(291, 21);
+            this.txt_Base_Recommended.TabIndex = 4;
+            // 
+            // txt_Base_Latest
+            // 
+            this.txt_Base_Latest.Location = new System.Drawing.Point(100, 14);
+            this.txt_Base_Latest.Name = "txt_Base_Latest";
+            this.txt_Base_Latest.Size = new System.Drawing.Size(291, 21);
+            this.txt_Base_Latest.TabIndex = 3;
+            // 
+            // lb_Base_Latest
+            // 
+            this.lb_Base_Latest.AutoSize = true;
+            this.lb_Base_Latest.Location = new System.Drawing.Point(33, 17);
+            this.lb_Base_Latest.Name = "lb_Base_Latest";
+            this.lb_Base_Latest.Size = new System.Drawing.Size(61, 12);
+            this.lb_Base_Latest.TabIndex = 2;
+            this.lb_Base_Latest.Text = "최신버전 :";
+            // 
+            // tp_OptionPack
+            // 
+            this.tp_OptionPack.Controls.Add(this.gb_Option_Upload);
+            this.tp_OptionPack.Controls.Add(this.gb_Option_Info);
+            this.tp_OptionPack.Controls.Add(this.gb_Option_Setting);
+            this.tp_OptionPack.Location = new System.Drawing.Point(4, 22);
+            this.tp_OptionPack.Name = "tp_OptionPack";
+            this.tp_OptionPack.Size = new System.Drawing.Size(818, 409);
+            this.tp_OptionPack.TabIndex = 2;
+            this.tp_OptionPack.Text = "옵션팩";
+            this.tp_OptionPack.UseVisualStyleBackColor = true;
+            // 
+            // gb_Option_Upload
+            // 
+            this.gb_Option_Upload.Controls.Add(this.lst_Option_File);
+            this.gb_Option_Upload.Controls.Add(this.btn_Option_Upload);
+            this.gb_Option_Upload.Controls.Add(this.cb_Option_Active);
+            this.gb_Option_Upload.Controls.Add(this.cb_Option_Recommended);
+            this.gb_Option_Upload.Controls.Add(this.cb_Option_Latest);
+            this.gb_Option_Upload.Controls.Add(this.pb_Option_Upload);
+            this.gb_Option_Upload.Controls.Add(this.lb_Option_Version);
+            this.gb_Option_Upload.Controls.Add(this.txt_Option_Version);
+            this.gb_Option_Upload.Enabled = false;
+            this.gb_Option_Upload.Location = new System.Drawing.Point(3, 170);
+            this.gb_Option_Upload.Name = "gb_Option_Upload";
+            this.gb_Option_Upload.Size = new System.Drawing.Size(812, 236);
+            this.gb_Option_Upload.TabIndex = 8;
+            this.gb_Option_Upload.TabStop = false;
+            this.gb_Option_Upload.Text = "업로드";
+            // 
+            // lst_Option_File
+            // 
+            this.lst_Option_File.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ch_Name,
+            this.ch_OUID,
+            this.ch_Default,
+            this.ch_Path});
+            this.lst_Option_File.Location = new System.Drawing.Point(243, 20);
+            this.lst_Option_File.Name = "lst_Option_File";
+            this.lst_Option_File.Size = new System.Drawing.Size(563, 193);
+            this.lst_Option_File.TabIndex = 16;
+            this.lst_Option_File.UseCompatibleStateImageBehavior = false;
+            // 
+            // ch_Name
+            // 
+            this.ch_Name.Text = "이름";
+            // 
+            // ch_OUID
+            // 
+            this.ch_OUID.Text = "OUID";
+            // 
+            // ch_Default
+            // 
+            this.ch_Default.Text = "기본설치";
+            // 
+            // ch_Path
+            // 
+            this.ch_Path.Text = "경로";
+            // 
             // btn_Option_Upload
             // 
             this.btn_Option_Upload.Location = new System.Drawing.Point(162, 190);
@@ -1019,79 +916,187 @@
             this.txt_Option_Version.Size = new System.Drawing.Size(187, 21);
             this.txt_Option_Version.TabIndex = 8;
             // 
-            // lst_Option_File
+            // gb_Option_Info
             // 
-            this.lst_Option_File.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ch_Name,
-            this.ch_OUID,
-            this.ch_Default,
-            this.ch_Path});
-            this.lst_Option_File.Location = new System.Drawing.Point(243, 20);
-            this.lst_Option_File.Name = "lst_Option_File";
-            this.lst_Option_File.Size = new System.Drawing.Size(563, 193);
-            this.lst_Option_File.TabIndex = 16;
-            this.lst_Option_File.UseCompatibleStateImageBehavior = false;
+            this.gb_Option_Info.Controls.Add(this.btn_Option_Set);
+            this.gb_Option_Info.Controls.Add(this.lb_OUID);
+            this.gb_Option_Info.Controls.Add(this.txt_OUID);
+            this.gb_Option_Info.Location = new System.Drawing.Point(3, 3);
+            this.gb_Option_Info.Name = "gb_Option_Info";
+            this.gb_Option_Info.Size = new System.Drawing.Size(812, 43);
+            this.gb_Option_Info.TabIndex = 7;
+            this.gb_Option_Info.TabStop = false;
+            this.gb_Option_Info.Text = "정보";
             // 
-            // ch_Name
+            // btn_Option_Set
             // 
-            this.ch_Name.Text = "이름";
+            this.btn_Option_Set.Location = new System.Drawing.Point(743, 12);
+            this.btn_Option_Set.Name = "btn_Option_Set";
+            this.btn_Option_Set.Size = new System.Drawing.Size(63, 23);
+            this.btn_Option_Set.TabIndex = 2;
+            this.btn_Option_Set.Text = "불러오기";
+            this.btn_Option_Set.UseVisualStyleBackColor = true;
+            this.btn_Option_Set.Click += new System.EventHandler(this.btn_Option_Set_Click);
             // 
-            // ch_OUID
+            // lb_OUID
             // 
-            this.ch_OUID.Text = "OUID";
+            this.lb_OUID.AutoSize = true;
+            this.lb_OUID.Location = new System.Drawing.Point(0, 17);
+            this.lb_OUID.Name = "lb_OUID";
+            this.lb_OUID.Size = new System.Drawing.Size(33, 12);
+            this.lb_OUID.TabIndex = 1;
+            this.lb_OUID.Text = "OUID";
             // 
-            // ch_Default
+            // txt_OUID
             // 
-            this.ch_Default.Text = "기본설치";
+            this.txt_OUID.Location = new System.Drawing.Point(49, 14);
+            this.txt_OUID.Name = "txt_OUID";
+            this.txt_OUID.Size = new System.Drawing.Size(688, 21);
+            this.txt_OUID.TabIndex = 0;
             // 
-            // ch_Path
+            // gb_Option_Setting
             // 
-            this.ch_Path.Text = "경로";
+            this.gb_Option_Setting.Controls.Add(this.btn_Option_DelVer);
+            this.gb_Option_Setting.Controls.Add(this.btn_Option_Save);
+            this.gb_Option_Setting.Controls.Add(this.lst_Option_Version);
+            this.gb_Option_Setting.Controls.Add(this.txt_Option_Down);
+            this.gb_Option_Setting.Controls.Add(this.lb_Option_Down);
+            this.gb_Option_Setting.Controls.Add(this.lb_Option_Recommended);
+            this.gb_Option_Setting.Controls.Add(this.txt_Option_Recommended);
+            this.gb_Option_Setting.Controls.Add(this.txt_Option_Latest);
+            this.gb_Option_Setting.Controls.Add(this.lb_Option_Latest);
+            this.gb_Option_Setting.Enabled = false;
+            this.gb_Option_Setting.Location = new System.Drawing.Point(3, 52);
+            this.gb_Option_Setting.Name = "gb_Option_Setting";
+            this.gb_Option_Setting.Size = new System.Drawing.Size(812, 112);
+            this.gb_Option_Setting.TabIndex = 6;
+            this.gb_Option_Setting.TabStop = false;
+            this.gb_Option_Setting.Text = "설정";
             // 
-            // comboBox3
+            // btn_Option_Save
             // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(117, 56);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(117, 20);
-            this.comboBox3.TabIndex = 23;
+            this.btn_Option_Save.Location = new System.Drawing.Point(731, 84);
+            this.btn_Option_Save.Name = "btn_Option_Save";
+            this.btn_Option_Save.Size = new System.Drawing.Size(75, 23);
+            this.btn_Option_Save.TabIndex = 15;
+            this.btn_Option_Save.Text = "저장";
+            this.btn_Option_Save.UseVisualStyleBackColor = true;
             // 
-            // comboBox4
+            // lst_Option_Version
             // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(117, 35);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(117, 20);
-            this.comboBox4.TabIndex = 22;
+            this.lst_Option_Version.FormattingEnabled = true;
+            this.lst_Option_Version.ItemHeight = 12;
+            this.lst_Option_Version.Location = new System.Drawing.Point(397, 14);
+            this.lst_Option_Version.Name = "lst_Option_Version";
+            this.lst_Option_Version.Size = new System.Drawing.Size(409, 64);
+            this.lst_Option_Version.TabIndex = 14;
             // 
-            // label3
+            // txt_Option_Down
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 59);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(101, 12);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "옵션팩 필요버전 :";
+            this.txt_Option_Down.Location = new System.Drawing.Point(100, 56);
+            this.txt_Option_Down.Name = "txt_Option_Down";
+            this.txt_Option_Down.Size = new System.Drawing.Size(291, 21);
+            this.txt_Option_Down.TabIndex = 13;
             // 
-            // label4
+            // lb_Option_Down
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-2, 38);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 12);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "베이스팩 필요버전 :";
+            this.lb_Option_Down.AutoSize = true;
+            this.lb_Option_Down.Location = new System.Drawing.Point(5, 59);
+            this.lb_Option_Down.Name = "lb_Option_Down";
+            this.lb_Option_Down.Size = new System.Drawing.Size(89, 12);
+            this.lb_Option_Down.TabIndex = 12;
+            this.lb_Option_Down.Text = "파일서버 주소 :";
             // 
-            // btn_Mod_SelectSave
+            // lb_Option_Recommended
             // 
-            this.btn_Mod_SelectSave.Location = new System.Drawing.Point(715, 143);
-            this.btn_Mod_SelectSave.Name = "btn_Mod_SelectSave";
-            this.btn_Mod_SelectSave.Size = new System.Drawing.Size(91, 23);
-            this.btn_Mod_SelectSave.TabIndex = 20;
-            this.btn_Mod_SelectSave.Text = "선택버전 저장";
-            this.btn_Mod_SelectSave.UseVisualStyleBackColor = true;
+            this.lb_Option_Recommended.AutoSize = true;
+            this.lb_Option_Recommended.Location = new System.Drawing.Point(33, 38);
+            this.lb_Option_Recommended.Name = "lb_Option_Recommended";
+            this.lb_Option_Recommended.Size = new System.Drawing.Size(61, 12);
+            this.lb_Option_Recommended.TabIndex = 5;
+            this.lb_Option_Recommended.Text = "권장버전 :";
+            // 
+            // txt_Option_Recommended
+            // 
+            this.txt_Option_Recommended.Location = new System.Drawing.Point(100, 35);
+            this.txt_Option_Recommended.Name = "txt_Option_Recommended";
+            this.txt_Option_Recommended.Size = new System.Drawing.Size(291, 21);
+            this.txt_Option_Recommended.TabIndex = 4;
+            // 
+            // txt_Option_Latest
+            // 
+            this.txt_Option_Latest.Location = new System.Drawing.Point(100, 14);
+            this.txt_Option_Latest.Name = "txt_Option_Latest";
+            this.txt_Option_Latest.Size = new System.Drawing.Size(291, 21);
+            this.txt_Option_Latest.TabIndex = 3;
+            // 
+            // lb_Option_Latest
+            // 
+            this.lb_Option_Latest.AutoSize = true;
+            this.lb_Option_Latest.Location = new System.Drawing.Point(33, 17);
+            this.lb_Option_Latest.Name = "lb_Option_Latest";
+            this.lb_Option_Latest.Size = new System.Drawing.Size(61, 12);
+            this.lb_Option_Latest.TabIndex = 2;
+            this.lb_Option_Latest.Text = "최신버전 :";
+            // 
+            // mi_Delete
+            // 
+            this.mi_Delete.Name = "mi_Delete";
+            this.mi_Delete.Size = new System.Drawing.Size(154, 22);
+            this.mi_Delete.Text = "해당 버전 삭제";
+            this.mi_Delete.Click += new System.EventHandler(this.mi_Delete_Click);
+            // 
+            // cms_Version
+            // 
+            this.cms_Version.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_Delete});
+            this.cms_Version.Name = "cms_Version";
+            this.cms_Version.Size = new System.Drawing.Size(155, 26);
+            // 
+            // mi_Exclusion
+            // 
+            this.mi_Exclusion.Name = "mi_Exclusion";
+            this.mi_Exclusion.Size = new System.Drawing.Size(98, 22);
+            this.mi_Exclusion.Text = "제외";
+            this.mi_Exclusion.Click += new System.EventHandler(this.mi_Exclusion_Click);
+            // 
+            // cms_File
+            // 
+            this.cms_File.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mi_Exclusion});
+            this.cms_File.Name = "cms_File";
+            this.cms_File.Size = new System.Drawing.Size(99, 26);
+            // 
+            // btn_Mod_DelVer
+            // 
+            this.btn_Mod_DelVer.Enabled = false;
+            this.btn_Mod_DelVer.Location = new System.Drawing.Point(613, 143);
+            this.btn_Mod_DelVer.Name = "btn_Mod_DelVer";
+            this.btn_Mod_DelVer.Size = new System.Drawing.Size(96, 23);
+            this.btn_Mod_DelVer.TabIndex = 21;
+            this.btn_Mod_DelVer.Text = "선택 버전 삭제";
+            this.btn_Mod_DelVer.UseVisualStyleBackColor = true;
+            this.btn_Mod_DelVer.Click += new System.EventHandler(this.btn_Mod_DelVer_Click);
+            // 
+            // btn_Base_DelVer
+            // 
+            this.btn_Base_DelVer.Location = new System.Drawing.Point(629, 84);
+            this.btn_Base_DelVer.Name = "btn_Base_DelVer";
+            this.btn_Base_DelVer.Size = new System.Drawing.Size(96, 23);
+            this.btn_Base_DelVer.TabIndex = 16;
+            this.btn_Base_DelVer.Text = "선택 버전 삭제";
+            this.btn_Base_DelVer.UseVisualStyleBackColor = true;
+            this.btn_Base_DelVer.Click += new System.EventHandler(this.btn_Base_DelVer_Click);
+            // 
+            // btn_Option_DelVer
+            // 
+            this.btn_Option_DelVer.Location = new System.Drawing.Point(631, 84);
+            this.btn_Option_DelVer.Name = "btn_Option_DelVer";
+            this.btn_Option_DelVer.Size = new System.Drawing.Size(97, 23);
+            this.btn_Option_DelVer.TabIndex = 16;
+            this.btn_Option_DelVer.Text = "선택 버전 삭제";
+            this.btn_Option_DelVer.UseVisualStyleBackColor = true;
+            this.btn_Option_DelVer.Click += new System.EventHandler(this.btn_Option_DelVer_Click);
             // 
             // BSU_ModManager
             // 
@@ -1106,16 +1111,15 @@
             this.Name = "BSU_ModManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "모드팩 관리";
+            this.Shown += new System.EventHandler(this.BSU_ModManager_Shown);
             this.tc_Pack.ResumeLayout(false);
             this.tp_ModPack.ResumeLayout(false);
             this.gb_Mod_Upload.ResumeLayout(false);
             this.gb_Mod_Upload.PerformLayout();
-            this.cms_File.ResumeLayout(false);
             this.gb_Mod_Info.ResumeLayout(false);
             this.gb_Mod_Info.PerformLayout();
             this.gb_Mod_Setting.ResumeLayout(false);
             this.gb_Mod_Setting.PerformLayout();
-            this.cms_Version.ResumeLayout(false);
             this.tp_BasePack.ResumeLayout(false);
             this.gb_Base_Upload.ResumeLayout(false);
             this.gb_Base_Upload.PerformLayout();
@@ -1130,6 +1134,8 @@
             this.gb_Option_Info.PerformLayout();
             this.gb_Option_Setting.ResumeLayout(false);
             this.gb_Option_Setting.PerformLayout();
+            this.cms_Version.ResumeLayout(false);
+            this.cms_File.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1176,8 +1182,6 @@
         private System.Windows.Forms.TextBox txt_Base_Recommended;
         private System.Windows.Forms.TextBox txt_Base_Latest;
         private System.Windows.Forms.Label lb_Base_Latest;
-        private System.Windows.Forms.TextBox txt_Base_Name;
-        private System.Windows.Forms.Label lb_Base_Name;
         private System.Windows.Forms.GroupBox gb_Option_Upload;
         private System.Windows.Forms.GroupBox gb_Option_Info;
         private System.Windows.Forms.Button btn_Option_Set;
@@ -1192,19 +1196,13 @@
         private System.Windows.Forms.TextBox txt_Option_Recommended;
         private System.Windows.Forms.TextBox txt_Option_Latest;
         private System.Windows.Forms.Label lb_Option_Latest;
-        private System.Windows.Forms.TextBox txt_Option_Name;
-        private System.Windows.Forms.Label lb_Option_Name;
-        private System.Windows.Forms.ContextMenuStrip cms_Version;
-        private System.Windows.Forms.ToolStripMenuItem mi_Delete;
         private System.Windows.Forms.Label lb_Mod_Version;
         private System.Windows.Forms.TextBox txt_Mod_Version;
         private System.Windows.Forms.ListBox lst_Mod_File;
-        private System.Windows.Forms.ContextMenuStrip cms_File;
-        private System.Windows.Forms.ToolStripMenuItem mi_Exclusion;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cb_Mod_Option_Ver;
+        private System.Windows.Forms.ComboBox cb_Mod_Base_Ver;
+        private System.Windows.Forms.Label lb_Mod_Option_Ver;
+        private System.Windows.Forms.Label lb_Mod_Base_Ver;
         private System.Windows.Forms.CheckBox cb_Mod_Recommended;
         private System.Windows.Forms.CheckBox cb_Mod_Latest;
         private System.Windows.Forms.ProgressBar pb_Mod_Upload;
@@ -1230,11 +1228,18 @@
         private System.Windows.Forms.ColumnHeader ch_OUID;
         private System.Windows.Forms.ColumnHeader ch_Default;
         private System.Windows.Forms.ColumnHeader ch_Path;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cb_Mod_Option_Upload;
+        private System.Windows.Forms.ComboBox cb_Mod_Base_Upload;
+        private System.Windows.Forms.Label lb_Mod_Option_Upload;
+        private System.Windows.Forms.Label lb_Mod_Base_Upload;
         private System.Windows.Forms.Button btn_Mod_SelectSave;
+        private System.Windows.Forms.ContextMenuStrip cms_File;
+        private System.Windows.Forms.ToolStripMenuItem mi_Exclusion;
+        private System.Windows.Forms.Button btn_Mod_DelVer;
+        private System.Windows.Forms.ContextMenuStrip cms_Version;
+        private System.Windows.Forms.ToolStripMenuItem mi_Delete;
+        private System.Windows.Forms.Button btn_Base_DelVer;
+        private System.Windows.Forms.Button btn_Option_DelVer;
 
     }
 }

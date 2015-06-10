@@ -17,9 +17,9 @@ namespace Bell_Smart_Server.Source.BSU
             InitializeComponent();
         }
 
-        private void btn_Set_Click(object sender, EventArgs e)
+        private void btn_Mod_Set_Click(object sender, EventArgs e)
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(txt_MUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
             
             if (MAR.Availability())
             {
@@ -27,15 +27,35 @@ namespace Bell_Smart_Server.Source.BSU
                 txt_Mod_Name.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name");
                 txt_Mod_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest");
                 txt_Mod_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended");
-                cb_Mod_Base.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
-                cb_Mod_Option.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
                 txt_Mod_News.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
                 txt_Mod_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
+
+                cb_Mod_Base.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Base));
+                txt_BUID.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
+                cb_Mod_Base.SelectedItem = txt_BUID.Text;
+                cb_Mod_Option.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Option));
+                txt_OUID.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
+                cb_Mod_Option.SelectedItem = txt_OUID.Text;
+
+                string[] Ver_Base = {"Latest", "Recommended"};
+                cb_Mod_Base_Ver.Items.AddRange(Ver_Base);
+                cb_Mod_Base_Ver.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+                cb_Mod_Base_Upload.Items.AddRange(Ver_Base);
+                cb_Mod_Base_Upload.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+                cb_Mod_Base_Upload.SelectedItem = Ver_Base[1];
+                cb_Mod_Option_Ver.Items.AddRange(Ver_Base);
+                cb_Mod_Option_Ver.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+                cb_Mod_Option_Upload.Items.AddRange(Ver_Base);
+                cb_Mod_Option_Upload.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+                cb_Mod_Option_Upload.SelectedItem = Ver_Base[1];
                 
                 txt_MUID.ReadOnly = true;
                 gb_Mod_Info.Enabled = false;
                 gb_Mod_Setting.Enabled = true;
                 gb_Mod_Upload.Enabled = true;
+
+                btn_Base_Set_Click(sender, e);
+                btn_Option_Set_Click(sender, e);
             }
         }
 
@@ -65,10 +85,85 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_Save_Click(object sender, EventArgs e)
         {
-            string[] Version = { "8.2.0", "8.0.0" };
-            //Version = lst_Mod_Version. //lst_Mod_Version 아이템 전부 아래 생성자에 직접 대입
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, cb_Mod_Base.SelectedText, cb_Mod_Option.SelectedText, txt_Mod_News.Text, txt_Mod_Down.Text, Version);
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Recommended.Text, txt_Mod_Latest.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
+            Common.Message("XML 작성 성공!");
+        }
+
+        private void BSU_ModManager_Shown(object sender, EventArgs e)
+        {
+            txt_MUID.Focus();
+        }
+
+        private void txt_MUID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) { btn_Mod_Set_Click(sender, e); }
+        }
+
+        private void mi_Delete_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Mod_DelVer_Click(object sender, EventArgs e)
+        {
+            lst_Mod_Version.Items.Remove(lst_Mod_Version.SelectedItem);
+        }
+
+        private void lst_Mod_Version_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cb_Mod_Base_Ver.Enabled = true;
+            cb_Mod_Option_Ver.Enabled = true;
+            btn_Mod_DelVer.Enabled = true;
+            btn_Mod_SelectSave.Enabled = true;
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
+            MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
+            cb_Mod_Base_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base");
+            cb_Mod_Option_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Option");
+        }
+
+        private void btn_Base_Set_Click(object sender, EventArgs e)
+        {
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, txt_BUID.Text);
+
+            if (MAR.Availability())
+            {
+                txt_Base_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Latest");
+                txt_Base_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Recommended");
+                txt_Base_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Down");
+                lst_Base_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+
+                gb_Base_Info.Enabled = false;
+                gb_Base_Setting.Enabled = true;
+                gb_Base_Upload.Enabled = true;
+            }
+        }
+
+        private void btn_Option_Set_Click(object sender, EventArgs e)
+        {
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, txt_OUID.Text);
+
+            if (MAR.Availability())
+            {
+                txt_Option_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Latest");
+                txt_Option_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Recommended");
+                txt_Option_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Down");
+                lst_Option_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+
+                gb_Option_Info.Enabled = false;
+                gb_Option_Setting.Enabled = true;
+                gb_Option_Upload.Enabled = true;
+            }
+        }
+
+        private void btn_Base_DelVer_Click(object sender, EventArgs e)
+        {
+            lst_Base_Version.Items.Remove(lst_Base_Version.SelectedItem);
+        }
+
+        private void btn_Option_DelVer_Click(object sender, EventArgs e)
+        {
+            lst_Option_Version.Items.Remove(lst_Option_Version.SelectedItem);
         }
     }
 }

@@ -12,9 +12,9 @@ namespace BellLib.Class
     public struct Info_Modpack
     {
         public string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down;
-        public string[] _Version;
+        public string[] _Version, _List;
 
-        public Info_Modpack(string _Name = null, string _Recommended = null, string _Latest = null, string _Base = null,
+        /*public Info_Modpack(string _Name = null, string _Recommended = null, string _Latest = null, string _Base = null,
                             string _Option = null, string _News = null, string _Down = null, string[] _Version = null)
         {
             this._Name = _Name;
@@ -25,35 +25,35 @@ namespace BellLib.Class
             this._News = _News;
             this._Down = _Down;
             this._Version = _Version;
-        }
+        }*/
     }
 
     public struct Info_Basepack
     {
         public string _Latest, _Recommended, _Down;
-        public string[] _Version;
+        public string[] _Version, _List;
 
-        public Info_Basepack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
+        /*public Info_Basepack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
         {
             this._Latest = _Latest;
             this._Recommended = _Recommended;
             this._Down = _Down;
             this._Version = _Version;
-        }
+        }*/
     }
 
     public struct Info_Optionpack
     {
         public string _Latest, _Recommended, _Down;
-        public string[] _Version;
+        public string[] _Version, _List;
 
-        public Info_Optionpack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
+        /*public Info_Optionpack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
         {
             this._Latest = _Latest;
             this._Recommended = _Recommended;
             this._Down = _Down;
             this._Version = _Version;
-        }
+        }*/
     }
 
     public struct Info_ClientMod
@@ -66,6 +66,22 @@ namespace BellLib.Class
             this._BaseVersion = _BaseVersion;
             this._OptionVersion = _OptionVersion;
         }
+    }
+
+    public struct Ver_Modpack
+    {
+        public string Base, Option;
+        public string[] Directory, Hash;
+    }
+
+    public struct Ver_Basepack
+    {
+        public string[] Directory, Hash;
+    }
+
+    public struct Ver_Optionpack
+    {
+        public string[] Option, Directory, Hash;
     }
 
     /// <summary>
@@ -93,6 +109,9 @@ namespace BellLib.Class
         private Info_Basepack InfoBasepack = new Info_Basepack();
         private Info_Optionpack InfoOptionpack = new Info_Optionpack();
         private Info_ClientMod InfoClientMod = new Info_ClientMod();
+        private Ver_Modpack VerModpack = new Ver_Modpack();
+        private Ver_Basepack VerBasepack = new Ver_Basepack();
+        private Ver_Optionpack VerOptionpack = new Ver_Optionpack();
         #pragma warning restore 169
 
         private string _MUID; // Modpack UID
@@ -120,14 +139,48 @@ namespace BellLib.Class
         }
 
         /// <summary>
-        /// MUID로 모드팩.xml을 로드하여 분석합니다.
+        /// UID로 지정팩.xml을 로드 및 분석합니다.
         /// </summary>
-        /// <param name="MUID">Modpack Unique Identifier. 모드팩 고유 식별자</param>
-        public ModAnalysisRead(string MUID, bool parse = true)
+        /// <param name="UID">Unique Identifier. 고유 식별자</param>
+        public ModAnalysisRead(PackType pt, string UID, bool parse = true)
         {
-            _MUID = MUID;
-            if (parse)
-                ParseModInfo();
+            if (parse) // 공통 로드 부분
+            {
+                if (!LoadModList()) return;
+                if (!LoadBaseList()) return;
+                if (!LoadOptionList()) return;
+                LoadClient();
+            }
+
+            switch (pt)
+            {
+                case PackType.Mod:
+                    _MUID = UID;
+                    if (!parse)
+                        break;
+                    if (!ParseModInfo()) return;
+                    if (!ParseBaseInfo()) return;
+                    if (!ParseOptionInfo()) return;
+                    break;
+
+                case PackType.Base:
+                    _BUID = UID;
+                    if (!parse)
+                        break;
+                    if (!ParseBaseInfo()) return;
+
+                    break;
+
+                case PackType.Option:
+                    _OUID = UID;
+                    if (!parse)
+                        break;
+                    if (!ParseOptionInfo()) return;
+
+                    break;
+            }
+
+            _Parsed = true;
         }
 
         #endregion
@@ -147,7 +200,7 @@ namespace BellLib.Class
         /// <summary>
         /// ModPack.XML을 로드 및 분석합니다.
         /// </summary>
-        private void ParseModInfo()
+        private bool ParseModInfo()
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
@@ -155,7 +208,7 @@ namespace BellLib.Class
             {
                 doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/" + _MUID + "/" + _MUID + ".xml");
             }
-            catch { return; }
+            catch { return false; }
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
 
             TypedReference _tr = __makeref(InfoModpack);
@@ -175,33 +228,29 @@ namespace BellLib.Class
             {
                 str.AppendLine(xn.InnerText);
             }
-            //InfoModpack._Version = str.ToString().Split('\n');
             List<string> lst = new List<string>();
             foreach (string tmp in str.ToString().Split('\n'))
                 if (tmp != "")
-                    lst.Add(tmp);
+                    lst.Add(tmp.Replace("\r", string.Empty));
             InfoModpack._Version = lst.ToArray();
 
 
             _BUID = InfoModpack._Base;
             _OUID = InfoModpack._Option;
 
-            ParseBaseInfo(); // [CLASS] BCP(Base.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
-            // [CLASS] 클라이언트 설정파일이 로드되지 않았을경우(미설치), ModPack {버전}.xml 로드 및 분석 후 설치 진행
-
-            //_Parsed = true;
+            return true;
         }
 
         /// <summary>
         /// Base.XML을 로드 및 분석합니다.
         /// </summary>
-        private void ParseBaseInfo()
+        private bool ParseBaseInfo()
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             try {
             doc.Load(Base.TOTAL_WEB_URL + "BSL/Base/" + _BUID + "/" + _BUID + ".xml");
-            } catch { return; }
+            } catch { return false; }
             xnList = doc.SelectNodes("/" + _BUID + "/Info");
 
             TypedReference _tr = __makeref(InfoBasepack);
@@ -221,26 +270,25 @@ namespace BellLib.Class
             {
                 str.AppendLine(xn.InnerText);
             }
-            //InfoBasepack._Version = str.ToString().Split('\n');
             List<string> lst = new List<string>();
             foreach (string tmp in str.ToString().Split('\n'))
                 if (tmp != "")
-                    lst.Add(tmp);
+                    lst.Add(tmp.Replace("\r", string.Empty));
             InfoBasepack._Version = lst.ToArray();
 
-            ParseOptionInfo(); // [CLASS] BCO(Option.xml) 로드 및 분석 후 변수에 대입 (Info 노드, Version 노드)
+            return true;
         }
 
         /// <summary>
         /// 옵션.XML을 로드 및 분석합니다.
         /// </summary>
-        private void ParseOptionInfo()
+        private bool ParseOptionInfo()
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             try {
             doc.Load(Base.TOTAL_WEB_URL + "BSL/Option/" + _OUID + "/" + _OUID + ".xml");
-            } catch { return; }
+            } catch { return false; }
             xnList = doc.SelectNodes("/" + _OUID + "/Info");
 
             TypedReference _tr = __makeref(InfoOptionpack);
@@ -260,23 +308,94 @@ namespace BellLib.Class
             {
                 str.AppendLine(xn.InnerText);
             }
-            //InfoOptionpack._Version = str.ToString().Split('\n');
             List<string> lst = new List<string>();
             foreach (string tmp in str.ToString().Split('\n'))
                 if (tmp != "")
-                    lst.Add(tmp);
+                    lst.Add(tmp.Replace("\r", string.Empty));
             InfoOptionpack._Version = lst.ToArray();
 
-            _Parsed = true;
+            return true;
+        }
 
-            ClientLoad(); // [BSL]   클라이언트 설정파일 로드 및 분석 (선택된 모드팩 MUID, 설치된 버전, 유지 희망 버전 (권장 or 최신 or 직접 선택)
-            //            분석된 MUID를 바탕으로 서버와 클라 버전 대조
+        private bool LoadModList()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            try
+            {
+                doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/PackList.xml");
+            }
+            catch { return false; }
+            xnList = doc.SelectNodes("/List/Pack");
+
+            StringBuilder str = new StringBuilder();
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+            List<string> lst = new List<string>();
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            InfoModpack._List = lst.ToArray();
+
+            return true;
+        }
+
+        private bool LoadBaseList()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            try
+            {
+                doc.Load(Base.TOTAL_WEB_URL + "BSL/Base/PackList.xml");
+            }
+            catch { return false; }
+            xnList = doc.SelectNodes("/List/Pack");
+
+            StringBuilder str = new StringBuilder();
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+            List<string> lst = new List<string>();
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            InfoBasepack._List = lst.ToArray();
+
+            return true;
+        }
+
+        private bool LoadOptionList()
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            try
+            {
+                doc.Load(Base.TOTAL_WEB_URL + "BSL/Option/PackList.xml");
+            }
+            catch { return false; }
+            xnList = doc.SelectNodes("/List/Pack");
+
+            StringBuilder str = new StringBuilder();
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+            List<string> lst = new List<string>();
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            InfoOptionpack._List = lst.ToArray();
+
+            return true;
         }
 
         /// <summary>
         /// 클라이언트 데이터를 로드합니다.
         /// </summary>
-        private void ClientLoad()
+        private bool LoadClient()
         {
             string clientPath = User.BSL_Root + "ModPack\\" + _MUID + "\\" + _MUID + ".bsn";
             if (File.Exists(clientPath))
@@ -296,7 +415,94 @@ namespace BellLib.Class
                     fieldInfo.SetValueDirect(_tr, value);
                     i++;
                 }
+
+                return true;
+            } else {
+                return false;
             }
+        }
+
+        /// <summary>
+        /// 지정한 버전의 모드팩 설치데이터를 로드 및 분석합니다.
+        /// </summary>
+        /// <param name="Version">모드팩 버전</param>
+        public void LoadMod(string Version)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            StringBuilder str = new StringBuilder();
+            try
+            {
+                doc.Load(Base.TOTAL_WEB_URL + "BSL/Pack/" + _MUID + "/Version/" + Version + ".xml");
+            }
+            catch { return; }
+            xnList = doc.SelectNodes("/" + _MUID + "/Version/Base");
+            VerModpack.Base = xnList.Item(0).InnerText;
+
+            xnList = doc.SelectNodes("/" + _MUID + "/Version/Option");
+            VerModpack.Option = xnList.Item(0).InnerText;
+
+
+            xnList = doc.SelectNodes("/" + _MUID + "/Directory/Dir");
+
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+            List<string> lst = new List<string>();
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            VerModpack.Directory = lst.ToArray();
+        }
+                
+        /// <summary>
+        /// 지정한 버전의 베이스팩 설치데이터를 로드 및 분석합니다.
+        /// </summary>
+        /// <param name="Version">베이스팩 버전</param>
+        public void LoadBase(string Version)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            StringBuilder str = new StringBuilder();
+            List<string> lst = new List<string>();
+            try
+            {
+                doc.Load(Base.TOTAL_WEB_URL + "BSL/Base/" + _BUID + "/Version/" + Version + ".xml"); // 베이스 버전 데이터 로드
+            }
+            catch { return; }
+            
+            xnList = doc.SelectNodes("/" + _BUID + "/Directory/Dir"); // 베이스팩 필요한 디렉토리
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.InnerText);
+            }
+
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            VerBasepack.Directory = lst.ToArray(); // 배열로 올림
+
+            str.Clear(); // 위에서 한번 썼으면 초기화를 해줘야지!
+            lst.Clear(); // 이것도!
+            xnList = doc.SelectNodes("/" + _BUID + "/Hash/File"); // 베이스팩 필요한 파일
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.Attributes.GetNamedItem("Loc").InnerText + "|" + xn.InnerText);
+            }
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            VerBasepack.Hash = lst.ToArray(); // 배열로 올림
+        }
+
+        /// <summary>
+        /// 지정한 버전의 옵션팩 설치데이터를 로드 및 분석합니다.
+        /// </summary>
+        /// <param name="Version">옵션팩 버전</param>
+        public void LoadOption(string Version)
+        {
+
         }
 
         /// <summary>
@@ -332,6 +538,30 @@ namespace BellLib.Class
             return null;
         }
 
+        /// <summary>
+        /// 선택한 팩 타입의 모든 리스트를 배열로 반환합니다.
+        /// </summary>
+        /// <param name="pt">팩 타입</param>
+        /// <returns>팩 리스트</returns>
+        public string[] GetList(PackType pt)
+        {
+            if (!_Parsed)
+                return null;
+
+            switch (pt)
+            {
+                case PackType.Mod:
+                    return InfoModpack._List;
+
+                case PackType.Base:
+                    return InfoBasepack._List;
+
+                case PackType.Option:
+                    return InfoOptionpack._List;
+            }
+            return null;
+        }
+
 
         public string GetInfo(PackType pt, string Name)
         {
@@ -350,6 +580,42 @@ namespace BellLib.Class
                         return (string)typeof(Info_Optionpack).GetField(Name).GetValue(this.InfoOptionpack);
                 }
             } catch { }
+            return null;
+        }
+
+        public string GetInstallInfo(PackType pt, string Name)
+        {
+            try
+            {
+                switch (pt)
+                {
+                    case PackType.Mod:
+                        return (string)typeof(Ver_Modpack).GetField(Name).GetValue(this.VerModpack);
+
+                    case PackType.Base:
+                        return (string)typeof(Ver_Basepack).GetField(Name).GetValue(this.VerBasepack);
+
+                    case PackType.Option:
+                        return (string)typeof(Ver_Optionpack).GetField(Name).GetValue(this.VerOptionpack);
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        public string[] GetInstallData(PackType pt, string Name)
+        {
+            switch (pt)
+            {
+                case PackType.Mod:
+                    return (string[])typeof(Ver_Modpack).GetField(Name).GetValue(this.VerModpack);
+
+                case PackType.Base:
+                    return (string[])typeof(Ver_Basepack).GetField(Name).GetValue(this.VerBasepack);
+
+                case PackType.Option:
+                    return (string[])typeof(Ver_Optionpack).GetField(Name).GetValue(this.VerOptionpack);
+            }
             return null;
         }
 
@@ -517,18 +783,20 @@ namespace BellLib.Class
 
         public void WriteXML()
         {
+            XmlTextWriter XTW;
+
             switch (Pack)
             {
                 case Type.ModPack:
-                    XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
                     XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
                     XTW.WriteStartDocument(); // XML 문서 시작
                     XTW.WriteStartElement(UID); // UID 엘리먼트 시작
 
                     XTW.WriteStartElement("Info"); // Info 엘리먼트 시작
                     XTW.WriteElementString("Name", DM.Name);
-                    XTW.WriteElementString("Recommended", DM.Recommended);
                     XTW.WriteElementString("Latest", DM.Latest);
+                    XTW.WriteElementString("Recommended", DM.Recommended);
                     XTW.WriteElementString("Base", DM.Base);
                     XTW.WriteElementString("Option", DM.Option);
                     XTW.WriteElementString("News", DM.News);
@@ -546,11 +814,47 @@ namespace BellLib.Class
                     break;
 
                 case Type.BasePack:
+                    XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+                    XTW.WriteStartDocument(); // XML 문서 시작
+                    XTW.WriteStartElement(UID); // UID 엘리먼트 시작
 
+                    XTW.WriteStartElement("Info"); // Info 엘리먼트 시작
+                    XTW.WriteElementString("Latest", DB.Latest);
+                    XTW.WriteElementString("Recommended", DB.Recommended);
+                    XTW.WriteElementString("Down", DB.Down);
+                    XTW.WriteEndElement(); // Info 엘리먼트 닫음
+
+                    XTW.WriteStartElement("Version");
+                    foreach (string tmp in DB.Version)
+                        XTW.WriteElementString("Ver", tmp);
+
+                    XTW.WriteEndElement();
+                    XTW.WriteEndDocument();
+                    XTW.Flush();
+                    XTW.Close();
                     break;
 
                 case Type.OptionPack:
+                    XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+                    XTW.WriteStartDocument(); // XML 문서 시작
+                    XTW.WriteStartElement(UID); // UID 엘리먼트 시작
 
+                    XTW.WriteStartElement("Info"); // Info 엘리먼트 시작
+                    XTW.WriteElementString("Latest", DO.Latest);
+                    XTW.WriteElementString("Recommended", DO.Recommended);
+                    XTW.WriteElementString("Down", DO.Down);
+                    XTW.WriteEndElement(); // Info 엘리먼트 닫음
+
+                    XTW.WriteStartElement("Version");
+                    foreach (string tmp in DO.Version)
+                        XTW.WriteElementString("Ver", tmp);
+
+                    XTW.WriteEndElement();
+                    XTW.WriteEndDocument();
+                    XTW.Flush();
+                    XTW.Close();
                     break;
             }
         }
