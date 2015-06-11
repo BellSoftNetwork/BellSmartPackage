@@ -687,7 +687,8 @@ namespace BellLib.Class
             this.UID = UID;
         }
         /// <summary>
-        /// 모드분석 후 XML 작성합니다.
+        /// 모드분석 후 XML 데이터를 작성합니다.
+        /// 모드팩 전용
         /// </summary>
         public ModAnalysisWrite(Type Typ, string UID, string Name, string Latest, string Recommended, string Base, string Option, string News, string Down, string[] Version)
         {
@@ -707,6 +708,16 @@ namespace BellLib.Class
                     break;
             }
         }
+        /// <summary>
+        /// 모드분석 후 XML 데이터를 작성합니다.
+        /// 베이스팩, 옵션팩 전용
+        /// </summary>
+        /// <param name="Typ"></param>
+        /// <param name="UID"></param>
+        /// <param name="Latest"></param>
+        /// <param name="Recommended"></param>
+        /// <param name="Down"></param>
+        /// <param name="Version"></param>
         public ModAnalysisWrite(Type Typ, string UID, string Latest, string Recommended, string Down, string[] Version)
         {
             this.Pack = Typ;
@@ -730,7 +741,9 @@ namespace BellLib.Class
         }
         #endregion
 
-
+        /// <summary>
+        /// 설정된 팩타입에 맞게 UID.xml 파일을 작성합니다.
+        /// </summary>
         public void WriteXML()
         {
             XmlTextWriter XTW;
