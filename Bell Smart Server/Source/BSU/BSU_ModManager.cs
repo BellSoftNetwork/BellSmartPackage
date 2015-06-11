@@ -6,7 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 using BellLib.Class;
+using BellLib.Data;
+using System.Diagnostics;
 
 namespace Bell_Smart_Server.Source.BSU
 {
@@ -15,8 +18,18 @@ namespace Bell_Smart_Server.Source.BSU
         public BSU_ModManager()
         {
             InitializeComponent();
+            Initialize();
         }
 
+        private void Initialize()
+        {
+            llb_Mod_Upload.Tag = User.BSN_Path + "Upload\\ModPack\\";
+            llb_Mod_Upload.Text = "업로드 폴더 : " + (string)llb_Mod_Upload.Tag;
+            llb_Base_Upload.Tag = User.BSN_Path + "Upload\\BasePack\\";
+            llb_Base_Upload.Text = "업로드 폴더 : " + (string)llb_Base_Upload.Tag;
+            llb_Option_Upload.Tag = User.BSN_Path + "Upload\\OptionPack\\";
+            llb_Option_Upload.Text = "업로드 폴더 : " + (string)llb_Option_Upload.Tag;
+        }
         private void btn_Mod_Set_Click(object sender, EventArgs e)
         {
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
@@ -66,7 +79,9 @@ namespace Bell_Smart_Server.Source.BSU
         private void lst_Mod_File_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            lst_Mod_File.Items.AddRange(files);
+            //lst_Mod_File.Items.AddRange(files);
+            foreach (string tmp in files)
+                lst_Mod_File.Items.AddRange(Directory.GetFiles(tmp));
         }
 
         private void lst_Mod_File_DragOver(object sender, DragEventArgs e)
@@ -80,11 +95,6 @@ namespace Bell_Smart_Server.Source.BSU
                 //아닐경우 커서의 모양을 θ 요런 모양으로 바꾼다.
                 e.Effect = DragDropEffects.None;
             }
-        }
-
-        private void mi_Exclusion_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void btn_Mod_Save_Click(object sender, EventArgs e)
@@ -116,12 +126,7 @@ namespace Bell_Smart_Server.Source.BSU
         {
             if (e.KeyCode == Keys.Enter) { btn_Mod_Set_Click(sender, e); }
         }
-
-        private void mi_Delete_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void btn_Mod_DelVer_Click(object sender, EventArgs e)
         {
             if (lst_Mod_Version.Items.Count > 1)
@@ -136,14 +141,17 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void lst_Mod_Version_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cb_Mod_Base_Ver.Enabled = true;
-            cb_Mod_Option_Ver.Enabled = true;
-            btn_Mod_DelVer.Enabled = true;
-            btn_Mod_SelectSave.Enabled = true;
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
-            MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
-            cb_Mod_Base_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base");
-            cb_Mod_Option_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Option");
+            if (lst_Mod_Version.SelectedItem != null)
+            {
+                cb_Mod_Base_Ver.Enabled = true;
+                cb_Mod_Option_Ver.Enabled = true;
+                btn_Mod_DelVer.Enabled = true;
+                btn_Mod_SelectSave.Enabled = true;
+                ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
+                MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
+                cb_Mod_Base_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base");
+                cb_Mod_Option_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Option");
+            }
         }
 
         private void btn_Base_Set_Click(object sender, EventArgs e)
@@ -224,10 +232,19 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_SelectSave_Click(object sender, EventArgs e)
         {
+            bool stop = false;
+            if ((string)lst_Mod_Version.SelectedItem == string.Empty) stop = true;
+            if ((string)cb_Mod_Base.SelectedItem == string.Empty) stop = true;
+            if ((string)cb_Mod_Option.SelectedItem == string.Empty) stop = true;
+            if (stop)
+            {
+                Common.Message("누락된 정보가 있습니다." + Environment.NewLine + "빠진 값이 없는지 확인해주세요.");
+                return;
+            }
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text);
-            string[] Dir = {"1", "2", "3"};
-            string[] Hash = {"경로|해시", "경로2|해시2"};
-            MAW.WriteVersionXML((string)lst_Mod_Version.SelectedItem, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, Dir, Hash);
+            MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
+            MAW.WriteVersionXML((string)lst_Mod_Version.SelectedItem, (string)cb_Mod_Base_Ver.SelectedItem, (string)cb_Mod_Option_Ver.SelectedItem, MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"), MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"));
         }
 
         private void btn_Base_Save_Click(object sender, EventArgs e)
@@ -264,34 +281,220 @@ namespace Bell_Smart_Server.Source.BSU
             Common.Message("XML 작성 성공!");
         }
 
-        private void btn_Mod_DelFile_Click(object sender, EventArgs e)
+        private void btn_Mod_Upload_Click(object sender, EventArgs e)
         {
-            lst_Mod_File.Items.Remove(lst_Mod_File.SelectedItem);
+            bool stop = false;
+            if (txt_Mod_Version.Text == string.Empty) stop = true;
+            if ((string)cb_Mod_Base_Upload.SelectedItem == string.Empty) stop = true;
+            if ((string)cb_Mod_Option_Upload.SelectedItem == string.Empty) stop = true;
+            if (stop)
+            {
+                Common.Message("모든 필드에 값을 입력해 주세요.");
+                return;
+            }
+            List<string> list = new List<string>();
+            Protection Pro = new Protection();
+            string[] Array = lst_Mod_File.Items.Cast<string>().ToArray();
+            foreach (string tmp in Array)
+            {
+                string Path = (string)llb_Mod_Upload.Tag + tmp;
+                list.Add(tmp + "|" + Pro.MD5Hash(Path));
+            }
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text);
+            MAW.WriteInstallXML(txt_Mod_Version.Text, (string)cb_Mod_Base_Upload.SelectedItem, (string)cb_Mod_Option_Upload.SelectedItem, Common.GetDirectoryArray((string)llb_Mod_Upload.Tag, true), list.ToArray());
+            // XML 생성
+            // 파일 업로드
+            Common.Message("모드팩이 정상적으로 업로드 되었습니다!");
         }
 
-        private void btn_Mod_Init_Click(object sender, EventArgs e)
+        private void btn_Base_Upload_Click(object sender, EventArgs e)
+        {
+            bool stop = false;
+            if (txt_Base_Version.Text == string.Empty) stop = true;
+            if (stop)
+            {
+                Common.Message("모든 필드에 값을 입력해 주세요.");
+                return;
+            }
+            List<string> list = new List<string>();
+            Protection Pro = new Protection();
+            string[] Array = lst_Base_File.Items.Cast<string>().ToArray();
+            foreach (string tmp in Array)
+            {
+                string Path = (string)llb_Base_Upload.Tag + tmp;
+                list.Add(tmp + "|" + Pro.MD5Hash(Path));
+            }
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text);
+            MAW.WriteInstallXML(txt_Base_Version.Text, Common.GetDirectoryArray((string)llb_Base_Upload.Tag, true), list.ToArray());
+            // XML 생성
+            // 파일 업로드
+            Common.Message("베이스팩이 정상적으로 업로드 되었습니다!");
+        }
+
+        private void btn_Option_Upload_Click(object sender, EventArgs e)
+        {
+            bool stop = false;
+            if (txt_Option_Version.Text == string.Empty) stop = true;
+            if (stop)
+            {
+                Common.Message("모든 필드에 값을 입력해 주세요.");
+                return;
+            }
+            List<string> Option = new List<string>();
+            List<string> Hash = new List<string>();
+            Protection Pro = new Protection();
+
+            foreach (ListViewItem item in lst_Option_File.Items)
+            {
+                if (item.SubItems[0].Text == string.Empty || item.SubItems[1].Text == string.Empty || item.SubItems[2].Text == string.Empty || item.SubItems[3].Text == string.Empty)
+                {
+                    Common.Message("옵션파일 상세리스트 모든 필드에 값을 입력해 주세요.");
+                    return;
+                }
+                Option.Add(item.SubItems[0].Text + "|" + item.SubItems[1].Text + "|" + item.SubItems[2].Text);
+                Hash.Add(item.SubItems[0].Text + "|" + item.SubItems[3].Text + "|" + Pro.MD5Hash(llb_Option_Upload.Tag + item.SubItems[3].Text));
+            }
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text);
+            MAW.WriteInstallXML(txt_Option_Version.Text, Option.ToArray(), Common.GetDirectoryArray((string)llb_Option_Upload.Tag, true), Hash.ToArray());
+            // XML 생성
+            // 파일 업로드
+            Common.Message("옵션팩이 정상적으로 업로드 되었습니다!");
+        }
+
+        private void llb_Mod_Upload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start((string)llb_Mod_Upload.Tag);
+            }
+            catch (Exception ex)
+            {
+                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+            }
+        }
+
+        private void llb_Base_Upload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start((string)llb_Base_Upload.Tag);
+            }
+            catch (Exception ex)
+            {
+                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+            }
+        }
+
+        private void llb_Option_Upload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start((string)llb_Option_Upload.Tag);
+            }
+            catch (Exception ex)
+            {
+                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+            }
+        }
+
+        private void btn_Mod_Load_Click(object sender, EventArgs e)
         {
             lst_Mod_File.Items.Clear();
+            lst_Mod_File.Items.AddRange(Common.GetFileArray((string)llb_Mod_Upload.Tag, true));
         }
 
-        private void btn_Base_Init_Click(object sender, EventArgs e)
+        private void btn_Base_Load_Click(object sender, EventArgs e)
         {
             lst_Base_File.Items.Clear();
+            lst_Base_File.Items.AddRange(Common.GetFileArray((string)llb_Base_Upload.Tag, true));
         }
 
-        private void btn_Base_DelFile_Click(object sender, EventArgs e)
+        private void btn_Option_Load_Click(object sender, EventArgs e)
         {
-            lst_Base_File.Items.Remove(lst_Base_File.SelectedItem);
-        }
-
-        private void btn_Option_Init_Click(object sender, EventArgs e)
-        {
+            txt_Option_Name.Text = string.Empty;
+            txt_Option_Name.Enabled = false;
+            txt_Option_UID.Text = string.Empty;
+            txt_Option_UID.Enabled = false;
+            cb_Option_Default.Enabled = false;
             lst_Option_File.Items.Clear();
+            lst_Option_File.BeginUpdate();
+            ListViewItem lvi;
+            foreach (string tmp in Common.GetFileArray((string)llb_Option_Upload.Tag, true))
+            {
+                lvi = new ListViewItem(string.Empty);
+                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add("false");
+                lvi.SubItems.Add(tmp);
+                lst_Option_File.Items.Add(lvi);
+            }
+            lst_Option_File.EndUpdate();
         }
 
-        private void btn_Option_DelFile_Click(object sender, EventArgs e)
+        private void lst_Option_File_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //lst_Option_File.Items.Remove(lst_Option_File.SelectedItems);
+            ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;
+
+            foreach (ListViewItem item in col)
+            {
+                txt_Option_Name.Text = item.SubItems[0].Text;
+                txt_Option_UID.Text = item.SubItems[1].Text;
+                cb_Option_Default.SelectedItem = item.SubItems[2].Text;
+            }
+
+            if (lst_Option_File.SelectedItems == null)
+            {
+                txt_Option_Name.Enabled = false;
+                txt_Option_UID.Enabled = false;
+                cb_Option_Default.Enabled = false;
+                btn_Option_Apply.Enabled = false;
+            }
+            else
+            {
+                txt_Option_Name.Enabled = true;
+                txt_Option_UID.Enabled = true;
+                cb_Option_Default.Enabled = true;
+                btn_Option_Apply.Enabled = true;
+            }
+        }
+
+        private void txt_Option_Name_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+                return;
+            ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;
+
+            foreach (ListViewItem item in col)
+                item.SubItems[0].Text = txt_Option_Name.Text;
+        }
+
+        private void txt_Option_UID_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter)
+                return;
+            ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;
+
+            foreach (ListViewItem item in col)
+                item.SubItems[1].Text = txt_Option_UID.Text;
+        }
+
+        private void cb_Option_Default_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;
+
+            foreach (ListViewItem item in col)
+                item.SubItems[2].Text = (string)cb_Option_Default.SelectedItem;
+        }
+
+        private void btn_Option_Apply_Click(object sender, EventArgs e)
+        {
+            ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;
+
+            foreach (ListViewItem item in col)
+            {
+                item.SubItems[0].Text = txt_Option_Name.Text;
+                item.SubItems[1].Text = txt_Option_UID.Text;
+                item.SubItems[2].Text = (string)cb_Option_Default.SelectedItem;
+            }
         }
     }
 }

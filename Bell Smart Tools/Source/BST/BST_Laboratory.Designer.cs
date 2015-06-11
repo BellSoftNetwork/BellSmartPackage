@@ -115,18 +115,18 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(123, 64);
+            this.textBox4.Location = new System.Drawing.Point(13, 64);
             this.textBox4.Multiline = true;
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 41);
+            this.textBox4.Size = new System.Drawing.Size(210, 41);
             this.textBox4.TabIndex = 12;
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(123, 105);
+            this.textBox5.Location = new System.Drawing.Point(13, 105);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 37);
+            this.textBox5.Size = new System.Drawing.Size(210, 37);
             this.textBox5.TabIndex = 13;
             // 
             // button6
@@ -154,7 +154,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(625, 208);
+            this.ClientSize = new System.Drawing.Size(625, 306);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.textBox5);

@@ -53,6 +53,7 @@ namespace Bell_Smart_Package.Source.BSP
         private bool Initialize()
         {
             Application.DoEvents();
+            Common.CreateDefaultForder();
             var actions = new Dictionary<Action, int> 
             {
                 {InitDebug, 1},

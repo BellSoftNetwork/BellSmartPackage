@@ -454,6 +454,18 @@ namespace BellLib.Class
                 if (tmp != "")
                     lst.Add(tmp.Replace("\r", string.Empty));
             VerModpack.Directory = lst.ToArray();
+
+            str.Clear(); // 위에서 한번 썼으면 초기화를 해줘야지!
+            lst.Clear(); // 이것도!
+            xnList = doc.SelectNodes("/" + _MUID + "/Hash/File"); // 베이스팩 필요한 파일
+            foreach (XmlNode xn in xnList)
+            {
+                str.AppendLine(xn.Attributes.GetNamedItem("Loc").InnerText + "|" + xn.InnerText);
+            }
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+            VerModpack.Hash = lst.ToArray(); // 배열로 올림
         }
                 
         /// <summary>
@@ -618,76 +630,6 @@ namespace BellLib.Class
             }
             return null;
         }
-
-        /// <summary>
-        /// 모드팩 정보를 반환합니다. 개발 중 테스트용 (반환값 확인)
-        /// </summary>
-        /// <returns>모드팩 정보</returns>
-        public string GetModInfo()
-        {
-            if (!_Parsed)
-                return "Not Parsed";
-
-            StringBuilder str = new StringBuilder();
-
-            // ModPack Info
-            str.AppendLine("*** ModPack Info ***");
-            Type _ModAnalysis = typeof(Info_Modpack);
-            foreach (var field in _ModAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                if (field.FieldType == typeof(string))
-                    str.AppendLine((string)field.GetValue(this.InfoModpack));
-
-            str.AppendLine();
-
-            // ModPack Version Info
-            str.AppendLine("*** ModPack Version Info ***");
-            foreach (string v in InfoModpack._Version)
-                str.AppendLine(v);
-
-            str.AppendLine();
-
-            // BasePack Info
-            str.AppendLine("*** BasePack Info ***");
-            Type _BaseAnalysis = typeof(Info_Basepack);
-            foreach (var field in _BaseAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                if (field.FieldType == typeof(string))
-                    str.AppendLine((string)field.GetValue(this.InfoBasepack));
-
-            str.AppendLine();
-
-            // BasePack Version Info
-            str.AppendLine("*** BasePack Version Info ***");
-            foreach (string v in InfoBasepack._Version)
-                str.AppendLine(v);
-
-            str.AppendLine();
-
-            // OptionPack Info
-            str.AppendLine("*** OptionPack Info ***");
-            Type _OptionAnalysis = typeof(Info_Optionpack);
-            foreach (var field in _OptionAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                if (field.FieldType == typeof(string))
-                    str.AppendLine((string)field.GetValue(this.InfoOptionpack));
-
-            str.AppendLine();
-
-            // OptionPack Version Info
-            str.AppendLine("*** OptionPack Version Info ***");
-            foreach (string v in InfoOptionpack._Version)
-                str.AppendLine(v);
-
-            str.AppendLine();
-
-            // ClientMod Info
-            str.AppendLine("*** ClientMod Info ***");
-            Type _ClientAnalysis = typeof(Info_ClientMod);
-            foreach (var field in _ClientAnalysis.GetFields(BindingFlags.Public | BindingFlags.Instance))
-                if (field.FieldType == typeof(string))
-                    str.AppendLine((string)field.GetValue(this.InfoClientMod));
-
-            return str.ToString();
-        }
-
         #endregion
     }
 
@@ -877,27 +819,9 @@ namespace BellLib.Class
         /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
         public void WriteVersionXML(string Version, string RequireBase, string RequireOption, string[] Directory, string[] Hash)
         {
-            /*<?xml version="1.0" encoding="utf-8" ?>
-            <BellCraft8>
-              <Version>
-                <Option>Latest</Option>
-                <Base>Recommended</Base>
-              </Version>
-
-              <Directory>
-                <Dir>config</Dir>
-                <Dir>mods</Dir>
-                <Dir>flan</Dir>
-              </Directory>
-              <Hash>
-                <File loc="mods\buildcraft.jar">asasdfasdfasdf파일해시</File>
-                <File loc="mods\industrialcraft.jar">asasddffasdfasdf파일해시</File>
-                <File loc="mods\appliedenergetics2.jar">asasdfasdfaasdfwaesdf파일해시</File>
-              </Hash>
-            </BellCraft8>*/
             if (Pack != Type.ModPack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -936,21 +860,9 @@ namespace BellLib.Class
         /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
         public void WriteVersionXML(string Version, string[] Directory, string[] Hash)
         {
-            /*<?xml version="1.0" encoding="utf-8" ?>
-            <BCP_1.7.10>
-              <Directory>
-                <Dir>assets</Dir>
-                <Dir>resource</Dir>
-              </Directory>
-              <Hash>
-                <File Loc="assets\어쩌구저쩌구.txt">파일해시 어쩌구저쩌구.txt</File>
-                <File Loc="assets\이러쿵저러쿵.log">파일해시 이러쿵저러쿵.log</File>
-                <File Loc="resource\리소스.txt">파일해시 리소스.txt</File>
-              </Hash>
-            </BCP_1.7.10>*/
             if (Pack != Type.BasePack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -985,26 +897,9 @@ namespace BellLib.Class
         /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
         public void WriteVersionXML(string Version, string[] Option, string[] Directory, string[] Hash)
         {
-            /*<?xml version="1.0" encoding="utf-8" ?>
-            <BCO_1.7.10>
-                <Option>
-                    <Name="NEI" UID="NEI">true</Name>
-                    <Name="MapWriter" UID="MiniMap">false</Name>
-                    <Name="Rei's MiniMap" UID="MiniMap">false</Name>
-                </Option>
-                <Directory>
-                    <Dir>mods</Dir>
-                    <Dir>flan</Dir>
-                </Directory>
-                <Hash>
-                    <Name="NEI" Loc="mods\NEI.jar">파일 해시 asdfasdf</File>
-                    <Name="MapWriter" Loc="mods\MapWriter.jar">파일 해시 asdfasdf</File>
-                    <Name="Rei's MiniMap" Loc="mods\Rei_MiniMap.jar">파일 해시 asdfasdf</File>
-                </Hash>
-            </BCO_1.7.10>*/
             if (Pack != Type.OptionPack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -1057,6 +952,131 @@ namespace BellLib.Class
             XTW.WriteStartElement("List");
             foreach (string tmp in List)
                 XTW.WriteElementString("Pack", tmp);
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
+        }
+
+        /// <summary>
+        /// 모드팩 설치 데이터 XML을 작성합니다.
+        /// 인스턴스생성시 팩 타입, MUID 값 설정 후 메서드 사용 가능.
+        /// </summary>
+        /// <param name="Version">모드팩 버전</param>
+        /// <param name="RequireBaseVer">실행시 필요한 베이스팩 버전</param>
+        /// <param name="RequireOptionVer">실행시 필요한 옵션팩 버전</param>
+        /// <param name="Directory">생성이 필요한 디렉토리 배열</param>
+        /// <param name="Hash">파일 해시 ('경로|해시')</param>
+        public void WriteInstallXML(string Version, string RequireBaseVer, string RequireOptionVer, string[] Directory, string[] Hash)
+        {
+            if (Pack != Type.ModPack)
+                return;
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented;
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement(UID);
+
+            XTW.WriteStartElement("Version");
+            XTW.WriteElementString("Base", RequireBaseVer);
+            XTW.WriteElementString("Option", RequireOptionVer);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Directory");
+            foreach (string tmp in Directory)
+                XTW.WriteElementString("Dir", tmp);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Hash");
+            foreach (string tmp in Hash)
+            {
+                XTW.WriteStartElement("File");
+                XTW.WriteAttributeString("Loc", tmp.Split('|')[0]);
+                XTW.WriteString(tmp.Split('|')[1]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
+        }
+
+        /// <summary>
+        /// 베이스팩 설치 데이터 XML을 작성합니다.
+        /// 인스턴스생성시 팩 타입, MUID 값 설정 후 메서드 사용 가능.
+        /// </summary>
+        /// <param name="Version">베이스팩 버전</param>
+        /// <param name="Directory">생성이 필요한 디렉토리 배열</param>
+        /// <param name="Hash">파일 해시 ('경로|해시')</param>
+        public void WriteInstallXML(string Version, string[] Directory, string[] Hash)
+        {
+            if (Pack != Type.BasePack)
+                return;
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented;
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement(UID);
+            
+            XTW.WriteStartElement("Directory");
+            foreach (string tmp in Directory)
+                XTW.WriteElementString("Dir", tmp);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Hash");
+            foreach (string tmp in Hash)
+            {
+                XTW.WriteStartElement("File");
+                XTW.WriteAttributeString("Loc", tmp.Split('|')[0]);
+                XTW.WriteString(tmp.Split('|')[1]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
+        }
+
+        /// <summary>
+        /// 옵션팩 설치 데이터 XML을 작성합니다.
+        /// 인스턴스생성시 팩 타입, MUID 값 설정 후 메서드 사용 가능.
+        /// </summary>
+        /// <param name="Version">옵션팩 버전</param>
+        /// <param name="Option">옵션 정보 ('이름|고유이름|기본설치|경로')</param>
+        /// <param name="Directory">생성이 필요한 디렉토리 배열</param>
+        /// <param name="Hash">파일 해시 ('이름|경로|해시')</param>
+        public void WriteInstallXML(string Version, string[] Option, string[] Directory, string[] Hash)
+        {
+            if (Pack != Type.OptionPack)
+                return;
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented;
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement(UID);
+
+            XTW.WriteStartElement("Option");
+            foreach (string tmp in Option)
+            {
+                XTW.WriteStartElement("Opt");
+                XTW.WriteAttributeString("Name", tmp.Split('|')[0]);
+                XTW.WriteAttributeString("UID", tmp.Split('|')[1]);
+                XTW.WriteString(tmp.Split('|')[2]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Directory");
+            foreach (string tmp in Directory)
+                XTW.WriteElementString("Dir", tmp);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Hash");
+            foreach (string tmp in Hash)
+            {
+                XTW.WriteStartElement("File");
+                XTW.WriteAttributeString("Name", tmp.Split('|')[0]);
+                XTW.WriteAttributeString("Loc", tmp.Split('|')[1]);
+                XTW.WriteString(tmp.Split('|')[2]);
+                XTW.WriteEndElement();
+            }
             XTW.WriteEndElement();
             XTW.WriteEndDocument();
             XTW.Flush();

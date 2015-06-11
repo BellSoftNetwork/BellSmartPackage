@@ -9,6 +9,7 @@ using System.Xml;
 using System.Windows.Forms;
 using System.Net;
 using BellLib.Class;
+using System.Security.Cryptography;
 
 namespace Bell_Smart_Tools.Source.BST
 {
