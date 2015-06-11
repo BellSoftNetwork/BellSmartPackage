@@ -725,10 +725,24 @@ namespace BellLib.Class
         private Data_Option DO = new Data_Option();
 
         #region 생성자
-
+        /// <summary>
+        /// 호출 시 정보를 제공하는 메서드 사용 시 생성합니다.
+        /// 일부 인스턴스 생성시 입력한 정보를 사용하는 메서드는 이 생성자로 작동하지 않습니다.
+        /// </summary>
         public ModAnalysisWrite()
         {
-            // 빈 생성자
+            
+        }
+
+        /// <summary>
+        /// XML 작성을 위한 최소한의 정보를 미리 저장해둡니다.
+        /// </summary>
+        /// <param name="Typ">팩 타입</param>
+        /// <param name="UID">고유이름</param>
+        public ModAnalysisWrite(Type Typ, string UID)
+        {
+            this.Pack = Typ;
+            this.UID = UID;
         }
         /// <summary>
         /// 모드분석 후 XML 작성합니다.
@@ -856,11 +870,12 @@ namespace BellLib.Class
         /// <summary>
         /// 모드팩 버전 설치정보를 기록합니다.
         /// </summary>
+        /// <param name="Version">작성 버전</param>
         /// <param name="RequireBase">필요 베이스팩 버전</param>
         /// <param name="RequireOption">필요 옵션팩 버전</param>
         /// <param name="Directory">필요 디렉토리 리스트</param>
         /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
-        public void WriteVersionXML(string RequireBase, string RequireOption, string[] Directory, string[] Hash)
+        public void WriteVersionXML(string Version, string RequireBase, string RequireOption, string[] Directory, string[] Hash)
         {
             /*<?xml version="1.0" encoding="utf-8" ?>
             <BellCraft8>
@@ -880,15 +895,46 @@ namespace BellLib.Class
                 <File loc="mods\appliedenergetics2.jar">asasdfasdfaasdfwaesdf파일해시</File>
               </Hash>
             </BellCraft8>*/
+            if (Pack != Type.ModPack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
+                return;
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement(UID);
 
+            XTW.WriteStartElement("Version");
+            XTW.WriteElementString("Base", RequireBase);
+            XTW.WriteElementString("Option", RequireOption);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Directory");
+            foreach (string tmp in Directory)
+                XTW.WriteElementString("Dir", tmp);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Hash");
+            foreach (string tmp in Hash)
+            {
+                XTW.WriteStartElement("File");
+                XTW.WriteAttributeString("Loc", tmp.Split('|')[0]);
+                XTW.WriteString(tmp.Split('|')[1]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
         }
 
         /// <summary>
         /// 베이스팩 버전 설치정보를 기록합니다.
         /// </summary>
+        /// <param name="Version">작성 버전</param>
         /// <param name="Directory">필요 디렉토리 리스트</param>
         /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
-        public void WriteVersionXML(string[] Directory, string[] Hash)
+        public void WriteVersionXML(string Version, string[] Directory, string[] Hash)
         {
             /*<?xml version="1.0" encoding="utf-8" ?>
             <BCP_1.7.10>
@@ -902,16 +948,42 @@ namespace BellLib.Class
                 <File Loc="resource\리소스.txt">파일해시 리소스.txt</File>
               </Hash>
             </BCP_1.7.10>*/
+            if (Pack != Type.BasePack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
+                return;
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement(UID);
+            
+            XTW.WriteStartElement("Directory");
+            foreach (string tmp in Directory)
+                XTW.WriteElementString("Dir", tmp);
+            XTW.WriteEndElement();
 
+            XTW.WriteStartElement("Hash");
+            foreach (string tmp in Hash)
+            {
+                XTW.WriteStartElement("File");
+                XTW.WriteAttributeString("Loc", tmp.Split('|')[0]);
+                XTW.WriteString(tmp.Split('|')[1]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
         }
 
         /// <summary>
         /// 옵션팩 버전 설치정보를 기록합니다.
         /// </summary>
+        /// <param name="Version">작성 버전</param>
         /// <param name="Option">옵션정보 ('이름|UID|기본설치' 식으로 값 대입)</param>
         /// <param name="Directory">필요 디렉토리 리스트</param>
         /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
-        public void WriteVersionXML(string[] Option, string[] Directory, string[] Hash)
+        public void WriteVersionXML(string Version, string[] Option, string[] Directory, string[] Hash)
         {
             /*<?xml version="1.0" encoding="utf-8" ?>
             <BCO_1.7.10>
@@ -930,7 +1002,42 @@ namespace BellLib.Class
                     <Name="Rei's MiniMap" Loc="mods\Rei_MiniMap.jar">파일 해시 asdfasdf</File>
                 </Hash>
             </BCO_1.7.10>*/
+            if (Pack != Type.OptionPack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
+                return;
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement(UID);
 
+            XTW.WriteStartElement("Option");
+            foreach (string tmp in Option)
+            {
+                XTW.WriteStartElement("Name", tmp.Split('|')[0]);
+                XTW.WriteAttributeString("UID", tmp.Split('|')[1]);
+                XTW.WriteString(tmp.Split('|')[2]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Directory");
+            foreach (string tmp in Directory)
+                XTW.WriteElementString("Dir", tmp);
+            XTW.WriteEndElement();
+
+            XTW.WriteStartElement("Hash");
+            foreach (string tmp in Hash)
+            {
+                XTW.WriteStartElement("Name", tmp.Split('|')[0]);
+                XTW.WriteAttributeString("Loc", tmp.Split('|')[1]);
+                XTW.WriteString(tmp.Split('|')[2]);
+                XTW.WriteEndElement();
+            }
+            XTW.WriteEndElement();
+
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
         }
 
         /// <summary>
@@ -944,8 +1051,16 @@ namespace BellLib.Class
               <Pack>BellCraft8</Pack>
               <Pack>FTB</Pack>
             </List>*/// 모드팩, 베이스팩, 옵션팩 리스트.xml구조는 전부 위와 같음.
-
-
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + "PackList.xml", Encoding.UTF8);
+            XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
+            XTW.WriteStartDocument();
+            XTW.WriteStartElement("List");
+            foreach (string tmp in List)
+                XTW.WriteElementString("Pack", tmp);
+            XTW.WriteEndElement();
+            XTW.WriteEndDocument();
+            XTW.Flush();
+            XTW.Close();
         }
     }
 }

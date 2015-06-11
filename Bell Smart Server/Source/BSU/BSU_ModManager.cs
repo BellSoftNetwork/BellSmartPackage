@@ -224,7 +224,10 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Mod_SelectSave_Click(object sender, EventArgs e)
         {
-
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text);
+            string[] Dir = {"1", "2", "3"};
+            string[] Hash = {"경로|해시", "경로2|해시2"};
+            MAW.WriteVersionXML((string)lst_Mod_Version.SelectedItem, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, Dir, Hash);
         }
 
         private void btn_Base_Save_Click(object sender, EventArgs e)
