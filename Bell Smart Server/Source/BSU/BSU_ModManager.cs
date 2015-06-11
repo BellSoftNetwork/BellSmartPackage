@@ -260,5 +260,35 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
             Common.Message("XML 작성 성공!");
         }
+
+        private void btn_Mod_DelFile_Click(object sender, EventArgs e)
+        {
+            lst_Mod_File.Items.Remove(lst_Mod_File.SelectedItem);
+        }
+
+        private void btn_Mod_Init_Click(object sender, EventArgs e)
+        {
+            lst_Mod_File.Items.Clear();
+        }
+
+        private void btn_Base_Init_Click(object sender, EventArgs e)
+        {
+            lst_Base_File.Items.Clear();
+        }
+
+        private void btn_Base_DelFile_Click(object sender, EventArgs e)
+        {
+            lst_Base_File.Items.Remove(lst_Base_File.SelectedItem);
+        }
+
+        private void btn_Option_Init_Click(object sender, EventArgs e)
+        {
+            lst_Option_File.Items.Clear();
+        }
+
+        private void btn_Option_DelFile_Click(object sender, EventArgs e)
+        {
+            //lst_Option_File.Items.Remove(lst_Option_File.SelectedItems);
+        }
     }
 }

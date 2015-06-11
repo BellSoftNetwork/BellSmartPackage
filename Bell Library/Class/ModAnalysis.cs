@@ -725,6 +725,11 @@ namespace BellLib.Class
         private Data_Option DO = new Data_Option();
 
         #region 생성자
+
+        public ModAnalysisWrite()
+        {
+            // 빈 생성자
+        }
         /// <summary>
         /// 모드분석 후 XML 작성합니다.
         /// </summary>
@@ -769,24 +774,6 @@ namespace BellLib.Class
         }
         #endregion
 
-        public void InsertData(string Name, string Recommended, string Latest, string Base, string Option, string News, string Down, string[] Version)
-        {
-            DM.Name = Name;
-            DM.Recommended = Recommended;
-            DM.Latest = Latest;
-            DM.Base = Base;
-            DM.Option = Option;
-            DM.News = News;
-            DM.Down = Down;
-            DM.Version = Version;
-        }
-        public void InsertData(string Recommended, string Latest, string Down, string[] Version)
-        {
-            DM.Recommended = Recommended;
-            DM.Latest = Latest;
-            DM.Down = Down;
-            DM.Version = Version;
-        }
 
         public void WriteXML()
         {
@@ -864,6 +851,101 @@ namespace BellLib.Class
                     XTW.Close();
                     break;
             }
+        }
+
+        /// <summary>
+        /// 모드팩 버전 설치정보를 기록합니다.
+        /// </summary>
+        /// <param name="RequireBase">필요 베이스팩 버전</param>
+        /// <param name="RequireOption">필요 옵션팩 버전</param>
+        /// <param name="Directory">필요 디렉토리 리스트</param>
+        /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
+        public void WriteVersionXML(string RequireBase, string RequireOption, string[] Directory, string[] Hash)
+        {
+            /*<?xml version="1.0" encoding="utf-8" ?>
+            <BellCraft8>
+              <Version>
+                <Option>Latest</Option>
+                <Base>Recommended</Base>
+              </Version>
+
+              <Directory>
+                <Dir>config</Dir>
+                <Dir>mods</Dir>
+                <Dir>flan</Dir>
+              </Directory>
+              <Hash>
+                <File loc="mods\buildcraft.jar">asasdfasdfasdf파일해시</File>
+                <File loc="mods\industrialcraft.jar">asasddffasdfasdf파일해시</File>
+                <File loc="mods\appliedenergetics2.jar">asasdfasdfaasdfwaesdf파일해시</File>
+              </Hash>
+            </BellCraft8>*/
+
+        }
+
+        /// <summary>
+        /// 베이스팩 버전 설치정보를 기록합니다.
+        /// </summary>
+        /// <param name="Directory">필요 디렉토리 리스트</param>
+        /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
+        public void WriteVersionXML(string[] Directory, string[] Hash)
+        {
+            /*<?xml version="1.0" encoding="utf-8" ?>
+            <BCP_1.7.10>
+              <Directory>
+                <Dir>assets</Dir>
+                <Dir>resource</Dir>
+              </Directory>
+              <Hash>
+                <File Loc="assets\어쩌구저쩌구.txt">파일해시 어쩌구저쩌구.txt</File>
+                <File Loc="assets\이러쿵저러쿵.log">파일해시 이러쿵저러쿵.log</File>
+                <File Loc="resource\리소스.txt">파일해시 리소스.txt</File>
+              </Hash>
+            </BCP_1.7.10>*/
+
+        }
+
+        /// <summary>
+        /// 옵션팩 버전 설치정보를 기록합니다.
+        /// </summary>
+        /// <param name="Option">옵션정보 ('이름|UID|기본설치' 식으로 값 대입)</param>
+        /// <param name="Directory">필요 디렉토리 리스트</param>
+        /// <param name="Hash">파일 리스트 ('파일명|해시' 식으로 값 대입)</param>
+        public void WriteVersionXML(string[] Option, string[] Directory, string[] Hash)
+        {
+            /*<?xml version="1.0" encoding="utf-8" ?>
+            <BCO_1.7.10>
+                <Option>
+                    <Name="NEI" UID="NEI">true</Name>
+                    <Name="MapWriter" UID="MiniMap">false</Name>
+                    <Name="Rei's MiniMap" UID="MiniMap">false</Name>
+                </Option>
+                <Directory>
+                    <Dir>mods</Dir>
+                    <Dir>flan</Dir>
+                </Directory>
+                <Hash>
+                    <Name="NEI" Loc="mods\NEI.jar">파일 해시 asdfasdf</File>
+                    <Name="MapWriter" Loc="mods\MapWriter.jar">파일 해시 asdfasdf</File>
+                    <Name="Rei's MiniMap" Loc="mods\Rei_MiniMap.jar">파일 해시 asdfasdf</File>
+                </Hash>
+            </BCO_1.7.10>*/
+
+        }
+
+        /// <summary>
+        /// List 배열값을 바탕으로 PackList.xml 파일을 생성합니다.
+        /// </summary>
+        /// <param name="List">팩 리스트 배열</param>
+        public void WriteListXML(string[] List)
+        {
+            /*<?xml version="1.0" encoding="UTF-8"?>
+            <List>
+              <Pack>BellCraft8</Pack>
+              <Pack>FTB</Pack>
+            </List>*/// 모드팩, 베이스팩, 옵션팩 리스트.xml구조는 전부 위와 같음.
+
+
         }
     }
 }

@@ -104,7 +104,7 @@
             this.gb_Option_Upload = new System.Windows.Forms.GroupBox();
             this.lst_Option_File = new System.Windows.Forms.ListView();
             this.ch_Name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_OUID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_UID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Default = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_Path = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_Option_Upload = new System.Windows.Forms.Button();
@@ -128,6 +128,12 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
+            this.btn_Mod_DelFile = new System.Windows.Forms.Button();
+            this.btn_Mod_Init = new System.Windows.Forms.Button();
+            this.btn_Base_Init = new System.Windows.Forms.Button();
+            this.btn_Base_DelFile = new System.Windows.Forms.Button();
+            this.btn_Option_Init = new System.Windows.Forms.Button();
+            this.btn_Option_DelFile = new System.Windows.Forms.Button();
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.gb_Mod_Upload.SuspendLayout();
@@ -172,6 +178,8 @@
             // 
             // gb_Mod_Upload
             // 
+            this.gb_Mod_Upload.Controls.Add(this.btn_Mod_Init);
+            this.gb_Mod_Upload.Controls.Add(this.btn_Mod_DelFile);
             this.gb_Mod_Upload.Controls.Add(this.cb_Mod_Option_Upload);
             this.gb_Mod_Upload.Controls.Add(this.cb_Mod_Base_Upload);
             this.gb_Mod_Upload.Controls.Add(this.lb_Mod_Option_Upload);
@@ -618,6 +626,8 @@
             // 
             // gb_Base_Upload
             // 
+            this.gb_Base_Upload.Controls.Add(this.btn_Base_Init);
+            this.gb_Base_Upload.Controls.Add(this.btn_Base_DelFile);
             this.gb_Base_Upload.Controls.Add(this.btn_Base_Upload);
             this.gb_Base_Upload.Controls.Add(this.cb_Base_Active);
             this.gb_Base_Upload.Controls.Add(this.cb_Base_Recommended);
@@ -860,6 +870,8 @@
             // 
             // gb_Option_Upload
             // 
+            this.gb_Option_Upload.Controls.Add(this.btn_Option_Init);
+            this.gb_Option_Upload.Controls.Add(this.btn_Option_DelFile);
             this.gb_Option_Upload.Controls.Add(this.lst_Option_File);
             this.gb_Option_Upload.Controls.Add(this.btn_Option_Upload);
             this.gb_Option_Upload.Controls.Add(this.cb_Option_Active);
@@ -880,7 +892,7 @@
             // 
             this.lst_Option_File.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_Name,
-            this.ch_OUID,
+            this.ch_UID,
             this.ch_Default,
             this.ch_Path});
             this.lst_Option_File.Location = new System.Drawing.Point(243, 20);
@@ -888,18 +900,22 @@
             this.lst_Option_File.Size = new System.Drawing.Size(563, 193);
             this.lst_Option_File.TabIndex = 16;
             this.lst_Option_File.UseCompatibleStateImageBehavior = false;
+            this.lst_Option_File.View = System.Windows.Forms.View.Details;
             // 
             // ch_Name
             // 
             this.ch_Name.Text = "이름";
+            this.ch_Name.Width = 94;
             // 
-            // ch_OUID
+            // ch_UID
             // 
-            this.ch_OUID.Text = "OUID";
+            this.ch_UID.Text = "UID";
+            this.ch_UID.Width = 76;
             // 
             // ch_Default
             // 
             this.ch_Default.Text = "기본설치";
+            this.ch_Default.Width = 67;
             // 
             // ch_Path
             // 
@@ -1103,6 +1119,66 @@
             this.lb_Option_Latest.TabIndex = 2;
             this.lb_Option_Latest.Text = "최신버전 :";
             // 
+            // btn_Mod_DelFile
+            // 
+            this.btn_Mod_DelFile.Location = new System.Drawing.Point(158, 100);
+            this.btn_Mod_DelFile.Name = "btn_Mod_DelFile";
+            this.btn_Mod_DelFile.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_DelFile.TabIndex = 24;
+            this.btn_Mod_DelFile.Text = "선택 제외";
+            this.btn_Mod_DelFile.UseVisualStyleBackColor = true;
+            this.btn_Mod_DelFile.Click += new System.EventHandler(this.btn_Mod_DelFile_Click);
+            // 
+            // btn_Mod_Init
+            // 
+            this.btn_Mod_Init.Location = new System.Drawing.Point(158, 75);
+            this.btn_Mod_Init.Name = "btn_Mod_Init";
+            this.btn_Mod_Init.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_Init.TabIndex = 25;
+            this.btn_Mod_Init.Text = "초기화";
+            this.btn_Mod_Init.UseVisualStyleBackColor = true;
+            this.btn_Mod_Init.Click += new System.EventHandler(this.btn_Mod_Init_Click);
+            // 
+            // btn_Base_Init
+            // 
+            this.btn_Base_Init.Location = new System.Drawing.Point(0, 190);
+            this.btn_Base_Init.Name = "btn_Base_Init";
+            this.btn_Base_Init.Size = new System.Drawing.Size(75, 23);
+            this.btn_Base_Init.TabIndex = 27;
+            this.btn_Base_Init.Text = "초기화";
+            this.btn_Base_Init.UseVisualStyleBackColor = true;
+            this.btn_Base_Init.Click += new System.EventHandler(this.btn_Base_Init_Click);
+            // 
+            // btn_Base_DelFile
+            // 
+            this.btn_Base_DelFile.Location = new System.Drawing.Point(81, 190);
+            this.btn_Base_DelFile.Name = "btn_Base_DelFile";
+            this.btn_Base_DelFile.Size = new System.Drawing.Size(75, 23);
+            this.btn_Base_DelFile.TabIndex = 26;
+            this.btn_Base_DelFile.Text = "선택 제외";
+            this.btn_Base_DelFile.UseVisualStyleBackColor = true;
+            this.btn_Base_DelFile.Click += new System.EventHandler(this.btn_Base_DelFile_Click);
+            // 
+            // btn_Option_Init
+            // 
+            this.btn_Option_Init.Location = new System.Drawing.Point(2, 190);
+            this.btn_Option_Init.Name = "btn_Option_Init";
+            this.btn_Option_Init.Size = new System.Drawing.Size(75, 23);
+            this.btn_Option_Init.TabIndex = 27;
+            this.btn_Option_Init.Text = "초기화";
+            this.btn_Option_Init.UseVisualStyleBackColor = true;
+            this.btn_Option_Init.Click += new System.EventHandler(this.btn_Option_Init_Click);
+            // 
+            // btn_Option_DelFile
+            // 
+            this.btn_Option_DelFile.Location = new System.Drawing.Point(83, 190);
+            this.btn_Option_DelFile.Name = "btn_Option_DelFile";
+            this.btn_Option_DelFile.Size = new System.Drawing.Size(75, 23);
+            this.btn_Option_DelFile.TabIndex = 26;
+            this.btn_Option_DelFile.Text = "선택 제외";
+            this.btn_Option_DelFile.UseVisualStyleBackColor = true;
+            this.btn_Option_DelFile.Click += new System.EventHandler(this.btn_Option_DelFile_Click);
+            // 
             // BSU_ModManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1230,7 +1306,7 @@
         private System.Windows.Forms.TextBox txt_Option_Version;
         private System.Windows.Forms.ListView lst_Option_File;
         private System.Windows.Forms.ColumnHeader ch_Name;
-        private System.Windows.Forms.ColumnHeader ch_OUID;
+        private System.Windows.Forms.ColumnHeader ch_UID;
         private System.Windows.Forms.ColumnHeader ch_Default;
         private System.Windows.Forms.ColumnHeader ch_Path;
         private System.Windows.Forms.ComboBox cb_Mod_Option_Upload;
@@ -1245,6 +1321,12 @@
         private System.Windows.Forms.ToolStripMenuItem mi_Delete;
         private System.Windows.Forms.Button btn_Base_DelVer;
         private System.Windows.Forms.Button btn_Option_DelVer;
+        private System.Windows.Forms.Button btn_Mod_DelFile;
+        private System.Windows.Forms.Button btn_Mod_Init;
+        private System.Windows.Forms.Button btn_Base_Init;
+        private System.Windows.Forms.Button btn_Base_DelFile;
+        private System.Windows.Forms.Button btn_Option_Init;
+        private System.Windows.Forms.Button btn_Option_DelFile;
 
     }
 }
