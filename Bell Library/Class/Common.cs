@@ -5,6 +5,7 @@ using System.Net;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace BellLib.Class
 {
@@ -157,24 +158,28 @@ namespace BellLib.Class
         /// Bell Library 내부에서 호출 할 경우에는 값을 할당하지 않아도 됩니다.
         /// </param>
         /// <returns>성공 여부를 반환합니다.</returns>
-        public static bool CreateFormAndShow(string iName, Assembly asm = null, bool throwException = false)
+        public static bool CreateFormAndShow(string iName, bool throwException = false)
         {
             try
             {
-                Type type;
-
-                if (asm == null)
-                    type = Type.GetType(iName, false);
-                else
-                    type = asm.GetTypes().First(t => t.Name == iName);
+                Type type = Assembly.GetCallingAssembly().GetTypes().First(t => t.Name == iName);
 
                 object instance = Activator.CreateInstance(type);
 
-                type.GetMethod("Show", BindingFlags.Public | BindingFlags.Instance).Invoke(instance, null);
+                try
+                {
+                    type.GetMethod("Show", BindingFlags.Public | BindingFlags.Instance).Invoke(instance, null);
+                }
+                catch (AmbiguousMatchException)
+                {
+                    foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+                        if (method.Name == "Show" && method.GetParameters().Length == 0)
+                            method.Invoke(instance, null);
+                }
 
                 return true;
             }
-            catch (Exception)
+            catch
             {
                 if (throwException)
                     throw;

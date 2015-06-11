@@ -15,6 +15,7 @@ namespace Bell_Smart_Tools.Source.BST
         {
             InitializeComponent();
             RegisterEvents();
+            TextBoxFormCreator_SetDefault();
         }
 
         private void RegisterEvents()
@@ -154,9 +155,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Test_WPF TWPF = new Test_WPF();
-            TWPF.Show();
-            Common.CreateFormAndShow("Test_WPF", Assembly.GetExecutingAssembly());
+            Common.CreateFormAndShow("Test_WPF");
         }
 
         private void mi_Help_Click(object sender, EventArgs e)
@@ -198,7 +197,7 @@ namespace Bell_Smart_Tools.Source.BST
                 return;
             }
 
-            Common.CreateFormAndShow(TextBoxFormCreator.Text, Assembly.GetExecutingAssembly());
+            Common.CreateFormAndShow(TextBoxFormCreator.Text);
         }
     }
 }

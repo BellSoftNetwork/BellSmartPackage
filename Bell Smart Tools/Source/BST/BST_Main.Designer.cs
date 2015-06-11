@@ -288,7 +288,6 @@
             this.TextBoxFormCreator.Name = "TextBoxFormCreator";
             this.TextBoxFormCreator.Size = new System.Drawing.Size(200, 21);
             this.TextBoxFormCreator.TabIndex = 9;
-            this.TextBoxFormCreator.Text = "폼 클래스 이름";
             // 
             // ButtonFormCreator
             // 
