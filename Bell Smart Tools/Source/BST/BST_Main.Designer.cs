@@ -58,6 +58,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.TextBoxFormCreator = new System.Windows.Forms.TextBox();
+            this.ButtonFormCreator = new System.Windows.Forms.Button();
             this.ms_MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -179,13 +181,13 @@
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(152, 22);
+            this.mi_Info.Size = new System.Drawing.Size(122, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // mi_DebugMenu
@@ -200,7 +202,7 @@
             this.mi_SS2,
             this.mi_DebugTool});
             this.mi_DebugMenu.Name = "mi_DebugMenu";
-            this.mi_DebugMenu.Size = new System.Drawing.Size(152, 22);
+            this.mi_DebugMenu.Size = new System.Drawing.Size(122, 22);
             this.mi_DebugMenu.Text = "Debug";
             // 
             // mi_DebugLevel_Disable
@@ -280,12 +282,31 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // TextBoxFormCreator
+            // 
+            this.TextBoxFormCreator.Location = new System.Drawing.Point(326, 213);
+            this.TextBoxFormCreator.Name = "TextBoxFormCreator";
+            this.TextBoxFormCreator.Size = new System.Drawing.Size(200, 21);
+            this.TextBoxFormCreator.TabIndex = 9;
+            this.TextBoxFormCreator.Text = "폼 클래스 이름";
+            // 
+            // ButtonFormCreator
+            // 
+            this.ButtonFormCreator.Location = new System.Drawing.Point(326, 240);
+            this.ButtonFormCreator.Name = "ButtonFormCreator";
+            this.ButtonFormCreator.Size = new System.Drawing.Size(200, 23);
+            this.ButtonFormCreator.TabIndex = 10;
+            this.ButtonFormCreator.Text = "Create Form And Show";
+            this.ButtonFormCreator.UseVisualStyleBackColor = true;
+            // 
             // BST_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(538, 275);
+            this.Controls.Add(this.ButtonFormCreator);
+            this.Controls.Add(this.TextBoxFormCreator);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -336,6 +357,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox TextBoxFormCreator;
+        private System.Windows.Forms.Button ButtonFormCreator;
 
     }
 }

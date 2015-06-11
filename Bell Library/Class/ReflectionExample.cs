@@ -11,9 +11,9 @@ namespace BellLib.Class
     {
         // Two Fields
         public string s = "문 자 열";
-        #pragma warning disable 169
+        #pragma warning disable 414
         private static int i = 1;
-        #pragma warning restore 169
+        #pragma warning restore 414
 
         // Two Methods
         private static void Methodee1()

@@ -25,12 +25,15 @@ namespace Bell_Smart_Tools.Source.BST
             {
                 if (debugItem.Name.IndexOf("mi_DebugLevel_") >= 0)
                 {
-                    MessageBox.Show(debugItem.Name);
                     var menuItem = (ToolStripMenuItem)debugItem.GetValue(this);
                     menuItem.CheckedChanged += new EventHandler(mi_DebugLevel_CheckedChanged);
                     menuItem.Click += new EventHandler(mi_DebugLevel_Click);
                 }
             }
+
+            TextBoxFormCreator.Enter += new EventHandler(TextBoxFormCreator_Enter);
+            TextBoxFormCreator.Leave += new EventHandler(TextBoxFormCreator_Leave);
+            ButtonFormCreator.Click += new EventHandler(ButtonFormCreator_Click);
         }
 
         private void Initialize() // 폼 초기화
@@ -153,6 +156,7 @@ namespace Bell_Smart_Tools.Source.BST
         {
             Test_WPF TWPF = new Test_WPF();
             TWPF.Show();
+            Common.CreateFormAndShow("Test_WPF", Assembly.GetExecutingAssembly());
         }
 
         private void mi_Help_Click(object sender, EventArgs e)
@@ -161,9 +165,40 @@ namespace Bell_Smart_Tools.Source.BST
         }
 
         private void button3_Click(object sender, EventArgs e)
+        {
+            BSL_Main BSLM = new BSL_Main();
+            BSLM.Show();
+        }
+
+        private void TextBoxFormCreator_Enter(object sender, EventArgs e)
+        {
+            if (TextBoxFormCreator.ForeColor == System.Drawing.Color.Black)
+                return;
+            TextBoxFormCreator.Text = "";
+            TextBoxFormCreator.ForeColor = System.Drawing.Color.Black;
+        }
+
+        private void TextBoxFormCreator_Leave(object sender, EventArgs e)
+        {
+            if (TextBoxFormCreator.Text.Trim() == "")
+                TextBoxFormCreator_SetDefault();
+        }
+
+        private void TextBoxFormCreator_SetDefault()
+        {
+            this.TextBoxFormCreator.Text = "폼 클래스 이름...";
+            TextBoxFormCreator.ForeColor = System.Drawing.Color.Gray;
+        }
+
+        private void ButtonFormCreator_Click(object sender, EventArgs e)
+        {
+            if (TextBoxFormCreator.Text == "폼 클래스 이름...")
             {
-                BSL_Main BSLM = new BSL_Main();
-                BSLM.Show();
+                MessageBox.Show("입력이 없당");
+                return;
             }
+
+            Common.CreateFormAndShow(TextBoxFormCreator.Text, Assembly.GetExecutingAssembly());
+        }
     }
 }

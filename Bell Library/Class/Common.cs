@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace BellLib.Class
 {
@@ -143,6 +145,42 @@ namespace BellLib.Class
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 새로운 폼의 인스턴스 생성하고 보여줍니다.
+        /// </summary>
+        /// <param name="iName">폼 클래스 인스턴스의 이름입니다.</param>
+        /// <param name="asm">
+        /// 폼 클래스 인스턴스가 포함된 어셈블리입니다.
+        /// 불분명한 경우는 Assembly.GetExecutingAssembly()를 사용하십시오.
+        /// Bell Library 내부에서 호출 할 경우에는 값을 할당하지 않아도 됩니다.
+        /// </param>
+        /// <returns>성공 여부를 반환합니다.</returns>
+        public static bool CreateFormAndShow(string iName, Assembly asm = null, bool throwException = false)
+        {
+            try
+            {
+                Type type;
+
+                if (asm == null)
+                    type = Type.GetType(iName, false);
+                else
+                    type = asm.GetTypes().First(t => t.Name == iName);
+
+                object instance = Activator.CreateInstance(type);
+
+                type.GetMethod("Show", BindingFlags.Public | BindingFlags.Instance).Invoke(instance, null);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                if (throwException)
+                    throw;
+
+                return false;
+            }
         }
     }
 }
