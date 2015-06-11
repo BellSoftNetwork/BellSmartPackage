@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.Reflection;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace BellLib.Class
 {
@@ -126,6 +127,46 @@ namespace BellLib.Class
         }
 
         /// <summary>
+        /// 새로운 폼의 인스턴스 생성하고 보여줍니다.
+        /// </summary>
+        /// <param name="iName">폼 클래스 인스턴스의 이름입니다.</param>
+        /// <param name="asm">
+        /// 폼 클래스 인스턴스가 포함된 어셈블리입니다.
+        /// 불분명한 경우는 Assembly.GetExecutingAssembly()를 사용하십시오.
+        /// Bell Library 내부에서 호출 할 경우에는 값을 할당하지 않아도 됩니다.
+        /// </param>
+        /// <returns>성공 여부를 반환합니다.</returns>
+        public static bool CreateFormAndShow(string iName, bool throwException = false)
+        {
+            try
+            {
+                Type type = Assembly.GetCallingAssembly().GetTypes().First(t => t.Name == iName);
+
+                object instance = Activator.CreateInstance(type);
+
+                try
+                {
+                    type.GetMethod("Show", BindingFlags.Public | BindingFlags.Instance).Invoke(instance, null);
+                }
+                catch (AmbiguousMatchException)
+                {
+                    foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+                        if (method.Name == "Show" && method.GetParameters().Length == 0)
+                            method.Invoke(instance, null);
+                }
+
+                return true;
+            }
+            catch
+            {
+                if (throwException)
+                    throw;
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 해당 디렉토리의 파일 포맷을 가진 모든 파일을 삭제합니다.
         /// </summary>
         /// <param name="dirPath"></param>
@@ -151,6 +192,40 @@ namespace BellLib.Class
             }
 
             return true;
+        }
+
+        public static string[] GetDirectoryArray(string strFilePath, bool Replace)
+        {
+            if (strFilePath[strFilePath.Length - 1] == '\\')
+                strFilePath = strFilePath.Substring(0, strFilePath.Length - 1);
+            List<string> list = new List<string>();
+            foreach (FileInfo File in (new DirectoryInfo(strFilePath)).GetFiles("*", SearchOption.AllDirectories))
+            {
+                string Path = File.DirectoryName;
+                if (Replace)
+                {
+                    Path = Path.Replace(strFilePath + '\\', string.Empty);
+                    Path = Path.Replace(strFilePath, string.Empty);
+                }
+                if (!list.Contains(Path) && Path != string.Empty)
+                    list.Add(Path);
+            }
+
+            return list.ToArray();
+        }
+        public static string[] GetFileArray(string strFilePath, bool Replace)
+        {
+            List<string> list = new List<string>();
+            foreach (FileInfo File in (new DirectoryInfo(strFilePath)).GetFiles("*", SearchOption.AllDirectories))
+            {
+                string Path = File.FullName;
+                if (Replace)
+                    Path = Path.Replace(strFilePath, string.Empty);
+                if (!list.Contains(Path))
+                    list.Add(Path);
+            }
+
+            return list.ToArray();
         }
     }
 }
