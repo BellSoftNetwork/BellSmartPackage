@@ -98,7 +98,7 @@
             this.mi_Restart,
             this.mi_End});
             this.mi_BST.Name = "mi_BST";
-            this.mi_BST.Size = new System.Drawing.Size(41, 20);
+            this.mi_BST.Size = new System.Drawing.Size(39, 20);
             this.mi_BST.Text = "BST";
             // 
             // mi_Logout
@@ -130,7 +130,7 @@
             this.mi_Laboratory,
             this.mi_BST_Preferences});
             this.mi_Tool.Name = "mi_Tool";
-            this.mi_Tool.Size = new System.Drawing.Size(41, 20);
+            this.mi_Tool.Size = new System.Drawing.Size(43, 20);
             this.mi_Tool.Text = "도구";
             // 
             // mi_TopMost
@@ -174,7 +174,7 @@
             this.mi_FeedBack,
             this.mi_DebugMenu});
             this.mi_Help.Name = "mi_Help";
-            this.mi_Help.Size = new System.Drawing.Size(41, 20);
+            this.mi_Help.Size = new System.Drawing.Size(43, 20);
             this.mi_Help.Text = "정보";
             this.mi_Help.Click += new System.EventHandler(this.mi_Help_Click);
             // 
@@ -208,47 +208,47 @@
             // mi_DebugLevel_Disable
             // 
             this.mi_DebugLevel_Disable.Name = "mi_DebugLevel_Disable";
-            this.mi_DebugLevel_Disable.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Disable.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugLevel_Disable.Text = "Disable";
             // 
             // mi_SS1
             // 
             this.mi_SS1.Name = "mi_SS1";
-            this.mi_SS1.Size = new System.Drawing.Size(201, 6);
+            this.mi_SS1.Size = new System.Drawing.Size(198, 6);
             // 
             // mi_DebugLevel_Low
             // 
             this.mi_DebugLevel_Low.Name = "mi_DebugLevel_Low";
-            this.mi_DebugLevel_Low.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Low.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugLevel_Low.Text = "Low Level";
             // 
             // mi_DebugLevel_Middle
             // 
             this.mi_DebugLevel_Middle.Name = "mi_DebugLevel_Middle";
-            this.mi_DebugLevel_Middle.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Middle.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugLevel_Middle.Text = "Middle Level";
             // 
             // mi_DebugLevel_High
             // 
             this.mi_DebugLevel_High.Name = "mi_DebugLevel_High";
-            this.mi_DebugLevel_High.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_High.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugLevel_High.Text = "High Level";
             // 
             // mi_DebugLevel_Log
             // 
             this.mi_DebugLevel_Log.Name = "mi_DebugLevel_Log";
-            this.mi_DebugLevel_Log.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Log.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugLevel_Log.Text = "Log Level";
             // 
             // mi_SS2
             // 
             this.mi_SS2.Name = "mi_SS2";
-            this.mi_SS2.Size = new System.Drawing.Size(201, 6);
+            this.mi_SS2.Size = new System.Drawing.Size(198, 6);
             // 
             // mi_DebugTool
             // 
             this.mi_DebugTool.Name = "mi_DebugTool";
-            this.mi_DebugTool.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugTool.Size = new System.Drawing.Size(201, 22);
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
             this.mi_DebugTool.Click += new System.EventHandler(this.mi_DebugTool_Click);
             // 
@@ -297,6 +297,7 @@
             this.ButtonFormCreator.TabIndex = 10;
             this.ButtonFormCreator.Text = "Create Form And Show";
             this.ButtonFormCreator.UseVisualStyleBackColor = true;
+            this.ButtonFormCreator.Click += new System.EventHandler(this.ButtonFormCreator_Click);
             // 
             // BST_Main
             // 
