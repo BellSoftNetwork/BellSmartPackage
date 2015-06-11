@@ -385,7 +385,11 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message(txt_MUID.Text + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
+            
             // 파일 업로드
+            FTPUtil FTPU = new FTPUtil(BellLib.Data.Base.SERVER_IP, "Bell", "bellpackage", "21");
+            //FTPU.Upload() 졸립다 자고 일어나서 해야지
+
             InitializeMod();
             Common.Message("모드팩이 정상적으로 업로드 되었습니다!");
         }

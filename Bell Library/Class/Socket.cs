@@ -76,6 +76,16 @@ namespace BellLib.Class
                 m_ClientSocket.Remove(ClientSocket);
             }
         }
+        private void Dispose()
+        {
+            foreach (Socket pBuffer in m_ClientSocket)
+            {
+                if (pBuffer.Connected)
+                    pBuffer.Disconnect(false);
+                pBuffer.Dispose();
+            }
+            m_ServerSocket.Dispose();
+        }
     }
 
     public class SocketClient
