@@ -47,12 +47,12 @@
             this.mi_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_FeedBack = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_DebugMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_Disable = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_DebugLevel_Disable = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mi_Low = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_Middle = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_High = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_Log = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_DebugLevel_Low = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_DebugLevel_Middle = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_DebugLevel_High = new System.Windows.Forms.ToolStripMenuItem();
+            this.mi_DebugLevel_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS2 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
@@ -96,7 +96,7 @@
             this.mi_Restart,
             this.mi_End});
             this.mi_BST.Name = "mi_BST";
-            this.mi_BST.Size = new System.Drawing.Size(39, 20);
+            this.mi_BST.Size = new System.Drawing.Size(41, 20);
             this.mi_BST.Text = "BST";
             // 
             // mi_Logout
@@ -128,7 +128,7 @@
             this.mi_Laboratory,
             this.mi_BST_Preferences});
             this.mi_Tool.Name = "mi_Tool";
-            this.mi_Tool.Size = new System.Drawing.Size(43, 20);
+            this.mi_Tool.Size = new System.Drawing.Size(41, 20);
             this.mi_Tool.Text = "도구";
             // 
             // mi_TopMost
@@ -172,91 +172,81 @@
             this.mi_FeedBack,
             this.mi_DebugMenu});
             this.mi_Help.Name = "mi_Help";
-            this.mi_Help.Size = new System.Drawing.Size(43, 20);
+            this.mi_Help.Size = new System.Drawing.Size(41, 20);
             this.mi_Help.Text = "정보";
             this.mi_Help.Click += new System.EventHandler(this.mi_Help_Click);
             // 
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(122, 22);
+            this.mi_Info.Size = new System.Drawing.Size(152, 22);
             this.mi_Info.Text = "BST 소개";
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // mi_DebugMenu
             // 
             this.mi_DebugMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_Disable,
+            this.mi_DebugLevel_Disable,
             this.mi_SS1,
-            this.mi_Low,
-            this.mi_Middle,
-            this.mi_High,
-            this.mi_Log,
+            this.mi_DebugLevel_Low,
+            this.mi_DebugLevel_Middle,
+            this.mi_DebugLevel_High,
+            this.mi_DebugLevel_Log,
             this.mi_SS2,
             this.mi_DebugTool});
             this.mi_DebugMenu.Name = "mi_DebugMenu";
-            this.mi_DebugMenu.Size = new System.Drawing.Size(122, 22);
+            this.mi_DebugMenu.Size = new System.Drawing.Size(152, 22);
             this.mi_DebugMenu.Text = "Debug";
             // 
-            // mi_Disable
+            // mi_DebugLevel_Disable
             // 
-            this.mi_Disable.Name = "mi_Disable";
-            this.mi_Disable.Size = new System.Drawing.Size(201, 22);
-            this.mi_Disable.Text = "Disable";
-            this.mi_Disable.CheckedChanged += new System.EventHandler(this.mi_Disable_CheckedChanged);
-            this.mi_Disable.Click += new System.EventHandler(this.mi_Disable_Click);
+            this.mi_DebugLevel_Disable.Name = "mi_DebugLevel_Disable";
+            this.mi_DebugLevel_Disable.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Disable.Text = "Disable";
             // 
             // mi_SS1
             // 
             this.mi_SS1.Name = "mi_SS1";
-            this.mi_SS1.Size = new System.Drawing.Size(198, 6);
+            this.mi_SS1.Size = new System.Drawing.Size(201, 6);
             // 
-            // mi_Low
+            // mi_DebugLevel_Low
             // 
-            this.mi_Low.Name = "mi_Low";
-            this.mi_Low.Size = new System.Drawing.Size(201, 22);
-            this.mi_Low.Text = "Low Level";
-            this.mi_Low.CheckedChanged += new System.EventHandler(this.mi_Low_CheckedChanged);
-            this.mi_Low.Click += new System.EventHandler(this.mi_Low_Click);
+            this.mi_DebugLevel_Low.Name = "mi_DebugLevel_Low";
+            this.mi_DebugLevel_Low.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Low.Text = "Low Level";
             // 
-            // mi_Middle
+            // mi_DebugLevel_Middle
             // 
-            this.mi_Middle.Name = "mi_Middle";
-            this.mi_Middle.Size = new System.Drawing.Size(201, 22);
-            this.mi_Middle.Text = "Middle Level";
-            this.mi_Middle.CheckedChanged += new System.EventHandler(this.mi_Middle_CheckedChanged);
-            this.mi_Middle.Click += new System.EventHandler(this.mi_Middle_Click);
+            this.mi_DebugLevel_Middle.Name = "mi_DebugLevel_Middle";
+            this.mi_DebugLevel_Middle.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Middle.Text = "Middle Level";
             // 
-            // mi_High
+            // mi_DebugLevel_High
             // 
-            this.mi_High.Name = "mi_High";
-            this.mi_High.Size = new System.Drawing.Size(201, 22);
-            this.mi_High.Text = "High Level";
-            this.mi_High.CheckedChanged += new System.EventHandler(this.mi_High_CheckedChanged);
-            this.mi_High.Click += new System.EventHandler(this.mi_High_Click);
+            this.mi_DebugLevel_High.Name = "mi_DebugLevel_High";
+            this.mi_DebugLevel_High.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_High.Text = "High Level";
             // 
-            // mi_Log
+            // mi_DebugLevel_Log
             // 
-            this.mi_Log.Name = "mi_Log";
-            this.mi_Log.Size = new System.Drawing.Size(201, 22);
-            this.mi_Log.Text = "Log Level";
-            this.mi_Log.CheckedChanged += new System.EventHandler(this.mi_Log_CheckedChanged);
-            this.mi_Log.Click += new System.EventHandler(this.mi_Log_Click);
+            this.mi_DebugLevel_Log.Name = "mi_DebugLevel_Log";
+            this.mi_DebugLevel_Log.Size = new System.Drawing.Size(204, 22);
+            this.mi_DebugLevel_Log.Text = "Log Level";
             // 
             // mi_SS2
             // 
             this.mi_SS2.Name = "mi_SS2";
-            this.mi_SS2.Size = new System.Drawing.Size(198, 6);
+            this.mi_SS2.Size = new System.Drawing.Size(201, 6);
             // 
             // mi_DebugTool
             // 
             this.mi_DebugTool.Name = "mi_DebugTool";
-            this.mi_DebugTool.Size = new System.Drawing.Size(201, 22);
+            this.mi_DebugTool.Size = new System.Drawing.Size(204, 22);
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
             this.mi_DebugTool.Click += new System.EventHandler(this.mi_DebugTool_Click);
             // 
@@ -335,12 +325,12 @@
         private System.Windows.Forms.ToolStripMenuItem mi_Info;
         private System.Windows.Forms.ToolStripMenuItem mi_FeedBack;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugMenu;
-        private System.Windows.Forms.ToolStripMenuItem mi_Disable;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Disable;
         private System.Windows.Forms.ToolStripSeparator mi_SS1;
-        private System.Windows.Forms.ToolStripMenuItem mi_Low;
-        private System.Windows.Forms.ToolStripMenuItem mi_Middle;
-        private System.Windows.Forms.ToolStripMenuItem mi_High;
-        private System.Windows.Forms.ToolStripMenuItem mi_Log;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Low;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Middle;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_High;
+        private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Log;
         private System.Windows.Forms.ToolStripSeparator mi_SS2;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugTool;
         private System.Windows.Forms.Button button1;

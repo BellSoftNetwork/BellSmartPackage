@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
+using System.Reflection;
 using BellLib.Class;
 using BellLib.Data;
 using Debug = BellLib.Class.Debug;
@@ -19,6 +14,23 @@ namespace Bell_Smart_Tools.Source.BST
         public BST_Main()
         {
             InitializeComponent();
+            RegisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            // Register mi_DebugLevel_*.CheckedChanged on mi_DebugLevel_CheckedChanged
+            // Register mi_DebugLevel_*.Click on mi_DebugLevel_Click
+            foreach (var debugItem in typeof(BST_Main).GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+            {
+                if (debugItem.Name.IndexOf("mi_DebugLevel_") >= 0)
+                {
+                    MessageBox.Show(debugItem.Name);
+                    var menuItem = (ToolStripMenuItem)debugItem.GetValue(this);
+                    menuItem.CheckedChanged += new EventHandler(mi_DebugLevel_CheckedChanged);
+                    menuItem.Click += new EventHandler(mi_DebugLevel_Click);
+                }
+            }
         }
 
         private void Initialize() // 폼 초기화
@@ -50,13 +62,6 @@ namespace Bell_Smart_Tools.Source.BST
 
             if (txt_Notice.Text != notice || txt_Notice.Text == null)
                 txt_Notice.Text = notice;
-
-                /*else
-            {
-                    txt_Notice.Text = notice;
-                    //BST_Manager.Sound(My.Resources.Sound_error);
-                    //F_BASE.FlashWindow(this.Handle, true);
-                }*/ // 무슨 의도인..
         }
 
         private void mi_TopMost_Click(object sender, EventArgs e)
@@ -98,89 +103,37 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void DebugModeLoad()
         {
-            mi_Disable.Checked = false;
-            mi_Low.Checked = false;
-            mi_Middle.Checked = false;
-            mi_High.Checked = false;
-            mi_Log.Checked = false;
-
-            switch (Debug.DebuggerMode)
+            Type t = typeof(BST_Main);
+            foreach (var fieldMenu in t.GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
             {
-                case Debug.Level.Disable:
-                    mi_Disable.Checked = true;
-                    break;
-                case Debug.Level.Low:
-                    mi_Low.Checked = true;
-                    break;
-                case Debug.Level.Middle:
-                    mi_Middle.Checked = true;
-                    break;
-                case Debug.Level.High:
-                    mi_High.Checked = true;
-                    break;
-                case Debug.Level.Log:
-                    mi_Log.Checked = true;
-                    break;
+                if (fieldMenu.Name.IndexOf("mi_DebugLevel_") >= 0) // 만약 디버그 레벨 메뉴면..
+                {
+                    var MenuItem = (ToolStripMenuItem)fieldMenu.GetValue(this); // 일단 mi_DebugLevel 메뉴를.. 안전하게 캐스팅하자..
+                    MenuItem.Checked = false; // 이걸 다 false로.. 바꾸고..
+
+                    foreach (var fieldLevel in typeof(Debug.Level).GetFields()) // Debug.Level 필드들을 구해서..
+                        if (fieldLevel.Name == fieldMenu.Name.Replace("mi_DebugLevel_", String.Empty) && Debug.DebuggerMode == (Debug.Level)fieldLevel.GetValue(this))
+                            // Debug.Level.*가 mi_DebugLevel_*와 같고.. Debug.DebuggerMode가 Debug.Level.*와 같으면?
+                            MenuItem.Checked = true; // mi_DebugLevel_*.Checked를 true로 바꾼다!
+                }
             }
         }
 
-        private void mi_Disable_CheckedChanged(object sender, EventArgs e)
+        private void mi_DebugLevel_CheckedChanged(object sender, EventArgs e)
         {
-            if (mi_Disable.Checked)
-                Debug.DebuggerMode = Debug.Level.Disable;
+            var item = (ToolStripMenuItem)sender;
+            if (item.Checked)
+            {
+                var fieldValue = typeof(Debug.Level).GetField(item.Name.Replace("mi_DebugLevel_", String.Empty)).GetValue(this);
+                Debug.DebuggerMode = (Debug.Level)fieldValue;
+            }
         }
 
-        private void mi_Low_CheckedChanged(object sender, EventArgs e)
+        private void mi_DebugLevel_Click(object sender, EventArgs e)
         {
-            if (mi_Low.Checked)
-                Debug.DebuggerMode = Debug.Level.Low;
-        }
-
-        private void mi_Middle_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mi_Middle.Checked)
-                Debug.DebuggerMode = Debug.Level.Middle;
-        }
-
-        private void mi_High_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mi_High.Checked)
-                Debug.DebuggerMode = Debug.Level.High;
-        }
-
-        private void mi_Log_CheckedChanged(object sender, EventArgs e)
-        {
-            if (mi_Log.Checked)
-                Debug.DebuggerMode = Debug.Level.Log;
-        }
-
-        private void mi_Disable_Click(object sender, EventArgs e)
-        {
-            Debug.DebuggerMode = Debug.Level.Disable;
-            DebugModeLoad();
-        }
-
-        private void mi_Low_Click(object sender, EventArgs e)
-        {
-            Debug.DebuggerMode = Debug.Level.Low;
-            DebugModeLoad();
-        }
-
-        private void mi_Middle_Click(object sender, EventArgs e)
-        {
-            Debug.DebuggerMode = Debug.Level.Middle;
-            DebugModeLoad();
-        }
-
-        private void mi_High_Click(object sender, EventArgs e)
-        {
-            Debug.DebuggerMode = Debug.Level.High;
-            DebugModeLoad();
-        }
-
-        private void mi_Log_Click(object sender, EventArgs e)
-        {
-            Debug.DebuggerMode = Debug.Level.Log;
+            var item = (ToolStripMenuItem)sender;
+            var fieldValue = typeof(Debug.Level).GetField(item.Name.Replace("mi_DebugLevel_", String.Empty)).GetValue(null);
+            Debug.DebuggerMode = (Debug.Level)fieldValue;
             DebugModeLoad();
         }
 
