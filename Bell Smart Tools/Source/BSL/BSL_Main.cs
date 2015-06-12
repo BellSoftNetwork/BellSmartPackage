@@ -48,5 +48,20 @@ namespace Bell_Smart_Tools.Source.BSL
             BSLP.ShowDialog();
         }
 
+        private void btn_Launch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lb_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pb_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

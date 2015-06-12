@@ -36,8 +36,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mC환경설정ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +50,7 @@
             this.lb_ModPack.Items.AddRange(new object[] {
             "BellCraft8",
             "TestPack"});
-            this.lb_ModPack.Location = new System.Drawing.Point(455, 84);
+            this.lb_ModPack.Location = new System.Drawing.Point(455, 46);
             this.lb_ModPack.Name = "lb_ModPack";
             this.lb_ModPack.Size = new System.Drawing.Size(181, 100);
             this.lb_ModPack.TabIndex = 0;
@@ -56,21 +58,22 @@
             // 
             // wb_PackNews
             // 
-            this.wb_PackNews.Location = new System.Drawing.Point(12, 84);
+            this.wb_PackNews.Location = new System.Drawing.Point(17, 46);
             this.wb_PackNews.MinimumSize = new System.Drawing.Size(20, 20);
             this.wb_PackNews.Name = "wb_PackNews";
-            this.wb_PackNews.Size = new System.Drawing.Size(280, 173);
+            this.wb_PackNews.Size = new System.Drawing.Size(280, 157);
             this.wb_PackNews.TabIndex = 1;
             this.wb_PackNews.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.wb_PackNews_DocumentCompleted);
             // 
             // btn_Launch
             // 
-            this.btn_Launch.Location = new System.Drawing.Point(535, 293);
+            this.btn_Launch.Location = new System.Drawing.Point(524, 277);
             this.btn_Launch.Name = "btn_Launch";
             this.btn_Launch.Size = new System.Drawing.Size(112, 23);
             this.btn_Launch.TabIndex = 2;
-            this.btn_Launch.Text = "Launch";
+            this.btn_Launch.Text = "START";
             this.btn_Launch.UseVisualStyleBackColor = true;
+            this.btn_Launch.Click += new System.EventHandler(this.btn_Launch_Click);
             // 
             // comboBox1
             // 
@@ -78,7 +81,7 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Latest",
             "Recommended"});
-            this.comboBox1.Location = new System.Drawing.Point(455, 237);
+            this.comboBox1.Location = new System.Drawing.Point(455, 152);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(181, 20);
             this.comboBox1.TabIndex = 3;
@@ -111,18 +114,36 @@
             this.도구ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.도구ToolStripMenuItem.Text = "도구";
             // 
+            // mC환경설정ToolStripMenuItem
+            // 
+            this.mC환경설정ToolStripMenuItem.Name = "mC환경설정ToolStripMenuItem";
+            this.mC환경설정ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.mC환경설정ToolStripMenuItem.Text = "MC환경설정";
+            this.mC환경설정ToolStripMenuItem.Click += new System.EventHandler(this.ms_BSL_PreferenceToolStripMenuItem_Click);
+            // 
             // 정보ToolStripMenuItem
             // 
             this.정보ToolStripMenuItem.Name = "정보ToolStripMenuItem";
             this.정보ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.정보ToolStripMenuItem.Text = "정보";
             // 
-            // mC환경설정ToolStripMenuItem
+            // label1
             // 
-            this.mC환경설정ToolStripMenuItem.Name = "mC환경설정ToolStripMenuItem";
-            this.mC환경설정ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.mC환경설정ToolStripMenuItem.Text = "MC환경설정";
-            this.mC환경설정ToolStripMenuItem.Click += new System.EventHandler(this.ms_BSL_PreferenceToolStripMenuItem_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 206);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(38, 12);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.lb_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(3, 306);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(644, 14);
+            this.progressBar1.TabIndex = 6;
+            this.progressBar1.Click += new System.EventHandler(this.pb_Click);
             // 
             // BSL_Main
             // 
@@ -131,6 +152,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(648, 317);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btn_Launch);
             this.Controls.Add(this.wb_PackNews);
@@ -164,5 +187,7 @@
         private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mC환경설정ToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
