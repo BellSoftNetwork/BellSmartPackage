@@ -388,7 +388,9 @@ namespace Bell_Smart_Server.Source.BSU
             
             // 파일 업로드
             FTPUtil FTPU = new FTPUtil(BellLib.Data.Base.SERVER_IP, "Bell", "bellpackage", "21");
-            //FTPU.Upload() 졸립다 자고 일어나서 해야지
+            FTPU.MakeDir("Pack/BellCraft8/8.8.0/mods");
+            //FTPU.DeleteFTP("Pack/BellCraft8/8.8.0/mods/b72_1710.jar");
+            FTPU.Upload("Pack/BellCraft8/8.8.0/mods", (string)llb_Mod_Upload.Tag + "mods\\b72_1710.jar");
 
             InitializeMod();
             Common.Message("모드팩이 정상적으로 업로드 되었습니다!");
