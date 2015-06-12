@@ -14,9 +14,9 @@ namespace BellLib.Data
         public const string TOTAL_WEB_URL = "http://bellsoft.iptime.org:88/";
         public const string SERVER_IP = "bellsoft.iptime.org";
         public const int SERVER_PORT = 25555;
-        public const string FTP_Data_ID = "BellData";
+        public const string FTP_Data_ID = "BSL_Data";
         public const string FTP_Data_PW = "bellsoftnetwork";
-        public const string FTP_Info_ID = "BellInfo";
+        public const string FTP_Info_ID = "BSL_Info";
         public const string FTP_Info_PW = "bellsoftnetwork";
     }
 }

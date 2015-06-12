@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSL_Main));
-            this.lb_ModPack = new System.Windows.Forms.ListBox();
+            this.lst_ModPack = new System.Windows.Forms.ListBox();
             this.wb_PackNews = new System.Windows.Forms.WebBrowser();
             this.btn_Launch = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb_Version = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,18 +47,18 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lb_ModPack
+            // lst_ModPack
             // 
-            this.lb_ModPack.FormattingEnabled = true;
-            this.lb_ModPack.ItemHeight = 12;
-            this.lb_ModPack.Items.AddRange(new object[] {
+            this.lst_ModPack.FormattingEnabled = true;
+            this.lst_ModPack.ItemHeight = 12;
+            this.lst_ModPack.Items.AddRange(new object[] {
             "BellCraft8",
             "TestPack"});
-            this.lb_ModPack.Location = new System.Drawing.Point(455, 46);
-            this.lb_ModPack.Name = "lb_ModPack";
-            this.lb_ModPack.Size = new System.Drawing.Size(181, 100);
-            this.lb_ModPack.TabIndex = 0;
-            this.lb_ModPack.SelectedIndexChanged += new System.EventHandler(this.lb_ModPack_SelectedIndexChanged);
+            this.lst_ModPack.Location = new System.Drawing.Point(455, 46);
+            this.lst_ModPack.Name = "lst_ModPack";
+            this.lst_ModPack.Size = new System.Drawing.Size(181, 100);
+            this.lst_ModPack.TabIndex = 0;
+            this.lst_ModPack.SelectedIndexChanged += new System.EventHandler(this.lst_ModPack_SelectedIndexChanged);
             // 
             // wb_PackNews
             // 
@@ -79,19 +79,20 @@
             this.btn_Launch.UseVisualStyleBackColor = true;
             this.btn_Launch.Click += new System.EventHandler(this.btn_Launch_Click);
             // 
-            // comboBox1
+            // cb_Version
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cb_Version.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Version.FormattingEnabled = true;
+            this.cb_Version.Items.AddRange(new object[] {
             "선택하세요",
             "==================",
             "Latest",
             "Recommended"});
-            this.comboBox1.Location = new System.Drawing.Point(455, 152);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(181, 20);
-            this.comboBox1.TabIndex = 3;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.cb_SelectedIndexChanged);
+            this.cb_Version.Location = new System.Drawing.Point(455, 152);
+            this.cb_Version.Name = "cb_Version";
+            this.cb_Version.Size = new System.Drawing.Size(181, 20);
+            this.cb_Version.TabIndex = 3;
+            this.cb_Version.SelectedIndexChanged += new System.EventHandler(this.cb_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
@@ -174,6 +175,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "선택하세요",
@@ -207,10 +209,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cb_Version);
             this.Controls.Add(this.btn_Launch);
             this.Controls.Add(this.wb_PackNews);
-            this.Controls.Add(this.lb_ModPack);
+            this.Controls.Add(this.lst_ModPack);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -231,10 +233,10 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lb_ModPack;
+        private System.Windows.Forms.ListBox lst_ModPack;
         private System.Windows.Forms.WebBrowser wb_PackNews;
         private System.Windows.Forms.Button btn_Launch;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb_Version;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem mCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;

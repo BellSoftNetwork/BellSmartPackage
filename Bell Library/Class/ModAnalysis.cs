@@ -135,7 +135,10 @@ namespace BellLib.Class
         /// </summary>
         public ModAnalysisRead()
         {
-
+            LoadModList();
+            LoadBaseList();
+            LoadOptionList();
+            LoadClient();
         }
 
         /// <summary>
@@ -557,9 +560,6 @@ namespace BellLib.Class
         /// <returns>팩 리스트</returns>
         public string[] GetList(PackType pt)
         {
-            if (!_Parsed)
-                return null;
-
             switch (pt)
             {
                 case PackType.Mod:
