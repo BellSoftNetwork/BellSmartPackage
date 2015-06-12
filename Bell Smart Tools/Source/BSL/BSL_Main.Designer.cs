@@ -38,12 +38,12 @@
             this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mC환경설정ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.pb_Load = new System.Windows.Forms.ProgressBar();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.cb_AutoUpdate = new System.Windows.Forms.CheckBox();
+            this.cb_Profile = new System.Windows.Forms.ComboBox();
+            this.btn_Preferences = new System.Windows.Forms.Button();
+            this.txt_Detail = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,11 +67,10 @@
             this.wb_PackNews.Name = "wb_PackNews";
             this.wb_PackNews.Size = new System.Drawing.Size(280, 157);
             this.wb_PackNews.TabIndex = 1;
-            this.wb_PackNews.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.wb_PackNews_DocumentCompleted);
             // 
             // btn_Launch
             // 
-            this.btn_Launch.Location = new System.Drawing.Point(524, 277);
+            this.btn_Launch.Location = new System.Drawing.Point(536, 277);
             this.btn_Launch.Name = "btn_Launch";
             this.btn_Launch.Size = new System.Drawing.Size(112, 23);
             this.btn_Launch.TabIndex = 2;
@@ -82,6 +81,7 @@
             // cb_Version
             // 
             this.cb_Version.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Version.Enabled = false;
             this.cb_Version.FormattingEnabled = true;
             this.cb_Version.Items.AddRange(new object[] {
             "선택하세요",
@@ -124,7 +124,7 @@
             // mC환경설정ToolStripMenuItem
             // 
             this.mC환경설정ToolStripMenuItem.Name = "mC환경설정ToolStripMenuItem";
-            this.mC환경설정ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.mC환경설정ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.mC환경설정ToolStripMenuItem.Text = "MC환경설정";
             this.mC환경설정ToolStripMenuItem.Click += new System.EventHandler(this.ms_BSL_PreferenceToolStripMenuItem_Click);
             // 
@@ -134,23 +134,14 @@
             this.정보ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.정보ToolStripMenuItem.Text = "정보";
             // 
-            // label1
+            // pb_Load
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 206);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 12);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Modpack Memo";
-            this.label1.Click += new System.EventHandler(this.lb_modlist_Click);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(3, 306);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(644, 14);
-            this.progressBar1.TabIndex = 6;
-            this.progressBar1.Click += new System.EventHandler(this.pb_Click);
+            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pb_Load.Location = new System.Drawing.Point(0, 303);
+            this.pb_Load.Name = "pb_Load";
+            this.pb_Load.Size = new System.Drawing.Size(648, 14);
+            this.pb_Load.Step = 1;
+            this.pb_Load.TabIndex = 6;
             // 
             // label2
             // 
@@ -160,41 +151,49 @@
             this.label2.Size = new System.Drawing.Size(100, 12);
             this.label2.TabIndex = 7;
             this.label2.Text = "Status Log Lable";
-            this.label2.Click += new System.EventHandler(this.lb_status_log_lable_Click);
             // 
-            // checkBox1
+            // cb_AutoUpdate
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(432, 281);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 16);
-            this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "자동업데이트";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.cb_auto_update_CheckedChanged);
+            this.cb_AutoUpdate.AutoSize = true;
+            this.cb_AutoUpdate.Location = new System.Drawing.Point(432, 281);
+            this.cb_AutoUpdate.Name = "cb_AutoUpdate";
+            this.cb_AutoUpdate.Size = new System.Drawing.Size(96, 16);
+            this.cb_AutoUpdate.TabIndex = 8;
+            this.cb_AutoUpdate.Text = "자동업데이트";
+            this.cb_AutoUpdate.UseVisualStyleBackColor = true;
+            this.cb_AutoUpdate.CheckedChanged += new System.EventHandler(this.cb_auto_update_CheckedChanged);
             // 
-            // comboBox2
+            // cb_Profile
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.cb_Profile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Profile.FormattingEnabled = true;
+            this.cb_Profile.Items.AddRange(new object[] {
             "선택하세요",
             "=================="});
-            this.comboBox2.Location = new System.Drawing.Point(455, 191);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(180, 20);
-            this.comboBox2.TabIndex = 9;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.cb_profile_list_SelectedIndexChanged);
+            this.cb_Profile.Location = new System.Drawing.Point(455, 191);
+            this.cb_Profile.Name = "cb_Profile";
+            this.cb_Profile.Size = new System.Drawing.Size(180, 20);
+            this.cb_Profile.TabIndex = 9;
             // 
-            // button1
+            // btn_Preferences
             // 
-            this.button1.Location = new System.Drawing.Point(338, 70);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 22);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "MC환경설정";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.bt_MCpreference_Click);
+            this.btn_Preferences.Location = new System.Drawing.Point(338, 70);
+            this.btn_Preferences.Name = "btn_Preferences";
+            this.btn_Preferences.Size = new System.Drawing.Size(94, 22);
+            this.btn_Preferences.TabIndex = 10;
+            this.btn_Preferences.Text = "런처 환경설정";
+            this.btn_Preferences.UseVisualStyleBackColor = true;
+            this.btn_Preferences.Click += new System.EventHandler(this.btn_Preferences_Click);
+            // 
+            // txt_Detail
+            // 
+            this.txt_Detail.Location = new System.Drawing.Point(0, 209);
+            this.txt_Detail.Multiline = true;
+            this.txt_Detail.Name = "txt_Detail";
+            this.txt_Detail.ReadOnly = true;
+            this.txt_Detail.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txt_Detail.Size = new System.Drawing.Size(297, 88);
+            this.txt_Detail.TabIndex = 11;
             // 
             // BSL_Main
             // 
@@ -203,12 +202,12 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(648, 317);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.txt_Detail);
+            this.Controls.Add(this.btn_Preferences);
+            this.Controls.Add(this.cb_Profile);
+            this.Controls.Add(this.cb_AutoUpdate);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pb_Load);
             this.Controls.Add(this.cb_Version);
             this.Controls.Add(this.btn_Launch);
             this.Controls.Add(this.wb_PackNews);
@@ -242,11 +241,11 @@
         private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mC환경설정ToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar pb_Load;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox cb_AutoUpdate;
+        private System.Windows.Forms.ComboBox cb_Profile;
+        private System.Windows.Forms.Button btn_Preferences;
+        private System.Windows.Forms.TextBox txt_Detail;
     }
 }

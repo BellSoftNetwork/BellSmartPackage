@@ -574,7 +574,12 @@ namespace BellLib.Class
             return null;
         }
 
-
+        /// <summary>
+        /// 선택된 팩 정보를 바탕으로 저장된 정보를 반환합니다.
+        /// </summary>
+        /// <param name="pt">팩 타입</param>
+        /// <param name="Name">반환 요청 정보</param>
+        /// <returns>저장된 정보</returns>
         public string GetInfo(PackType pt, string Name)
         {
             Name = "_" + Name;
@@ -595,6 +600,12 @@ namespace BellLib.Class
             return null;
         }
 
+        /// <summary>
+        /// 선택한 팩 정보를 바탕으로 설치 정보를 반환합니다.
+        /// </summary>
+        /// <param name="pt">팩 타입</param>
+        /// <param name="Name">필요한 설치정보값</param>
+        /// <returns>설치 정보 값</returns>
         public string GetInstallInfo(PackType pt, string Name)
         {
             try
@@ -615,6 +626,12 @@ namespace BellLib.Class
             return null;
         }
 
+        /// <summary>
+        /// 선택한 팩 정보를 바탕으로 설치 정보배열을 반환합니다.
+        /// </summary>
+        /// <param name="pt">팩 타입</param>
+        /// <param name="Name">필요한 설치정보값</param>
+        /// <returns>설치 정보값 배열</returns>
         public string[] GetInstallData(PackType pt, string Name)
         {
             switch (pt)
