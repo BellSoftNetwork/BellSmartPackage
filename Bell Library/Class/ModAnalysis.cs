@@ -751,7 +751,7 @@ namespace BellLib.Class
             switch (Pack)
             {
                 case Type.ModPack:
-                    XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\ModPack\\" + UID + ".xml", Encoding.UTF8);
                     XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
                     XTW.WriteStartDocument(); // XML 문서 시작
                     XTW.WriteStartElement(UID); // UID 엘리먼트 시작
@@ -777,7 +777,7 @@ namespace BellLib.Class
                     break;
 
                 case Type.BasePack:
-                    XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\BasePack\\" + UID + ".xml", Encoding.UTF8);
                     XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
                     XTW.WriteStartDocument(); // XML 문서 시작
                     XTW.WriteStartElement(UID); // UID 엘리먼트 시작
@@ -799,7 +799,7 @@ namespace BellLib.Class
                     break;
 
                 case Type.OptionPack:
-                    XTW = new XmlTextWriter(User.BSN_Path + UID + ".xml", Encoding.UTF8);
+                    XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\OptionPack\\" + UID + ".xml", Encoding.UTF8);
                     XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
                     XTW.WriteStartDocument(); // XML 문서 시작
                     XTW.WriteStartElement(UID); // UID 엘리먼트 시작
@@ -821,8 +821,8 @@ namespace BellLib.Class
                     break;
             }
         }
-
-        /// <summary>
+        // 젠장 똑같은 기능의 메서드를 이름만 바꿔서 만들었었잖아!
+        /*/// <summary>
         /// 모드팩 버전 설치정보를 기록합니다.
         /// </summary>
         /// <param name="Version">작성 버전</param>
@@ -834,7 +834,7 @@ namespace BellLib.Class
         {
             if (Pack != Type.ModPack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -875,7 +875,7 @@ namespace BellLib.Class
         {
             if (Pack != Type.BasePack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\BasePack\\Version\\" + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -912,7 +912,7 @@ namespace BellLib.Class
         {
             if (Pack != Type.OptionPack) // 혹시 모를 실수에 대비해 설정팩이 모드팩이 아닐경우 중단.
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\OptionPack\\Version\\" + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -946,7 +946,7 @@ namespace BellLib.Class
             XTW.WriteEndDocument();
             XTW.Flush();
             XTW.Close();
-        }
+        }*/
 
         /// <summary>
         /// List 배열값을 바탕으로 PackList.xml 파일을 생성합니다.
@@ -959,7 +959,7 @@ namespace BellLib.Class
               <Pack>BellCraft8</Pack>
               <Pack>FTB</Pack>
             </List>*/// 모드팩, 베이스팩, 옵션팩 리스트.xml구조는 전부 위와 같음.
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + "PackList.xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\PackList.xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented; // 파일 기록시 자동으로 들여씀
             XTW.WriteStartDocument();
             XTW.WriteStartElement("List");
@@ -984,7 +984,7 @@ namespace BellLib.Class
         {
             if (Pack != Type.ModPack)
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented;
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -1024,7 +1024,7 @@ namespace BellLib.Class
         {
             if (Pack != Type.BasePack)
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\BasePack\\Version\\" + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented;
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);
@@ -1060,7 +1060,7 @@ namespace BellLib.Class
         {
             if (Pack != Type.OptionPack)
                 return;
-            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Path + UID + " " + Version + ".xml", Encoding.UTF8);
+            XmlTextWriter XTW = new XmlTextWriter(User.BSN_Temp + "BSU\\Data\\OptionPack\\Version\\" + Version + ".xml", Encoding.UTF8);
             XTW.Formatting = Formatting.Indented;
             XTW.WriteStartDocument();
             XTW.WriteStartElement(UID);

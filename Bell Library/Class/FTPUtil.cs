@@ -22,7 +22,7 @@ namespace BellLib.Class
 
 
         //ftpUtil 객체를 생성할때 생성자에 인자로 필요한 값들을 넣어준다.
-        public FTPUtil(string ip, string id, string pw, string port)
+        public FTPUtil(string ip, string id, string pw, string port = "21")
         {
             ftpServerIP = ip;   //FTP 서버주소
             ftpUserID = id;     //아이디
@@ -94,7 +94,7 @@ namespace BellLib.Class
             }
             catch
             {
-                Common.Message("FTP 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다.");
+                Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다.");
                 // FTP 서버에 동일파일이 있고, 계정에 삭제권한이 없을때도 이 예외가 발생함.
                 return false;
             }

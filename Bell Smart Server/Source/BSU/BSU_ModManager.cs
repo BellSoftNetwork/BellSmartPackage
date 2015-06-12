@@ -88,6 +88,7 @@ namespace Bell_Smart_Server.Source.BSU
 
                 btn_Base_Set_Click(sender, e);
                 btn_Option_Set_Click(sender, e);
+                btn_Mod_Load_Click(sender, e);
             }
             else
             {
@@ -133,7 +134,10 @@ namespace Bell_Smart_Server.Source.BSU
             }
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
-            Common.Message("XML 작성 성공!");
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", User.BSN_Temp + "BSU\\Data\\ModPack\\" + txt_MUID.Text + ".xml"); // 모드팩 데이터 업로드
+            InitializeMod(); // 다시한번 로드
+            Common.Message("설정값 업로드 성공!");
         }
 
         private void BSU_ModManager_Shown(object sender, EventArgs e)
@@ -286,10 +290,16 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("누락된 정보가 있습니다." + Environment.NewLine + "빠진 값이 없는지 확인해주세요.");
                 return;
             }
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text);
-            MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
-            MAW.WriteVersionXML((string)lst_Mod_Version.SelectedItem, (string)cb_Mod_Base_Ver.SelectedItem, (string)cb_Mod_Option_Ver.SelectedItem, MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"), MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"));
+            string SetVer = (string)lst_Mod_Version.SelectedItem;
+            string MUID = txt_MUID.Text;
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID);
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID);
+            MAR.LoadMod(SetVer);
+            MAW.WriteInstallXML(SetVer, (string)cb_Mod_Base_Ver.SelectedItem, (string)cb_Mod_Option_Ver.SelectedItem, MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"), MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"));
+            // FTP 서버에 업로드.
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Pack/" + MUID + "/Version/", User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+            Common.Message(SetVer + "버전 설정값 업로드 성공!");
         }
 
         private void btn_Base_Save_Click(object sender, EventArgs e)
@@ -326,6 +336,24 @@ namespace Bell_Smart_Server.Source.BSU
             Common.Message("XML 작성 성공!");
         }
 
+        /// <summary>
+        /// 모드 업로드시 모드팩 정보를 수정하지 못하게 막습니다.
+        /// </summary>
+        /// <param name="value">업로드 진행중 여부</param>
+        private void ModUploading(bool value)
+        {
+            value = !value;
+            btn_Mod_Upload.Enabled = value;
+            btn_Mod_Load.Enabled = value;
+            txt_Mod_Version.Enabled = value;
+            cb_Mod_Base_Upload.Enabled = value;
+            cb_Mod_Option_Upload.Enabled = value;
+            cb_Mod_Latest.Enabled = value;
+            cb_Mod_Recommended.Enabled = value;
+            lst_Mod_File.Enabled = value;
+
+            pb_Mod_Upload.Value = 0;
+        }
         private void btn_Mod_Upload_Click(object sender, EventArgs e)
         {
             bool stop = false;
@@ -337,22 +365,30 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
+            ModUploading(true);
             List<string> list = new List<string>();
             Protection Pro = new Protection();
-            string[] Array = lst_Mod_File.Items.Cast<string>().ToArray();
-            string SetVer = txt_Mod_Version.Text;
-
+            string SetVer = txt_Mod_Version.Text; // 업로드시 설정 버전
+            string MUID = txt_MUID.Text; // MUID
+            string LocalRoot = (string)llb_Mod_Upload.Tag; // 업로드 루트폴더
+            string RequireBase = (string)cb_Mod_Base_Upload.SelectedItem; // 필요 베이스팩 버전
+            string RequireOption = (string)cb_Mod_Option_Upload.SelectedItem; // 필요 옵션팩 버전
+            string[] FileArray = lst_Mod_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
+            string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
+            string[] Hash; // 파일 해시
             // 모드팩 버전.xml 생성
-            foreach (string tmp in Array)
+            foreach (string tmp in FileArray)
             {
-                string Path = (string)llb_Mod_Upload.Tag + tmp;
+                string Path = LocalRoot + tmp;
                 list.Add(tmp + "|" + Pro.MD5Hash(Path));
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text);
-            MAW.WriteInstallXML(SetVer, (string)cb_Mod_Base_Upload.SelectedItem, (string)cb_Mod_Option_Upload.SelectedItem, Common.GetDirectoryArray((string)llb_Mod_Upload.Tag, true), list.ToArray());
-            
+            Hash = list.ToArray();
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID);
+            MAW.WriteInstallXML(SetVer, RequireBase, RequireOption, Directory, Hash);
+            Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+
             // 모드팩.XML 생성
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID);
             if (MAR.Availability())
             {
                 string Name, Latest, Recommended, Base, Option, News, Down;
@@ -377,21 +413,44 @@ namespace Bell_Smart_Server.Source.BSU
                     Latest = SetVer;
                 if (cb_Mod_Recommended.Checked)
                     Recommended = SetVer;
-                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, Name, Latest, Recommended, Base, Option, News, Down, Version.ToArray());
+                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID, Name, Latest, Recommended, Base, Option, News, Down, Version.ToArray());
                 MAW.WriteXML();
             }
             else
             {
-                Common.Message(txt_MUID.Text + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
+                ModUploading(false);
+                Common.Message(MUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
-            
-            // 파일 업로드
-            FTPUtil FTPU = new FTPUtil(BellLib.Data.Base.SERVER_IP, "Bell", "bellpackage", "21");
-            FTPU.MakeDir("Pack/BellCraft8/8.8.0/mods");
-            //FTPU.DeleteFTP("Pack/BellCraft8/8.8.0/mods/b72_1710.jar");
-            FTPU.Upload("Pack/BellCraft8/8.8.0/mods", (string)llb_Mod_Upload.Tag + "mods\\b72_1710.jar");
 
+            FTPUtil FTP_Data = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+            pb_Mod_Upload.Maximum = Directory.Length + FileArray.Length;
+
+            // 디렉토리 생성
+            foreach (string tmp in Directory)
+            {
+                FTP_Data.MakeDir("Pack/" + MUID + "/" + SetVer + "/" + tmp.Replace("\\", "/"));
+                pb_Mod_Upload.PerformStep();
+                Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+            }
+
+            // 파일 업로드
+            foreach (string tmp in FileArray)
+            {
+                // 파일 리스트 배열에 값을 디렉토리, 파일명으로 나눠야됨.
+                FileInfo FI = new FileInfo(LocalRoot + tmp);
+                string FTPDir = FI.DirectoryName.Replace(LocalRoot, string.Empty).Replace(LocalRoot.Substring(0, LocalRoot.Length - 1), string.Empty);
+                FTP_Data.Upload("Pack/" + MUID + "/" + SetVer + "/" + FTPDir, LocalRoot + tmp);
+                pb_Mod_Upload.PerformStep();
+                Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+            }
+
+            // xml 업로드
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Pack/" + MUID + "/", User.BSN_Temp + "BSU\\Data\\ModPack\\" + MUID + ".xml"); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Pack/" + MUID + "/Version/", User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+
+            ModUploading(false); // 업로드 끝
             InitializeMod();
             Common.Message("모드팩이 정상적으로 업로드 되었습니다!");
         }
@@ -557,6 +616,7 @@ namespace Bell_Smart_Server.Source.BSU
         {
             lst_Mod_File.Items.Clear();
             lst_Mod_File.Items.AddRange(Common.GetFileArray((string)llb_Mod_Upload.Tag, true));
+            btn_Mod_Upload.Enabled = true;
         }
 
         private void btn_Base_Load_Click(object sender, EventArgs e)

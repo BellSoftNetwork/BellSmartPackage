@@ -101,6 +101,13 @@
             this.lb_Base_Latest = new System.Windows.Forms.Label();
             this.tp_OptionPack = new System.Windows.Forms.TabPage();
             this.gb_Option_Upload = new System.Windows.Forms.GroupBox();
+            this.btn_Option_Apply = new System.Windows.Forms.Button();
+            this.cb_Option_Default = new System.Windows.Forms.ComboBox();
+            this.lb_Option_Default = new System.Windows.Forms.Label();
+            this.txt_Option_UID = new System.Windows.Forms.TextBox();
+            this.txt_Option_Name = new System.Windows.Forms.TextBox();
+            this.lb_Option_UID = new System.Windows.Forms.Label();
+            this.lb_Option_Name = new System.Windows.Forms.Label();
             this.btn_Option_Load = new System.Windows.Forms.Button();
             this.llb_Option_Upload = new System.Windows.Forms.LinkLabel();
             this.lst_Option_File = new System.Windows.Forms.ListView();
@@ -129,13 +136,6 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
-            this.lb_Option_Name = new System.Windows.Forms.Label();
-            this.lb_Option_UID = new System.Windows.Forms.Label();
-            this.txt_Option_Name = new System.Windows.Forms.TextBox();
-            this.txt_Option_UID = new System.Windows.Forms.TextBox();
-            this.lb_Option_Default = new System.Windows.Forms.Label();
-            this.cb_Option_Default = new System.Windows.Forms.ComboBox();
-            this.btn_Option_Apply = new System.Windows.Forms.Button();
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.gb_Mod_Upload.SuspendLayout();
@@ -260,6 +260,7 @@
             // 
             // btn_Mod_Upload
             // 
+            this.btn_Mod_Upload.Enabled = false;
             this.btn_Mod_Upload.Location = new System.Drawing.Point(159, 130);
             this.btn_Mod_Upload.Name = "btn_Mod_Upload";
             this.btn_Mod_Upload.Size = new System.Drawing.Size(75, 23);
@@ -307,6 +308,7 @@
             this.pb_Mod_Upload.Location = new System.Drawing.Point(3, 159);
             this.pb_Mod_Upload.Name = "pb_Mod_Upload";
             this.pb_Mod_Upload.Size = new System.Drawing.Size(806, 14);
+            this.pb_Mod_Upload.Step = 1;
             this.pb_Mod_Upload.TabIndex = 3;
             // 
             // lst_Mod_File
@@ -914,6 +916,76 @@
             this.gb_Option_Upload.TabStop = false;
             this.gb_Option_Upload.Text = "업로드";
             // 
+            // btn_Option_Apply
+            // 
+            this.btn_Option_Apply.Enabled = false;
+            this.btn_Option_Apply.Location = new System.Drawing.Point(162, 180);
+            this.btn_Option_Apply.Name = "btn_Option_Apply";
+            this.btn_Option_Apply.Size = new System.Drawing.Size(75, 23);
+            this.btn_Option_Apply.TabIndex = 36;
+            this.btn_Option_Apply.Text = "적용";
+            this.btn_Option_Apply.UseVisualStyleBackColor = true;
+            this.btn_Option_Apply.Click += new System.EventHandler(this.btn_Option_Apply_Click);
+            // 
+            // cb_Option_Default
+            // 
+            this.cb_Option_Default.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Option_Default.Enabled = false;
+            this.cb_Option_Default.FormattingEnabled = true;
+            this.cb_Option_Default.Items.AddRange(new object[] {
+            "true",
+            "false"});
+            this.cb_Option_Default.Location = new System.Drawing.Point(59, 154);
+            this.cb_Option_Default.Name = "cb_Option_Default";
+            this.cb_Option_Default.Size = new System.Drawing.Size(178, 20);
+            this.cb_Option_Default.TabIndex = 35;
+            this.cb_Option_Default.SelectedIndexChanged += new System.EventHandler(this.cb_Option_Default_SelectedIndexChanged);
+            // 
+            // lb_Option_Default
+            // 
+            this.lb_Option_Default.AutoSize = true;
+            this.lb_Option_Default.Location = new System.Drawing.Point(1, 157);
+            this.lb_Option_Default.Name = "lb_Option_Default";
+            this.lb_Option_Default.Size = new System.Drawing.Size(53, 12);
+            this.lb_Option_Default.TabIndex = 34;
+            this.lb_Option_Default.Text = "기본설치";
+            // 
+            // txt_Option_UID
+            // 
+            this.txt_Option_UID.Enabled = false;
+            this.txt_Option_UID.Location = new System.Drawing.Point(59, 130);
+            this.txt_Option_UID.Name = "txt_Option_UID";
+            this.txt_Option_UID.Size = new System.Drawing.Size(178, 21);
+            this.txt_Option_UID.TabIndex = 33;
+            this.txt_Option_UID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Option_UID_KeyDown);
+            // 
+            // txt_Option_Name
+            // 
+            this.txt_Option_Name.Enabled = false;
+            this.txt_Option_Name.Location = new System.Drawing.Point(59, 107);
+            this.txt_Option_Name.Name = "txt_Option_Name";
+            this.txt_Option_Name.Size = new System.Drawing.Size(178, 21);
+            this.txt_Option_Name.TabIndex = 32;
+            this.txt_Option_Name.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Option_Name_KeyDown);
+            // 
+            // lb_Option_UID
+            // 
+            this.lb_Option_UID.AutoSize = true;
+            this.lb_Option_UID.Location = new System.Drawing.Point(21, 133);
+            this.lb_Option_UID.Name = "lb_Option_UID";
+            this.lb_Option_UID.Size = new System.Drawing.Size(32, 12);
+            this.lb_Option_UID.TabIndex = 31;
+            this.lb_Option_UID.Text = "UID :";
+            // 
+            // lb_Option_Name
+            // 
+            this.lb_Option_Name.AutoSize = true;
+            this.lb_Option_Name.Location = new System.Drawing.Point(16, 110);
+            this.lb_Option_Name.Name = "lb_Option_Name";
+            this.lb_Option_Name.Size = new System.Drawing.Size(37, 12);
+            this.lb_Option_Name.TabIndex = 30;
+            this.lb_Option_Name.Text = "이름 :";
+            // 
             // btn_Option_Load
             // 
             this.btn_Option_Load.Location = new System.Drawing.Point(700, 12);
@@ -1173,76 +1245,6 @@
             this.lb_Option_Latest.Size = new System.Drawing.Size(61, 12);
             this.lb_Option_Latest.TabIndex = 2;
             this.lb_Option_Latest.Text = "최신버전 :";
-            // 
-            // lb_Option_Name
-            // 
-            this.lb_Option_Name.AutoSize = true;
-            this.lb_Option_Name.Location = new System.Drawing.Point(16, 110);
-            this.lb_Option_Name.Name = "lb_Option_Name";
-            this.lb_Option_Name.Size = new System.Drawing.Size(37, 12);
-            this.lb_Option_Name.TabIndex = 30;
-            this.lb_Option_Name.Text = "이름 :";
-            // 
-            // lb_Option_UID
-            // 
-            this.lb_Option_UID.AutoSize = true;
-            this.lb_Option_UID.Location = new System.Drawing.Point(21, 133);
-            this.lb_Option_UID.Name = "lb_Option_UID";
-            this.lb_Option_UID.Size = new System.Drawing.Size(32, 12);
-            this.lb_Option_UID.TabIndex = 31;
-            this.lb_Option_UID.Text = "UID :";
-            // 
-            // txt_Option_Name
-            // 
-            this.txt_Option_Name.Enabled = false;
-            this.txt_Option_Name.Location = new System.Drawing.Point(59, 107);
-            this.txt_Option_Name.Name = "txt_Option_Name";
-            this.txt_Option_Name.Size = new System.Drawing.Size(178, 21);
-            this.txt_Option_Name.TabIndex = 32;
-            this.txt_Option_Name.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Option_Name_KeyDown);
-            // 
-            // txt_Option_UID
-            // 
-            this.txt_Option_UID.Enabled = false;
-            this.txt_Option_UID.Location = new System.Drawing.Point(59, 130);
-            this.txt_Option_UID.Name = "txt_Option_UID";
-            this.txt_Option_UID.Size = new System.Drawing.Size(178, 21);
-            this.txt_Option_UID.TabIndex = 33;
-            this.txt_Option_UID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Option_UID_KeyDown);
-            // 
-            // lb_Option_Default
-            // 
-            this.lb_Option_Default.AutoSize = true;
-            this.lb_Option_Default.Location = new System.Drawing.Point(1, 157);
-            this.lb_Option_Default.Name = "lb_Option_Default";
-            this.lb_Option_Default.Size = new System.Drawing.Size(53, 12);
-            this.lb_Option_Default.TabIndex = 34;
-            this.lb_Option_Default.Text = "기본설치";
-            // 
-            // cb_Option_Default
-            // 
-            this.cb_Option_Default.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_Option_Default.Enabled = false;
-            this.cb_Option_Default.FormattingEnabled = true;
-            this.cb_Option_Default.Items.AddRange(new object[] {
-            "true",
-            "false"});
-            this.cb_Option_Default.Location = new System.Drawing.Point(59, 154);
-            this.cb_Option_Default.Name = "cb_Option_Default";
-            this.cb_Option_Default.Size = new System.Drawing.Size(178, 20);
-            this.cb_Option_Default.TabIndex = 35;
-            this.cb_Option_Default.SelectedIndexChanged += new System.EventHandler(this.cb_Option_Default_SelectedIndexChanged);
-            // 
-            // btn_Option_Apply
-            // 
-            this.btn_Option_Apply.Enabled = false;
-            this.btn_Option_Apply.Location = new System.Drawing.Point(162, 180);
-            this.btn_Option_Apply.Name = "btn_Option_Apply";
-            this.btn_Option_Apply.Size = new System.Drawing.Size(75, 23);
-            this.btn_Option_Apply.TabIndex = 36;
-            this.btn_Option_Apply.Text = "적용";
-            this.btn_Option_Apply.UseVisualStyleBackColor = true;
-            this.btn_Option_Apply.Click += new System.EventHandler(this.btn_Option_Apply_Click);
             // 
             // BSU_ModManager
             // 
