@@ -134,6 +134,8 @@ namespace Bell_Smart_Server.Source.BSU
             }
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
+            
+            // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
             FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", User.BSN_Temp + "BSU\\Data\\ModPack\\" + txt_MUID.Text + ".xml"); // 모드팩 데이터 업로드
             InitializeMod(); // 다시한번 로드
@@ -204,6 +206,8 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Base_Info.Enabled = false;
                 gb_Base_Setting.Enabled = true;
                 gb_Base_Upload.Enabled = true;
+
+                btn_Base_Load_Click(sender, e);
             }
             else
             {
@@ -238,6 +242,8 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Option_Info.Enabled = false;
                 gb_Option_Setting.Enabled = true;
                 gb_Option_Upload.Enabled = true;
+
+                btn_Option_Load_Click(sender, e);
             }
             else
             {
@@ -316,7 +322,12 @@ namespace Bell_Smart_Server.Source.BSU
             }
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
-            Common.Message("XML 작성 성공!");
+
+            // FTP서버에 정보 업로드
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Base/" + txt_BUID.Text + "/", User.BSN_Temp + "BSU\\Data\\BasePack\\" + txt_BUID.Text + ".xml"); // 베이스팩 데이터 업로드
+            InitializeBase(); // 다시한번 로드
+            Common.Message("설정값 업로드 성공!");
         }
 
         private void btn_Option_Save_Click(object sender, EventArgs e)
@@ -333,7 +344,12 @@ namespace Bell_Smart_Server.Source.BSU
             }
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
-            Common.Message("XML 작성 성공!");
+
+            // FTP서버에 정보 업로드
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Option/" + txt_OUID.Text + "/", User.BSN_Temp + "BSU\\Data\\OptionPack\\" + txt_OUID.Text + ".xml"); // 옵션팩 데이터 업로드
+            InitializeOption(); // 다시한번 로드
+            Common.Message("설정값 업로드 성공!");
         }
 
         /// <summary>
@@ -451,10 +467,25 @@ namespace Bell_Smart_Server.Source.BSU
             FTP_Info.Upload("Pack/" + MUID + "/Version/", User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
 
             ModUploading(false); // 업로드 끝
+            txt_Mod_Version.Text = string.Empty;
+            cb_Mod_Latest.Checked = false;
+            cb_Mod_Recommended.Checked = false;
             InitializeMod();
             Common.Message("모드팩이 정상적으로 업로드 되었습니다!");
         }
 
+        private void BaseUploading(bool value)
+        {
+            value = !value;
+            btn_Base_Upload.Enabled = value;
+            btn_Base_Load.Enabled = value;
+            txt_Base_Version.Enabled = value;
+            cb_Base_Latest.Enabled = value;
+            cb_Base_Recommended.Enabled = value;
+            lst_Base_File.Enabled = value;
+
+            pb_Base_Upload.Value = 0;
+        }
         private void btn_Base_Upload_Click(object sender, EventArgs e)
         {
             bool stop = false;
@@ -464,22 +495,28 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
+            BaseUploading(true);
             List<string> list = new List<string>();
             Protection Pro = new Protection();
-            string[] Array = lst_Base_File.Items.Cast<string>().ToArray();
-            string SetVer = txt_Base_Version.Text;
+            string[] FileArray = lst_Base_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
+            string SetVer = txt_Base_Version.Text; // 업로드시 설정버전
+            string BUID = txt_BUID.Text; // BUID
+            string LocalRoot = (string)llb_Base_Upload.Tag; // 업로드 루트폴더
+            string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
+            string[] Hash; // 파일 해시
 
             // 베이스팩 버전.xml 생성
-            foreach (string tmp in Array)
+            foreach (string tmp in FileArray)
             {
-                string Path = (string)llb_Base_Upload.Tag + tmp;
+                string Path = LocalRoot + tmp;
                 list.Add(tmp + "|" + Pro.MD5Hash(Path));
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text);
-            MAW.WriteInstallXML(txt_Base_Version.Text, Common.GetDirectoryArray((string)llb_Base_Upload.Tag, true), list.ToArray());
+            Hash = list.ToArray();
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, BUID);
+            MAW.WriteInstallXML(SetVer, Directory, Hash);
             
             // 베이스팩.XML 생성
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, txt_BUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, BUID);
             if (MAR.Availability())
             {
                 string Latest, Recommended, Down;
@@ -500,19 +537,69 @@ namespace Bell_Smart_Server.Source.BSU
                     Latest = SetVer;
                 if (cb_Base_Recommended.Checked)
                     Recommended = SetVer;
-                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text, Latest, Recommended, Down, Version.ToArray());
+                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, BUID, Latest, Recommended, Down, Version.ToArray());
                 MAW.WriteXML();
             }
             else
             {
-                Common.Message(txt_BUID.Text + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
+                BaseUploading(false);
+                Common.Message(BUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
+
             // 파일 업로드
-            InitializeBase();
+            FTPUtil FTP_Data = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+            pb_Base_Upload.Maximum = Directory.Length + FileArray.Length;
+
+            // 디렉토리 생성
+            foreach (string tmp in Directory)
+            {
+                FTP_Data.MakeDir("Base/" + BUID + "/" + SetVer + "/" + tmp.Replace("\\", "/"));
+                pb_Base_Upload.PerformStep();
+                Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+            }
+
+            // 파일 업로드
+            foreach (string tmp in FileArray)
+            {
+                // 파일 리스트 배열에 값을 디렉토리, 파일명으로 나눠야됨.
+                FileInfo FI = new FileInfo(LocalRoot + tmp);
+                string FTPDir = FI.DirectoryName.Replace(LocalRoot, string.Empty).Replace(LocalRoot.Substring(0, LocalRoot.Length - 1), string.Empty);
+                FTP_Data.Upload("Base/" + BUID + "/" + SetVer + "/" + FTPDir, LocalRoot + tmp);
+                pb_Base_Upload.PerformStep();
+                Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+            }
+
+            // xml 업로드
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Base/" + BUID + "/", User.BSN_Temp + "BSU\\Data\\BasePack\\" + BUID + ".xml"); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Base/" + BUID + "/Version/", User.BSN_Temp + "BSU\\Data\\BasePack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+
+            BaseUploading(false); // 업로드 끝
+            txt_Base_Version.Text = string.Empty;
+            cb_Base_Latest.Checked = false;
+            cb_Base_Recommended.Checked = false;
+            InitializeBase(); // 화면 새로고침
             Common.Message("베이스팩이 정상적으로 업로드 되었습니다!");
         }
 
+        private void OptionUploading(bool value)
+        {
+            value = !value;
+            btn_Option_Upload.Enabled = value;
+            btn_Option_Load.Enabled = value;
+            txt_Option_Version.Enabled = value;
+            cb_Option_Latest.Enabled = value;
+            cb_Option_Recommended.Enabled = value;
+            lst_Option_File.Enabled = value;
+
+            txt_Option_Name.Enabled = false;
+            txt_Option_UID.Enabled = false;
+            cb_Option_Default.Enabled = false;
+            btn_Option_Apply.Enabled = false;
+
+            pb_Option_Upload.Value = 0;
+        }
         private void btn_Option_Upload_Click(object sender, EventArgs e)
         {
             bool stop = false;
@@ -522,27 +609,36 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
+            OptionUploading(true);
             List<string> Option = new List<string>();
             List<string> Hash = new List<string>();
+            List<string> File = new List<string>();
             Protection Pro = new Protection();
             string SetVer = txt_Option_Version.Text;
+            string[] FileArray; // = lst_Option_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
+            string OUID = txt_OUID.Text; // OUID
+            string LocalRoot = (string)llb_Option_Upload.Tag; // 업로드 루트폴더
+            string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
 
             // 옵션팩 버전.xml 생성
             foreach (ListViewItem item in lst_Option_File.Items)
             {
                 if (item.SubItems[0].Text == string.Empty || item.SubItems[1].Text == string.Empty || item.SubItems[2].Text == string.Empty || item.SubItems[3].Text == string.Empty)
                 {
+                    OptionUploading(false);
                     Common.Message("옵션파일 상세리스트 모든 필드에 값을 입력해 주세요.");
                     return;
                 }
                 Option.Add(item.SubItems[0].Text + "|" + item.SubItems[1].Text + "|" + item.SubItems[2].Text);
-                Hash.Add(item.SubItems[0].Text + "|" + item.SubItems[3].Text + "|" + Pro.MD5Hash(llb_Option_Upload.Tag + item.SubItems[3].Text));
+                Hash.Add(item.SubItems[0].Text + "|" + item.SubItems[3].Text + "|" + Pro.MD5Hash(LocalRoot + item.SubItems[3].Text));
+                File.Add(item.SubItems[3].Text);
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text);
-            MAW.WriteInstallXML(txt_Option_Version.Text, Option.ToArray(), Common.GetDirectoryArray((string)llb_Option_Upload.Tag, true), Hash.ToArray());
+            FileArray = File.ToArray();
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, OUID);
+            MAW.WriteInstallXML(SetVer, Option.ToArray(), Directory, Hash.ToArray());
             
             // 옵션팩.XML 생성
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, txt_OUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, OUID);
             if (MAR.Availability())
             {
                 string Latest, Recommended, Down;
@@ -563,16 +659,49 @@ namespace Bell_Smart_Server.Source.BSU
                     Latest = SetVer;
                 if (cb_Option_Recommended.Checked)
                     Recommended = SetVer;
-                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text, Latest, Recommended, Down, Version.ToArray());
+                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, OUID, Latest, Recommended, Down, Version.ToArray());
                 MAW.WriteXML();
             }
             else
             {
-                Common.Message(txt_OUID.Text + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
+                OptionUploading(false);
+                Common.Message(OUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
+
             // 파일 업로드
-            InitializeOption();
+            FTPUtil FTP_Data = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+            pb_Option_Upload.Maximum = Directory.Length + FileArray.Length;
+
+            // 디렉토리 생성
+            foreach (string tmp in Directory)
+            {
+                FTP_Data.MakeDir("Option/" + OUID + "/" + SetVer + "/" + tmp.Replace("\\", "/"));
+                pb_Option_Upload.PerformStep();
+                Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+            }
+
+            // 파일 업로드
+            foreach (string tmp in FileArray)
+            {
+                // 파일 리스트 배열에 값을 디렉토리, 파일명으로 나눠야됨.
+                FileInfo FI = new FileInfo(LocalRoot + tmp);
+                string FTPDir = FI.DirectoryName.Replace(LocalRoot, string.Empty).Replace(LocalRoot.Substring(0, LocalRoot.Length - 1), string.Empty);
+                FTP_Data.Upload("Option/" + OUID + "/" + SetVer + "/" + FTPDir, LocalRoot + tmp);
+                pb_Option_Upload.PerformStep();
+                Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
+            }
+
+            // xml 업로드
+            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTP_Info.Upload("Option/" + OUID + "/", User.BSN_Temp + "BSU\\Data\\OptionPack\\" + OUID + ".xml"); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Option/" + OUID + "/Version/", User.BSN_Temp + "BSU\\Data\\OptionPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+
+            OptionUploading(false); // 업로드 끝
+            txt_Option_Version.Text = string.Empty;
+            cb_Option_Latest.Checked = false;
+            cb_Option_Recommended.Checked = false;
+            InitializeOption(); // 화면 새로고침
             Common.Message("옵션팩이 정상적으로 업로드 되었습니다!");
         }
 
@@ -623,6 +752,8 @@ namespace Bell_Smart_Server.Source.BSU
         {
             lst_Base_File.Items.Clear();
             lst_Base_File.Items.AddRange(Common.GetFileArray((string)llb_Base_Upload.Tag, true));
+
+            btn_Base_Upload.Enabled = true;
         }
 
         private void btn_Option_Load_Click(object sender, EventArgs e)
@@ -681,6 +812,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             foreach (ListViewItem item in col)
                 item.SubItems[0].Text = txt_Option_Name.Text;
+            txt_Option_Name.Text = string.Empty;
         }
 
         private void txt_Option_UID_KeyDown(object sender, KeyEventArgs e)
@@ -691,6 +823,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             foreach (ListViewItem item in col)
                 item.SubItems[1].Text = txt_Option_UID.Text;
+            txt_Option_UID.Text = string.Empty;
         }
 
         private void cb_Option_Default_SelectedIndexChanged(object sender, EventArgs e)
@@ -703,14 +836,21 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_Option_Apply_Click(object sender, EventArgs e)
         {
+            if (txt_Option_UID.Text == string.Empty || txt_Option_Name.Text == string.Empty)
+            {
+                Common.Message("필드에 누락된 값이 있습니다.");
+                return;
+            }
             ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;
-
+            
             foreach (ListViewItem item in col)
             {
                 item.SubItems[0].Text = txt_Option_Name.Text;
                 item.SubItems[1].Text = txt_Option_UID.Text;
                 item.SubItems[2].Text = (string)cb_Option_Default.SelectedItem;
             }
+            txt_Option_Name.Text = string.Empty;
+            txt_Option_UID.Text = string.Empty;
         }
     }
 }

@@ -665,6 +665,7 @@
             // 
             // btn_Base_Upload
             // 
+            this.btn_Base_Upload.Enabled = false;
             this.btn_Base_Upload.Location = new System.Drawing.Point(162, 190);
             this.btn_Base_Upload.Name = "btn_Base_Upload";
             this.btn_Base_Upload.Size = new System.Drawing.Size(75, 23);
@@ -712,6 +713,7 @@
             this.pb_Base_Upload.Location = new System.Drawing.Point(3, 219);
             this.pb_Base_Upload.Name = "pb_Base_Upload";
             this.pb_Base_Upload.Size = new System.Drawing.Size(806, 14);
+            this.pb_Base_Upload.Step = 1;
             this.pb_Base_Upload.TabIndex = 11;
             // 
             // lst_Base_File
@@ -1093,6 +1095,7 @@
             this.pb_Option_Upload.Location = new System.Drawing.Point(3, 219);
             this.pb_Option_Upload.Name = "pb_Option_Upload";
             this.pb_Option_Upload.Size = new System.Drawing.Size(806, 14);
+            this.pb_Option_Upload.Step = 1;
             this.pb_Option_Upload.TabIndex = 11;
             // 
             // lb_Option_Version
