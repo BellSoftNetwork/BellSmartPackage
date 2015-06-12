@@ -53,14 +53,35 @@ namespace Bell_Smart_Tools.Source.BSL
 
         }
 
-        private void lb_Click(object sender, EventArgs e)
+        private void lb_modlist_Click(object sender, EventArgs e)
+        {
+
+        }
+        //밑에있는게 뭐였는지 까먹음 ㅋㅋㅋㅋㅋ 혹시나 알게되면 주석좀 달아봐 by UI관계자
+        private void pb_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void pb_Click(object sender, EventArgs e)
+        private void lb_status_log_lable_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cb_auto_update_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cb_profile_list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt_MCpreference_Click(object sender, EventArgs e)
+        {
+            BSL_Preferences BSLP = new BSL_Preferences();
+            BSLP.ShowDialog();
         }
 
     }
