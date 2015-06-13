@@ -80,21 +80,22 @@
             this.txt_ID.Location = new System.Drawing.Point(127, 47);
             this.txt_ID.Name = "txt_ID";
             this.txt_ID.Size = new System.Drawing.Size(253, 21);
-            this.txt_ID.TabIndex = 3;
+            this.txt_ID.TabIndex = 1;
             // 
             // txt_PW
             // 
             this.txt_PW.Location = new System.Drawing.Point(127, 74);
             this.txt_PW.Name = "txt_PW";
+            this.txt_PW.PasswordChar = '*';
             this.txt_PW.Size = new System.Drawing.Size(253, 21);
-            this.txt_PW.TabIndex = 4;
+            this.txt_PW.TabIndex = 2;
             // 
             // txt_Name
             // 
             this.txt_Name.Location = new System.Drawing.Point(127, 20);
             this.txt_Name.Name = "txt_Name";
             this.txt_Name.Size = new System.Drawing.Size(253, 21);
-            this.txt_Name.TabIndex = 5;
+            this.txt_Name.TabIndex = 0;
             // 
             // cb_SavePW
             // 
@@ -104,7 +105,7 @@
             this.cb_SavePW.Location = new System.Drawing.Point(127, 101);
             this.cb_SavePW.Name = "cb_SavePW";
             this.cb_SavePW.Size = new System.Drawing.Size(100, 16);
-            this.cb_SavePW.TabIndex = 6;
+            this.cb_SavePW.TabIndex = 3;
             this.cb_SavePW.Text = "비밀번호 저장";
             this.cb_SavePW.UseVisualStyleBackColor = true;
             this.cb_SavePW.CheckedChanged += new System.EventHandler(this.cb_SavePW_CheckedChanged);
@@ -117,6 +118,7 @@
             this.btn_Save.TabIndex = 7;
             this.btn_Save.Text = "저장";
             this.btn_Save.UseVisualStyleBackColor = true;
+            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
             // btn_Delete
             // 
@@ -126,6 +128,7 @@
             this.btn_Delete.TabIndex = 8;
             this.btn_Delete.Text = "삭제";
             this.btn_Delete.UseVisualStyleBackColor = true;
+            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
             // 
             // gb_Info
             // 
@@ -162,7 +165,7 @@
             this.txt_Parameter.Name = "txt_Parameter";
             this.txt_Parameter.ReadOnly = true;
             this.txt_Parameter.Size = new System.Drawing.Size(312, 21);
-            this.txt_Parameter.TabIndex = 3;
+            this.txt_Parameter.TabIndex = 7;
             // 
             // txt_Java
             // 
@@ -170,7 +173,7 @@
             this.txt_Java.Name = "txt_Java";
             this.txt_Java.ReadOnly = true;
             this.txt_Java.Size = new System.Drawing.Size(312, 21);
-            this.txt_Java.TabIndex = 2;
+            this.txt_Java.TabIndex = 5;
             // 
             // cb_Parameter
             // 
@@ -178,7 +181,7 @@
             this.cb_Parameter.Location = new System.Drawing.Point(6, 44);
             this.cb_Parameter.Name = "cb_Parameter";
             this.cb_Parameter.Size = new System.Drawing.Size(56, 16);
-            this.cb_Parameter.TabIndex = 1;
+            this.cb_Parameter.TabIndex = 6;
             this.cb_Parameter.Text = "인자 :";
             this.cb_Parameter.UseVisualStyleBackColor = true;
             this.cb_Parameter.CheckedChanged += new System.EventHandler(this.cb_Parameter_CheckedChanged);
@@ -189,7 +192,7 @@
             this.cb_Java.Location = new System.Drawing.Point(6, 20);
             this.cb_Java.Name = "cb_Java";
             this.cb_Java.Size = new System.Drawing.Size(56, 16);
-            this.cb_Java.TabIndex = 0;
+            this.cb_Java.TabIndex = 4;
             this.cb_Java.Text = "실행 :";
             this.cb_Java.UseVisualStyleBackColor = true;
             this.cb_Java.CheckedChanged += new System.EventHandler(this.cb_Java_CheckedChanged);

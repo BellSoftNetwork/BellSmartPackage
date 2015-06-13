@@ -83,7 +83,7 @@ namespace Bell_Smart_Tools.Source.BSL
             //PathPack = User.BSL_Root + "";
             string Parameter = null;
             string strTemp;
-            StringBuilder sb = new StringBuilder("java", 1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
+            StringBuilder sb = new StringBuilder("C:\\Program Files\\Java\\jre1.8.0_45\\bin\\java.exe", 1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
 
             sb.Append(" ");
@@ -127,6 +127,7 @@ namespace Bell_Smart_Tools.Source.BSL
             try
             {
                 Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
+                Common.Message(strTemp);
                 Process.Start(strTemp);
                 //Shell(strTemp, AppWinStyle.NormalFocus);
                 /*BC_PID = Interaction.Shell(strTemp, AppWinStyle.NormalFocus);
@@ -227,7 +228,7 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void btn_Launch_Click(object sender, EventArgs e)
         {
-            Enjoy(User.BSL_Root + "BellCraft\\Package\\", User.BSL_Root + "BellCraft");
+            Enjoy(User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\");
         }
         private void btn_Preferences_Click(object sender, EventArgs e)
         {
@@ -256,7 +257,7 @@ namespace Bell_Smart_Tools.Source.BSL
         private void btn_Edit_Click(object sender, EventArgs e)
         {
             // 프로필 에디터에 선택 프로필 값 전달해줌.
-            BSL_Profile BSLP = new BSL_Profile();
+            BSL_Profile BSLP = new BSL_Profile((string)cb_Profile.SelectedItem);
             BSLP.ShowDialog();
         }
     }
