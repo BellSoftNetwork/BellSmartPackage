@@ -133,11 +133,13 @@ namespace Bell_Smart_Server.Source.BSU
                 return;
             }
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + txt_MUID.Text + ".xml";
             MAW.WriteXML();
             
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", User.BSN_Temp + "BSU\\Data\\ModPack\\" + txt_MUID.Text + ".xml"); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", xmlPath); // 모드팩 데이터 업로드
+            File.Delete(xmlPath); // xml 파일 삭제
             InitializeMod(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
         }
@@ -298,13 +300,15 @@ namespace Bell_Smart_Server.Source.BSU
             }
             string SetVer = (string)lst_Mod_Version.SelectedItem;
             string MUID = txt_MUID.Text;
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml";
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID);
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID);
             MAR.LoadMod(SetVer);
             MAW.WriteInstallXML(SetVer, (string)cb_Mod_Base_Ver.SelectedItem, (string)cb_Mod_Option_Ver.SelectedItem, MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"), MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"));
             // FTP 서버에 업로드.
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Pack/" + MUID + "/Version/", User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+            FTP_Info.Upload("Pack/" + MUID + "/Version/", xmlPath); // 버전 데이터 업로드
+            File.Delete(xmlPath); // 로컬 버전 데이터 삭제
             Common.Message(SetVer + "버전 설정값 업로드 성공!");
         }
 
@@ -325,7 +329,9 @@ namespace Bell_Smart_Server.Source.BSU
 
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Base/" + txt_BUID.Text + "/", User.BSN_Temp + "BSU\\Data\\BasePack\\" + txt_BUID.Text + ".xml"); // 베이스팩 데이터 업로드
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + txt_BUID.Text + ".xml";
+            FTP_Info.Upload("Base/" + txt_BUID.Text + "/", xmlPath); // 베이스팩 데이터 업로드
+            File.Delete(xmlPath); // xml 삭제
             InitializeBase(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
         }
@@ -347,7 +353,10 @@ namespace Bell_Smart_Server.Source.BSU
 
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Option/" + txt_OUID.Text + "/", User.BSN_Temp + "BSU\\Data\\OptionPack\\" + txt_OUID.Text + ".xml"); // 옵션팩 데이터 업로드
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + txt_OUID.Text + ".xml";
+            FTP_Info.Upload("Option/" + txt_OUID.Text + "/", xmlPath); // 옵션팩 데이터 업로드
+            File.Delete(xmlPath); // 데이터 삭제
+
             InitializeOption(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
         }
@@ -463,8 +472,12 @@ namespace Bell_Smart_Server.Source.BSU
 
             // xml 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Pack/" + MUID + "/", User.BSN_Temp + "BSU\\Data\\ModPack\\" + MUID + ".xml"); // 모드팩 데이터 업로드
-            FTP_Info.Upload("Pack/" + MUID + "/Version/", User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+            string xmlPackPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + MUID + ".xml";
+            string xmlVerPath = User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml";
+            FTP_Info.Upload("Pack/" + MUID + "/", xmlPackPath); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Pack/" + MUID + "/Version/", xmlVerPath); // 버전 데이터 업로드
+            File.Delete(xmlPackPath); // 팩 xml 삭제
+            File.Delete(xmlVerPath); // 버전 xml 삭제
 
             ModUploading(false); // 업로드 끝
             txt_Mod_Version.Text = string.Empty;
@@ -572,8 +585,12 @@ namespace Bell_Smart_Server.Source.BSU
 
             // xml 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Base/" + BUID + "/", User.BSN_Temp + "BSU\\Data\\BasePack\\" + BUID + ".xml"); // 모드팩 데이터 업로드
-            FTP_Info.Upload("Base/" + BUID + "/Version/", User.BSN_Temp + "BSU\\Data\\BasePack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+            string xmlPackPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + BUID + ".xml";
+            string xmlVerPath = User.BSN_Temp + "BSU\\Data\\BasePack\\Version\\" + SetVer + ".xml";
+            FTP_Info.Upload("Base/" + BUID + "/", xmlPackPath); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Base/" + BUID + "/Version/", xmlVerPath); // 버전 데이터 업로드
+            File.Delete(xmlPackPath); // 팩 정보 삭제
+            File.Delete(xmlVerPath); // 버전 정보 삭제
 
             BaseUploading(false); // 업로드 끝
             txt_Base_Version.Text = string.Empty;
@@ -612,7 +629,7 @@ namespace Bell_Smart_Server.Source.BSU
             OptionUploading(true);
             List<string> Option = new List<string>();
             List<string> Hash = new List<string>();
-            List<string> File = new List<string>();
+            List<string> FileList = new List<string>();
             Protection Pro = new Protection();
             string SetVer = txt_Option_Version.Text;
             string[] FileArray; // = lst_Option_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
@@ -631,9 +648,9 @@ namespace Bell_Smart_Server.Source.BSU
                 }
                 Option.Add(item.SubItems[0].Text + "|" + item.SubItems[1].Text + "|" + item.SubItems[2].Text);
                 Hash.Add(item.SubItems[0].Text + "|" + item.SubItems[3].Text + "|" + Pro.MD5Hash(LocalRoot + item.SubItems[3].Text));
-                File.Add(item.SubItems[3].Text);
+                FileList.Add(item.SubItems[3].Text);
             }
-            FileArray = File.ToArray();
+            FileArray = FileList.ToArray();
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, OUID);
             MAW.WriteInstallXML(SetVer, Option.ToArray(), Directory, Hash.ToArray());
             
@@ -694,8 +711,12 @@ namespace Bell_Smart_Server.Source.BSU
 
             // xml 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Option/" + OUID + "/", User.BSN_Temp + "BSU\\Data\\OptionPack\\" + OUID + ".xml"); // 모드팩 데이터 업로드
-            FTP_Info.Upload("Option/" + OUID + "/Version/", User.BSN_Temp + "BSU\\Data\\OptionPack\\Version\\" + SetVer + ".xml"); // 버전 데이터 업로드
+            string xmlPackPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + OUID + ".xml";
+            string xmlVerPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\Version\\" + SetVer + ".xml";
+            FTP_Info.Upload("Option/" + OUID + "/", xmlPackPath); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Option/" + OUID + "/Version/", xmlVerPath); // 버전 데이터 업로드
+            File.Delete(xmlPackPath); // 팩 정보 삭제
+            File.Delete(xmlVerPath); // 버전 정보 삭제
 
             OptionUploading(false); // 업로드 끝
             txt_Option_Version.Text = string.Empty;

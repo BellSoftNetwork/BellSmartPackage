@@ -205,6 +205,12 @@ namespace BellLib.Class
             return true;
         }
 
+        /// <summary>
+        /// 디렉토리 배열을 반환합니다.
+        /// </summary>
+        /// <param name="strFilePath">최상위 경로</param>
+        /// <param name="Replace">최상위 경로를 제거한 뒤 반환할지 여부</param>
+        /// <returns>디렉토리 리스트</returns>
         public static string[] GetDirectoryArray(string strFilePath, bool Replace)
         {
             if (strFilePath[strFilePath.Length - 1] == '\\')
@@ -224,6 +230,13 @@ namespace BellLib.Class
 
             return list.ToArray();
         }
+
+        /// <summary>
+        /// 파일 배열을 반환합니다.
+        /// </summary>
+        /// <param name="strFilePath">최상위 폴더</param>
+        /// <param name="Replace">최상위 경로를 제거할지 여부</param>
+        /// <returns>파일 리스트 배열</returns>
         public static string[] GetFileArray(string strFilePath, bool Replace)
         {
             List<string> list = new List<string>();
