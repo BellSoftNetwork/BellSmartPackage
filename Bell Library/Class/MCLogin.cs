@@ -154,7 +154,7 @@ namespace BellLib.Class
                 if (jArray[0])
                 {
                     if (jReader.TokenType == JsonToken.String)
-                        //MC_AccessToken = jReader.Value.ToString();
+                        User.MC_AccessToken = jReader.Value.ToString();
                     // 이게 뭡니까? 어디있는겨
                     jArray[0] = false;
                 }

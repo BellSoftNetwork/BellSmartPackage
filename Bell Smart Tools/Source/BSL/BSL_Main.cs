@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using BellLib.Data;
 using BellLib.Class;
+using System.IO;
+using System.Diagnostics;
 
 namespace Bell_Smart_Tools.Source.BSL
 {
@@ -72,6 +74,90 @@ namespace Bell_Smart_Tools.Source.BSL
         private void SettingLoad()
         {
 
+        }
+
+        private void Enjoy(string PathBase, string PathPack)
+        {
+            string MUID = lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex];
+            //PathBase = User.BSL_Root + "";
+            //PathPack = User.BSL_Root + "";
+            string Parameter = null;
+            string strTemp;
+            StringBuilder sb = new StringBuilder("java", 1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
+
+            sb.Append(" ");
+            sb.Append(Parameter);
+
+            sb.Append(" -Djava.library.path=");
+            sb.Append(PathBase);
+            sb.Append("natives");
+
+            sb.Append(" -cp ");
+            sb.Append(PathBase);
+            sb.Append("*");
+
+            sb.Append(" net.minecraft.launchwrapper.Launch");
+
+            sb.Append(" --username ");
+            sb.Append(User.MC_NickName);
+
+            sb.Append(" --version ");
+            sb.Append(MUID);
+
+            sb.Append(" --gameDir ");
+            sb.Append(PathPack);
+
+            sb.Append(" --assetsDir ");
+            sb.Append(PathBase);
+            sb.Append("assets");
+
+            sb.Append(" --assetIndex "); //BellCraft");
+            sb.Append(MUID);
+
+            sb.Append(" --uuid ");
+            sb.Append(User.MC_UUID);
+
+            sb.Append(" --accessToken ");
+            sb.Append(User.MC_AccessToken);
+
+            sb.Append(" --userProperties {} --userType mojang --tweakClass cpw.mods.fml.common.launcher.FMLTweaker");
+
+            strTemp = sb.ToString();
+            try
+            {
+                Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
+                Process.Start(strTemp);
+                //Shell(strTemp, AppWinStyle.NormalFocus);
+                /*BC_PID = Interaction.Shell(strTemp, AppWinStyle.NormalFocus);
+                //방울크래프트 실행
+                SetStatusTxt("방울크래프트 실행완료");
+                RegSave("LastGame", DateString);
+                this.Invoke(() => BST_Main.BC_Progress.Value == BST_Main.BC_Progress.Maximum);
+                this.Invoke(() => BST_Main.BC_Status.BackColor == Color.SpringGreen);
+                this.Invoke(() => BST_Main.btn_BCLaunch.Text == "방울크래프트 강제종료");
+                this.Invoke(() => BST_Main.btn_BCLaunch.BackColor == Color.Red);
+                this.Invoke(() => BST_Main.btn_BCLaunch.Enabled == true);
+                BGW_BCC.RunWorkerAsync();
+                if (DATA_USER.BST_AutoTray)
+                    BST_Manager.BST_Visible = false;*/
+            }
+            catch (FileNotFoundException fnf)
+            {
+                BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.High, fnf.Message);
+                /*BC_PID = -1;
+                if (BST_Manager.Message("자바 경로가 비 정상적으로 설정되었습니다." + Constants.vbCrLf + "자바 경로 설정 화면으로 이동하시겠습니까?", , MessageBoxButtons.YesNo) == Windows.Forms.DialogResult.Yes) {
+                    BC_Preferences.ShowDialog();
+                }
+                BC_Button(false);*/
+            }
+            catch (Exception ex)
+            {
+                Common.Message(ex.Message);
+                /*BC_PID = -1;
+                BST_Manager.Message("방울크래프트 실행 중 문제가 발생하였습니다." + Constants.vbCrLf + "자바 경로가 정상적으로 설정되어있는지 확인하시기 바랍니다." + Constants.vbCrLf + Constants.vbCrLf + ex.Message);
+                BC_Button(false);*/
+            }
         }
         private void lst_ModPack_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -141,7 +227,7 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void btn_Launch_Click(object sender, EventArgs e)
         {
-
+            Enjoy(User.BSL_Root + "BellCraft\\Package\\", User.BSL_Root + "BellCraft");
         }
         private void btn_Preferences_Click(object sender, EventArgs e)
         {

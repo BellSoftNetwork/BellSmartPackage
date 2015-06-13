@@ -9,7 +9,7 @@ namespace BellLib.Data
     public class User
     {
         public static string BSN_Email, BSN_Password;
-        public static string MC_NickName, MC_UUID;
+        public static string MC_NickName, MC_UUID, MC_AccessToken;
 
         public static Version BST_Current_Verion { get { return Deployment.CurrentVersion; } }
         public static Version BST_Latest_Version { get { return Deployment.LatestVersion; } }

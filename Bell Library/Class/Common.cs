@@ -127,6 +127,8 @@ namespace BellLib.Class
             CreateFolder(Data.User.BSN_Path + "Upload\\BasePack");
             CreateFolder(Data.User.BSN_Path + "Upload\\OptionPack");
 
+            CreateFolder(Data.User.BSN_Path + "Data");
+
 
             CreateFolder(Data.User.BSL_Root + "ModPack");
             CreateFolder(Data.User.BSL_Root + "Base");
@@ -250,6 +252,41 @@ namespace BellLib.Class
             }
 
             return list.ToArray();
+        }
+
+        /// <summary>
+        /// .bd (Bell Data) 파일을 작성합니다.
+        /// </summary>
+        /// <param name="Path">작성할 .bd파일 경로</param>
+        /// <param name="Text">작성할 텍스트</param>
+        /// <param name="Append">내용 추가여부</param>
+        /// <param name="Encryption">암호화 작성여부</param>
+        public static void WriteBDText(string Path, string Text, bool Append = false, bool Encryption = true)
+        {
+            if (Encryption)
+            {
+                Protection Pro = new Protection();
+                Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_ENCODE);
+            }
+            WriteTextFile(Path, Text, Append);
+        }
+
+        /// <summary>
+        /// .bd (Bell Data) 파일을 읽습니다.
+        /// </summary>
+        /// <param name="Path">.bd파일 경로</param>
+        /// <param name="Decryption">복호화 여부</param>
+        /// <returns>복호화된 bd파일 값</returns>
+        public static string ReadBDText(string Path, bool Decryption = true)
+        {
+            string Text = File.ReadAllText(Path);
+            if (Decryption)
+            {
+                Protection Pro = new Protection();
+                Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_DECODE);
+            }
+
+            return Text;
         }
     }
 }
