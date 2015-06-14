@@ -22,7 +22,7 @@ namespace Bell_Smart_Tools.Source.BSL
         public BSL_Profile(string ProfileName)
         {
             this.ProfileName = ProfileName;
-            string[] Data = Common.ReadBDText(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bd").Split('\n');
+            string[] Data = Common.ReadBDFile(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bd").Split('\n');
             foreach (string Value in Data)
             {
                 string[] tmp = Value.Split('=');
@@ -99,7 +99,7 @@ namespace Bell_Smart_Tools.Source.BSL
             sb.AppendLine("PARAMETER=" + txt_Parameter.Text);
 
             Data = sb.ToString();
-            Common.WriteBDText(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bd", Data);
+            Common.WriteBDFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bd", Data);
             this.Close();
         }
 

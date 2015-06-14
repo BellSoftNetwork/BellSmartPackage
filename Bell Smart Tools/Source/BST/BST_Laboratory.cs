@@ -9,7 +9,7 @@ using System.Xml;
 using System.Windows.Forms;
 using System.Net;
 using BellLib.Class;
-using System.Security.Cryptography;
+using BellLib.Data;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -56,6 +56,16 @@ namespace Bell_Smart_Tools.Source.BST
         {
             Protection pt = new Protection();
             textBox4.Text = pt.Base64(textBox5.Text, Protection.ProtectionType.PROTECTION_DECODE);
+        }
+        
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string[] tmp = { "test|value", "test2|Value" };
+            Common.WriteBDXFile(User.BSN_Path + "Test.bdx", tmp);
+            string temp = null;
+            foreach (string tmm in Common.ReadBDXFile(User.BSN_Path + "Test.bdx"))
+                temp += tmm;
+            Common.Message(temp);
         }
     }
 }

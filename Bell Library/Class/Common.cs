@@ -7,6 +7,8 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Text;
+using System.Xml;
 
 namespace BellLib.Class
 {
@@ -259,38 +261,125 @@ namespace BellLib.Class
         }
 
         /// <summary>
+        /// .bdx (Bell Data Xml) 데이터 파일을 작성합니다.
+        /// </summary>
+        /// <param name="Path">작성할 .bdx파일 경로</param>
+        /// <param name="Data">작성할 데이터 ('데이터명|데이터값' 형식으로 전달)</param>
+        public static void WriteBDXFile(string Path, string[] Data)
+        {
+            string result;
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            using (MemoryStream output = new MemoryStream())
+            {
+                using (XmlWriter Writer = XmlWriter.Create(output, settings))
+                {
+                    Writer.WriteStartDocument(); // 문서 시작
+                    Writer.WriteStartElement("BDX"); // BDX 시작 <BDX>
+                    foreach (string tmp in Data)
+                    {
+                        string[] Value = tmp.Split('|');
+                        Writer.WriteElementString(Value[0], Value[1]); // <값이름>값</값이름>
+                    }
+                    Writer.WriteEndElement(); // BDX 끝냄 </BDX>
+                    Writer.WriteEndDocument(); // 문서 끝냄
+                    Writer.Flush();
+                    Writer.Close();
+                }
+                result = Encoding.UTF8.GetString(output.ToArray());
+            }
+            WriteBDFile(Path, result); // 데이터 파일 작성
+        }
+
+        /// <summary>
+        /// .bdx (Bell Data Xml) 데이터 파일을 읽습니다.
+        /// </summary>
+        /// <param name="Path">읽을 .bdx파일 경로</param>
+        /// <returns>복호화 된 데이터 ('데이터이름|데이터값' 형식으로 반환)</returns>
+        public static string[] ReadBDXFile(string Path)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlNodeList xnList;
+            try
+            {
+                string data = ReadBDFile(Path);
+                Message(data);
+                doc.LoadXml(data); // 왜 안읽이는겨;
+            }
+            catch { return new string[] {string.Empty}; }
+            xnList = doc.SelectNodes("/BDX");
+
+            StringBuilder str = new StringBuilder();
+            foreach (XmlNode xn in xnList)
+            {
+                str.Append(xn.Name);
+                str.Append("|");
+                str.AppendLine(xn.InnerText);
+            }
+            List<string> lst = new List<string>();
+            foreach (string tmp in str.ToString().Split('\n'))
+                if (tmp != "")
+                    lst.Add(tmp.Replace("\r", string.Empty));
+
+            return lst.ToArray();
+        }
+        /// <summary>
         /// .bd (Bell Data) 파일을 작성합니다.
         /// </summary>
         /// <param name="Path">작성할 .bd파일 경로</param>
         /// <param name="Text">작성할 텍스트</param>
         /// <param name="Append">내용 추가여부</param>
-        /// <param name="Encryption">암호화 작성여부</param>
-        public static void WriteBDText(string Path, string Text, bool Append = false, bool Encryption = true)
+        public static void WriteBDFile(string Path, string Text, bool Append = false)
         {
-            if (Encryption)
-            {
-                Protection Pro = new Protection();
-                Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_ENCODE);
-            }
-            WriteTextFile(Path, Text, Append);
+            Protection Pro = new Protection();
+            Text += "BELL" + GetRandomString(2) + "DATA"; // 원본 텍스트에 10자리의 쓰레기값을 추가함.
+            Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_ENCODE); // 암호화
+            Text += GetRandomString(6) + "BELL"; // 암호화된 텍스트에 10자리의 쓰레기값을 추가함.
+            WriteTextFile(Path, Text, Append); // 데이터 작성
         }
 
         /// <summary>
         /// .bd (Bell Data) 파일을 읽습니다.
         /// </summary>
         /// <param name="Path">.bd파일 경로</param>
-        /// <param name="Decryption">복호화 여부</param>
         /// <returns>복호화된 bd파일 값</returns>
-        public static string ReadBDText(string Path, bool Decryption = true)
+        public static string ReadBDFile(string Path)
         {
             string Text = File.ReadAllText(Path);
-            if (Decryption)
-            {
-                Protection Pro = new Protection();
-                Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_DECODE);
-            }
+            Protection Pro = new Protection();
+            Text = Text.Substring(0, Text.Length - 10); // 암호화된 데이터의 끝 10자리 쓰레기값을 제거함.
+            Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_DECODE); // 복호화
+            Text = Text.Substring(0, Text.Length - 10); // 복호화된 데이터의 끝 10자리 쓰레기값을 제거함.
 
             return Text;
+        }
+
+        /// <summary>
+        /// 랜덤 문자열을 반환합니다.
+        /// </summary>
+        /// <param name="length">필요한 문자열 길이</param>
+        /// <returns>랜덤 문자열</returns>
+        public static string GetRandomString(int length)
+        {
+            Random rnd = new Random();
+            return GetRandomString(length, rnd);
+        }
+
+        /// <summary>
+        /// 랜덤 문자열을 반환합니다.
+        /// </summary>
+        /// <param name="length">필요한 문자열 길이</param>
+        /// <param name="rnd">랜덤 시드</param>
+        /// <param name="charPool">랜덤 허용 문자열</param>
+        /// <returns>랜덤 문자열</returns>
+        public static string GetRandomString(int length, Random rnd, string charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw xyz1234567890")
+        {
+            StringBuilder rs = new StringBuilder();
+
+            while (length != rs.Length)
+                rs.Append(charPool[(int)(rnd.NextDouble() * charPool.Length)]);
+
+            return rs.ToString();
         }
     }
 }

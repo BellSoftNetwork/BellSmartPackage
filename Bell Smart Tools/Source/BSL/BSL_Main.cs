@@ -25,6 +25,7 @@ namespace Bell_Smart_Tools.Source.BSL
         private void Initialize()
         {
             ListLoad(); // 팩 리스트 로드
+            ProfileLoad(); // 프로필 로드
             SettingLoad(); // 클라이언트 셋팅 로드
         }
 
@@ -61,12 +62,20 @@ namespace Bell_Smart_Tools.Source.BSL
             cb_Version.Items.AddRange(Default); // 기본값 삽입!
             cb_Version.SelectedItem = "Recommended"; // 선택값을 권장버전으로 설정!
 
-            cb_Profile.Items.Clear(); // 프로필 리스트 초기화
-            Default = new string[] { "프로필 선택", "프로필 생성" };
-            cb_Profile.Items.AddRange(Default); // 기본값 추가
-            cb_Profile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠
+            
             // 클라 셋팅에서 프로필 리스트 불러온 뒤 추가함.
             // 마지막 설정한 프로필 선택.
+        }
+        /// <summary>
+        /// 프로필 데이터를 로드합니다.
+        /// </summary>
+        private void ProfileLoad()
+        {
+            cb_Profile.Items.Clear(); // 프로필 리스트 초기화
+            string[] Default = { "프로필 선택", "프로필 생성" };
+            cb_Profile.Items.AddRange(Default); // 기본값 추가
+            cb_Profile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠 (기본값)
+            
         }
         /// <summary>
         /// 클라이언트 설정값을 전부 로드 후, BSL을 초기화합니다.
