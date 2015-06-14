@@ -323,6 +323,7 @@ namespace BellLib.Class
 
             return lst.ToArray();
         }
+
         /// <summary>
         /// .bd (Bell Data) 파일을 작성합니다.
         /// </summary>
@@ -331,11 +332,22 @@ namespace BellLib.Class
         /// <param name="Append">내용 추가여부</param>
         public static void WriteBDFile(string Path, string Text, bool Append = false)
         {
+            WriteTextFile(Path, WriteBDText(Text), Append); // 데이터 작성
+        }
+
+        /// <summary>
+        /// 텍스트를 Bell Data 방식으로 암호화합니다.
+        /// </summary>
+        /// <param name="Text">작성할 텍스트</param>
+        /// <returns>암호화된 텍스트</returns>
+        public static string WriteBDText(string Text)
+        {
             Protection Pro = new Protection();
             Text += "BELL" + GetRandomString(2) + "DATA"; // 원본 텍스트에 10자리의 쓰레기값을 추가함.
             Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_ENCODE); // 암호화
             Text += GetRandomString(6) + "BELL"; // 암호화된 텍스트에 10자리의 쓰레기값을 추가함.
-            WriteTextFile(Path, Text, Append); // 데이터 작성
+            
+            return Text;
         }
 
         /// <summary>
@@ -345,7 +357,16 @@ namespace BellLib.Class
         /// <returns>복호화된 bd파일 값</returns>
         public static string ReadBDFile(string Path)
         {
-            string Text = File.ReadAllText(Path);
+            return ReadBDText(File.ReadAllText(Path));
+        }
+
+        /// <summary>
+        /// Bell Data 텍스트를 읽습니다.
+        /// </summary>
+        /// <param name="Text">복호화할 BD 텍스트</param>
+        /// <returns>복호화된 텍스트</returns>
+        public static string ReadBDText(string Text)
+        {
             Protection Pro = new Protection();
             Text = Text.Substring(0, Text.Length - 10); // 암호화된 데이터의 끝 10자리 쓰레기값을 제거함.
             Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_DECODE); // 복호화
