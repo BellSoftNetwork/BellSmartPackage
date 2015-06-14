@@ -267,7 +267,7 @@ namespace BellLib.Class
         /// <param name="Data">작성할 데이터 ('데이터명|데이터값' 형식으로 전달)</param>
         public static void WriteBDXFile(string Path, string[] Data)
         {
-            string result;
+            /*string result;
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             using (MemoryStream output = new MemoryStream())
@@ -288,7 +288,31 @@ namespace BellLib.Class
                 }
                 result = Encoding.UTF8.GetString(output.ToArray());
             }
-            WriteBDFile(Path, result); // 데이터 파일 작성
+            WriteBDFile(Path, result); // 데이터 파일 작성*/
+
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings xmlSetting = new XmlWriterSettings();
+            xmlSetting.Encoding = Encoding.UTF8;
+            xmlSetting.Indent = true;
+
+            XmlWriter Writer = XmlWriter.Create(sb, xmlSetting);
+            Writer.WriteStartDocument(); // 문서 시작
+            Writer.WriteStartElement("BDX"); // BDX 시작 <BDX>
+            foreach (string tmp in Data)
+            {
+                string[] Value = tmp.Split('|');
+                Writer.WriteStartElement("DATA");
+                Writer.WriteAttributeString("NAME", Value[0]);
+                Writer.WriteString(Value[1]); // <DATA NAME="값이름">값</DATA>
+                Writer.WriteEndElement();
+            }
+            Writer.WriteEndElement(); // BDX 끝냄 </BDX>
+            Writer.WriteEndDocument(); // 문서 끝냄
+            Writer.Flush();
+            Writer.Close();
+
+            string xmlString = sb.ToString();
+            WriteBDFile(Path, xmlString); // 데이터 파일 작성
         }
 
         /// <summary>
@@ -304,15 +328,15 @@ namespace BellLib.Class
             {
                 string data = ReadBDFile(Path);
                 Message(data);
-                doc.LoadXml(data); // 왜 안읽이는겨;
+                doc.LoadXml(data);
             }
             catch { return new string[] {string.Empty}; }
-            xnList = doc.SelectNodes("/BDX");
+            xnList = doc.SelectNodes("/BDX/DATA");
 
             StringBuilder str = new StringBuilder();
             foreach (XmlNode xn in xnList)
             {
-                str.Append(xn.Name);
+                str.Append(xn.Attributes.GetNamedItem("NAME").InnerText);
                 str.Append("|");
                 str.AppendLine(xn.InnerText);
             }

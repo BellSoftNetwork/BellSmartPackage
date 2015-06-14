@@ -48,14 +48,16 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Protection pt = new Protection();
-            textBox5.Text = pt.Base64(textBox4.Text, Protection.ProtectionType.PROTECTION_ENCODE);
+            /*Protection pt = new Protection();
+            textBox5.Text = pt.Base64(textBox4.Text, Protection.ProtectionType.PROTECTION_ENCODE);*/
+            textBox5.Text = Common.WriteBDText(textBox4.Text);
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Protection pt = new Protection();
-            textBox4.Text = pt.Base64(textBox5.Text, Protection.ProtectionType.PROTECTION_DECODE);
+            /*Protection pt = new Protection();
+            textBox4.Text = pt.Base64(textBox5.Text, Protection.ProtectionType.PROTECTION_DECODE);*/
+            textBox4.Text = Common.ReadBDText(textBox5.Text);
         }
         
         private void button2_Click(object sender, EventArgs e)
