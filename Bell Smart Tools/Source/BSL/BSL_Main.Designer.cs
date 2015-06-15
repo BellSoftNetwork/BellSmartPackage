@@ -205,6 +205,7 @@
             // 
             // btn_Edit
             // 
+            this.btn_Edit.Enabled = false;
             this.btn_Edit.Location = new System.Drawing.Point(297, 253);
             this.btn_Edit.Name = "btn_Edit";
             this.btn_Edit.Size = new System.Drawing.Size(47, 23);

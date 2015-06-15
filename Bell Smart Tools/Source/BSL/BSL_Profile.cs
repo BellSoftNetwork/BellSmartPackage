@@ -21,11 +21,14 @@ namespace Bell_Smart_Tools.Source.BSL
         }
         public BSL_Profile(string ProfileName)
         {
+            InitializeComponent();
             this.ProfileName = ProfileName;
-            string[] Data = Common.ReadBDFile(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bd").Split('\n');
+            string[] Data = Common.ReadBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
+
+            txt_Name.Text = ProfileName;
             foreach (string Value in Data)
             {
-                string[] tmp = Value.Split('=');
+                string[] tmp = Value.Split('|');
                 switch (tmp[0])
                 {
                     case "ID":
@@ -75,31 +78,37 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            string Data;
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("ID=" + txt_ID.Text);
-            sb.AppendLine("PW=" + txt_PW.Text);
+            //string Data;
+            //StringBuilder sb = new StringBuilder();
+            List<string> list = new List<string>();
+
+            list.Add("ID|" + txt_ID.Text); //sb.AppendLine("ID=" + txt_ID.Text);
+            list.Add("PW|" + txt_PW.Text); //sb.AppendLine("PW=" + txt_PW.Text);
             if (cb_Java.Checked)
             {
-                sb.AppendLine("CUSTOM_JAVA=TRUE");
+                list.Add("CUSTOM_JAVA|TRUE"); //sb.AppendLine("CUSTOM_JAVA=TRUE");
             }
             else
             {
-                sb.AppendLine("CUSTOM_JAVA=FALSE");
+                list.Add("CUSTOM_JAVA|FALSE"); //sb.AppendLine("CUSTOM_JAVA=FALSE");
             }
-            sb.AppendLine("JAVA=" + txt_Java.Text);
+            list.Add("JAVA|" + txt_Java.Text); //sb.AppendLine("JAVA=" + txt_Java.Text);
             if (cb_Parameter.Checked)
             {
-                sb.AppendLine("CUSTOM_PARAMETER=TRUE");
+                list.Add("CUSTOM_PARAMETER|TRUE"); //sb.AppendLine("CUSTOM_PARAMETER=TRUE");
             }
             else
             {
-                sb.AppendLine("CUSTOM_PARAMETER=FALSE");
+                list.Add("CUSTOM_PARAMETER|FALSE"); //sb.AppendLine("CUSTOM_PARAMETER=FALSE");
             }
-            sb.AppendLine("PARAMETER=" + txt_Parameter.Text);
+            list.Add("PARAMETER|" + txt_Parameter.Text); //sb.AppendLine("PARAMETER=" + txt_Parameter.Text);
 
-            Data = sb.ToString();
-            Common.WriteBDFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bd", Data);
+            //Data = sb.ToString();
+            if (ProfileName != string.Empty)
+                File.Delete(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx"); // 열렸던 파일 삭제
+            Common.WriteBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
+            //Common.WriteBDFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bd", Data);
+            
             this.Close();
         }
 

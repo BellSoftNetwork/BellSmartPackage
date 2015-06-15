@@ -327,7 +327,6 @@ namespace BellLib.Class
             try
             {
                 string data = ReadBDFile(Path);
-                Message(data);
                 doc.LoadXml(data);
             }
             catch { return new string[] {string.Empty}; }

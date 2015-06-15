@@ -15,6 +15,7 @@ namespace Bell_Smart_Tools.Source.BSL
 {
     public partial class BSL_Main : Form
     {
+        private bool Initialization = false; // 초기화 상태
         public BSL_Main()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace Bell_Smart_Tools.Source.BSL
             ListLoad(); // 팩 리스트 로드
             ProfileLoad(); // 프로필 로드
             SettingLoad(); // 클라이언트 셋팅 로드
+            Initialization = true;
         }
 
         /// <summary>
@@ -75,16 +77,65 @@ namespace Bell_Smart_Tools.Source.BSL
             string[] Default = { "프로필 선택", "프로필 생성" };
             cb_Profile.Items.AddRange(Default); // 기본값 추가
             cb_Profile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠 (기본값)
-            
+            string DefaultPath = User.BSL_Root + "Data\\BSL\\Profile\\"; // 프로필파일 기본 경로
+            string[] ProfileList = Directory.GetFiles(DefaultPath,"*.bdx"); // .bd 파일 리스트를 불러옴.
+            foreach (string tmp in ProfileList)
+            {
+                cb_Profile.Items.Add(tmp.Replace(DefaultPath, string.Empty).Replace(".bdx", string.Empty)); // 프로필 파일을 전부 로드함.
+            }
         }
         /// <summary>
         /// 클라이언트 설정값을 전부 로드 후, BSL을 초기화합니다.
         /// </summary>
         private void SettingLoad()
         {
-
+            string[] DataList;
+            try
+            {
+                DataList = Common.ReadBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx");
+            }
+            catch
+            {
+                return; // 로드실패. 셋팅 로드 중단
+            }
+            foreach (string Data in DataList)
+            {
+                string[] Value = Data.Split('|');
+                switch (Value[0])
+                {
+                    case "PROFILE":
+                        if (Value[1] != string.Empty)
+                            cb_Profile.SelectedItem = Value[1];
+                        break;
+                        
+                    case "MODPACK":
+                        lst_ModPack.SelectedItem = Value[1];
+                        break;
+                }
+            }
         }
 
+        private void SaveSetting()
+        {
+            List<string> list = new List<string>();
+            if (cb_Profile.SelectedIndex == 0)
+            {
+                list.Add("PROFILE|" + string.Empty);
+            }
+            else
+            {
+                list.Add("PROFILE|" + (string)cb_Profile.SelectedItem);
+            }
+            list.Add("MODPACK|" + (string)lst_ModPack.SelectedItem);
+
+            Common.WriteBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx", list.ToArray()); // 모든 값 저장
+        }
+
+        /// <summary>
+        /// 모드팩을 실행합니다.
+        /// </summary>
+        /// <param name="PathBase">베이스팩 경로</param>
+        /// <param name="PathPack">모드팩 경로</param>
         private void Enjoy(string PathBase, string PathPack)
         {
             string MUID = lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex];
@@ -202,6 +253,9 @@ namespace Bell_Smart_Tools.Source.BSL
                 }
                 wb_PackNews.AllowNavigation = false; // 다시 페이지 변경 비허용!
 
+                if (Initialization)
+                    SaveSetting(); // 설정값 저장
+
                 cb_AutoUpdate.Enabled = true;
                 cb_AutoUpdate.Checked = false;
                 cb_AutoUpdate.Text = PackName + " 자동 업데이트";
@@ -253,6 +307,7 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void cb_Profile_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btn_Edit.Enabled = false;
             if (cb_Profile.SelectedItem == null)
                 return;
             if (cb_Profile.SelectedIndex == 1)
@@ -260,7 +315,14 @@ namespace Bell_Smart_Tools.Source.BSL
                 cb_Profile.SelectedIndex = 0;
                 BSL_Profile BSLP = new BSL_Profile();
                 BSLP.ShowDialog();
+                ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
             }
+            if (cb_Profile.SelectedIndex != 0) // 인덱스 1은 위에서 0으로 바뀌므로 0이 아닐경우 (프로필을 선택했을경우)
+            {
+                btn_Edit.Enabled = true; // 수정 버튼 활성화
+            }
+            if (Initialization)
+                SaveSetting(); // 설정값 저장
         }
 
         private void btn_Edit_Click(object sender, EventArgs e)
@@ -268,6 +330,7 @@ namespace Bell_Smart_Tools.Source.BSL
             // 프로필 에디터에 선택 프로필 값 전달해줌.
             BSL_Profile BSLP = new BSL_Profile((string)cb_Profile.SelectedItem);
             BSLP.ShowDialog();
+            ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
         }
     }
 }
