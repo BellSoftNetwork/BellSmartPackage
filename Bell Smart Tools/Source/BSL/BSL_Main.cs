@@ -220,6 +220,30 @@ namespace Bell_Smart_Tools.Source.BSL
                 BC_Button(false);*/
             }
         }
+
+        /// <summary>
+        /// 선택된 클라이언트 설치여부를 확인한 후, 새 버전이 있을경우 업데이트합니다.
+        /// </summary>
+        private void CheckInstall()
+        {
+
+        }
+
+        /// <summary>
+        /// 베이스팩을 설치 및 업데이트합니다.
+        /// </summary>
+        private void InstallBase()
+        {
+
+        }
+
+        /// <summary>
+        /// 모드팩을 설치 및 업데이트합니다.
+        /// </summary>
+        private void InstallMod()
+        {
+
+        }
         private void lst_ModPack_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lst_ModPack.SelectedItem != null)
@@ -291,12 +315,9 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void btn_Launch_Click(object sender, EventArgs e)
         {
-            Enjoy(User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\");
-        }
-        private void btn_Preferences_Click(object sender, EventArgs e)
-        {
-            BSL_Preferences BSLP = new BSL_Preferences();
-            BSLP.ShowDialog();
+            CheckInstall(); // 클라이언트 설치 & 업데이트
+            Enjoy(User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\"); // 클라이언트 실행
+            SaveSetting(); // 클라이언트 설정 저장.
         }
 
         private void btn_Option_Click(object sender, EventArgs e)

@@ -34,15 +34,12 @@
             this.btn_Launch = new System.Windows.Forms.Button();
             this.cb_Version = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mC환경설정ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pb_Load = new System.Windows.Forms.ProgressBar();
             this.lb_Status = new System.Windows.Forms.Label();
             this.cb_AutoUpdate = new System.Windows.Forms.CheckBox();
             this.cb_Profile = new System.Windows.Forms.ComboBox();
-            this.btn_Preferences = new System.Windows.Forms.Button();
             this.txt_Detail = new System.Windows.Forms.TextBox();
             this.btn_Option = new System.Windows.Forms.Button();
             this.btn_Edit = new System.Windows.Forms.Button();
@@ -94,7 +91,6 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mCToolStripMenuItem,
             this.도구ToolStripMenuItem,
             this.정보ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -104,26 +100,11 @@
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ms_ItemClicked);
             // 
-            // mCToolStripMenuItem
-            // 
-            this.mCToolStripMenuItem.Name = "mCToolStripMenuItem";
-            this.mCToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
-            this.mCToolStripMenuItem.Text = "MC";
-            // 
             // 도구ToolStripMenuItem
             // 
-            this.도구ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mC환경설정ToolStripMenuItem});
             this.도구ToolStripMenuItem.Name = "도구ToolStripMenuItem";
             this.도구ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.도구ToolStripMenuItem.Text = "도구";
-            // 
-            // mC환경설정ToolStripMenuItem
-            // 
-            this.mC환경설정ToolStripMenuItem.Name = "mC환경설정ToolStripMenuItem";
-            this.mC환경설정ToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.mC환경설정ToolStripMenuItem.Text = "MC환경설정";
-            this.mC환경설정ToolStripMenuItem.Click += new System.EventHandler(this.ms_BSL_PreferenceToolStripMenuItem_Click);
             // 
             // 정보ToolStripMenuItem
             // 
@@ -173,16 +154,6 @@
             this.cb_Profile.TabIndex = 9;
             this.cb_Profile.SelectedIndexChanged += new System.EventHandler(this.cb_Profile_SelectedIndexChanged);
             // 
-            // btn_Preferences
-            // 
-            this.btn_Preferences.Location = new System.Drawing.Point(297, 213);
-            this.btn_Preferences.Name = "btn_Preferences";
-            this.btn_Preferences.Size = new System.Drawing.Size(94, 22);
-            this.btn_Preferences.TabIndex = 10;
-            this.btn_Preferences.Text = "런처 환경설정";
-            this.btn_Preferences.UseVisualStyleBackColor = true;
-            this.btn_Preferences.Click += new System.EventHandler(this.btn_Preferences_Click);
-            // 
             // txt_Detail
             // 
             this.txt_Detail.Location = new System.Drawing.Point(0, 215);
@@ -224,7 +195,6 @@
             this.Controls.Add(this.btn_Edit);
             this.Controls.Add(this.btn_Option);
             this.Controls.Add(this.txt_Detail);
-            this.Controls.Add(this.btn_Preferences);
             this.Controls.Add(this.cb_Profile);
             this.Controls.Add(this.cb_AutoUpdate);
             this.Controls.Add(this.lb_Status);
@@ -258,15 +228,12 @@
         private System.Windows.Forms.Button btn_Launch;
         private System.Windows.Forms.ComboBox cb_Version;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem mCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mC환경설정ToolStripMenuItem;
         private System.Windows.Forms.ProgressBar pb_Load;
         private System.Windows.Forms.Label lb_Status;
         private System.Windows.Forms.CheckBox cb_AutoUpdate;
         private System.Windows.Forms.ComboBox cb_Profile;
-        private System.Windows.Forms.Button btn_Preferences;
         private System.Windows.Forms.TextBox txt_Detail;
         private System.Windows.Forms.Button btn_Option;
         private System.Windows.Forms.Button btn_Edit;
