@@ -136,17 +136,12 @@ namespace Bell_Smart_Tools.Source.BSL
         /// </summary>
         /// <param name="PathBase">베이스팩 경로</param>
         /// <param name="PathPack">모드팩 경로</param>
-        private void Enjoy(string PathBase, string PathPack)
+        private void Enjoy(string MUID, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken)
         {
-            string MUID = lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex];
-            //PathBase = User.BSL_Root + "";
-            //PathPack = User.BSL_Root + "";
-            string Parameter = null;
             string strTemp;
-            StringBuilder sb = new StringBuilder("C:\\Program Files\\Java\\jre1.8.0_45\\bin\\java.exe", 1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
+            StringBuilder sb = new StringBuilder(1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
 
-            sb.Append(" ");
             sb.Append(Parameter);
 
             sb.Append(" -Djava.library.path=");
@@ -160,7 +155,7 @@ namespace Bell_Smart_Tools.Source.BSL
             sb.Append(" net.minecraft.launchwrapper.Launch");
 
             sb.Append(" --username ");
-            sb.Append(User.MC_NickName);
+            sb.Append(NickName);
 
             sb.Append(" --version ");
             sb.Append(MUID);
@@ -176,10 +171,10 @@ namespace Bell_Smart_Tools.Source.BSL
             sb.Append(MUID);
 
             sb.Append(" --uuid ");
-            sb.Append(User.MC_UUID);
+            sb.Append(UUID);
 
             sb.Append(" --accessToken ");
-            sb.Append(User.MC_AccessToken);
+            sb.Append(AccessToken);
 
             sb.Append(" --userProperties {} --userType mojang --tweakClass cpw.mods.fml.common.launcher.FMLTweaker");
 
@@ -188,7 +183,7 @@ namespace Bell_Smart_Tools.Source.BSL
             {
                 Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
                 Common.Message(strTemp);
-                Process.Start(strTemp);
+                Process.Start(PathJAVA, strTemp);
                 //Shell(strTemp, AppWinStyle.NormalFocus);
                 /*BC_PID = Interaction.Shell(strTemp, AppWinStyle.NormalFocus);
                 //방울크래프트 실행
@@ -316,7 +311,7 @@ namespace Bell_Smart_Tools.Source.BSL
         private void btn_Launch_Click(object sender, EventArgs e)
         {
             CheckInstall(); // 클라이언트 설치 & 업데이트
-            Enjoy(User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\"); // 클라이언트 실행
+            Enjoy(lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex], User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\", "C:\\Program Files\\Java\\jre1.8.0_45\\bin\\java.exe", string.Empty, User.MC_NickName, User.MC_UUID, User.MC_AccessToken); // 클라이언트 실행
             SaveSetting(); // 클라이언트 설정 저장.
         }
 
