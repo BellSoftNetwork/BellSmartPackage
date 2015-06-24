@@ -37,7 +37,7 @@
             this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pb_Load = new System.Windows.Forms.ProgressBar();
-            this.lb_Status = new System.Windows.Forms.Label();
+            this.lb_State = new System.Windows.Forms.Label();
             this.cb_AutoUpdate = new System.Windows.Forms.CheckBox();
             this.cb_Profile = new System.Windows.Forms.ComboBox();
             this.txt_Detail = new System.Windows.Forms.TextBox();
@@ -121,14 +121,14 @@
             this.pb_Load.Step = 1;
             this.pb_Load.TabIndex = 6;
             // 
-            // lb_Status
+            // lb_State
             // 
-            this.lb_Status.AutoSize = true;
-            this.lb_Status.Location = new System.Drawing.Point(295, 286);
-            this.lb_Status.Name = "lb_Status";
-            this.lb_Status.Size = new System.Drawing.Size(49, 12);
-            this.lb_Status.TabIndex = 7;
-            this.lb_Status.Text = "대기중..";
+            this.lb_State.AutoSize = true;
+            this.lb_State.Location = new System.Drawing.Point(295, 286);
+            this.lb_State.Name = "lb_State";
+            this.lb_State.Size = new System.Drawing.Size(49, 12);
+            this.lb_State.TabIndex = 7;
+            this.lb_State.Text = "대기중..";
             // 
             // cb_AutoUpdate
             // 
@@ -197,7 +197,7 @@
             this.Controls.Add(this.txt_Detail);
             this.Controls.Add(this.cb_Profile);
             this.Controls.Add(this.cb_AutoUpdate);
-            this.Controls.Add(this.lb_Status);
+            this.Controls.Add(this.lb_State);
             this.Controls.Add(this.pb_Load);
             this.Controls.Add(this.cb_Version);
             this.Controls.Add(this.btn_Launch);
@@ -231,7 +231,7 @@
         private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
         private System.Windows.Forms.ProgressBar pb_Load;
-        private System.Windows.Forms.Label lb_Status;
+        private System.Windows.Forms.Label lb_State;
         private System.Windows.Forms.CheckBox cb_AutoUpdate;
         private System.Windows.Forms.ComboBox cb_Profile;
         private System.Windows.Forms.TextBox txt_Detail;

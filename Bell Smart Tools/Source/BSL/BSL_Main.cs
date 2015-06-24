@@ -10,6 +10,7 @@ using BellLib.Data;
 using BellLib.Class;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
 
 namespace Bell_Smart_Tools.Source.BSL
 {
@@ -29,6 +30,12 @@ namespace Bell_Smart_Tools.Source.BSL
             ProfileLoad(); // 프로필 로드
             SettingLoad(); // 클라이언트 셋팅 로드
             Initialization = true;
+        }
+
+        private void SetState(string Log)
+        {
+            lb_State.Text = Log;
+            Application.DoEvents();
         }
 
         /// <summary>
@@ -167,7 +174,7 @@ namespace Bell_Smart_Tools.Source.BSL
             sb.Append(PathBase);
             sb.Append("assets");
 
-            sb.Append(" --assetIndex "); //BellCraft");
+            sb.Append(" --assetIndex ");
             sb.Append(MUID);
 
             sb.Append(" --uuid ");
@@ -182,7 +189,6 @@ namespace Bell_Smart_Tools.Source.BSL
             try
             {
                 Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
-                Common.Message(strTemp);
                 Process.Start(PathJAVA, strTemp);
                 //Shell(strTemp, AppWinStyle.NormalFocus);
                 /*BC_PID = Interaction.Shell(strTemp, AppWinStyle.NormalFocus);
@@ -235,8 +241,45 @@ namespace Bell_Smart_Tools.Source.BSL
         /// <summary>
         /// 모드팩을 설치 및 업데이트합니다.
         /// </summary>
-        private void InstallMod()
+        private void InstallMod(string MUID, string Version)
         {
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
+            MAR.LoadMod(Version); // 모드팩 설치 데이터 로드
+            string[] Dir = MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"); // 디렉토리 배열 받아옴
+            string[] Hash = MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"); // 해시 배열 받아옴
+            Protection Pro = new Protection();
+            string PackPath = User.BSL_Root + "ModPack\\" + MUID + "\\"; // 모드팩 기본 경로
+            string FileServer = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
+
+            foreach (string tmp in Dir)
+            {
+                Directory.CreateDirectory(PackPath + tmp); // 디렉토리 생성
+                SetState("디렉토리 생성 : " + tmp);
+            }
+
+            foreach (string tmp in Hash)
+            {
+                string[] Data = tmp.Split('|');
+
+                if (Pro.MD5Hash(PackPath + Data[0]) != Data[1])
+                {
+                    WebClient WC = new WebClient();
+                    try
+                    {
+                        WC.DownloadFile(FileServer + Version + "\\" + Data[0], PackPath + Data[0]); // 파일 다운로드
+                        SetState("다운로드 : " + Data[0]);
+                    }
+                    catch
+                    {
+                        SetState("다운로드 실패 : " + Data[0]);
+                        Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
+                    }
+                }
+                else
+                {
+                    SetState("최신버전 : " + Data[0]);
+                }
+            }
 
         }
         private void lst_ModPack_SelectedIndexChanged(object sender, EventArgs e)
@@ -310,9 +353,17 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void btn_Launch_Click(object sender, EventArgs e)
         {
+            btn_Launch.Enabled = false;
+            string MUID = lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex]; SetState("MUID 로드 성공");
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
+            InstallMod(MUID, "8.6.0"); SetState("버전 설치정보 로드 성공");
+            
             CheckInstall(); // 클라이언트 설치 & 업데이트
-            Enjoy(lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex], User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\", "C:\\Program Files\\Java\\jre1.8.0_45\\bin\\java.exe", string.Empty, User.MC_NickName, User.MC_UUID, User.MC_AccessToken); // 클라이언트 실행
-            SaveSetting(); // 클라이언트 설정 저장.
+            BSL_Profile BSLP = new BSL_Profile((string)cb_Profile.SelectedItem); // 선택한 프로필로 데이터를 초기화함.
+            Enjoy(MUID, User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\", BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
+            SaveSetting(); SetState("클라이언트 설정정보 저장 성공"); // 클라이언트 설정 저장.
+            SetState("정상적으로 실행되었습니다.");
+            btn_Launch.Enabled = true;
         }
 
         private void btn_Option_Click(object sender, EventArgs e)

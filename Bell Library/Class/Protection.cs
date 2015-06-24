@@ -80,15 +80,22 @@ namespace BellLib.Class
         }*/
         public string MD5Hash(string filename)
         {
-            using (var md5 = MD5.Create())
+            try
             {
-                using (var stream = File.OpenRead(filename))
+                using (var md5 = MD5.Create())
                 {
-                    StringBuilder sb = new StringBuilder();
-                    foreach (int i in md5.ComputeHash(stream))
-                        sb.Append(i.ToString("X2"));
-                    return sb.ToString();
+                    using (var stream = File.OpenRead(filename))
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (int i in md5.ComputeHash(stream))
+                            sb.Append(i.ToString("X2"));
+                        return sb.ToString();
+                    }
                 }
+            }
+            catch
+            {
+                return string.Empty;
             }
         }
         public static string GetMd5Hash(MD5 md5Hash, string input)

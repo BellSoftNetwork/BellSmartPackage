@@ -320,6 +320,10 @@ namespace BellLib.Class
             return true;
         }
 
+        /// <summary>
+        /// 모드팩 리스트를 로드합니다.
+        /// </summary>
+        /// <returns>MUID 리스트 배열</returns>
         private bool LoadModList()
         {
             XmlDocument doc = new XmlDocument();
@@ -345,6 +349,10 @@ namespace BellLib.Class
             return true;
         }
 
+        /// <summary>
+        /// 베이스팩 리스트를 로드합니다.
+        /// </summary>
+        /// <returns>BUID 리스트 배열</returns>
         private bool LoadBaseList()
         {
             XmlDocument doc = new XmlDocument();
@@ -370,6 +378,10 @@ namespace BellLib.Class
             return true;
         }
 
+        /// <summary>
+        /// 옵션팩 리스트를 로드합니다.
+        /// </summary>
+        /// <returns>OUID 리스트 배열</returns>
         private bool LoadOptionList()
         {
             XmlDocument doc = new XmlDocument();
@@ -463,7 +475,7 @@ namespace BellLib.Class
             xnList = doc.SelectNodes("/" + _MUID + "/Hash/File"); // 베이스팩 필요한 파일
             foreach (XmlNode xn in xnList)
             {
-                str.AppendLine(xn.Attributes.GetNamedItem("Loc").InnerText + "|" + xn.InnerText);
+                str.AppendLine(xn.Attributes.GetNamedItem("Loc").InnerText + "|" + xn.InnerText); // 파일 상대 경로|파일해시
             }
             foreach (string tmp in str.ToString().Split('\n'))
                 if (tmp != "")

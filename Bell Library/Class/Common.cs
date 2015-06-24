@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Threading;
 
 namespace BellLib.Class
 {
@@ -424,6 +425,11 @@ namespace BellLib.Class
                 rs.Append(charPool[(int)(rnd.NextDouble() * charPool.Length)]);
 
             return rs.ToString();
+        }
+
+        public static void Delay(int millisecondsTimeout)
+        {
+            Thread.Sleep(millisecondsTimeout);
         }
     }
 }

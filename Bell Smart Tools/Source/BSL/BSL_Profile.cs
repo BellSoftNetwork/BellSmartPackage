@@ -60,6 +60,39 @@ namespace Bell_Smart_Tools.Source.BSL
             }
         }
 
+        public enum Data
+        {
+            JAVA,
+            ID,
+            PW,
+            Parameter
+        }
+        public string getData(Data Value)
+        {
+            string strTemp = string.Empty;
+
+            switch (Value)
+            {
+                case Data.JAVA:
+                    strTemp = txt_Java.Text;
+                    break;
+
+                case Data.ID:
+                    strTemp = txt_ID.Text;
+                    break;
+
+                case Data.PW:
+                    strTemp = txt_PW.Text;
+                    break;
+
+                case Data.Parameter:
+                    strTemp = txt_Parameter.Text;
+                    break;
+            }
+
+            return strTemp;
+        }
+
         private void cb_Java_CheckedChanged(object sender, EventArgs e)
         {
             txt_Java.ReadOnly = !cb_Java.Checked;
