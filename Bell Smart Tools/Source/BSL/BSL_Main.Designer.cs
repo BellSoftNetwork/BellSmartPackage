@@ -69,7 +69,7 @@
             // 
             // btn_Launch
             // 
-            this.btn_Launch.Location = new System.Drawing.Point(536, 281);
+            this.btn_Launch.Location = new System.Drawing.Point(537, 263);
             this.btn_Launch.Name = "btn_Launch";
             this.btn_Launch.Size = new System.Drawing.Size(112, 23);
             this.btn_Launch.TabIndex = 2;
@@ -123,10 +123,9 @@
             // 
             // lb_State
             // 
-            this.lb_State.AutoSize = true;
-            this.lb_State.Location = new System.Drawing.Point(295, 286);
+            this.lb_State.Location = new System.Drawing.Point(-2, 288);
             this.lb_State.Name = "lb_State";
-            this.lb_State.Size = new System.Drawing.Size(49, 12);
+            this.lb_State.Size = new System.Drawing.Size(650, 12);
             this.lb_State.TabIndex = 7;
             this.lb_State.Text = "대기중..";
             // 
@@ -134,7 +133,7 @@
             // 
             this.cb_AutoUpdate.AutoSize = true;
             this.cb_AutoUpdate.Enabled = false;
-            this.cb_AutoUpdate.Location = new System.Drawing.Point(297, 236);
+            this.cb_AutoUpdate.Location = new System.Drawing.Point(297, 219);
             this.cb_AutoUpdate.Name = "cb_AutoUpdate";
             this.cb_AutoUpdate.Size = new System.Drawing.Size(100, 16);
             this.cb_AutoUpdate.TabIndex = 8;
@@ -148,7 +147,7 @@
             this.cb_Profile.Items.AddRange(new object[] {
             "선택하세요",
             "=================="});
-            this.cb_Profile.Location = new System.Drawing.Point(350, 255);
+            this.cb_Profile.Location = new System.Drawing.Point(350, 243);
             this.cb_Profile.Name = "cb_Profile";
             this.cb_Profile.Size = new System.Drawing.Size(298, 20);
             this.cb_Profile.TabIndex = 9;
@@ -161,7 +160,7 @@
             this.txt_Detail.Name = "txt_Detail";
             this.txt_Detail.ReadOnly = true;
             this.txt_Detail.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_Detail.Size = new System.Drawing.Size(297, 88);
+            this.txt_Detail.Size = new System.Drawing.Size(297, 70);
             this.txt_Detail.TabIndex = 11;
             // 
             // btn_Option
@@ -177,7 +176,7 @@
             // btn_Edit
             // 
             this.btn_Edit.Enabled = false;
-            this.btn_Edit.Location = new System.Drawing.Point(297, 253);
+            this.btn_Edit.Location = new System.Drawing.Point(297, 241);
             this.btn_Edit.Name = "btn_Edit";
             this.btn_Edit.Size = new System.Drawing.Size(47, 23);
             this.btn_Edit.TabIndex = 13;

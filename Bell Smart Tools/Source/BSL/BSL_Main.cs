@@ -122,6 +122,9 @@ namespace Bell_Smart_Tools.Source.BSL
             }
         }
 
+        /// <summary>
+        /// 클라이언트 설정값을 저장합니다.
+        /// </summary>
         private void SaveSetting()
         {
             List<string> list = new List<string>();

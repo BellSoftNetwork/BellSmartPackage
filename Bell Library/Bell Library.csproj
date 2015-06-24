@@ -83,15 +83,15 @@
     <Content Include="Example\BCP_1.7.10.xml" />
     <Content Include="Example\BellCraft8.xml" />
     <Content Include="Example\PackList.xml" />
-    <Content Include="Photo\Photo_Bell.ico" />
-    <Content Include="Photo\Photo_Random.ico" />
-    <Content Include="Photo\Photo_RedBell.ico" />
-    <Content Include="Resource\Newtonsoft.Json.dll" />
-    <Content Include="Sound\Sound_alarm.wav" />
-    <Content Include="Sound\Sound_end.wav" />
-    <Content Include="Sound\Sound_error.wav" />
-    <Content Include="Sound\Sound_select.wav" />
-    <Content Include="Sound\Sound_start.wav" />
+    <Content Include="Resource\Photo\Photo_Bell.ico" />
+    <Content Include="Resource\Photo\Photo_Random.ico" />
+    <Content Include="Resource\Photo\Photo_RedBell.ico" />
+    <Content Include="Resource\Library\Newtonsoft.Json.dll" />
+    <Content Include="Resource\Sound\Sound_alarm.wav" />
+    <Content Include="Resource\Sound\Sound_end.wav" />
+    <Content Include="Resource\Sound\Sound_error.wav" />
+    <Content Include="Resource\Sound\Sound_select.wav" />
+    <Content Include="Resource\Sound\Sound_start.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bell Library_Key.pfx" />
@@ -100,8 +100,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

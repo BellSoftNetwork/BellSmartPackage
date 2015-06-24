@@ -21,12 +21,25 @@ namespace BellLib.Class
 
         static OnEnd onEnd;
 
+        /// <summary>
+        /// 메시지 박스를 띄웁니다.
+        /// </summary>
+        /// <param name="Text">메시지박스 내용</param>
+        /// <param name="Caption">메시지박스 제목</param>
+        /// <param name="buttons">메시지박스 버튼</param>
+        /// <param name="icon">메시지박스 아이콘</param>
+        /// <param name="defaultButton">메시지박스 기본 버튼</param>
+        /// <returns>선택한 버튼값</returns>
         public static DialogResult Message(string Text, string Caption = "Bell Smart Package", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
             Debug.Message(Debug.Level.Log, Text, Caption, buttons, icon, defaultButton, "MessageBox");
             return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
         }
 
+        /// <summary>
+        /// 프로그램을 종료합니다.
+        /// </summary>
+        /// <param name="Restart">프로그램 재시작 여부</param>
         public static void End(bool Restart = false)
         {
             // 콜백에 프로그램 종료를 알린다.
@@ -79,6 +92,12 @@ namespace BellLib.Class
             catch { }
         }
 
+        /// <summary>
+        /// 텍스트 파일을 작성합니다.
+        /// </summary>
+        /// <param name="localFilePath">저장할 파일 경로</param>
+        /// <param name="data">저장할 텍스트 값</param>
+        /// <param name="append">이어쓸지 여부</param>
         public static void WriteTextFile(string localFilePath, string data, bool append = false)
         {
             bool written = false;
@@ -102,6 +121,11 @@ namespace BellLib.Class
             }
         }
 
+        /// <summary>
+        /// 해당 웹 텍스트를 전부 가져옵니다.
+        /// </summary>
+        /// <param name="URL">웹 주소</param>
+        /// <returns>웹 텍스트</returns>
         public static string GetStringFromWeb(string URL)
         {
             try
@@ -111,6 +135,9 @@ namespace BellLib.Class
             catch { return null; }
         }
 
+        /// <summary>
+        /// 기본적으로 존재해야하는 디렉토리를 생성합니다.
+        /// </summary>
         public static void CreateDefaultForder()
         {
             CreateFolder(Data.User.BSN_Path);
@@ -427,6 +454,10 @@ namespace BellLib.Class
             return rs.ToString();
         }
 
+        /// <summary>
+        /// 호출한 스레드를 잠시 멈춥니다.
+        /// </summary>
+        /// <param name="millisecondsTimeout">멈출 시간</param>
         public static void Delay(int millisecondsTimeout)
         {
             Thread.Sleep(millisecondsTimeout);

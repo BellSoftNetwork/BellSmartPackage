@@ -19,6 +19,11 @@ namespace Bell_Smart_Tools.Source.BSL
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// 프로필 에디터를 선택한 프로필파일로 초기화합니다.
+        /// </summary>
+        /// <param name="ProfileName">프로필 이름</param>
         public BSL_Profile(string ProfileName)
         {
             InitializeComponent();
@@ -60,6 +65,9 @@ namespace Bell_Smart_Tools.Source.BSL
             }
         }
 
+        /// <summary>
+        /// 프로필 데이터 종류 리스트
+        /// </summary>
         public enum Data
         {
             JAVA,
@@ -67,6 +75,12 @@ namespace Bell_Smart_Tools.Source.BSL
             PW,
             Parameter
         }
+
+        /// <summary>
+        /// 프로필 데이터를 가져옵니다.
+        /// </summary>
+        /// <param name="Value">반환할 프로필 데이터 값</param>
+        /// <returns>프로필 데이터</returns>
         public string getData(Data Value)
         {
             string strTemp = string.Empty;
