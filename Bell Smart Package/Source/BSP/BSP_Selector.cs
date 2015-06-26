@@ -62,15 +62,6 @@ namespace Bell_Smart_Package.Source.BSP
             /*BST_Loader BST = new BST_Loader();
             BST.Show();
             this.Close();*/
-            /*try
-            {
-                BSS_Loader BSS = new BSS_Loader(); // BSS 파일이 없으면,
-            }
-            catch
-            {
-                btn_BST_Click(sender, e); // 그냥 바로 BST 실행
-                this.Close();
-            }*/
             if (!File.Exists(Application.StartupPath + "\\Bell Smart Server.exe") && !Sel) // BSS 파일이 없으면,
             {
                 btn_BST_Click(sender, e); // 그냥 바로 BST 실행

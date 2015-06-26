@@ -141,12 +141,6 @@ namespace Bell_Smart_Tools.Source.BST
             DebugModeLoad();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Source.BSL.BSL_Preferences MCP = new BSL.BSL_Preferences();
-            MCP.ShowDialog();
-        }
-
         private void mi_DebugTool_Click(object sender, EventArgs e)
         {
             BST_Debug BSTD = new BST_Debug();

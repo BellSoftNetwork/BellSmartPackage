@@ -55,7 +55,6 @@
             this.mi_DebugLevel_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS2 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.TextBoxFormCreator = new System.Windows.Forms.TextBox();
@@ -252,19 +251,9 @@
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
             this.mi_DebugTool.Click += new System.EventHandler(this.mi_DebugTool_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(406, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "MC 환경설정 (임시)";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(406, 69);
+            this.button2.Location = new System.Drawing.Point(463, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 7;
@@ -274,7 +263,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(406, 120);
+            this.button3.Location = new System.Drawing.Point(463, 41);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 8;
@@ -309,7 +298,6 @@
             this.Controls.Add(this.TextBoxFormCreator);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.txt_Notice);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -354,7 +342,6 @@
         private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Log;
         private System.Windows.Forms.ToolStripSeparator mi_SS2;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugTool;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox TextBoxFormCreator;
