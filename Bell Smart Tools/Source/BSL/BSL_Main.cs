@@ -147,7 +147,7 @@ namespace Bell_Smart_Tools.Source.BSL
         /// </summary>
         /// <param name="PathBase">베이스팩 경로</param>
         /// <param name="PathPack">모드팩 경로</param>
-        private void Enjoy(string MUID, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken)
+        private void Enjoy(string MUID, string BUID, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken)
         {
             if (MUID == string.Empty || PathBase == string.Empty || PathPack == string.Empty || UUID == string.Empty || AccessToken == string.Empty)
             {
@@ -184,7 +184,7 @@ namespace Bell_Smart_Tools.Source.BSL
             sb.Append("assets");
 
             sb.Append(" --assetIndex ");
-            sb.Append(MUID);
+            sb.Append(BUID);
 
             sb.Append(" --uuid ");
             sb.Append(UUID);
@@ -597,7 +597,7 @@ namespace Bell_Smart_Tools.Source.BSL
             string PathBase = User.BSL_Root + "Base\\" + BUID + "\\" + SelectBase + "\\";
             string PathPack = User.BSL_Root + "ModPack\\" + MUID + "\\" + AbsoluteMod + "\\";
             pb_Load.PerformStep(); // 진행
-            Enjoy(MUID, PathBase, PathPack, BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
+            Enjoy(MUID, BUID, PathBase, PathPack, BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
             pb_Load.PerformStep(); // 진행
             string[] tmp = {"Select Version|" + SelectMod};
             Common.WriteBDXFile(User.BSL_Root + "ModPack\\" + MUID + "\\" + "data.bdx", tmp); // 현재 실행한 버전을 저장함.

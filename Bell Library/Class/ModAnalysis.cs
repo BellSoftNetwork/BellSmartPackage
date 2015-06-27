@@ -161,16 +161,16 @@ namespace BellLib.Class
                     _MUID = UID;
                     if (!parse)
                         break;
-                    if (!ParseModInfo()) return;
-                    if (!ParseBaseInfo()) return;
-                    if (!ParseOptionInfo()) return;
+                    if (!ParseModInfo()) { return; }
+                    if (!ParseBaseInfo()) { return; }
+                    if (!ParseOptionInfo()) { return; }
                     break;
 
                 case PackType.Base:
                     _BUID = UID;
                     if (!parse)
                         break;
-                    if (!ParseBaseInfo()) return;
+                    if (!ParseBaseInfo()) { return; }
 
                     break;
 
@@ -178,7 +178,7 @@ namespace BellLib.Class
                     _OUID = UID;
                     if (!parse)
                         break;
-                    if (!ParseOptionInfo()) return;
+                    if (!ParseOptionInfo()) { return; }
 
                     break;
             }
@@ -554,12 +554,18 @@ namespace BellLib.Class
             switch (pt)
             {
                 case PackType.Mod:
+                    if (InfoModpack._Version == null)
+                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
                     return InfoModpack._Version;
 
                 case PackType.Base:
+                    if (InfoBasepack._Version == null)
+                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
                     return InfoBasepack._Version;
 
                 case PackType.Option:
+                    if (InfoOptionpack._Version == null)
+                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
                     return InfoOptionpack._Version;
             }
             return null;
@@ -572,23 +578,22 @@ namespace BellLib.Class
         /// <returns>팩 리스트</returns>
         public string[] GetList(PackType pt)
         {
-            try
+            switch (pt)
             {
-                switch (pt)
-                {
-                    case PackType.Mod:
-                        return InfoModpack._List;
+                case PackType.Mod:
+                    if (InfoModpack._List == null)
+                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                    return InfoModpack._List;
 
-                    case PackType.Base:
-                        return InfoBasepack._List;
+                case PackType.Base:
+                    if (InfoBasepack._List == null)
+                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                    return InfoBasepack._List;
 
-                    case PackType.Option:
-                        return InfoOptionpack._List;
-                }
-            }
-            catch
-            {
-                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                case PackType.Option:
+                    if (InfoOptionpack._List == null)
+                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                    return InfoOptionpack._List;
             }
             return null;
         }

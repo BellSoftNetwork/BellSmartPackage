@@ -61,11 +61,13 @@ namespace Bell_Smart_Server.Source.BSU
                 string[] Ver_Base = { "Latest", "Recommended" };
                 cb_Mod_Base_Ver.Items.AddRange(Ver_Base);
                 cb_Mod_Base_Ver.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+                cb_Mod_Base_Ver.Enabled = false;
                 cb_Mod_Base_Upload.Items.AddRange(Ver_Base);
                 cb_Mod_Base_Upload.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
                 cb_Mod_Base_Upload.SelectedItem = Ver_Base[1];
                 cb_Mod_Option_Ver.Items.AddRange(Ver_Base);
                 cb_Mod_Option_Ver.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+                cb_Mod_Option_Ver.Enabled = false;
                 cb_Mod_Option_Upload.Items.AddRange(Ver_Base);
                 cb_Mod_Option_Upload.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
                 cb_Mod_Option_Upload.SelectedItem = Ver_Base[1];
