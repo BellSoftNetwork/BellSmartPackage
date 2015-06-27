@@ -65,6 +65,7 @@ namespace Bell_Smart_Tools.Source.BSL
             }
             lst_ModPack.Items.AddRange(PackNameList.ToArray()); // 팩 리스트 로드!
             lst_ModPack.SelectedIndex = 0; // 첫번째 모드팩 기본 선택
+            
 
             cb_Version.Items.Clear(); // 버전정보 리스트 초기화!
             string[] Default = { "Latest", "Recommended" }; // 기본값 임시 저장
@@ -148,6 +149,11 @@ namespace Bell_Smart_Tools.Source.BSL
         /// <param name="PathPack">모드팩 경로</param>
         private void Enjoy(string MUID, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken)
         {
+            if (MUID == string.Empty || PathBase == string.Empty || PathPack == string.Empty || UUID == string.Empty || AccessToken == string.Empty)
+            {
+                Common.Message("게임 실행 중 매개변수값이 정상적으로 전달되지 않아 실행을 중단합니다.");
+                return;
+            }
             string strTemp;
             StringBuilder sb = new StringBuilder(1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
@@ -193,19 +199,7 @@ namespace Bell_Smart_Tools.Source.BSL
             {
                 Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
                 Process.Start(PathJAVA, strTemp);
-                //Shell(strTemp, AppWinStyle.NormalFocus);
-                /*BC_PID = Interaction.Shell(strTemp, AppWinStyle.NormalFocus);
-                //방울크래프트 실행
-                SetStatusTxt("방울크래프트 실행완료");
-                RegSave("LastGame", DateString);
-                this.Invoke(() => BST_Main.BC_Progress.Value == BST_Main.BC_Progress.Maximum);
-                this.Invoke(() => BST_Main.BC_Status.BackColor == Color.SpringGreen);
-                this.Invoke(() => BST_Main.btn_BCLaunch.Text == "방울크래프트 강제종료");
-                this.Invoke(() => BST_Main.btn_BCLaunch.BackColor == Color.Red);
-                this.Invoke(() => BST_Main.btn_BCLaunch.Enabled == true);
-                BGW_BCC.RunWorkerAsync();
-                if (DATA_USER.BST_AutoTray)
-                    BST_Manager.BST_Visible = false;*/
+                //BC_PID = Shell(strTemp, AppWinStyle.NormalFocus);
             }
             catch (FileNotFoundException fnf)
             {
@@ -228,35 +222,207 @@ namespace Bell_Smart_Tools.Source.BSL
         /// <summary>
         /// 선택된 클라이언트 설치여부를 확인한 후, 새 버전이 있을경우 업데이트합니다.
         /// </summary>
-        private void CheckInstall()
+        /// <param name="RootPath">클라이언트 로컬 루트 경로</param>
+        /// <param name="MUID">MUID값</param>
+        /// <param name="SelectMod">모드팩 설치 희망 버전</param>
+        /// <returns>BUID|요구버전</returns>
+        private string CheckInstall(string RootPath, string MUID, string SelectMod)
         {
-            
+            // 주 데이터
+            string BUID;
+            string ModVersion = string.Empty; // 모드팩 현재 버전
+            string RelativeMod = SelectMod; // 모드팩 상대 버전
+            string BaseVersion = string.Empty; // 베이스팩 현재 버전
+            string SelectBase; // 베이스팩 선택 버전
+            int LengthMod = 0; // 모드팩 설치 길이
+            int LengthBase = 0; // 베이스팩 설치 길이
+
+            // 1. 기초 데이터 로드
+            SetState("설치 및 업데이트 필요여부 검사 시작");
+
+            // 서버에서 데이터 가져옴 - 모드팩 부분
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 인스턴스 생성
+            BUID = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base"); SetState("필요 베이스팩 고유이름 로드 완료");
+            switch (SelectMod) // 유지 희망 버전이 상대적일경우,
+            {
+                case "Recommended":
+                    SelectMod = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended"); // 모드팩 권장버전의 절대버전
+                    break;
+
+                case "Latest":
+                    SelectMod = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest"); // 모드팩 최신버전의 절대버전
+                    break;
+            }
+            SetState("모드팩 상대버전 분석 완료");
+            MAR.LoadMod(SelectMod); SetState("베이스팩 정보 로드 완료"); // 모드팩 선택버전의 데이터 로드
+            SetState("모드팩 진행바 최대값 계산중");
+            LengthMod += MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory").Length; // 생성이 필요한 디렉토리 개수만큼 진행바 최대값 증가
+            LengthMod += MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash").Length; // 생성이 필요한 파일 개수만큼
+            SetState("모드팩 진행바 최대값 계산완료");
+            SelectBase = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base"); SetState("베이스팩 필요버전 로드 완료"); // 베이스팩 필요 버전 로드 (상대 버전일 수도 있음)
+
+            // 서버에서 데이터 가져옴 - 베이스팩 부분
+            MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, BUID); // 인스턴스 생성
+            switch (SelectBase)
+            {
+                case "Recommended":
+                    SelectBase = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Recommended"); // 베이스팩 권장버전의 절대버전
+                    break;
+
+                case "Latest":
+                    SelectBase = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Latest"); // 베이스팩 최신버전의 절대버전
+                    break;
+            }
+            SetState("베이스팩 상대버전 분석 완료");
+            MAR.LoadBase(SelectBase);
+            SetState("베이스팩 진행바 최대값 계산중");
+            LengthBase += MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Directory").Length;
+            LengthBase += MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Hash").Length;
+            SetState("베이스팩 진행바 최대값 계산완료");
+
+            // 클라이언트 모드팩 데이터 가져옴
+            try
+            {
+                string[] modData = Common.ReadBDXFile(RootPath + "\\ModPack\\" + MUID + "\\" + SelectMod + "\\data.bdx"); // 클라이언트 모드팩 데이터 로드
+                foreach (string tmp in modData)
+                {
+                    string[] Value = tmp.Split('|');
+                    if (Value[0] == "Current Version") // 데이터 집합 중 현재 버전 데이터일경우
+                    {
+                        if (SelectMod == Value[1]) // 희망버전과 로컬 버전이 같으면
+                        {
+                            ModVersion = Value[1];
+                            break; // 필요한거 얻었응께 나머지 버리고 나와브러~
+                        }
+                    }
+                }
+                SetState("모드팩 로컬데이터 분석 완료");
+            }
+            catch // 데이터 로드중 예외 오류가 날 경우, 신규 설치로 간주
+            {
+                // Mod Current Version이 이미 null로 초기화 되어있으므로 그냥 진행.
+                // Mod Select Version이 이미 SelectVer로 초기화 되어있으므로 그냥 진행.
+                SetState("모드팩 신규설치");
+            }
+
+            // 클라이언트 베이스팩 데이터 가져옴
+            try
+            {
+                string[] baseData = Common.ReadBDXFile(RootPath + "\\Base\\" + BUID + "\\" + SelectBase + "\\data.bdx");
+                foreach (string tmp in baseData)
+                {
+                    string[] Value = tmp.Split('|');
+                    if (Value[0] == "Current Version") // 데이터 집합 중 현재버전만.
+                    {
+                        if (SelectBase == Value[1]) // 베이스팩 요구버전과 베이스팩 현재버전이 같으면
+                        {
+                            BaseVersion = Value[1];
+                            SetState("베이스팩 로컬 데이터 분석 완료");
+                            break; // 찾을거 다 찾았으면 가차없이 반복문 탈출 해부러~~
+                        }
+                    }
+                }
+            }
+            catch // 데이터 로드중 문제 발생, 신규 설치로 간주
+            {
+                // BaseVersion이 이미 null로 초기화 되어있으므로 그냥 진행.
+                SetState("베이스팩 신규설치");
+            }
+
+            // 2. 설치 & 업데이트
+            // 로드한 데이터를 바탕으로 설치 또는 업데이트를 시행함.
+            SetState("진행바 최대값 설정");
+            if (ModVersion != SelectMod) // 모드팩 희망버전과 로컬버전이 다를경우,
+                pb_Load.Maximum += LengthMod;
+            if (BaseVersion != SelectBase) // 베이스팩 희망버전과 로컬버전이 다를경우,
+                pb_Load.Maximum += LengthBase;
+
+            SetState("설치 및 업데이트 진행");
+            if (ModVersion != SelectMod) // 모드팩 희망버전과 로컬버전이 다를경우,
+            {
+                InstallMod(MUID, SelectMod, RelativeMod); // 모드팩 설치 및 업데이트 진행
+            }
+            if (BaseVersion != SelectBase) // 베이스팩 희망버전과 로컬버전이 다를경우,
+            {
+                InstallBase(BUID, SelectBase); // 베이스팩 설치 및 업데이트 진행
+            }
+            SetState("정상적으로 설치되었습니다.");
+            return BUID + "|" + SelectBase + "|" + SelectMod; // 'BUID|요구버전' 반환
         }
 
         /// <summary>
         /// 베이스팩을 설치 및 업데이트합니다.
         /// </summary>
-        private void InstallBase()
+        /// <param name="BUID">BUID 값</param>
+        /// <param name="Version">설치버전</param>
+        private void InstallBase(string BUID, string Version)
         {
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, BUID); // 선택된 팩정보로 인스턴스 생성
+            MAR.LoadBase(Version); SetState("모드팩 설치 데이터 로드 성공"); // 모드팩 설치 데이터 로드
+            string[] Dir = MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Directory"); // 디렉토리 배열 받아옴
+            string[] Hash = MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Hash"); // 해시 배열 받아옴
+            Protection Pro = new Protection();
+            string BasePath = User.BSL_Root + "Base\\" + BUID + "\\" + Version + "\\"; // 모드팩 기본 경로
+            string FileServer = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Down");
 
+            foreach (string tmp in Dir)
+            {
+                Directory.CreateDirectory(BasePath + tmp); // 디렉토리 생성
+                pb_Load.PerformStep(); // 진행
+                SetState("디렉토리 생성 : " + tmp);
+            }
+
+            foreach (string tmp in Hash)
+            {
+                string[] Data = tmp.Split('|');
+
+                if (Pro.MD5Hash(BasePath + Data[0]) != Data[1])
+                {
+                    WebClient WC = new WebClient();
+                    try
+                    {
+                        WC.DownloadFile(FileServer + Version + "\\" + Data[0], BasePath + Data[0]); // 파일 다운로드
+                        SetState("다운로드 : " + Data[0]);
+                    }
+                    catch
+                    {
+                        SetState("다운로드 실패 : " + Data[0]);
+                        Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
+                    }
+                }
+                else
+                {
+                    SetState("최신버전 : " + Data[0]);
+                }
+                pb_Load.PerformStep(); // 진행
+            }
+            string[] versionData = { "Current Version|" + Version }; // 신규설치일때 기본값을 그대로 작성
+
+            Common.WriteBDXFile(BasePath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
+            SetState("베이스팩 설치 완료");
         }
 
         /// <summary>
         /// 모드팩을 설치 및 업데이트합니다.
         /// </summary>
-        private void InstallMod(string MUID, string Version)
+        /// <param name="MUID">MUID값</param>
+        /// <param name="Version">설치 절대버전</param>
+        /// <param name="RelativeVersion">설치 상대버전</param>
+        private void InstallMod(string MUID, string Version, string RelativeVersion)
         {
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
-            MAR.LoadMod(Version); // 모드팩 설치 데이터 로드
+            MAR.LoadMod(Version); SetState("모드팩 설치 데이터 로드 성공"); // 모드팩 설치 데이터 로드
             string[] Dir = MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"); // 디렉토리 배열 받아옴
             string[] Hash = MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"); // 해시 배열 받아옴
             Protection Pro = new Protection();
-            string PackPath = User.BSL_Root + "ModPack\\" + MUID + "\\"; // 모드팩 기본 경로
+            string RootPath = User.BSL_Root + "ModPack\\" + MUID + "\\"; // 모드팩 루트 경로
+            string PackPath = RootPath + Version + "\\"; // 모드팩 기본 경로
             string FileServer = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
 
             foreach (string tmp in Dir)
             {
                 Directory.CreateDirectory(PackPath + tmp); // 디렉토리 생성
+                pb_Load.PerformStep(); // 진행
                 SetState("디렉토리 생성 : " + tmp);
             }
 
@@ -282,8 +448,42 @@ namespace Bell_Smart_Tools.Source.BSL
                 {
                     SetState("최신버전 : " + Data[0]);
                 }
+                pb_Load.PerformStep(); // 진행
             }
 
+            string[] baseData = { "Select Version|" + RelativeVersion }; // 신규설치일때 기본값을 그대로 작성
+            string[] versionData = { "Current Version|" + Version }; // 신규설치일때 기본값을 그대로 작성
+            string[] localData = null;
+            try
+            {
+                List<string> list = new List<string>();
+                localData = Common.ReadBDXFile(PackPath + "data.bdx"); // 저장되있는 클라이언트 데이터를 불러옴
+                foreach (string tmp in localData)
+                {
+                    string[] Value = tmp.Split('|');
+                    switch (Value[0])
+                    {
+                        case "Select Version":
+                            list.Add("Select Version|" + Version);
+                            break;
+
+                        default:
+                            list.Add(tmp); // 현재 데이터 그대로 추가
+                            break;
+                    }
+                }
+                baseData = list.ToArray();
+                SetState("모드팩 업데이트 완료");
+            }
+            catch
+            {
+                // 실패 시 신규설치로 간주
+                SetState("모드팩 신규설치 완료");
+            }
+
+            Common.WriteBDXFile(RootPath + "data.bdx", baseData); // 모드팩 전체 데이터 저장
+            Common.WriteBDXFile(PackPath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
+            SetState("모드팩 데이터 작성 완료");
         }
         private void lst_ModPack_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -301,6 +501,7 @@ namespace Bell_Smart_Tools.Source.BSL
                 ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
                 try
                 {
+                    // 선택 모드팩 버전 리스트 로드
                     cb_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Mod)); // 선택 모드팩 버전정보 삽입!
                 }
                 catch
@@ -308,6 +509,24 @@ namespace Bell_Smart_Tools.Source.BSL
                     Common.Message("버전정보 로드중 문제가 발생하였습니다.");
                     return;
                 }
+                // 마지막에 실행했던 버전 로드
+                try
+                {
+                    string[] modData = Common.ReadBDXFile(User.BSL_Root + "\\ModPack\\" + MUID + "\\data.bdx"); // 클라이언트 모드팩 데이터 로드
+                    foreach (string tmp in modData)
+                    {
+                        string[] Value = tmp.Split('|');
+                        if (Value[0] == "Select Version") // 데이터 집합 중 현재 버전 데이터일경우
+                        {
+                            cb_Version.SelectedItem = Value[1]; // 마지막 실행했던 버전으로 선택
+                            break; // 필요한거 얻었응께 나머지 버리고 나와브러~
+                        }
+                    }
+                }
+                catch // 데이터 로드중 예외 오류가 날 경우 미설치
+                {
+                }
+
                 wb_PackNews.AllowNavigation = true; // 뉴스페이지를 바꿔야되니 잠시 페이지 이동 허용해주고!
                 string News = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
                 Uri URI = new Uri(News);
@@ -336,6 +555,7 @@ namespace Bell_Smart_Tools.Source.BSL
         private void BSL_Main_Load(object sender, EventArgs e)
         {
             Initialize(); // 초기화
+            lst_ModPack_SelectedIndexChanged(sender, e); // 처음 런처를 키면 버전 리스트가 제대로 로드가 안되서 직접 실행
         }
 
         private void cb_SelectedIndexChanged(object sender, EventArgs e)
@@ -358,15 +578,34 @@ namespace Bell_Smart_Tools.Source.BSL
         {
             btn_Launch.Enabled = false;
             string MUID = lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex]; SetState("MUID 로드 성공");
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
-            InstallMod(MUID, "8.6.0"); SetState("버전 설치정보 로드 성공");
+            string SelectMod = (string)cb_Version.SelectedItem; // 모드팩 선택 버전
+            string AbsoluteMod; // 모드팩 선택 절대버전
+            string BUID;
+            string SelectBase;
+            string[] Data;
+
+            pb_Load.Value = 0;
+            pb_Load.Maximum = 0;
+            pb_Load.Maximum += 5;
+            Data = CheckInstall(User.BSL_Root, MUID, SelectMod).Split('|'); // 클라이언트 설치 & 업데이트
+            BUID = Data[0];
+            SelectBase = Data[1];
+            AbsoluteMod = Data[2];
+            pb_Load.PerformStep(); // 진행
             
-            CheckInstall(); // 클라이언트 설치 & 업데이트
             BSL_Profile BSLP = new BSL_Profile((string)cb_Profile.SelectedItem); // 선택한 프로필로 데이터를 초기화함.
-            Enjoy(MUID, User.BSL_Root + "Base\\BCP_1.7.10\\", User.BSL_Root + "ModPack\\BellCraft8\\", BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
+            string PathBase = User.BSL_Root + "Base\\" + BUID + "\\" + SelectBase + "\\";
+            string PathPack = User.BSL_Root + "ModPack\\" + MUID + "\\" + AbsoluteMod + "\\";
+            pb_Load.PerformStep(); // 진행
+            Enjoy(MUID, PathBase, PathPack, BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
+            pb_Load.PerformStep(); // 진행
+            string[] tmp = {"Select Version|" + SelectMod};
+            Common.WriteBDXFile(User.BSL_Root + "ModPack\\" + MUID + "\\" + "data.bdx", tmp); // 현재 실행한 버전을 저장함.
+            pb_Load.PerformStep(); // 진행
+
             SaveSetting(); SetState("클라이언트 설정정보 저장 성공"); // 클라이언트 설정 저장.
-            SetState("정상적으로 실행되었습니다.");
-            btn_Launch.Enabled = true;
+            pb_Load.Value = pb_Load.Maximum; // 진행
+            btn_Launch.Enabled = true; SetState("정상적으로 실행되었습니다.");
         }
 
         private void btn_Option_Click(object sender, EventArgs e)

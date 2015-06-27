@@ -43,6 +43,7 @@
             this.txt_Detail = new System.Windows.Forms.TextBox();
             this.btn_Option = new System.Windows.Forms.Button();
             this.btn_Edit = new System.Windows.Forms.Button();
+            this.cb_Force = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -184,6 +185,16 @@
             this.btn_Edit.UseVisualStyleBackColor = true;
             this.btn_Edit.Click += new System.EventHandler(this.btn_Edit_Click);
             // 
+            // cb_Force
+            // 
+            this.cb_Force.AutoSize = true;
+            this.cb_Force.Location = new System.Drawing.Point(455, 269);
+            this.cb_Force.Name = "cb_Force";
+            this.cb_Force.Size = new System.Drawing.Size(76, 16);
+            this.cb_Force.TabIndex = 14;
+            this.cb_Force.Text = "강제 설치";
+            this.cb_Force.UseVisualStyleBackColor = true;
+            // 
             // BSL_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -191,6 +202,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(648, 317);
+            this.Controls.Add(this.cb_Force);
             this.Controls.Add(this.btn_Edit);
             this.Controls.Add(this.btn_Option);
             this.Controls.Add(this.txt_Detail);
@@ -236,5 +248,6 @@
         private System.Windows.Forms.TextBox txt_Detail;
         private System.Windows.Forms.Button btn_Option;
         private System.Windows.Forms.Button btn_Edit;
+        private System.Windows.Forms.CheckBox cb_Force;
     }
 }

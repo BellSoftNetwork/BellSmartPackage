@@ -572,16 +572,23 @@ namespace BellLib.Class
         /// <returns>팩 리스트</returns>
         public string[] GetList(PackType pt)
         {
-            switch (pt)
+            try
             {
-                case PackType.Mod:
-                    return InfoModpack._List;
+                switch (pt)
+                {
+                    case PackType.Mod:
+                        return InfoModpack._List;
 
-                case PackType.Base:
-                    return InfoBasepack._List;
+                    case PackType.Base:
+                        return InfoBasepack._List;
 
-                case PackType.Option:
-                    return InfoOptionpack._List;
+                    case PackType.Option:
+                        return InfoOptionpack._List;
+                }
+            }
+            catch
+            {
+                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
             }
             return null;
         }
@@ -608,7 +615,11 @@ namespace BellLib.Class
                     case PackType.Option:
                         return (string)typeof(Info_Optionpack).GetField(Name).GetValue(this.InfoOptionpack);
                 }
-            } catch { }
+            }
+            catch
+            {
+                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+            }
             return null;
         }
 
@@ -634,7 +645,10 @@ namespace BellLib.Class
                         return (string)typeof(Ver_Optionpack).GetField(Name).GetValue(this.VerOptionpack);
                 }
             }
-            catch { }
+            catch
+            {
+                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+            }
             return null;
         }
 
@@ -646,16 +660,23 @@ namespace BellLib.Class
         /// <returns>설치 정보값 배열</returns>
         public string[] GetInstallData(PackType pt, string Name)
         {
-            switch (pt)
+            try
             {
-                case PackType.Mod:
-                    return (string[])typeof(Ver_Modpack).GetField(Name).GetValue(this.VerModpack);
+                switch (pt)
+                {
+                    case PackType.Mod:
+                        return (string[])typeof(Ver_Modpack).GetField(Name).GetValue(this.VerModpack);
 
-                case PackType.Base:
-                    return (string[])typeof(Ver_Basepack).GetField(Name).GetValue(this.VerBasepack);
+                    case PackType.Base:
+                        return (string[])typeof(Ver_Basepack).GetField(Name).GetValue(this.VerBasepack);
 
-                case PackType.Option:
-                    return (string[])typeof(Ver_Optionpack).GetField(Name).GetValue(this.VerOptionpack);
+                    case PackType.Option:
+                        return (string[])typeof(Ver_Optionpack).GetField(Name).GetValue(this.VerOptionpack);
+                }
+            }
+            catch
+            {
+                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
             }
             return null;
         }

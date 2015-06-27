@@ -357,7 +357,10 @@ namespace BellLib.Class
                 string data = ReadBDFile(Path);
                 doc.LoadXml(data);
             }
-            catch { return new string[] {string.Empty}; }
+            catch
+            {
+                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+            }
             xnList = doc.SelectNodes("/BDX/DATA");
 
             StringBuilder str = new StringBuilder();
