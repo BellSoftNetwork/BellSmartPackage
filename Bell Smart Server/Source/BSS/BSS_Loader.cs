@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BellLib.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,9 +12,16 @@ namespace Bell_Smart_Server.Source.BSS
 {
     public partial class BSS_Loader : Form
     {
-        public BSS_Loader()
+        public BSS_Loader(string ID)
         {
-            InitializeComponent();
+            if (ID == "bell04204@gmail.com")
+            {
+                InitializeComponent();
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private bool Initialize()
@@ -44,9 +52,12 @@ namespace Bell_Smart_Server.Source.BSS
         {
             if (Initialize())
             {
-                BSS_Main Main = new BSS_Main();
-                Main.Show();
-                this.Close();
+                if (User.BSN_Email == "bell04204@gmail.com")
+                {
+                    BSS_Main Main = new BSS_Main();
+                    Main.Show();
+                    this.Close();
+                }
             }
         }
     }

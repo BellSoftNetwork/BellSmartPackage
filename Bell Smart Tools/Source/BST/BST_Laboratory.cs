@@ -22,8 +22,6 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void Button_TicTacToe_Click(object sender, EventArgs e)
         {
-            //var game = new BST_TicTacToe();
-            //game.Show();
             ReflectionExample.Example();
         }
 
@@ -44,30 +42,6 @@ namespace Bell_Smart_Tools.Source.BST
             SocketClient SC = new SocketClient("127.0.0.1");
             SC.Send(textBox3.Text);
             textBox3.Text = null;
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            /*Protection pt = new Protection();
-            textBox5.Text = pt.Base64(textBox4.Text, Protection.ProtectionType.PROTECTION_ENCODE);*/
-            textBox5.Text = Common.WriteBDText(textBox4.Text);
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            /*Protection pt = new Protection();
-            textBox4.Text = pt.Base64(textBox5.Text, Protection.ProtectionType.PROTECTION_DECODE);*/
-            textBox4.Text = Common.ReadBDText(textBox5.Text);
-        }
-        
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string[] tmp = { "test|value", "test2|Value" };
-            Common.WriteBDXFile(User.BSN_Path + "Test.bdx", tmp);
-            string temp = null;
-            foreach (string tmm in Common.ReadBDXFile(User.BSN_Path + "Test.bdx"))
-                temp += tmm;
-            Common.Message(temp);
         }
     }
 }

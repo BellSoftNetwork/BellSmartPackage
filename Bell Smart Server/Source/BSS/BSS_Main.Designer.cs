@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSS_Main));
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_ModManager = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // btn_ModManager
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(449, 151);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Mod Manager";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_ModManager.Location = new System.Drawing.Point(274, 77);
+            this.btn_ModManager.Name = "btn_ModManager";
+            this.btn_ModManager.Size = new System.Drawing.Size(187, 86);
+            this.btn_ModManager.TabIndex = 0;
+            this.btn_ModManager.Text = "모드 매니저";
+            this.btn_ModManager.UseVisualStyleBackColor = true;
+            this.btn_ModManager.Click += new System.EventHandler(this.btn_ModManager_Click);
             // 
             // BSS_Main
             // 
@@ -48,7 +48,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(473, 175);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_ModManager);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -62,6 +62,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_ModManager;
     }
 }

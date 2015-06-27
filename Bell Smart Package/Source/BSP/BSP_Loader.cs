@@ -97,6 +97,10 @@ namespace Bell_Smart_Package.Source.BSP
                 // 되는지 안되는지는 모르는 소스.
                 Log("Program parameter loading");
                 string[] tmp = Environment.GetCommandLineArgs(); // 프로그램 파라미터 로드
+                /*string Temp = string.Empty;
+                foreach (string tp in tmp)
+                    Temp += tp + Environment.NewLine;
+                Common.Message(Temp);*/
                 string[] Parameter = tmp[0].Split('='); // 파라미터 파싱
                 if (Parameter[0] == "Debug") // 파라미터가 디버그일경우
                 {

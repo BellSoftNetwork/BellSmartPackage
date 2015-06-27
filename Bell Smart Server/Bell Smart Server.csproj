@@ -123,6 +123,12 @@
     <Compile Include="Source\BSU\BSU_ModManager.Designer.cs">
       <DependentUpon>BSU_ModManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BSU\BSU_RuntimeManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSU\BSU_RuntimeManager.Designer.cs">
+      <DependentUpon>BSU_RuntimeManager.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BSU\BSU_ModManager.resx">
       <DependentUpon>BSU_ModManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSU\BSU_RuntimeManager.resx">
+      <DependentUpon>BSU_RuntimeManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Bell Smart Server_Key.pfx" />
     <None Include="Properties\app.manifest" />

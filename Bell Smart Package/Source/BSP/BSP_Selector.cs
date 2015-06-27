@@ -10,6 +10,7 @@ using Bell_Smart_Server.Source.BSS;
 using Bell_Smart_Tools.Source.BST;
 using System.IO;
 using BellLib.Class;
+using BellLib.Data;
 
 namespace Bell_Smart_Package.Source.BSP
 {
@@ -45,7 +46,7 @@ namespace Bell_Smart_Package.Source.BSP
         {
             if (!Sel)
             {
-                BSS_Loader BSS = new BSS_Loader();
+                BSS_Loader BSS = new BSS_Loader(User.BSN_Email);
                 BSS.Show();
                 this.Close();
                 Sel = true;
@@ -59,10 +60,7 @@ namespace Bell_Smart_Package.Source.BSP
         /// <param name="e"></param>
         private void BSP_Selector_Shown(object sender, EventArgs e)
         {
-            /*BST_Loader BST = new BST_Loader();
-            BST.Show();
-            this.Close();*/
-            if (!File.Exists(Application.StartupPath + "\\Bell Smart Server.exe") && !Sel) // BSS 파일이 없으면,
+            if ((!File.Exists(Application.StartupPath + "\\Bell Smart Server.exe") && !Sel) || User.BSN_Email != "bell04204@gmail.com") // BSS 파일이 없으면,
             {
                 btn_BST_Click(sender, e); // 그냥 바로 BST 실행
                 this.Close();

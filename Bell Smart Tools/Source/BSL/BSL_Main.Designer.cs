@@ -33,9 +33,6 @@
             this.wb_PackNews = new System.Windows.Forms.WebBrowser();
             this.btn_Launch = new System.Windows.Forms.Button();
             this.cb_Version = new System.Windows.Forms.ComboBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.도구ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.정보ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pb_Load = new System.Windows.Forms.ProgressBar();
             this.lb_State = new System.Windows.Forms.Label();
             this.cb_AutoUpdate = new System.Windows.Forms.CheckBox();
@@ -44,7 +41,6 @@
             this.btn_Option = new System.Windows.Forms.Button();
             this.btn_Edit = new System.Windows.Forms.Button();
             this.cb_Force = new System.Windows.Forms.CheckBox();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lst_ModPack
@@ -87,31 +83,6 @@
             this.cb_Version.Name = "cb_Version";
             this.cb_Version.Size = new System.Drawing.Size(181, 20);
             this.cb_Version.TabIndex = 3;
-            this.cb_Version.SelectedIndexChanged += new System.EventHandler(this.cb_SelectedIndexChanged);
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.도구ToolStripMenuItem,
-            this.정보ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(648, 24);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.ms_ItemClicked);
-            // 
-            // 도구ToolStripMenuItem
-            // 
-            this.도구ToolStripMenuItem.Name = "도구ToolStripMenuItem";
-            this.도구ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.도구ToolStripMenuItem.Text = "도구";
-            // 
-            // 정보ToolStripMenuItem
-            // 
-            this.정보ToolStripMenuItem.Name = "정보ToolStripMenuItem";
-            this.정보ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.정보ToolStripMenuItem.Text = "정보";
             // 
             // pb_Load
             // 
@@ -214,17 +185,13 @@
             this.Controls.Add(this.btn_Launch);
             this.Controls.Add(this.wb_PackNews);
             this.Controls.Add(this.lst_ModPack);
-            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "BSL_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bell Smart Launcher";
             this.Load += new System.EventHandler(this.BSL_Main_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,9 +205,6 @@
         private System.Windows.Forms.WebBrowser wb_PackNews;
         private System.Windows.Forms.Button btn_Launch;
         private System.Windows.Forms.ComboBox cb_Version;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 도구ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 정보ToolStripMenuItem;
         private System.Windows.Forms.ProgressBar pb_Load;
         private System.Windows.Forms.Label lb_State;
         private System.Windows.Forms.CheckBox cb_AutoUpdate;

@@ -15,7 +15,6 @@ namespace Bell_Smart_Tools.Source.BST
         {
             InitializeComponent();
             RegisterEvents();
-            TextBoxFormCreator_SetDefault();
         }
 
         private void RegisterEvents()
@@ -31,10 +30,6 @@ namespace Bell_Smart_Tools.Source.BST
                     menuItem.Click += new EventHandler(mi_DebugLevel_Click);
                 }
             }
-
-            TextBoxFormCreator.Enter += new EventHandler(TextBoxFormCreator_Enter);
-            TextBoxFormCreator.Leave += new EventHandler(TextBoxFormCreator_Leave);
-            ButtonFormCreator.Click += new EventHandler(ButtonFormCreator_Click);
         }
 
         private void Initialize() // 폼 초기화
@@ -147,11 +142,6 @@ namespace Bell_Smart_Tools.Source.BST
             BSTD.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Common.CreateFormAndShow("Test_WPF");
-        }
-
         private void mi_Help_Click(object sender, EventArgs e)
         {
 
@@ -163,35 +153,10 @@ namespace Bell_Smart_Tools.Source.BST
             BSLM.Show();
         }
 
-        private void TextBoxFormCreator_Enter(object sender, EventArgs e)
+        private void mi_Reader_Click(object sender, EventArgs e)
         {
-            if (TextBoxFormCreator.ForeColor == System.Drawing.Color.Black)
-                return;
-            TextBoxFormCreator.Text = "";
-            TextBoxFormCreator.ForeColor = System.Drawing.Color.Black;
-        }
-
-        private void TextBoxFormCreator_Leave(object sender, EventArgs e)
-        {
-            if (TextBoxFormCreator.Text.Trim() == "")
-                TextBoxFormCreator_SetDefault();
-        }
-
-        private void TextBoxFormCreator_SetDefault()
-        {
-            this.TextBoxFormCreator.Text = "폼 클래스 이름...";
-            TextBoxFormCreator.ForeColor = System.Drawing.Color.Gray;
-        }
-
-        private void ButtonFormCreator_Click(object sender, EventArgs e)
-        {
-            if (TextBoxFormCreator.Text == "폼 클래스 이름...")
-            {
-                MessageBox.Show("입력이 없당");
-                return;
-            }
-
-            Common.CreateFormAndShow(TextBoxFormCreator.Text);
+            BST_Reader BSTR = new BST_Reader();
+            BSTR.Show();
         }
     }
 }

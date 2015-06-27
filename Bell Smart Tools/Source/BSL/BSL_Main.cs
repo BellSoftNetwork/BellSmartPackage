@@ -485,6 +485,15 @@ namespace Bell_Smart_Tools.Source.BSL
             Common.WriteBDXFile(PackPath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
             SetState("모드팩 데이터 작성 완료");
         }
+
+        /// <summary>
+        /// 필요한 런타임 파일을 설치합니다.
+        /// </summary>
+        private void InstallRuntime()
+        {
+
+        }
+
         private void lst_ModPack_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lst_ModPack.SelectedItem != null)
@@ -557,23 +566,7 @@ namespace Bell_Smart_Tools.Source.BSL
             Initialize(); // 초기화
             lst_ModPack_SelectedIndexChanged(sender, e); // 처음 런처를 키면 버전 리스트가 제대로 로드가 안되서 직접 실행
         }
-
-        private void cb_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ms_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void ms_BSL_PreferenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BSL_Preferences BSLP = new BSL_Preferences();
-            BSLP.ShowDialog();
-        }
-
+        
         private void btn_Launch_Click(object sender, EventArgs e)
         {
             btn_Launch.Enabled = false;

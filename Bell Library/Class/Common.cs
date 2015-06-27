@@ -159,13 +159,14 @@ namespace BellLib.Class
 
             CreateFolder(Data.User.BSN_Path + "Data");
 
-
+            
             CreateFolder(Data.User.BSL_Root + "Data");
             CreateFolder(Data.User.BSL_Root + "Data\\BSL");
             CreateFolder(Data.User.BSL_Root + "Data\\BSL\\Profile");
 
             CreateFolder(Data.User.BSL_Root + "ModPack");
             CreateFolder(Data.User.BSL_Root + "Base");
+            CreateFolder(Data.User.BSL_Root + "Runtime");
         }
 
         private static void CreateFolder(string folderPath)
