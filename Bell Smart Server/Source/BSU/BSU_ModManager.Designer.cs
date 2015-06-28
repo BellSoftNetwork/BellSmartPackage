@@ -49,7 +49,6 @@
             this.gb_Mod_Info = new System.Windows.Forms.GroupBox();
             this.btn_Mod_Set = new System.Windows.Forms.Button();
             this.lb_MUID = new System.Windows.Forms.Label();
-            this.txt_MUID = new System.Windows.Forms.TextBox();
             this.gb_Mod_Setting = new System.Windows.Forms.GroupBox();
             this.btn_Mod_DelVer = new System.Windows.Forms.Button();
             this.btn_Mod_SelectSave = new System.Windows.Forms.Button();
@@ -88,7 +87,6 @@
             this.gb_Base_Info = new System.Windows.Forms.GroupBox();
             this.btn_Base_Set = new System.Windows.Forms.Button();
             this.lb_BUID = new System.Windows.Forms.Label();
-            this.txt_BUID = new System.Windows.Forms.TextBox();
             this.gb_Base_Setting = new System.Windows.Forms.GroupBox();
             this.btn_Base_DelVer = new System.Windows.Forms.Button();
             this.btn_Base_Save = new System.Windows.Forms.Button();
@@ -125,7 +123,6 @@
             this.gb_Option_Info = new System.Windows.Forms.GroupBox();
             this.btn_Option_Set = new System.Windows.Forms.Button();
             this.lb_OUID = new System.Windows.Forms.Label();
-            this.txt_OUID = new System.Windows.Forms.TextBox();
             this.gb_Option_Setting = new System.Windows.Forms.GroupBox();
             this.btn_Option_DelVer = new System.Windows.Forms.Button();
             this.btn_Option_Save = new System.Windows.Forms.Button();
@@ -136,6 +133,9 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
+            this.cb_MUID = new System.Windows.Forms.ComboBox();
+            this.cb_BUID = new System.Windows.Forms.ComboBox();
+            this.cb_OUID = new System.Windows.Forms.ComboBox();
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.gb_Mod_Upload.SuspendLayout();
@@ -342,9 +342,9 @@
             // 
             // gb_Mod_Info
             // 
+            this.gb_Mod_Info.Controls.Add(this.cb_MUID);
             this.gb_Mod_Info.Controls.Add(this.btn_Mod_Set);
             this.gb_Mod_Info.Controls.Add(this.lb_MUID);
-            this.gb_Mod_Info.Controls.Add(this.txt_MUID);
             this.gb_Mod_Info.Dock = System.Windows.Forms.DockStyle.Top;
             this.gb_Mod_Info.Location = new System.Drawing.Point(3, 3);
             this.gb_Mod_Info.Name = "gb_Mod_Info";
@@ -374,14 +374,6 @@
             this.lb_MUID.Size = new System.Drawing.Size(43, 12);
             this.lb_MUID.TabIndex = 1;
             this.lb_MUID.Text = "MUID :";
-            // 
-            // txt_MUID
-            // 
-            this.txt_MUID.Location = new System.Drawing.Point(49, 14);
-            this.txt_MUID.Name = "txt_MUID";
-            this.txt_MUID.Size = new System.Drawing.Size(660, 21);
-            this.txt_MUID.TabIndex = 0;
-            this.txt_MUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_MUID_KeyDown);
             // 
             // gb_Mod_Setting
             // 
@@ -748,9 +740,9 @@
             // 
             // gb_Base_Info
             // 
+            this.gb_Base_Info.Controls.Add(this.cb_BUID);
             this.gb_Base_Info.Controls.Add(this.btn_Base_Set);
             this.gb_Base_Info.Controls.Add(this.lb_BUID);
-            this.gb_Base_Info.Controls.Add(this.txt_BUID);
             this.gb_Base_Info.Dock = System.Windows.Forms.DockStyle.Top;
             this.gb_Base_Info.Location = new System.Drawing.Point(3, 3);
             this.gb_Base_Info.Name = "gb_Base_Info";
@@ -779,14 +771,6 @@
             this.lb_BUID.Size = new System.Drawing.Size(40, 12);
             this.lb_BUID.TabIndex = 1;
             this.lb_BUID.Text = "BUID :";
-            // 
-            // txt_BUID
-            // 
-            this.txt_BUID.Location = new System.Drawing.Point(49, 14);
-            this.txt_BUID.Name = "txt_BUID";
-            this.txt_BUID.Size = new System.Drawing.Size(637, 21);
-            this.txt_BUID.TabIndex = 0;
-            this.txt_BUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_BUID_KeyDown);
             // 
             // gb_Base_Setting
             // 
@@ -1121,9 +1105,9 @@
             // 
             // gb_Option_Info
             // 
+            this.gb_Option_Info.Controls.Add(this.cb_OUID);
             this.gb_Option_Info.Controls.Add(this.btn_Option_Set);
             this.gb_Option_Info.Controls.Add(this.lb_OUID);
-            this.gb_Option_Info.Controls.Add(this.txt_OUID);
             this.gb_Option_Info.Location = new System.Drawing.Point(3, 3);
             this.gb_Option_Info.Name = "gb_Option_Info";
             this.gb_Option_Info.Size = new System.Drawing.Size(812, 43);
@@ -1148,17 +1132,9 @@
             this.lb_OUID.AutoSize = true;
             this.lb_OUID.Location = new System.Drawing.Point(0, 17);
             this.lb_OUID.Name = "lb_OUID";
-            this.lb_OUID.Size = new System.Drawing.Size(33, 12);
+            this.lb_OUID.Size = new System.Drawing.Size(41, 12);
             this.lb_OUID.TabIndex = 1;
-            this.lb_OUID.Text = "OUID";
-            // 
-            // txt_OUID
-            // 
-            this.txt_OUID.Location = new System.Drawing.Point(49, 14);
-            this.txt_OUID.Name = "txt_OUID";
-            this.txt_OUID.Size = new System.Drawing.Size(660, 21);
-            this.txt_OUID.TabIndex = 0;
-            this.txt_OUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_OUID_KeyDown);
+            this.lb_OUID.Text = "OUID :";
             // 
             // gb_Option_Setting
             // 
@@ -1256,6 +1232,33 @@
             this.lb_Option_Latest.TabIndex = 2;
             this.lb_Option_Latest.Text = "최신버전 :";
             // 
+            // cb_MUID
+            // 
+            this.cb_MUID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_MUID.FormattingEnabled = true;
+            this.cb_MUID.Location = new System.Drawing.Point(49, 14);
+            this.cb_MUID.Name = "cb_MUID";
+            this.cb_MUID.Size = new System.Drawing.Size(660, 20);
+            this.cb_MUID.TabIndex = 3;
+            // 
+            // cb_BUID
+            // 
+            this.cb_BUID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_BUID.FormattingEnabled = true;
+            this.cb_BUID.Location = new System.Drawing.Point(46, 14);
+            this.cb_BUID.Name = "cb_BUID";
+            this.cb_BUID.Size = new System.Drawing.Size(640, 20);
+            this.cb_BUID.TabIndex = 3;
+            // 
+            // cb_OUID
+            // 
+            this.cb_OUID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_OUID.FormattingEnabled = true;
+            this.cb_OUID.Location = new System.Drawing.Point(47, 14);
+            this.cb_OUID.Name = "cb_OUID";
+            this.cb_OUID.Size = new System.Drawing.Size(662, 20);
+            this.cb_OUID.TabIndex = 3;
+            // 
             // BSU_ModManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -1269,7 +1272,6 @@
             this.Name = "BSU_ModManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "모드팩 관리";
-            this.Shown += new System.EventHandler(this.BSU_ModManager_Shown);
             this.tc_Pack.ResumeLayout(false);
             this.tp_ModPack.ResumeLayout(false);
             this.gb_Mod_Upload.ResumeLayout(false);
@@ -1304,7 +1306,6 @@
         private System.Windows.Forms.TabPage tp_OptionPack;
         private System.Windows.Forms.GroupBox gb_Mod_Setting;
         private System.Windows.Forms.GroupBox gb_Mod_Info;
-        private System.Windows.Forms.TextBox txt_MUID;
         private System.Windows.Forms.Label lb_MUID;
         private System.Windows.Forms.Button btn_Mod_Set;
         private System.Windows.Forms.Label lb_Mod_Name;
@@ -1328,7 +1329,6 @@
         private System.Windows.Forms.GroupBox gb_Base_Info;
         private System.Windows.Forms.Button btn_Base_Set;
         private System.Windows.Forms.Label lb_BUID;
-        private System.Windows.Forms.TextBox txt_BUID;
         private System.Windows.Forms.GroupBox gb_Base_Setting;
         private System.Windows.Forms.Button btn_Base_Save;
         private System.Windows.Forms.ListBox lst_Base_Version;
@@ -1342,7 +1342,6 @@
         private System.Windows.Forms.GroupBox gb_Option_Info;
         private System.Windows.Forms.Button btn_Option_Set;
         private System.Windows.Forms.Label lb_OUID;
-        private System.Windows.Forms.TextBox txt_OUID;
         private System.Windows.Forms.GroupBox gb_Option_Setting;
         private System.Windows.Forms.Button btn_Option_Save;
         private System.Windows.Forms.ListBox lst_Option_Version;
@@ -1405,6 +1404,9 @@
         private System.Windows.Forms.Label lb_Option_Default;
         private System.Windows.Forms.ComboBox cb_Option_Default;
         private System.Windows.Forms.Button btn_Option_Apply;
+        private System.Windows.Forms.ComboBox cb_MUID;
+        private System.Windows.Forms.ComboBox cb_BUID;
+        private System.Windows.Forms.ComboBox cb_OUID;
 
     }
 }

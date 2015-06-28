@@ -29,10 +29,20 @@ namespace Bell_Smart_Server.Source.BSU
             llb_Base_Upload.Text = "업로드 폴더 : " + (string)llb_Base_Upload.Tag;
             llb_Option_Upload.Tag = User.BSN_Path + "Upload\\OptionPack\\";
             llb_Option_Upload.Text = "업로드 폴더 : " + (string)llb_Option_Upload.Tag;
+
+            ModAnalysisRead MAR = new ModAnalysisRead();
+            cb_MUID.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Mod));
+            cb_MUID.SelectedIndex = 0;
+
+            cb_BUID.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Base));
+            cb_BUID.SelectedIndex = 0;
+
+            cb_OUID.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Option));
+            cb_OUID.SelectedIndex = 0;
         }
         private bool InitializeMod()
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, (string)cb_MUID.SelectedItem);
 
             if (MAR.Availability())
             {
@@ -52,11 +62,11 @@ namespace Bell_Smart_Server.Source.BSU
                 txt_Mod_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
 
                 cb_Mod_Base.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Base));
-                txt_BUID.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
-                cb_Mod_Base.SelectedItem = txt_BUID.Text;
+                cb_BUID.SelectedItem = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
+                cb_Mod_Base.SelectedItem = (string)cb_BUID.SelectedItem;
                 cb_Mod_Option.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Option));
-                txt_OUID.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
-                cb_Mod_Option.SelectedItem = txt_OUID.Text;
+                cb_OUID.SelectedItem = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
+                cb_Mod_Option.SelectedItem = (string)cb_OUID.SelectedItem;
 
                 string[] Ver_Base = { "Latest", "Recommended" };
                 cb_Mod_Base_Ver.Items.AddRange(Ver_Base);
@@ -98,9 +108,9 @@ namespace Bell_Smart_Server.Source.BSU
             {
                 if (InitializeMod())
                 {
-                    txt_MUID.ReadOnly = true;
+                    //txt_MUID.ReadOnly = true;
                     //gb_Mod_Info.Enabled = false;
-                    txt_MUID.Enabled = false;
+                    cb_MUID.Enabled = false;
                     gb_Mod_Setting.Enabled = true;
                     gb_Mod_Upload.Enabled = true;
 
@@ -120,7 +130,7 @@ namespace Bell_Smart_Server.Source.BSU
             { // 모드팩 삭제하기
                 if (Common.Message("정말로 불러온 모드팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.","모드팩 영구 삭제",MessageBoxButtons.YesNo,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (InputBox("불러온 모드팩의 MUID값을 입력 해 주세요.", "모드팩 삭제") == txt_MUID.Text)
+                    if (InputBox("불러온 모드팩의 MUID값을 입력 해 주세요.", "모드팩 삭제") == (string)cb_MUID.SelectedItem)
                     {
                         if (InputBox("불러온 모드팩의 이름을 입력 해 주세요.", "모드팩 삭제") == txt_Mod_Name.Text)
                         {
@@ -131,7 +141,7 @@ namespace Bell_Smart_Server.Source.BSU
                                     // 모드팩 삭제 진행
                                     // 모드팩 파일 전체 삭제
                                     FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
-                                    string RootPath = "Pack/" + txt_MUID.Text + "/";
+                                    string RootPath = "Pack/" + (string)cb_MUID.SelectedItem + "/";
                                     FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
                                     
                                     // 모드팩 리스트에서 현재 모드팩 제거
@@ -139,7 +149,7 @@ namespace Bell_Smart_Server.Source.BSU
                                     ModAnalysisRead MAR = new ModAnalysisRead();
                                     foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Mod))
                                     {
-                                        if (tmp != txt_MUID.Text)
+                                        if (tmp != (string)cb_MUID.SelectedItem)
                                             list.Add(tmp);
                                     }
                                     ModAnalysisWrite MAW = new ModAnalysisWrite();
@@ -198,28 +208,18 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
-            string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + txt_MUID.Text + ".xml";
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, (string)cb_MUID.SelectedItem, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + (string)cb_MUID.SelectedItem + ".xml";
             MAW.WriteXML();
             
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", xmlPath); // 모드팩 데이터 업로드
+            FTP_Info.Upload("Pack/" + (string)cb_MUID.SelectedItem + "/", xmlPath); // 모드팩 데이터 업로드
             File.Delete(xmlPath); // xml 파일 삭제
             InitializeMod(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
         }
-
-        private void BSU_ModManager_Shown(object sender, EventArgs e)
-        {
-            txt_MUID.Focus();
-        }
-
-        private void txt_MUID_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) { btn_Mod_Set_Click(sender, e); }
-        }
-        
+                
         private void btn_Mod_DelVer_Click(object sender, EventArgs e)
         {
             if (lst_Mod_Version.Items.Count > 1)
@@ -233,7 +233,7 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Mod_Setting.Enabled = false;
                 // 해당 버전을 FTP서버에서 삭제
                 FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
-                string RootPath = "Pack/" + txt_MUID.Text + "/" + SelectVer + "/";
+                string RootPath = "Pack/" + (string)cb_MUID.SelectedItem + "/" + SelectVer + "/";
                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Mod_Version.Items.Remove(lst_Mod_Version.SelectedItem);
                 gb_Mod_Setting.Enabled = true;
@@ -253,7 +253,7 @@ namespace Bell_Smart_Server.Source.BSU
                 cb_Mod_Option_Ver.Enabled = true;
                 btn_Mod_DelVer.Enabled = true;
                 btn_Mod_SelectSave.Enabled = true;
-                ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, txt_MUID.Text);
+                ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, (string)cb_MUID.SelectedItem);
                 MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
                 cb_Mod_Base_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base");
                 cb_Mod_Option_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Option");
@@ -262,7 +262,7 @@ namespace Bell_Smart_Server.Source.BSU
 
         private bool InitializeBase()
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, txt_BUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, (string)cb_BUID.SelectedItem);
 
             if (MAR.Availability())
             {
@@ -287,7 +287,7 @@ namespace Bell_Smart_Server.Source.BSU
                 if (InitializeBase())
                 {
                     //gb_Base_Info.Enabled = false;
-                    txt_BUID.Enabled = false;
+                    cb_BUID.Enabled = false;
                     gb_Base_Setting.Enabled = true;
                     gb_Base_Upload.Enabled = true;
 
@@ -304,7 +304,7 @@ namespace Bell_Smart_Server.Source.BSU
             { // 베이스팩 삭제
                 if (Common.Message("정말로 불러온 베이스팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "베이스팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (InputBox("불러온 베이스팩의 BUID값을 입력 해 주세요.", "베이스팩 삭제") == txt_BUID.Text)
+                    if (InputBox("불러온 베이스팩의 BUID값을 입력 해 주세요.", "베이스팩 삭제") == (string)cb_BUID.SelectedItem)
                     {
                         if (InputBox("불러온 베이스팩의 최신버전을 입력 해 주세요.", "베이스팩 삭제") == txt_Base_Latest.Text)
                         {
@@ -315,7 +315,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 // 베이스팩 삭제 진행
                                 // 베이스팩 파일 전체 삭제
                                 FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
-                                string RootPath = "Base/" + txt_BUID.Text + "/";
+                                string RootPath = "Base/" + (string)cb_BUID.SelectedItem + "/";
                                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
                                 
                                 // 베이스팩 리스트에서 선택된 베이스팩 제거
@@ -323,7 +323,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 ModAnalysisRead MAR = new ModAnalysisRead();
                                 foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Base))
                                 {
-                                    if (tmp != txt_BUID.Text)
+                                    if (tmp != (string)cb_BUID.SelectedItem)
                                         list.Add(tmp);
                                 }
                                 ModAnalysisWrite MAW = new ModAnalysisWrite();
@@ -347,7 +347,7 @@ namespace Bell_Smart_Server.Source.BSU
 
         private bool InitializeOption()
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, txt_OUID.Text);
+            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, (string)cb_OUID.SelectedItem);
 
             if (MAR.Availability())
             {
@@ -372,7 +372,7 @@ namespace Bell_Smart_Server.Source.BSU
                 if (InitializeOption())
                 {
                     //gb_Option_Info.Enabled = false;
-                    txt_OUID.Enabled = false;
+                    cb_OUID.Enabled = false;
                     gb_Option_Setting.Enabled = true;
                     gb_Option_Upload.Enabled = true;
 
@@ -389,7 +389,7 @@ namespace Bell_Smart_Server.Source.BSU
             { // 옵션팩 삭제
                 if (Common.Message("정말로 불러온 옵션팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "옵션팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                 {
-                    if (InputBox("불러온 옵션팩의 OUID값을 입력 해 주세요.", "옵션팩 삭제") == txt_OUID.Text)
+                    if (InputBox("불러온 옵션팩의 OUID값을 입력 해 주세요.", "옵션팩 삭제") == (string)cb_OUID.SelectedItem)
                     {
                         if (InputBox("불러온 옵션팩의 최신버전을 입력 해 주세요.", "옵션팩 삭제") == txt_Option_Latest.Text)
                         {
@@ -400,7 +400,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 // 옵션팩 삭제 진행
                                 // 옵션팩 파일 전체 삭제
                                 FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
-                                string RootPath = "Option/" + txt_OUID.Text + "/";
+                                string RootPath = "Option/" + (string)cb_OUID.SelectedItem + "/";
                                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
 
                                 // 옵션팩 리스트에서 선택된 옵션팩 제거
@@ -408,7 +408,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 ModAnalysisRead MAR = new ModAnalysisRead();
                                 foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Option))
                                 {
-                                    if (tmp != txt_OUID.Text)
+                                    if (tmp != (string)cb_OUID.SelectedItem)
                                         list.Add(tmp);
                                 }
                                 ModAnalysisWrite MAW = new ModAnalysisWrite();
@@ -443,7 +443,7 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Base_Setting.Enabled = false;
                 // 해당 버전을 FTP서버에서 삭제
                 FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
-                string RootPath = "Base/" + txt_BUID.Text + "/" + SelectVer + "/";
+                string RootPath = "Base/" + (string)cb_BUID.SelectedItem + "/" + SelectVer + "/";
                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Base_Version.Items.Remove(lst_Base_Version.SelectedItem);
                 gb_Base_Setting.Enabled = true;
@@ -468,7 +468,7 @@ namespace Bell_Smart_Server.Source.BSU
                 gb_Option_Setting.Enabled = false;
                 // 해당 버전을 FTP서버에서 삭제
                 FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
-                string RootPath = "Option/" + txt_OUID.Text + "/" + SelectVer + "/";
+                string RootPath = "Option/" + (string)cb_OUID.SelectedItem + "/" + SelectVer + "/";
                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Option_Version.Items.Remove(lst_Option_Version.SelectedItem);
                 gb_Option_Setting.Enabled = true;
@@ -479,17 +479,7 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
             }
         }
-
-        private void txt_BUID_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) { btn_Base_Set_Click(sender, e); }
-        }
-
-        private void txt_OUID_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter) { btn_Option_Set_Click(sender, e); }
-        }
-
+        
         private void btn_Mod_SelectSave_Click(object sender, EventArgs e)
         {
             bool stop = false;
@@ -502,7 +492,7 @@ namespace Bell_Smart_Server.Source.BSU
                 return;
             }
             string SetVer = (string)lst_Mod_Version.SelectedItem;
-            string MUID = txt_MUID.Text;
+            string MUID = (string)cb_MUID.SelectedItem;
             string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml";
             ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID);
             ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID);
@@ -527,13 +517,13 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, (string)cb_BUID.SelectedItem, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            string xmlPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + txt_BUID.Text + ".xml";
-            FTP_Info.Upload("Base/" + txt_BUID.Text + "/", xmlPath); // 베이스팩 데이터 업로드
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + (string)cb_BUID.SelectedItem + ".xml";
+            FTP_Info.Upload("Base/" + (string)cb_BUID.SelectedItem + "/", xmlPath); // 베이스팩 데이터 업로드
             File.Delete(xmlPath); // xml 삭제
             InitializeBase(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
@@ -551,13 +541,13 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
+            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, (string)cb_OUID.SelectedItem, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
-            string xmlPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + txt_OUID.Text + ".xml";
-            FTP_Info.Upload("Option/" + txt_OUID.Text + "/", xmlPath); // 옵션팩 데이터 업로드
+            string xmlPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + (string)cb_OUID.SelectedItem + ".xml";
+            FTP_Info.Upload("Option/" + (string)cb_OUID.SelectedItem + "/", xmlPath); // 옵션팩 데이터 업로드
             File.Delete(xmlPath); // 데이터 삭제
 
             InitializeOption(); // 다시한번 로드
@@ -605,7 +595,7 @@ namespace Bell_Smart_Server.Source.BSU
             List<string> list = new List<string>();
             Protection Pro = new Protection();
             string SetVer = txt_Mod_Version.Text; // 업로드시 설정 버전
-            string MUID = txt_MUID.Text; // MUID
+            string MUID = (string)cb_MUID.SelectedItem; // MUID
             string LocalRoot = (string)llb_Mod_Upload.Tag; // 업로드 루트폴더
             string RequireBase = (string)cb_Mod_Base_Upload.SelectedItem; // 필요 베이스팩 버전
             string RequireOption = (string)cb_Mod_Option_Upload.SelectedItem; // 필요 옵션팩 버전
@@ -732,7 +722,7 @@ namespace Bell_Smart_Server.Source.BSU
             Protection Pro = new Protection();
             string[] FileArray = lst_Base_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
             string SetVer = txt_Base_Version.Text; // 업로드시 설정버전
-            string BUID = txt_BUID.Text; // BUID
+            string BUID = (string)cb_BUID.SelectedItem; // BUID
             string LocalRoot = (string)llb_Base_Upload.Tag; // 업로드 루트폴더
             string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
             string[] Hash; // 파일 해시
@@ -860,7 +850,7 @@ namespace Bell_Smart_Server.Source.BSU
             Protection Pro = new Protection();
             string SetVer = txt_Option_Version.Text;
             string[] FileArray; // = lst_Option_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
-            string OUID = txt_OUID.Text; // OUID
+            string OUID = (string)cb_OUID.SelectedItem; // OUID
             string LocalRoot = (string)llb_Option_Upload.Tag; // 업로드 루트폴더
             string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
 
