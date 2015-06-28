@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Windows.Forms;
 
 namespace BellLib.Class
 {
@@ -22,6 +23,13 @@ namespace BellLib.Class
 
 
         //ftpUtil 객체를 생성할때 생성자에 인자로 필요한 값들을 넣어준다.
+        /// <summary>
+        /// FTPUtill을 초기화합니다.
+        /// </summary>
+        /// <param name="ip">FTP 서버 IP</param>
+        /// <param name="id">FTP 계정 ID</param>
+        /// <param name="pw">FTP 계정 PW</param>
+        /// <param name="port">FTP 포트</param>
         public FTPUtil(string ip, string id, string pw, string port = "21")
         {
             ftpServerIP = ip;   //FTP 서버주소
@@ -101,8 +109,56 @@ namespace BellLib.Class
 
         }
 
-        //파일 삭제         
-        public void DeleteFTP(string fileName)
+        /// <summary>
+        /// FTP 서버에서 지정한 폴더의 파일들을 전부 삭제합니다. (하위폴더 포함)
+        /// </summary>
+        /// <param name="dirPath">삭제할 디렉토리 경로</param>
+        public void DeletePath(string dirPath)
+        {
+            string[] FileList = GetFileList(dirPath); // 지정한 경로의 파일리스트 받아옴
+            try
+            {
+                foreach (string FilePath in FileList)
+                {
+                    // 파일인지 경로인지 판단 후 파일이면 파일만 삭제, 경로면 재귀함수 호출 (판단이 복잡해서 보류)
+                    string[] Data = FilePath.Split('.');
+                    string[] Extension = { "jar", "exe", "cfg", "dat", "zip", "ini", "txt", "conf", "json", "xml", "prop", "png", "dll" };
+                    bool isFile = false;
+                    
+                    foreach (string Ext in Extension)
+                    { // 확장자 검사
+                        if (Data[Data.Length - 1] == Ext)
+                        {
+                            isFile = true;
+                            break;
+                        }
+                    }
+
+                    if (isFile) // 이 경로가 파일이면,
+                    {
+                        DeleteFile(dirPath + FilePath); // 파일 삭제
+                    }
+                    else
+                    { // 이 경로가 디렉토리이면,
+                        DeleteFile(dirPath + FilePath); // 디렉토리가 아닐수도 있으니 삭제 시도
+                        DeletePath(dirPath + FilePath + "/"); // 재귀함수 호출
+                    }
+                    Application.DoEvents();
+                }
+            }
+            catch
+            {
+            }
+
+            // 위에서 하위폴더 다 삭제했으므로
+            RemoveDir(dirPath); // 루트 디렉토리 삭제
+        }
+
+        /// <summary>
+        /// FTP 서버에 업로드된 파일을 삭제합니다.
+        /// </summary>
+        /// <param name="fileName">파일 경로</param>
+        public void DeleteFile(string fileName)
         {
             try
             {
@@ -128,6 +184,35 @@ namespace BellLib.Class
             //catch (Exception ex){MessageBox.Show(ex.Message, "FTP 2.0 Delete");}
         }
 
+        /// <summary>
+        /// FTP 서버에 생성된 디렉토리를 삭제합니다.
+        /// </summary>
+        /// <param name="dirName">디렉토리 경로</param>
+        public void RemoveDir(string dirName)
+        {
+            try
+            {
+                string uri = "ftp://" + ftpServerIP + "/" + dirName;
+                FtpWebRequest reqFTP;
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + dirName));
+
+                reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
+                reqFTP.KeepAlive = false;
+                reqFTP.Method = WebRequestMethods.Ftp.RemoveDirectory;
+
+                string result = String.Empty;
+                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
+                long size = response.ContentLength;
+                Stream datastream = response.GetResponseStream();
+                StreamReader sr = new StreamReader(datastream);
+                result = sr.ReadToEnd();
+                sr.Close();
+                datastream.Close();
+                response.Close();
+            }
+            catch { return; }
+            //catch (Exception ex){MessageBox.Show(ex.Message, "FTP 2.0 Delete");}
+        }
 
         public bool GetFilesInfo(string filename, ref DateTime dt)
         {
@@ -187,6 +272,11 @@ namespace BellLib.Class
             //catch (Exception ex){System.Windows.Forms.MessageBox.Show(ex.Message);return files;}
         }
 
+        /// <summary>
+        /// FTP 서버에 업로드된 파일 및 디렉토리 리스트를 반환합니다.
+        /// </summary>
+        /// <param name="subFolder">FTP 경로</param>
+        /// <returns>파일 및 디렉토리 배열</returns>
         public string[] GetFileList(string subFolder)
         {
             string[] downloadFiles;
@@ -356,6 +446,10 @@ namespace BellLib.Class
             */
         }
 
+        /// <summary>
+        /// FTP 서버에 디렉토리를 생성합니다.
+        /// </summary>
+        /// <param name="dirName">생성할 디렉토리 경로</param>
         public void MakeDir(string dirName)
         {
             FtpWebRequest reqFTP;

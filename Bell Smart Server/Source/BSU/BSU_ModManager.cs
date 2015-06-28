@@ -160,7 +160,20 @@ namespace Bell_Smart_Server.Source.BSU
         {
             if (lst_Mod_Version.Items.Count > 1)
             {
+                string SelectVer = (string)lst_Mod_Version.SelectedItem;
+                if (txt_Mod_Latest.Text == SelectVer || txt_Mod_Recommended.Text == SelectVer) // 최신버전이나 권장버전이 삭제하려는 버전이면 먼저 버전 수정 요청
+                {
+                    Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
+                    return;
+                }
+                gb_Mod_Setting.Enabled = false;
+                // 해당 버전을 FTP서버에서 삭제
+                FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+                string RootPath = "Pack/" + txt_MUID.Text + "/" + SelectVer + "/";
+                FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Mod_Version.Items.Remove(lst_Mod_Version.SelectedItem);
+                gb_Mod_Setting.Enabled = true;
+                btn_Mod_Save_Click(sender, e);
             }
             else
             {
@@ -259,7 +272,20 @@ namespace Bell_Smart_Server.Source.BSU
         {
             if (lst_Base_Version.Items.Count > 1)
             {
+                string SelectVer = (string)lst_Base_Version.SelectedItem;
+                if (txt_Base_Latest.Text == SelectVer || txt_Base_Recommended.Text == SelectVer) // 최신버전이나 권장버전이 삭제하려는 버전이면 먼저 버전 수정 요청
+                {
+                    Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
+                    return;
+                }
+                gb_Base_Setting.Enabled = false;
+                // 해당 버전을 FTP서버에서 삭제
+                FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+                string RootPath = "Base/" + txt_BUID.Text + "/" + SelectVer + "/";
+                FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Base_Version.Items.Remove(lst_Base_Version.SelectedItem);
+                gb_Base_Setting.Enabled = true;
+                btn_Base_Save_Click(sender, e);
             }
             else
             {
@@ -271,7 +297,20 @@ namespace Bell_Smart_Server.Source.BSU
         {
             if (lst_Option_Version.Items.Count > 1)
             {
+                string SelectVer = (string)lst_Option_Version.SelectedItem;
+                if (txt_Option_Latest.Text == SelectVer || txt_Option_Recommended.Text == SelectVer) // 최신버전이나 권장버전이 삭제하려는 버전이면 먼저 버전 수정 요청
+                {
+                    Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
+                    return;
+                }
+                gb_Option_Setting.Enabled = false;
+                // 해당 버전을 FTP서버에서 삭제
+                FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+                string RootPath = "Option/" + txt_OUID.Text + "/" + SelectVer + "/";
+                FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Option_Version.Items.Remove(lst_Option_Version.SelectedItem);
+                gb_Option_Setting.Enabled = true;
+                btn_Option_Save_Click(sender, e);
             }
             else
             {
@@ -392,6 +431,14 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
+            foreach (string tmp in lst_Mod_Version.Items)
+            {
+                if (txt_Mod_Version.Text == tmp)
+                {
+                    Common.Message("이미 서버에 등록되어 있는 버전입니다.");
+                    return;
+                }
+            }
             ModUploading(true);
             List<string> list = new List<string>();
             Protection Pro = new Protection();
@@ -510,6 +557,14 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
+            foreach (string tmp in lst_Base_Version.Items)
+            {
+                if (txt_Base_Version.Text == tmp)
+                {
+                    Common.Message("이미 서버에 등록되어 있는 버전입니다.");
+                    return;
+                }
+            }
             BaseUploading(true);
             List<string> list = new List<string>();
             Protection Pro = new Protection();
@@ -627,6 +682,14 @@ namespace Bell_Smart_Server.Source.BSU
             {
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
+            }
+            foreach (string tmp in lst_Option_Version.Items)
+            {
+                if (txt_Option_Version.Text == tmp)
+                {
+                    Common.Message("이미 서버에 등록되어 있는 버전입니다.");
+                    return;
+                }
             }
             OptionUploading(true);
             List<string> Option = new List<string>();

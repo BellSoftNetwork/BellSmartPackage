@@ -54,7 +54,6 @@
             this.Controls.Add(this.txt_Content);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BST_Reader";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "전용 텍스트 파일 리더";
             this.ResumeLayout(false);
             this.PerformLayout();

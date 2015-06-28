@@ -29,41 +29,42 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSU_RuntimeManager));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
+            this.tc_Runtime = new System.Windows.Forms.TabControl();
+            this.tp_64 = new System.Windows.Forms.TabPage();
+            this.tp_86 = new System.Windows.Forms.TabPage();
+            this.tc_Runtime.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tc_Runtime
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(391, 237);
-            this.tabControl1.TabIndex = 0;
+            this.tc_Runtime.Controls.Add(this.tp_64);
+            this.tc_Runtime.Controls.Add(this.tp_86);
+            this.tc_Runtime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tc_Runtime.Location = new System.Drawing.Point(0, 0);
+            this.tc_Runtime.Name = "tc_Runtime";
+            this.tc_Runtime.SelectedIndex = 0;
+            this.tc_Runtime.Size = new System.Drawing.Size(526, 302);
+            this.tc_Runtime.TabIndex = 0;
             // 
-            // tabPage1
+            // tp_64
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(383, 211);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "x64";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tp_64.Location = new System.Drawing.Point(4, 22);
+            this.tp_64.Name = "tp_64";
+            this.tp_64.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_64.Size = new System.Drawing.Size(518, 276);
+            this.tp_64.TabIndex = 0;
+            this.tp_64.Text = "x64";
+            this.tp_64.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tp_86
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(383, 211);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "x86";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tp_86.Location = new System.Drawing.Point(4, 22);
+            this.tp_86.Name = "tp_86";
+            this.tp_86.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_86.Size = new System.Drawing.Size(383, 211);
+            this.tp_86.TabIndex = 1;
+            this.tp_86.Text = "x86";
+            this.tp_86.UseVisualStyleBackColor = true;
             // 
             // BSU_RuntimeManager
             // 
@@ -71,22 +72,22 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(526, 302);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tc_Runtime);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "BSU_RuntimeManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "런타임 관리";
-            this.tabControl1.ResumeLayout(false);
+            this.tc_Runtime.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabControl tc_Runtime;
+        private System.Windows.Forms.TabPage tp_64;
+        private System.Windows.Forms.TabPage tp_86;
     }
 }

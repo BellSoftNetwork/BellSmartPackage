@@ -39,27 +39,29 @@ namespace Bell_Smart_Tools.Source.BSL
                     case "ID":
                         txt_ID.Text = tmp[1];
                         break;
+
                     case "PW":
                         txt_PW.Text = tmp[1];
                         cb_SavePW.Checked = true;
-                        if (txt_PW.Text != string.Empty)
+                        if (txt_PW.Text == string.Empty)
                             cb_SavePW.Checked = false;
                         break;
+
                     case "CUSTOM_JAVA":
                         cb_Java.Checked = false;
                         if (tmp[1] == "TRUE")
                             cb_Java.Checked = true;
                         break;
+
                     case "JAVA":
                         txt_Java.Text = tmp[1];
                         break;
-                    case "CUSTOM_PARAMETER":
-                        cb_Parameter.Checked = false;
-                        if (tmp[1] == "TRUE")
-                            cb_Parameter.Checked = true;
-                        break;
+
                     case "PARAMETER":
+                        cb_Parameter.Checked = true;
                         txt_Parameter.Text = tmp[1];
+                        if (txt_Parameter.Text == string.Empty)
+                            cb_Parameter.Checked = false;
                         break;
                 }
             }
@@ -70,6 +72,7 @@ namespace Bell_Smart_Tools.Source.BSL
         /// </summary>
         public enum Data
         {
+            Name,
             JAVA,
             ID,
             PW,
@@ -87,6 +90,10 @@ namespace Bell_Smart_Tools.Source.BSL
 
             switch (Value)
             {
+                case Data.Name:
+                    strTemp = ProfileName;
+                    break;
+
                 case Data.JAVA:
                     strTemp = txt_Java.Text;
                     break;
@@ -125,36 +132,60 @@ namespace Bell_Smart_Tools.Source.BSL
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
-            //string Data;
-            //StringBuilder sb = new StringBuilder();
-            List<string> list = new List<string>();
+            // 설정값 정리
+            if (txt_PW.Text == string.Empty)
+                cb_SavePW.Checked = false;
 
-            list.Add("ID|" + txt_ID.Text); //sb.AppendLine("ID=" + txt_ID.Text);
-            list.Add("PW|" + txt_PW.Text); //sb.AppendLine("PW=" + txt_PW.Text);
+            // 필드 검사
+            List<string> list = new List<string>();
+            if (txt_Name.Text == string.Empty)
+                list.Add("프로필 이름");
+            if (txt_ID.Text == string.Empty)
+                list.Add("계정 아이디");
+            if (txt_Java.Text == string.Empty)
+                list.Add("자바 실행 경로");
+
+            if (list.Count != 0) // 없는 값이 있을경우
+            {
+                string strTemp = null;
+                foreach (string tmp in list)
+                {
+                    strTemp += tmp;
+                    if (list[list.Count - 1] != tmp)
+                        strTemp += ", ";
+                }
+                Common.Message(strTemp + " 값을 입력해주세요.");
+                return;
+            }
+
+            // 저장
+            list.Clear(); // 위에서 한번 썼으니 초기화!
+
+            list.Add("ID|" + txt_ID.Text);
+            list.Add("PW|" + txt_PW.Text);
             if (cb_Java.Checked)
             {
-                list.Add("CUSTOM_JAVA|TRUE"); //sb.AppendLine("CUSTOM_JAVA=TRUE");
+                list.Add("CUSTOM_JAVA|TRUE");
             }
             else
             {
-                list.Add("CUSTOM_JAVA|FALSE"); //sb.AppendLine("CUSTOM_JAVA=FALSE");
+                list.Add("CUSTOM_JAVA|FALSE");
             }
-            list.Add("JAVA|" + txt_Java.Text); //sb.AppendLine("JAVA=" + txt_Java.Text);
-            if (cb_Parameter.Checked)
+            list.Add("JAVA|" + txt_Java.Text);
+            /*if (cb_Parameter.Checked)
             {
-                list.Add("CUSTOM_PARAMETER|TRUE"); //sb.AppendLine("CUSTOM_PARAMETER=TRUE");
+                list.Add("CUSTOM_PARAMETER|TRUE");
             }
             else
             {
-                list.Add("CUSTOM_PARAMETER|FALSE"); //sb.AppendLine("CUSTOM_PARAMETER=FALSE");
-            }
-            list.Add("PARAMETER|" + txt_Parameter.Text); //sb.AppendLine("PARAMETER=" + txt_Parameter.Text);
+                list.Add("CUSTOM_PARAMETER|FALSE");
+            }*/
+            list.Add("PARAMETER|" + txt_Parameter.Text);
 
-            //Data = sb.ToString();
             if (ProfileName != string.Empty)
                 File.Delete(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx"); // 열렸던 파일 삭제
             Common.WriteBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
-            //Common.WriteBDFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bd", Data);
+            ProfileName = txt_Name.Text;
             
             this.Close();
         }
@@ -163,7 +194,7 @@ namespace Bell_Smart_Tools.Source.BSL
         {
             if (ProfileName == string.Empty)
                 return;
-            File.Delete(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bd");
+            File.Delete(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
             this.Close();
         }
     }

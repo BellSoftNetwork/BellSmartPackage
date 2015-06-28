@@ -42,7 +42,7 @@ namespace Bell_Smart_Tools.Source.BST
 
             var actions = new Dictionary<Action, int> 
             {
-                {MCL, 1},
+                {BlankMetod, 1},
             };
 
             pb_Load.Minimum = 0;
@@ -54,16 +54,15 @@ namespace Bell_Smart_Tools.Source.BST
                 pb_Load.Value += action.Value;
                 Application.DoEvents();
             }
+            pb_Load.Value = pb_Load.Maximum;
             return true;
         }
 
-        private void MCL()
+        private void BlankMetod()
         {
-            if (User.MC_ID != null && User.MC_PW != null) // 레지스트리에 MC 계정정보가 저장되어있으면 로그인 실행
-            {
-                MCLogin.Login(User.MC_ID, User.MC_PW, MCLogin.LoginType.Authenticate);
-            }
+
         }
+
         private void BST_Loader_Shown(object sender, EventArgs e)
         {
             if (Initialize())

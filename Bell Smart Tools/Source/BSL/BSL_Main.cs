@@ -569,6 +569,14 @@ namespace Bell_Smart_Tools.Source.BSL
         
         private void btn_Launch_Click(object sender, EventArgs e)
         {
+            // 기본값 설정 유무 확인
+            if (cb_Profile.SelectedIndex == 0)
+            {
+                Common.Message("사용하실 프로필파일을 선택해주세요.");
+                return;
+            }
+
+            // 본격적인 런칭 시작
             btn_Launch.Enabled = false;
             string MUID = lst_ModPack.Tag.ToString().Split('|')[lst_ModPack.SelectedIndex]; SetState("MUID 로드 성공");
             string SelectMod = (string)cb_Version.SelectedItem; // 모드팩 선택 버전
@@ -580,7 +588,9 @@ namespace Bell_Smart_Tools.Source.BSL
             pb_Load.Value = 0;
             pb_Load.Maximum = 0;
             pb_Load.Maximum += 5;
-            Data = CheckInstall(User.BSL_Root, MUID, SelectMod).Split('|'); // 클라이언트 설치 & 업데이트
+
+            // 클라이언트 설치 & 업데이트
+            Data = CheckInstall(User.BSL_Root, MUID, SelectMod).Split('|');
             BUID = Data[0];
             SelectBase = Data[1];
             AbsoluteMod = Data[2];
@@ -590,6 +600,38 @@ namespace Bell_Smart_Tools.Source.BSL
             string PathBase = User.BSL_Root + "Base\\" + BUID + "\\" + SelectBase + "\\";
             string PathPack = User.BSL_Root + "ModPack\\" + MUID + "\\" + AbsoluteMod + "\\";
             pb_Load.PerformStep(); // 진행
+            // 계정 로그인
+            User.MC_ID = BSLP.getData(BSL_Profile.Data.ID);
+            User.MC_PW = BSLP.getData(BSL_Profile.Data.PW);
+            string Password = User.MC_PW;
+
+            if (User.MC_ID != string.Empty) // && User.MC_PW != null) // 레지스트리에 MC 계정정보가 저장되어있으면 로그인 실행
+            {
+                if (Password == string.Empty)
+                {
+                    BSL_Password BSLPw = new BSL_Password();
+                    BSLPw.ShowDialog();
+                    Password = BSLPw.getPassword();
+                }
+
+                if (MCLogin.Login(User.MC_ID, Password, MCLogin.LoginType.Authenticate))
+                {
+                    SetState("마인크래프트 계정 로그인 성공");
+                }
+                else
+                {
+                    SetState("마인크래프트 계정 로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.");
+                    btn_Launch.Enabled = true;
+                    return;
+                }
+            }
+            else
+            {
+                SetState("마인크래프트 계정 로그인 실패. 프로필 파일 설정을 확인하세요.");
+                btn_Launch.Enabled = true;
+                return;
+            }
+
             Enjoy(MUID, BUID, PathBase, PathPack, BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
             pb_Load.PerformStep(); // 진행
             string[] tmp = {"Select Version|" + SelectMod};
@@ -610,20 +652,26 @@ namespace Bell_Smart_Tools.Source.BSL
         private void cb_Profile_SelectedIndexChanged(object sender, EventArgs e)
         {
             btn_Edit.Enabled = false;
+            btn_Launch.Enabled = false;
             if (cb_Profile.SelectedItem == null)
                 return;
             if (cb_Profile.SelectedIndex == 1)
-            {
+            { // 프로필 생성
                 cb_Profile.SelectedIndex = 0;
                 BSL_Profile BSLP = new BSL_Profile();
                 BSLP.ShowDialog();
                 ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
+                SettingLoad(); // 셋팅값 로드!
+                if (BSLP.getData(BSL_Profile.Data.Name) != null) // 프로필 이름이 null이 아니라면, (프로필을 정상적으로 생성했다면,
+                    cb_Profile.SelectedItem = BSLP.getData(BSL_Profile.Data.Name); // 방금 생성한 따끈따끈한 프로필파일을 선택
+                SaveSetting(); // 선택 프로필이 바뀌었으므로 설정값 저장!
             }
             if (cb_Profile.SelectedIndex != 0) // 인덱스 1은 위에서 0으로 바뀌므로 0이 아닐경우 (프로필을 선택했을경우)
             {
                 btn_Edit.Enabled = true; // 수정 버튼 활성화
+                btn_Launch.Enabled = true;
             }
-            if (Initialization)
+            if (Initialization && cb_Profile.SelectedIndex != 0)
                 SaveSetting(); // 설정값 저장
         }
 
@@ -633,6 +681,7 @@ namespace Bell_Smart_Tools.Source.BSL
             BSL_Profile BSLP = new BSL_Profile((string)cb_Profile.SelectedItem);
             BSLP.ShowDialog();
             ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
+            SettingLoad(); // 데이터가 다시 로드됬으니 다시 셋팅!
         }
     }
 }

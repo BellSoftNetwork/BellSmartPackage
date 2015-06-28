@@ -177,24 +177,20 @@ namespace BellLib.Class
             bool value = !responseFromServer.Contains("error");
             //로그인 성공시 True
             //BST_Main.btn_BCLaunch.Enabled = RT;
-            User.MC_Login = value;
+            /*User.MC_Login = value;
 
             if (value)
             {
-                User.MC_ID = id;
-                User.MC_PW = pw;
+                //User.MC_ID = id;
+                //User.MC_PW = pw;
 
                 User.MC_Login = true;
-
-                //BST_Manager.BST_Status("마인크래프트 계정 로그인 성공");
             }
             else
             {
-                User.MC_ID = null;
-                User.MC_PW = null;
-
-                //BST_Manager.BST_Status("마인크래프트 계정 로그인 실패");
-            }
+                //User.MC_ID = null;
+                //User.MC_PW = null;
+            }*/
 
             return value;
         }

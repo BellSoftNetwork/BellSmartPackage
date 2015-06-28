@@ -97,7 +97,7 @@ namespace BellLib.Data
                 RM.Dispose();
             }
         }
-        public static bool MC_Login = false;
+        //public static bool MC_Login = false;
         public static bool BSP_AutoUpdate = true;
         public static string BSN_Temp = BSN_Path + "Temp\\";
     }
