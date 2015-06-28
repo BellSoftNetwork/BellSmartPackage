@@ -355,12 +355,15 @@
             // 
             // btn_Mod_Set
             // 
-            this.btn_Mod_Set.Location = new System.Drawing.Point(743, 12);
+            this.btn_Mod_Set.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btn_Mod_Set.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_Mod_Set.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btn_Mod_Set.Location = new System.Drawing.Point(715, 12);
             this.btn_Mod_Set.Name = "btn_Mod_Set";
-            this.btn_Mod_Set.Size = new System.Drawing.Size(63, 23);
+            this.btn_Mod_Set.Size = new System.Drawing.Size(91, 23);
             this.btn_Mod_Set.TabIndex = 2;
             this.btn_Mod_Set.Text = "불러오기";
-            this.btn_Mod_Set.UseVisualStyleBackColor = true;
+            this.btn_Mod_Set.UseVisualStyleBackColor = false;
             this.btn_Mod_Set.Click += new System.EventHandler(this.btn_Mod_Set_Click);
             // 
             // lb_MUID
@@ -376,7 +379,7 @@
             // 
             this.txt_MUID.Location = new System.Drawing.Point(49, 14);
             this.txt_MUID.Name = "txt_MUID";
-            this.txt_MUID.Size = new System.Drawing.Size(688, 21);
+            this.txt_MUID.Size = new System.Drawing.Size(660, 21);
             this.txt_MUID.TabIndex = 0;
             this.txt_MUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_MUID_KeyDown);
             // 
@@ -758,12 +761,14 @@
             // 
             // btn_Base_Set
             // 
-            this.btn_Base_Set.Location = new System.Drawing.Point(743, 12);
+            this.btn_Base_Set.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btn_Base_Set.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_Base_Set.Location = new System.Drawing.Point(692, 12);
             this.btn_Base_Set.Name = "btn_Base_Set";
-            this.btn_Base_Set.Size = new System.Drawing.Size(63, 23);
+            this.btn_Base_Set.Size = new System.Drawing.Size(117, 23);
             this.btn_Base_Set.TabIndex = 2;
             this.btn_Base_Set.Text = "불러오기";
-            this.btn_Base_Set.UseVisualStyleBackColor = true;
+            this.btn_Base_Set.UseVisualStyleBackColor = false;
             this.btn_Base_Set.Click += new System.EventHandler(this.btn_Base_Set_Click);
             // 
             // lb_BUID
@@ -779,7 +784,7 @@
             // 
             this.txt_BUID.Location = new System.Drawing.Point(49, 14);
             this.txt_BUID.Name = "txt_BUID";
-            this.txt_BUID.Size = new System.Drawing.Size(688, 21);
+            this.txt_BUID.Size = new System.Drawing.Size(637, 21);
             this.txt_BUID.TabIndex = 0;
             this.txt_BUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_BUID_KeyDown);
             // 
@@ -1128,12 +1133,14 @@
             // 
             // btn_Option_Set
             // 
-            this.btn_Option_Set.Location = new System.Drawing.Point(743, 12);
+            this.btn_Option_Set.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btn_Option_Set.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btn_Option_Set.Location = new System.Drawing.Point(715, 12);
             this.btn_Option_Set.Name = "btn_Option_Set";
-            this.btn_Option_Set.Size = new System.Drawing.Size(63, 23);
+            this.btn_Option_Set.Size = new System.Drawing.Size(91, 23);
             this.btn_Option_Set.TabIndex = 2;
             this.btn_Option_Set.Text = "불러오기";
-            this.btn_Option_Set.UseVisualStyleBackColor = true;
+            this.btn_Option_Set.UseVisualStyleBackColor = false;
             this.btn_Option_Set.Click += new System.EventHandler(this.btn_Option_Set_Click);
             // 
             // lb_OUID
@@ -1149,7 +1156,7 @@
             // 
             this.txt_OUID.Location = new System.Drawing.Point(49, 14);
             this.txt_OUID.Name = "txt_OUID";
-            this.txt_OUID.Size = new System.Drawing.Size(688, 21);
+            this.txt_OUID.Size = new System.Drawing.Size(660, 21);
             this.txt_OUID.TabIndex = 0;
             this.txt_OUID.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_OUID_KeyDown);
             // 

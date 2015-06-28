@@ -35,7 +35,7 @@ namespace BellLib.Class
             Debug.Message(Debug.Level.Log, Text, Caption, buttons, icon, defaultButton, "MessageBox");
             return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
         }
-
+        
         /// <summary>
         /// 프로그램을 종료합니다.
         /// </summary>

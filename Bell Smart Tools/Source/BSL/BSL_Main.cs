@@ -538,14 +538,20 @@ namespace Bell_Smart_Tools.Source.BSL
 
                 wb_PackNews.AllowNavigation = true; // 뉴스페이지를 바꿔야되니 잠시 페이지 이동 허용해주고!
                 string News = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
-                Uri URI = new Uri(News);
-                wb_PackNews.Url = URI; // 선택 모드팩 뉴스페이지 로드!
-                while (wb_PackNews.ReadyState != WebBrowserReadyState.Complete)
-                { // 아직 로딩중일 때 페이지 변경 비허용을 시키면 페이지 로드가 안되니 로드가 완료될때까지 대기
-                    Application.DoEvents(); // 무한 루프만 돌리면 UI가 렉먹으니 UI 메시지 큐 처리.
+                try
+                {
+                    Uri URI = new Uri(News);
+                    wb_PackNews.Url = URI; // 선택 모드팩 뉴스페이지 로드!
+                    while (wb_PackNews.ReadyState != WebBrowserReadyState.Complete)
+                    { // 아직 로딩중일 때 페이지 변경 비허용을 시키면 페이지 로드가 안되니 로드가 완료될때까지 대기
+                        Application.DoEvents(); // 무한 루프만 돌리면 UI가 렉먹으니 UI 메시지 큐 처리.
+                    }
+                    wb_PackNews.AllowNavigation = false; // 다시 페이지 변경 비허용!
                 }
-                wb_PackNews.AllowNavigation = false; // 다시 페이지 변경 비허용!
-
+                catch
+                {
+                    wb_PackNews.Url = null;
+                }
                 if (Initialization)
                     SaveSetting(); // 설정값 저장
 

@@ -27,5 +27,17 @@ namespace Bell_Smart_Server.Source.BSS
             BSU.BSU_ModManager MM = new BSU.BSU_ModManager();
             MM.Show();
         }
+
+        private void btn_RuntimeManager_Click(object sender, EventArgs e)
+        {
+            BSU.BSU_RuntimeManager RM = new BSU.BSU_RuntimeManager();
+            RM.Show();
+        }
+
+        private void btn_PackMaker_Click(object sender, EventArgs e)
+        {
+            BSU.BSU_PackMaker PM = new BSU.BSU_PackMaker();
+            PM.Show();
+        }
     }
 }

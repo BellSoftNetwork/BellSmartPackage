@@ -79,22 +79,86 @@ namespace Bell_Smart_Server.Source.BSU
                 return false;
             }
         }
+
+        /// <summary>
+        /// Input박스를 생성합니다.
+        /// </summary>
+        /// <param name="Text">메시지박스 내용</param>
+        /// <param name="Caption">메시지박스 캡션</param>
+        /// <returns>입력값</returns>
+        private string InputBox(string Text, string Caption = "삭제")
+        {
+            BSU_InputBox IB = new BSU_InputBox(Text, Caption);
+            IB.ShowDialog();
+            return IB.getInput();
+        }
         private void btn_Mod_Set_Click(object sender, EventArgs e)
         {
-            if (InitializeMod())
+            if (btn_Mod_Set.Text == "불러오기")
             {
-                txt_MUID.ReadOnly = true;
-                gb_Mod_Info.Enabled = false;
-                gb_Mod_Setting.Enabled = true;
-                gb_Mod_Upload.Enabled = true;
+                if (InitializeMod())
+                {
+                    txt_MUID.ReadOnly = true;
+                    //gb_Mod_Info.Enabled = false;
+                    txt_MUID.Enabled = false;
+                    gb_Mod_Setting.Enabled = true;
+                    gb_Mod_Upload.Enabled = true;
 
-                btn_Base_Set_Click(sender, e);
-                btn_Option_Set_Click(sender, e);
-                btn_Mod_Load_Click(sender, e);
+                    btn_Base_Set_Click(sender, e);
+                    btn_Option_Set_Click(sender, e);
+                    btn_Mod_Load_Click(sender, e);
+
+                    btn_Mod_Set.Text = "모드팩 삭제";
+                    btn_Mod_Set.BackColor = Color.Red;
+                }
+                else
+                {
+                    Common.Message("존재하지 않는 MUID 입니다.");
+                }
             }
             else
-            {
-                Common.Message("존재하지 않는 MUID 입니다.");
+            { // 모드팩 삭제하기
+                if (Common.Message("정말로 불러온 모드팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.","모드팩 영구 삭제",MessageBoxButtons.YesNo,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    if (InputBox("불러온 모드팩의 MUID값을 입력 해 주세요.", "모드팩 삭제") == txt_MUID.Text)
+                    {
+                        if (InputBox("불러온 모드팩의 이름을 입력 해 주세요.", "모드팩 삭제") == txt_Mod_Name.Text)
+                        {
+                            if (InputBox("불러온 모드팩의 최신버전을 입력 해 주세요.", "모드팩 삭제") == txt_Mod_Latest.Text)
+                            {
+                                if (InputBox("불러온 모드팩의 권장버전을 입력 해 주세요.", "모드팩 삭제") == txt_Mod_Recommended.Text)
+                                {
+                                    // 모드팩 삭제 진행
+                                    // 모드팩 파일 전체 삭제
+                                    FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+                                    string RootPath = "Pack/" + txt_MUID.Text + "/";
+                                    FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
+                                    
+                                    // 모드팩 리스트에서 현재 모드팩 제거
+                                    List<string> list = new List<string>();
+                                    ModAnalysisRead MAR = new ModAnalysisRead();
+                                    foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Mod))
+                                    {
+                                        if (tmp != txt_MUID.Text)
+                                            list.Add(tmp);
+                                    }
+                                    ModAnalysisWrite MAW = new ModAnalysisWrite();
+                                    MAW.WriteListXML(list.ToArray());
+                                    FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+                                    string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
+                                    FTP_Info.Upload("Pack/", xmlPath, true); // 모드팩 리스트 업로드
+                                    FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
+
+                                    gb_Mod_Info.Enabled = false;
+                                    gb_Mod_Setting.Enabled = false;
+                                    gb_Mod_Upload.Enabled = false;
+                                    btn_Mod_Set.Enabled = false;
+                                    Common.Message("모드팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 모드팩에 접근하시려면 관리창을 재 실행하세요.");
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -218,17 +282,66 @@ namespace Bell_Smart_Server.Source.BSU
         }
         private void btn_Base_Set_Click(object sender, EventArgs e)
         {
-            if (InitializeBase())
+            if (btn_Base_Set.Text == "불러오기")
             {
-                gb_Base_Info.Enabled = false;
-                gb_Base_Setting.Enabled = true;
-                gb_Base_Upload.Enabled = true;
+                if (InitializeBase())
+                {
+                    //gb_Base_Info.Enabled = false;
+                    txt_BUID.Enabled = false;
+                    gb_Base_Setting.Enabled = true;
+                    gb_Base_Upload.Enabled = true;
 
-                btn_Base_Load_Click(sender, e);
+                    btn_Base_Load_Click(sender, e);
+                    btn_Base_Set.Text = "베이스팩 삭제";
+                    btn_Base_Set.BackColor = Color.Red;
+                }
+                else
+                {
+                    Common.Message("존재하지 않는 BUID 입니다.");
+                }
             }
             else
-            {
-                Common.Message("존재하지 않는 BUID 입니다.");
+            { // 베이스팩 삭제
+                if (Common.Message("정말로 불러온 베이스팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "베이스팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    if (InputBox("불러온 베이스팩의 BUID값을 입력 해 주세요.", "베이스팩 삭제") == txt_BUID.Text)
+                    {
+                        if (InputBox("불러온 베이스팩의 최신버전을 입력 해 주세요.", "베이스팩 삭제") == txt_Base_Latest.Text)
+                        {
+                            if (InputBox("불러온 베이스팩의 권장버전을 입력 해 주세요.", "베이스팩 삭제") == txt_Base_Recommended.Text)
+                            {
+                                // 선택한 베이스팩을 의존하는 모드팩이 있는지 확인, 있으면 삭제 중단
+
+                                // 베이스팩 삭제 진행
+                                // 베이스팩 파일 전체 삭제
+                                FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+                                string RootPath = "Base/" + txt_BUID.Text + "/";
+                                FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
+                                
+                                // 베이스팩 리스트에서 선택된 베이스팩 제거
+                                List<string> list = new List<string>();
+                                ModAnalysisRead MAR = new ModAnalysisRead();
+                                foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Base))
+                                {
+                                    if (tmp != txt_BUID.Text)
+                                        list.Add(tmp);
+                                }
+                                ModAnalysisWrite MAW = new ModAnalysisWrite();
+                                MAW.WriteListXML(list.ToArray());
+                                FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+                                string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
+                                FTP_Info.Upload("Base/", xmlPath, true); // 베이스팩 리스트 업로드
+                                FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
+
+                                gb_Base_Info.Enabled = false;
+                                gb_Base_Setting.Enabled = false;
+                                gb_Base_Upload.Enabled = false;
+                                btn_Base_Set.Enabled = false;
+                                Common.Message("베이스팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 베이스팩에 접근하시려면 관리창을 재 실행하세요.");
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -254,17 +367,66 @@ namespace Bell_Smart_Server.Source.BSU
         }
         private void btn_Option_Set_Click(object sender, EventArgs e)
         {
-            if (InitializeOption())
+            if (btn_Option_Set.Text == "불러오기")
             {
-                gb_Option_Info.Enabled = false;
-                gb_Option_Setting.Enabled = true;
-                gb_Option_Upload.Enabled = true;
+                if (InitializeOption())
+                {
+                    //gb_Option_Info.Enabled = false;
+                    txt_OUID.Enabled = false;
+                    gb_Option_Setting.Enabled = true;
+                    gb_Option_Upload.Enabled = true;
 
-                btn_Option_Load_Click(sender, e);
+                    btn_Option_Load_Click(sender, e);
+                    btn_Option_Set.Text = "옵션팩 삭제";
+                    btn_Option_Set.BackColor = Color.Red;
+                }
+                else
+                {
+                    Common.Message("존재하지 않는 OUID 입니다.");
+                }
             }
             else
-            {
-                Common.Message("존재하지 않는 OUID 입니다.");
+            { // 옵션팩 삭제
+                if (Common.Message("정말로 불러온 옵션팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "옵션팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    if (InputBox("불러온 옵션팩의 OUID값을 입력 해 주세요.", "옵션팩 삭제") == txt_OUID.Text)
+                    {
+                        if (InputBox("불러온 옵션팩의 최신버전을 입력 해 주세요.", "옵션팩 삭제") == txt_Option_Latest.Text)
+                        {
+                            if (InputBox("불러온 옵션팩의 권장버전을 입력 해 주세요.", "옵션팩 삭제") == txt_Option_Recommended.Text)
+                            {
+                                // 선택한 옵션팩을 의존하는 모드팩이 있는지 확인, 있으면 삭제 중단
+
+                                // 옵션팩 삭제 진행
+                                // 옵션팩 파일 전체 삭제
+                                FTPUtil FTP_Delete = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Data_ID, BellLib.Data.Base.FTP_Data_PW); // FTP 객체 생성
+                                string RootPath = "Option/" + txt_OUID.Text + "/";
+                                FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
+
+                                // 옵션팩 리스트에서 선택된 옵션팩 제거
+                                List<string> list = new List<string>();
+                                ModAnalysisRead MAR = new ModAnalysisRead();
+                                foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Option))
+                                {
+                                    if (tmp != txt_OUID.Text)
+                                        list.Add(tmp);
+                                }
+                                ModAnalysisWrite MAW = new ModAnalysisWrite();
+                                MAW.WriteListXML(list.ToArray());
+                                FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+                                string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
+                                FTP_Info.Upload("Option/", xmlPath, true); // 모드팩 리스트 업로드
+                                FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
+
+                                gb_Option_Info.Enabled = false;
+                                gb_Option_Setting.Enabled = false;
+                                gb_Option_Upload.Enabled = false;
+                                btn_Option_Set.Enabled = false;
+                                Common.Message("옵션팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 옵션팩에 접근하시려면 관리창을 재 실행하세요.");
+                            }
+                        }
+                    }
+                }
             }
         }
 

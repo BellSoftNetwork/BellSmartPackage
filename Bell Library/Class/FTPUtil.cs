@@ -44,7 +44,7 @@ namespace BellLib.Class
         /// </summary>
         /// <param name="filename">file full name to be uploaded</param>
         //파일 업로드
-        public Boolean Upload(string folder, string filename)
+        public Boolean Upload(string folder, string filename, bool AfterDelete = false)
         {
             FileInfo fileInf = new FileInfo(filename);
             string uri = "ftp://" + ftpServerIP + ":" + ftpPort + "/" + folder + "/" + fileInf.Name;
@@ -97,8 +97,6 @@ namespace BellLib.Class
                 // Close the file stream and the Request Stream
                 strm.Close();
                 fs.Close();
-
-                return true;
             }
             catch
             {
@@ -106,6 +104,9 @@ namespace BellLib.Class
                 // FTP 서버에 동일파일이 있고, 계정에 삭제권한이 없을때도 이 예외가 발생함.
                 return false;
             }
+            if (AfterDelete)
+                File.Delete(filename); // xml 파일 삭제
+            return true;
 
         }
 

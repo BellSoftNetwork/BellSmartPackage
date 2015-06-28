@@ -822,8 +822,12 @@ namespace BellLib.Class
                     XTW.WriteEndElement(); // Info 엘리먼트 닫음
 
                     XTW.WriteStartElement("Version");
-                    foreach (string tmp in DM.Version)
-                        XTW.WriteElementString("Ver", tmp);
+                    try
+                    {
+                        foreach (string tmp in DM.Version)
+                            XTW.WriteElementString("Ver", tmp);
+                    }
+                    catch { }
 
                     XTW.WriteEndElement();
                     XTW.WriteEndDocument();
@@ -844,8 +848,12 @@ namespace BellLib.Class
                     XTW.WriteEndElement(); // Info 엘리먼트 닫음
 
                     XTW.WriteStartElement("Version");
-                    foreach (string tmp in DB.Version)
-                        XTW.WriteElementString("Ver", tmp);
+                    try
+                    {
+                        foreach (string tmp in DB.Version)
+                            XTW.WriteElementString("Ver", tmp);
+                    }
+                    catch { }
 
                     XTW.WriteEndElement();
                     XTW.WriteEndDocument();
@@ -866,8 +874,12 @@ namespace BellLib.Class
                     XTW.WriteEndElement(); // Info 엘리먼트 닫음
 
                     XTW.WriteStartElement("Version");
-                    foreach (string tmp in DO.Version)
-                        XTW.WriteElementString("Ver", tmp);
+                    try
+                    {
+                        foreach (string tmp in DO.Version)
+                            XTW.WriteElementString("Ver", tmp);
+                    }
+                    catch { }
 
                     XTW.WriteEndElement();
                     XTW.WriteEndDocument();
