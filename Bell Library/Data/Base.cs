@@ -12,11 +12,6 @@ namespace BellLib.Data
         public const string BSN_WEB_URL = "http://www.softbell.net/";
         public const string TOTAL_FILE_URL = "http://www.softbell.net:4135/";
         public const string TOTAL_WEB_URL = "http://www.softbell.net:88/";
-        public const string SERVER_IP = "softbell.net";
         public const int SERVER_PORT = 25555;
-        public const string FTP_Data_ID = "BSL_Data";
-        public const string FTP_Data_PW = "bellsoftnetwork";
-        public const string FTP_Info_ID = "BSL_Info";
-        public const string FTP_Info_PW = "bellsoftnetwork";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BellLib.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +22,15 @@ namespace BellLib.Class
         string ftpPort = null;
         bool usePassive = false;
 
+        /// <summary>
+        /// FTP 공식서버 리스트
+        /// </summary>
+        public enum OfficialServer
+        {
+            Bell_Soft_Network_Info,
+            SangDolE_Cloud
+        }
+
 
         //ftpUtil 객체를 생성할때 생성자에 인자로 필요한 값들을 넣어준다.
         /// <summary>
@@ -40,11 +50,37 @@ namespace BellLib.Class
         }
 
         /// <summary>
+        /// 선택한 서버로 FTP 설정을 초기화합니다.
+        /// </summary>
+        /// <param name="Server">지정된 공식서버</param>
+        public FTPUtil(OfficialServer Server)
+        {
+            switch (Server)
+            {
+                case OfficialServer.Bell_Soft_Network_Info:
+                    ftpServerIP = Servers.Bell_Soft_Network.SERVER_IP;
+                    ftpUserID = Servers.Bell_Soft_Network.FTP_Info_ID;
+                    ftpPassword = Servers.Bell_Soft_Network.FTP_Info_PW;
+                    ftpPort = Servers.Bell_Soft_Network.FTP_Port;
+                    usePassive = false;
+                    break;
+
+                case OfficialServer.SangDolE_Cloud:
+                    ftpServerIP = Servers.SangDolE.SERVER_IP;
+                    ftpUserID = Servers.SangDolE.FTP_Data_ID;
+                    ftpPassword = Servers.SangDolE.FTP_Data_PW;
+                    ftpPort = Servers.SangDolE.FTP_Port;
+                    usePassive = false;
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Method to upload the specified file to the specified FTP Server
         /// </summary>
         /// <param name="filename">file full name to be uploaded</param>
         //파일 업로드
-        public Boolean Upload(string folder, string filename, bool AfterDelete = false)
+        public Boolean Upload(string folder, string filename, bool AfterDelete = false, bool Recursive = false)
         {
             FileInfo fileInf = new FileInfo(filename);
             string uri = "ftp://" + ftpServerIP + ":" + ftpPort + "/" + folder + "/" + fileInf.Name;
@@ -98,10 +134,30 @@ namespace BellLib.Class
                 strm.Close();
                 fs.Close();
             }
-            catch
+            catch (WebException ex)
             {
-                Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다.");
+                if (Recursive) // 함수가 다시 호출되었을때 무한루프를 막기위함.
+                {
+                    Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
+                    return false;
+                }
+                // 서버에 해당 폴더가 없으면 상위폴더까지 전부 재생성
+                string[] Temp = folder.Split('/');
+                string Dir = null;
+                foreach (string tmp in Temp)
+                {
+                    Dir += tmp + "/";
+                    MakeDir(tmp);
+                }
+
+                Dir = ex.Message; // 개쓸모없는 구문
+                return Upload(folder, filename, AfterDelete, true);
                 // FTP 서버에 동일파일이 있고, 계정에 삭제권한이 없을때도 이 예외가 발생함.
+                //return false;
+            }
+            catch (Exception ex)
+            {
+                Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
                 return false;
             }
             if (AfterDelete)
@@ -451,7 +507,7 @@ namespace BellLib.Class
         /// FTP 서버에 디렉토리를 생성합니다.
         /// </summary>
         /// <param name="dirName">생성할 디렉토리 경로</param>
-        public void MakeDir(string dirName)
+        public void MakeDir(string dirName, bool Recursive = false)
         {
             FtpWebRequest reqFTP;
             try
@@ -468,13 +524,25 @@ namespace BellLib.Class
                 ftpStream.Close();
                 response.Close();
             }
-            catch { }
-            /*
-            catch (Exception ex)
+            catch (WebException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (Recursive) // 함수가 다시 호출되었을때 무한루프를 막기위함.
+                    return;
+                // 서버에 해당 폴더가 없으면 상위폴더까지 전부 재생성
+                string[] Temp = dirName.Split('/');
+                string Dir = null;
+                foreach (string tmp in Temp)
+                {
+                    Dir += tmp + "/";
+                    MakeDir(tmp, true);
+                }
+
+                Dir = ex.Message; // 개쓸모없는 구문
             }
-            */
+            catch// (Exception ex)
+            {
+                //Common.Message(ex.Message);
+            }
         }
 
     }

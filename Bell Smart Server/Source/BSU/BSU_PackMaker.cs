@@ -77,7 +77,7 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
-            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
             FTP_Info.MakeDir("Pack/" + txt_MUID.Text + "/Version/");
             FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
             //File.Delete(xmlPath); // xml 파일 삭제
@@ -122,7 +122,7 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
-            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.MakeDir("Base/" + txt_BUID.Text + "/Version/");
             FTP_Info.Upload("Base/" + txt_BUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
 
@@ -167,7 +167,7 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
-            FTPUtil FTP_Info = new FTPUtil(BellLib.Data.Base.SERVER_IP, BellLib.Data.Base.FTP_Info_ID, BellLib.Data.Base.FTP_Info_PW); // FTP 객체 생성
+            FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.MakeDir("Option/" + txt_OUID.Text + "/Version/");
             FTP_Info.Upload("Option/" + txt_OUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
 

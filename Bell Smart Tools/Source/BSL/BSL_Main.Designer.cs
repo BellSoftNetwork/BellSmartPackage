@@ -50,7 +50,7 @@
             this.lst_ModPack.Items.AddRange(new object[] {
             "BellCraft8",
             "TestPack"});
-            this.lst_ModPack.Location = new System.Drawing.Point(297, 53);
+            this.lst_ModPack.Location = new System.Drawing.Point(297, 26);
             this.lst_ModPack.Name = "lst_ModPack";
             this.lst_ModPack.Size = new System.Drawing.Size(351, 160);
             this.lst_ModPack.TabIndex = 0;
@@ -58,7 +58,7 @@
             // 
             // wb_PackNews
             // 
-            this.wb_PackNews.Location = new System.Drawing.Point(0, 27);
+            this.wb_PackNews.Location = new System.Drawing.Point(0, 0);
             this.wb_PackNews.MinimumSize = new System.Drawing.Size(20, 20);
             this.wb_PackNews.Name = "wb_PackNews";
             this.wb_PackNews.Size = new System.Drawing.Size(297, 186);
@@ -67,7 +67,7 @@
             // btn_Launch
             // 
             this.btn_Launch.Enabled = false;
-            this.btn_Launch.Location = new System.Drawing.Point(537, 263);
+            this.btn_Launch.Location = new System.Drawing.Point(537, 236);
             this.btn_Launch.Name = "btn_Launch";
             this.btn_Launch.Size = new System.Drawing.Size(112, 23);
             this.btn_Launch.TabIndex = 2;
@@ -80,7 +80,7 @@
             this.cb_Version.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_Version.Enabled = false;
             this.cb_Version.FormattingEnabled = true;
-            this.cb_Version.Location = new System.Drawing.Point(467, 27);
+            this.cb_Version.Location = new System.Drawing.Point(467, 0);
             this.cb_Version.Name = "cb_Version";
             this.cb_Version.Size = new System.Drawing.Size(181, 20);
             this.cb_Version.TabIndex = 3;
@@ -88,7 +88,7 @@
             // pb_Load
             // 
             this.pb_Load.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pb_Load.Location = new System.Drawing.Point(0, 303);
+            this.pb_Load.Location = new System.Drawing.Point(0, 276);
             this.pb_Load.Name = "pb_Load";
             this.pb_Load.Size = new System.Drawing.Size(648, 14);
             this.pb_Load.Step = 1;
@@ -96,7 +96,7 @@
             // 
             // lb_State
             // 
-            this.lb_State.Location = new System.Drawing.Point(-2, 288);
+            this.lb_State.Location = new System.Drawing.Point(-2, 262);
             this.lb_State.Name = "lb_State";
             this.lb_State.Size = new System.Drawing.Size(650, 12);
             this.lb_State.TabIndex = 7;
@@ -106,7 +106,7 @@
             // 
             this.cb_AutoUpdate.AutoSize = true;
             this.cb_AutoUpdate.Enabled = false;
-            this.cb_AutoUpdate.Location = new System.Drawing.Point(297, 219);
+            this.cb_AutoUpdate.Location = new System.Drawing.Point(297, 192);
             this.cb_AutoUpdate.Name = "cb_AutoUpdate";
             this.cb_AutoUpdate.Size = new System.Drawing.Size(100, 16);
             this.cb_AutoUpdate.TabIndex = 8;
@@ -120,7 +120,7 @@
             this.cb_Profile.Items.AddRange(new object[] {
             "선택하세요",
             "=================="});
-            this.cb_Profile.Location = new System.Drawing.Point(350, 243);
+            this.cb_Profile.Location = new System.Drawing.Point(350, 216);
             this.cb_Profile.Name = "cb_Profile";
             this.cb_Profile.Size = new System.Drawing.Size(298, 20);
             this.cb_Profile.TabIndex = 9;
@@ -128,7 +128,7 @@
             // 
             // txt_Detail
             // 
-            this.txt_Detail.Location = new System.Drawing.Point(0, 215);
+            this.txt_Detail.Location = new System.Drawing.Point(0, 188);
             this.txt_Detail.Multiline = true;
             this.txt_Detail.Name = "txt_Detail";
             this.txt_Detail.ReadOnly = true;
@@ -138,7 +138,7 @@
             // 
             // btn_Option
             // 
-            this.btn_Option.Location = new System.Drawing.Point(297, 27);
+            this.btn_Option.Location = new System.Drawing.Point(297, 0);
             this.btn_Option.Name = "btn_Option";
             this.btn_Option.Size = new System.Drawing.Size(75, 23);
             this.btn_Option.TabIndex = 12;
@@ -149,7 +149,7 @@
             // btn_Edit
             // 
             this.btn_Edit.Enabled = false;
-            this.btn_Edit.Location = new System.Drawing.Point(297, 241);
+            this.btn_Edit.Location = new System.Drawing.Point(297, 214);
             this.btn_Edit.Name = "btn_Edit";
             this.btn_Edit.Size = new System.Drawing.Size(47, 23);
             this.btn_Edit.TabIndex = 13;
@@ -160,7 +160,7 @@
             // cb_Force
             // 
             this.cb_Force.AutoSize = true;
-            this.cb_Force.Location = new System.Drawing.Point(455, 269);
+            this.cb_Force.Location = new System.Drawing.Point(455, 242);
             this.cb_Force.Name = "cb_Force";
             this.cb_Force.Size = new System.Drawing.Size(76, 16);
             this.cb_Force.TabIndex = 14;
@@ -173,7 +173,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(648, 317);
+            this.ClientSize = new System.Drawing.Size(648, 290);
             this.Controls.Add(this.cb_Force);
             this.Controls.Add(this.btn_Edit);
             this.Controls.Add(this.btn_Option);

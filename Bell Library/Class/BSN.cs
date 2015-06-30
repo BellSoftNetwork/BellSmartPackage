@@ -78,7 +78,7 @@ namespace BellLib.Class
             sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL
                 + "%26act%3DdispMemberLoginForm&mid=" + MidURL
                 + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F"
-                + Base.SERVER_IP
+                + Servers.Bell_Soft_Network.SERVER_IP
                 + "%2Findex.php%3Fmid%3D" + MidURL
                 + "&act=procMemberLogin&xe_validator_id=modules%2Fmember%2Fskin%2Fdefault%2Flogin_form%2F1"
                 + "&user_id=" + email
