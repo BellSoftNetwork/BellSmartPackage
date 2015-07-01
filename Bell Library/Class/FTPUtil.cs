@@ -226,7 +226,7 @@ namespace BellLib.Class
             {
                 string uri = "ftp://" + ftpServerIP + "/" + fileName;
                 FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + fileName));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + fileName));
 
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 reqFTP.KeepAlive = false;
@@ -256,7 +256,7 @@ namespace BellLib.Class
             {
                 string uri = "ftp://" + ftpServerIP + "/" + dirName;
                 FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + dirName));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + dirName));
 
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 reqFTP.KeepAlive = false;
@@ -281,7 +281,7 @@ namespace BellLib.Class
             try
             {
                 FtpWebRequest reqFTP;
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + filename));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + filename));
                 reqFTP.UseBinary = true;
                 reqFTP.UsePassive = usePassive;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
@@ -309,7 +309,7 @@ namespace BellLib.Class
                 //StringBuilder result = new StringBuilder();
 
                 FtpWebRequest ftp;
-                ftp = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + subFolder));
+                ftp = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + subFolder));
                 ftp.UseBinary = true;
                 ftp.UsePassive = usePassive;
                 ftp.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
@@ -346,7 +346,7 @@ namespace BellLib.Class
             FtpWebRequest reqFTP;
             try
             {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + subFolder));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + subFolder));
                 reqFTP.UseBinary = true;
                 reqFTP.UsePassive = usePassive;
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
@@ -410,7 +410,7 @@ namespace BellLib.Class
                 checkDir(localFullPathFile);
                 FileStream outputStream = new FileStream(localFullPathFile, FileMode.Create);
 
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + serverFullPathFile));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + serverFullPathFile));
                 reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
                 reqFTP.UseBinary = true;
                 reqFTP.UsePassive = usePassive;
@@ -455,7 +455,7 @@ namespace BellLib.Class
             long fileSize = 0;
             try
             {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + filename));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + filename));
                 reqFTP.Method = WebRequestMethods.Ftp.GetFileSize;
                 reqFTP.UseBinary = true;
                 reqFTP.UsePassive = usePassive;
@@ -486,7 +486,7 @@ namespace BellLib.Class
             FtpWebRequest reqFTP;
             try
             {
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + currentFilename));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + currentFilename));
                 reqFTP.Method = WebRequestMethods.Ftp.Rename;
                 reqFTP.RenameTo = newFilename;
                 reqFTP.UseBinary = true;
@@ -518,7 +518,7 @@ namespace BellLib.Class
             try
             {
                 // dirName = name of the directory to create.
-                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + "/" + dirName));
+                reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri("ftp://" + ftpServerIP + ":" + ftpPort + "/" + dirName));
                 reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
                 reqFTP.UseBinary = true;
                 reqFTP.UsePassive = usePassive;
