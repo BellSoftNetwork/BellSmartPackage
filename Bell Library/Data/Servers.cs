@@ -14,9 +14,9 @@ namespace BellLib.Data
         {
             public const string SERVER_IP = "softbell.net";
 
-            public const string FTP_PATH_BSL = "";
+            public const string FTP_PATH_BSL = "HDD1/Info/BSL/";
             public const string FTP_Port = "21";
-            public const string FTP_Info_ID = "BSL_Info";
+            public const string FTP_Info_ID = "BSNInfo";
             public const string FTP_Info_PW = "bellsoftnetwork";
         }
 

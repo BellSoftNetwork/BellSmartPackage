@@ -55,7 +55,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void NoticeLoad()
         {
-            string notice = Common.GetStringFromWeb(Base.TOTAL_WEB_URL + "BST/Integration Notice.BSN");
+            string notice = Common.GetStringFromWeb(Base.WEB_INFO_URL + "BST/Integration Notice.BSN");
 
             if (notice == null) return; // notice가 있다가 오류로 안받아져서 공지가 없어지면 좀 그렇잖아요?
 

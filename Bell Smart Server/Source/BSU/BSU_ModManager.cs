@@ -143,9 +143,10 @@ namespace Bell_Smart_Server.Source.BSU
                                     // 모드팩 삭제 진행
                                     // 모드팩 파일 전체 삭제
                                     FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
-                                    string RootPath = "Pack/" + (string)cb_MUID.SelectedItem + "/";
+                                    string RootPath = Servers.SangDolE.FTP_PATH_BSL + "Pack/" + (string)cb_MUID.SelectedItem + "/";
                                     FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
-                                    
+                                    RootPath = RootPath.Replace(Servers.SangDolE.FTP_PATH_BSL, Servers.Bell_Soft_Network.FTP_PATH_BSL);
+
                                     // 모드팩 리스트에서 현재 모드팩 제거
                                     List<string> list = new List<string>();
                                     ModAnalysisRead MAR = new ModAnalysisRead();
@@ -158,7 +159,7 @@ namespace Bell_Smart_Server.Source.BSU
                                     MAW.WriteListXML(list.ToArray());
                                     FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
                                     string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
-                                    FTP_Info.Upload("Pack/", xmlPath, true); // 모드팩 리스트 업로드
+                                    FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Pack/", xmlPath, true); // 모드팩 리스트 업로드
                                     FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
                                     gb_Mod_Info.Enabled = false;
@@ -216,8 +217,7 @@ namespace Bell_Smart_Server.Source.BSU
             
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
-            FTP_Info.Upload("Pack/" + (string)cb_MUID.SelectedItem + "/", xmlPath); // 모드팩 데이터 업로드
-            File.Delete(xmlPath); // xml 파일 삭제
+            FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Pack/" + (string)cb_MUID.SelectedItem + "/", xmlPath, true); // 모드팩 데이터 업로드
             InitializeMod(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
         }
@@ -317,9 +317,10 @@ namespace Bell_Smart_Server.Source.BSU
                                 // 베이스팩 삭제 진행
                                 // 베이스팩 파일 전체 삭제
                                 FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
-                                string RootPath = "Base/" + (string)cb_BUID.SelectedItem + "/";
+                                string RootPath = Servers.SangDolE.FTP_PATH_BSL + "Base/" + (string)cb_BUID.SelectedItem + "/";
                                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
-                                
+                                RootPath = RootPath.Replace(Servers.SangDolE.FTP_PATH_BSL, Servers.Bell_Soft_Network.FTP_PATH_BSL);
+
                                 // 베이스팩 리스트에서 선택된 베이스팩 제거
                                 List<string> list = new List<string>();
                                 ModAnalysisRead MAR = new ModAnalysisRead();
@@ -332,7 +333,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 MAW.WriteListXML(list.ToArray());
                                 FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
                                 string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
-                                FTP_Info.Upload("Base/", xmlPath, true); // 베이스팩 리스트 업로드
+                                FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Base/", xmlPath, true); // 베이스팩 리스트 업로드
                                 FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
                                 gb_Base_Info.Enabled = false;
@@ -402,8 +403,9 @@ namespace Bell_Smart_Server.Source.BSU
                                 // 옵션팩 삭제 진행
                                 // 옵션팩 파일 전체 삭제
                                 FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
-                                string RootPath = "Option/" + (string)cb_OUID.SelectedItem + "/";
+                                string RootPath = Servers.SangDolE.FTP_PATH_BSL + "Option/" + (string)cb_OUID.SelectedItem + "/";
                                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 팩 루트 폴더 삭제
+                                RootPath = RootPath.Replace(Servers.SangDolE.FTP_PATH_BSL, Servers.Bell_Soft_Network.FTP_PATH_BSL);
 
                                 // 옵션팩 리스트에서 선택된 옵션팩 제거
                                 List<string> list = new List<string>();
@@ -417,7 +419,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 MAW.WriteListXML(list.ToArray());
                                 FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
                                 string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
-                                FTP_Info.Upload("Option/", xmlPath, true); // 모드팩 리스트 업로드
+                                FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Option/", xmlPath, true); // 모드팩 리스트 업로드
                                 FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
                                 gb_Option_Info.Enabled = false;
@@ -525,8 +527,7 @@ namespace Bell_Smart_Server.Source.BSU
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             string xmlPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + (string)cb_BUID.SelectedItem + ".xml";
-            FTP_Info.Upload("Base/" + (string)cb_BUID.SelectedItem + "/", xmlPath); // 베이스팩 데이터 업로드
-            File.Delete(xmlPath); // xml 삭제
+            FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Base/" + (string)cb_BUID.SelectedItem + "/", xmlPath, true); // 베이스팩 데이터 업로드
             InitializeBase(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
         }
@@ -549,8 +550,7 @@ namespace Bell_Smart_Server.Source.BSU
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             string xmlPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + (string)cb_OUID.SelectedItem + ".xml";
-            FTP_Info.Upload("Option/" + (string)cb_OUID.SelectedItem + "/", xmlPath); // 옵션팩 데이터 업로드
-            File.Delete(xmlPath); // 데이터 삭제
+            FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Option/" + (string)cb_OUID.SelectedItem + "/", xmlPath, true); // 옵션팩 데이터 업로드
 
             InitializeOption(); // 다시한번 로드
             Common.Message("설정값 업로드 성공!");
@@ -653,7 +653,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             FTPUtil FTP_Data = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
             string FTP_Default_Cloud = Servers.SangDolE.FTP_PATH_BSL + "Pack/" + MUID + "/"; // FTP 서버접속시 기본경로
-            string FTP_Default_Info = "Pack/" + MUID + "/";
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Pack/" + MUID + "/";
             pb_Mod_Upload.Maximum = Directory.Length + FileArray.Length;
 
             // 디렉토리 생성
@@ -681,10 +681,8 @@ namespace Bell_Smart_Server.Source.BSU
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             string xmlPackPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + MUID + ".xml";
             string xmlVerPath = User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml";
-            FTP_Info.Upload(FTP_Default_Info, xmlPackPath); // 모드팩 데이터 업로드
-            FTP_Info.Upload(FTP_Default_Info + "Version/", xmlVerPath); // 버전 데이터 업로드
-            File.Delete(xmlPackPath); // 팩 xml 삭제
-            File.Delete(xmlVerPath); // 버전 xml 삭제
+            FTP_Info.Upload(FTP_Default_Info, xmlPackPath, true); // 모드팩 데이터 업로드
+            FTP_Info.Upload(FTP_Default_Info + "Version/", xmlVerPath, true); // 버전 데이터 업로드
 
             ModUploading(false); // 업로드 끝
             txt_Mod_Version.Text = string.Empty;
@@ -778,7 +776,7 @@ namespace Bell_Smart_Server.Source.BSU
             // 파일 업로드
             FTPUtil FTP_Data = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
             string FTP_Default_Cloud = Servers.SangDolE.FTP_PATH_BSL + "Base/" + BUID + "/"; // FTP 서버접속시 기본경로
-            string FTP_Default_Info = "Base/" + BUID + "/";
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Base/" + BUID + "/";
             pb_Base_Upload.Maximum = Directory.Length + FileArray.Length;
 
             // 디렉토리 생성
@@ -806,10 +804,8 @@ namespace Bell_Smart_Server.Source.BSU
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             string xmlPackPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + BUID + ".xml";
             string xmlVerPath = User.BSN_Temp + "BSU\\Data\\BasePack\\Version\\" + SetVer + ".xml";
-            FTP_Info.Upload(FTP_Default_Info, xmlPackPath); // 모드팩 데이터 업로드
-            FTP_Info.Upload(FTP_Default_Info + "Version/", xmlVerPath); // 버전 데이터 업로드
-            File.Delete(xmlPackPath); // 팩 정보 삭제
-            File.Delete(xmlVerPath); // 버전 정보 삭제
+            FTP_Info.Upload(FTP_Default_Info, xmlPackPath, true); // 모드팩 데이터 업로드
+            FTP_Info.Upload(FTP_Default_Info + "Version/", xmlVerPath, true); // 버전 데이터 업로드
 
             BaseUploading(false); // 업로드 끝
             txt_Base_Version.Text = string.Empty;
@@ -916,7 +912,7 @@ namespace Bell_Smart_Server.Source.BSU
             // 파일 업로드
             FTPUtil FTP_Data = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
             string FTP_Default_Cloud = Servers.SangDolE.FTP_PATH_BSL + "Option/" + OUID + "/"; // FTP 서버접속시 기본경로
-            string FTP_Default_Info = "Option/" + OUID + "/";
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Option/" + OUID + "/";
             pb_Option_Upload.Maximum = Directory.Length + FileArray.Length;
 
             // 디렉토리 생성
@@ -944,10 +940,8 @@ namespace Bell_Smart_Server.Source.BSU
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             string xmlPackPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + OUID + ".xml";
             string xmlVerPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\Version\\" + SetVer + ".xml";
-            FTP_Info.Upload(FTP_Default_Info, xmlPackPath); // 모드팩 데이터 업로드
-            FTP_Info.Upload(FTP_Default_Info + "Version/", xmlVerPath); // 버전 데이터 업로드
-            File.Delete(xmlPackPath); // 팩 정보 삭제
-            File.Delete(xmlVerPath); // 버전 정보 삭제
+            FTP_Info.Upload(FTP_Default_Info, xmlPackPath, true); // 모드팩 데이터 업로드
+            FTP_Info.Upload(FTP_Default_Info + "Version/", xmlVerPath, true); // 버전 데이터 업로드
 
             OptionUploading(false); // 업로드 끝
             txt_Option_Version.Text = string.Empty;

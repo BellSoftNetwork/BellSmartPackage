@@ -139,6 +139,7 @@ namespace BellLib.Class
                 if (Recursive) // 함수가 다시 호출되었을때 무한루프를 막기위함.
                 {
                     Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
+                    fs.Close();
                     return false;
                 }
                 // 서버에 해당 폴더가 없으면 상위폴더까지 전부 재생성
@@ -161,7 +162,11 @@ namespace BellLib.Class
                 return false;
             }
             if (AfterDelete)
-                File.Delete(filename); // xml 파일 삭제
+                try
+                {
+                    File.Delete(filename); // xml 파일 삭제
+                }
+                catch { }
             return true;
 
         }

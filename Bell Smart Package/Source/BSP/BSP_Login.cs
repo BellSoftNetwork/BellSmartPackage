@@ -95,7 +95,7 @@ namespace Bell_Smart_Package.Source.BSP
 
         private void llb_text_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(Base.BSN_WEB_URL);
+            Process.Start(Base.WEB_BSN_URL);
         }
 
         private void cb_EmailSave_CheckedChanged(object sender, EventArgs e)
