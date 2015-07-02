@@ -59,17 +59,17 @@ namespace BellLib.Class
             {
                 case OfficialServer.Bell_Soft_Network_Info:
                     ftpServerIP = Servers.Bell_Soft_Network.SERVER_IP;
-                    ftpUserID = Servers.Bell_Soft_Network.FTP_Info_ID;
-                    ftpPassword = Servers.Bell_Soft_Network.FTP_Info_PW;
-                    ftpPort = Servers.Bell_Soft_Network.FTP_Port;
+                    ftpUserID = Servers.Bell_Soft_Network.FTP_INFO_ID;
+                    ftpPassword = Servers.Bell_Soft_Network.FTP_INFO_PW;
+                    ftpPort = Servers.Bell_Soft_Network.FTP_PORT;
                     usePassive = false;
                     break;
 
                 case OfficialServer.SangDolE_Cloud:
                     ftpServerIP = Servers.SangDolE.SERVER_IP;
-                    ftpUserID = Servers.SangDolE.FTP_Data_ID;
-                    ftpPassword = Servers.SangDolE.FTP_Data_PW;
-                    ftpPort = Servers.SangDolE.FTP_Port;
+                    ftpUserID = Servers.SangDolE.FTP_DATA_ID;
+                    ftpPassword = Servers.SangDolE.FTP_DATA_PW;
+                    ftpPort = Servers.SangDolE.FTP_PORT;
                     usePassive = false;
                     break;
             }
@@ -148,7 +148,7 @@ namespace BellLib.Class
                 foreach (string tmp in Temp)
                 {
                     Dir += tmp + "/";
-                    MakeDir(tmp);
+                    MakeDir(Dir);
                 }
 
                 Dir = ex.Message; // 개쓸모없는 구문
@@ -539,7 +539,7 @@ namespace BellLib.Class
                 foreach (string tmp in Temp)
                 {
                     Dir += tmp + "/";
-                    MakeDir(tmp, true);
+                    MakeDir(Dir, true);
                 }
 
                 Dir = ex.Message; // 개쓸모없는 구문

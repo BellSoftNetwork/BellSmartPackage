@@ -111,9 +111,9 @@ namespace BellLib.Class
         /// <returns>초기화 된 HttpWebRequest 인스턴스를 반환합니다.</returns>
         private static HttpWebRequest GetInstance()
         {
-            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Base.WEB_BSN_URL + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
+            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
             wRequestBSN.Method = "POST";
-            wRequestBSN.Referer = Base.WEB_BSN_URL;
+            wRequestBSN.Referer = Servers.Bell_Soft_Network.WEB_BSN_ROOT;
             wRequestBSN.ContentType = "application/x-www-form-urlencoded";
             wRequestBSN.CookieContainer = wCookie;
             wRequestBSN.UserAgent = ".NET Application (BST Version : " + "4.0.0.0" + ")";

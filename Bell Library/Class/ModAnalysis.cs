@@ -209,7 +209,7 @@ namespace BellLib.Class
             XmlNodeList xnList;
             try
             {
-                doc.Load(Base.WEB_INFO_URL + "BSL/Pack/" + _MUID + "/" + _MUID + ".xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Pack/" + _MUID + "/" + _MUID + ".xml");
             }
             catch { return false; }
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
@@ -252,7 +252,7 @@ namespace BellLib.Class
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             try {
-            doc.Load(Base.WEB_INFO_URL + "BSL/Base/" + _BUID + "/" + _BUID + ".xml");
+            doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Base/" + _BUID + "/" + _BUID + ".xml");
             } catch { return false; }
             xnList = doc.SelectNodes("/" + _BUID + "/Info");
 
@@ -290,7 +290,7 @@ namespace BellLib.Class
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             try {
-            doc.Load(Base.WEB_INFO_URL + "BSL/Option/" + _OUID + "/" + _OUID + ".xml");
+            doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Option/" + _OUID + "/" + _OUID + ".xml");
             } catch { return false; }
             xnList = doc.SelectNodes("/" + _OUID + "/Info");
 
@@ -330,7 +330,7 @@ namespace BellLib.Class
             XmlNodeList xnList;
             try
             {
-                doc.Load(Base.WEB_INFO_URL + "BSL/Pack/PackList.xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Pack/PackList.xml");
             }
             catch { return false; }
             xnList = doc.SelectNodes("/List/Pack");
@@ -359,7 +359,7 @@ namespace BellLib.Class
             XmlNodeList xnList;
             try
             {
-                doc.Load(Base.WEB_INFO_URL + "BSL/Base/PackList.xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Base/PackList.xml");
             }
             catch { return false; }
             xnList = doc.SelectNodes("/List/Pack");
@@ -388,7 +388,7 @@ namespace BellLib.Class
             XmlNodeList xnList;
             try
             {
-                doc.Load(Base.WEB_INFO_URL + "BSL/Option/PackList.xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Option/PackList.xml");
             }
             catch { return false; }
             xnList = doc.SelectNodes("/List/Pack");
@@ -448,7 +448,7 @@ namespace BellLib.Class
             StringBuilder str = new StringBuilder();
             try
             {
-                doc.Load(Base.WEB_INFO_URL + "BSL/Pack/" + _MUID + "/Version/" + Version + ".xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Pack/" + _MUID + "/Version/" + Version + ".xml");
             }
             catch { return; }
             xnList = doc.SelectNodes("/" + _MUID + "/Version/Base");
@@ -495,7 +495,7 @@ namespace BellLib.Class
             List<string> lst = new List<string>();
             try
             {
-                doc.Load(Base.WEB_INFO_URL + "BSL/Base/" + _BUID + "/Version/" + Version + ".xml"); // 베이스 버전 데이터 로드
+                doc.Load(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "BSL/Base/" + _BUID + "/Version/" + Version + ".xml"); // 베이스 버전 데이터 로드
             }
             catch { return; }
             

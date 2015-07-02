@@ -140,6 +140,11 @@ namespace Bell_Smart_Server.Source.BSU
                             {
                                 if (InputBox("불러온 모드팩의 권장버전을 입력 해 주세요.", "모드팩 삭제") == txt_Mod_Recommended.Text)
                                 {
+                                    gb_Mod_Info.Enabled = false;
+                                    gb_Mod_Setting.Enabled = false;
+                                    gb_Mod_Upload.Enabled = false;
+                                    btn_Mod_Set.Enabled = false;
+
                                     // 모드팩 삭제 진행
                                     // 모드팩 파일 전체 삭제
                                     FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
@@ -162,10 +167,6 @@ namespace Bell_Smart_Server.Source.BSU
                                     FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Pack/", xmlPath, true); // 모드팩 리스트 업로드
                                     FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
-                                    gb_Mod_Info.Enabled = false;
-                                    gb_Mod_Setting.Enabled = false;
-                                    gb_Mod_Upload.Enabled = false;
-                                    btn_Mod_Set.Enabled = false;
                                     Common.Message("모드팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 모드팩에 접근하시려면 관리창을 재 실행하세요.");
                                 }
                             }
@@ -314,6 +315,11 @@ namespace Bell_Smart_Server.Source.BSU
                             {
                                 // 선택한 베이스팩을 의존하는 모드팩이 있는지 확인, 있으면 삭제 중단
 
+                                gb_Base_Info.Enabled = false;
+                                gb_Base_Setting.Enabled = false;
+                                gb_Base_Upload.Enabled = false;
+                                btn_Base_Set.Enabled = false;
+
                                 // 베이스팩 삭제 진행
                                 // 베이스팩 파일 전체 삭제
                                 FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
@@ -336,10 +342,6 @@ namespace Bell_Smart_Server.Source.BSU
                                 FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Base/", xmlPath, true); // 베이스팩 리스트 업로드
                                 FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
-                                gb_Base_Info.Enabled = false;
-                                gb_Base_Setting.Enabled = false;
-                                gb_Base_Upload.Enabled = false;
-                                btn_Base_Set.Enabled = false;
                                 Common.Message("베이스팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 베이스팩에 접근하시려면 관리창을 재 실행하세요.");
                             }
                         }
@@ -400,6 +402,11 @@ namespace Bell_Smart_Server.Source.BSU
                             {
                                 // 선택한 옵션팩을 의존하는 모드팩이 있는지 확인, 있으면 삭제 중단
 
+                                gb_Option_Info.Enabled = false;
+                                gb_Option_Setting.Enabled = false;
+                                gb_Option_Upload.Enabled = false;
+                                btn_Option_Set.Enabled = false;
+
                                 // 옵션팩 삭제 진행
                                 // 옵션팩 파일 전체 삭제
                                 FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
@@ -422,10 +429,6 @@ namespace Bell_Smart_Server.Source.BSU
                                 FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_BSL + "Option/", xmlPath, true); // 모드팩 리스트 업로드
                                 FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
-                                gb_Option_Info.Enabled = false;
-                                gb_Option_Setting.Enabled = false;
-                                gb_Option_Upload.Enabled = false;
-                                btn_Option_Set.Enabled = false;
                                 Common.Message("옵션팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 옵션팩에 접근하시려면 관리창을 재 실행하세요.");
                             }
                         }
