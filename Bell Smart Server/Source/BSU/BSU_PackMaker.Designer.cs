@@ -117,6 +117,7 @@
             // 
             this.txt_Mod_Down.Location = new System.Drawing.Point(97, 132);
             this.txt_Mod_Down.Name = "txt_Mod_Down";
+            this.txt_Mod_Down.ReadOnly = true;
             this.txt_Mod_Down.Size = new System.Drawing.Size(291, 21);
             this.txt_Mod_Down.TabIndex = 41;
             // 
@@ -133,6 +134,7 @@
             // 
             this.txt_Mod_News.Location = new System.Drawing.Point(97, 111);
             this.txt_Mod_News.Name = "txt_Mod_News";
+            this.txt_Mod_News.ReadOnly = true;
             this.txt_Mod_News.Size = new System.Drawing.Size(291, 21);
             this.txt_Mod_News.TabIndex = 39;
             // 
@@ -212,6 +214,8 @@
             this.txt_MUID.Name = "txt_MUID";
             this.txt_MUID.Size = new System.Drawing.Size(291, 21);
             this.txt_MUID.TabIndex = 31;
+            this.txt_MUID.TextChanged += new System.EventHandler(this.txt_MUID_TextChanged);
+            this.txt_MUID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_MUID_KeyPress);
             // 
             // btn_Mod_Upload
             // 
@@ -262,6 +266,7 @@
             // 
             this.txt_Base_Down.Location = new System.Drawing.Point(97, 47);
             this.txt_Base_Down.Name = "txt_Base_Down";
+            this.txt_Base_Down.ReadOnly = true;
             this.txt_Base_Down.Size = new System.Drawing.Size(291, 21);
             this.txt_Base_Down.TabIndex = 26;
             // 
@@ -289,6 +294,7 @@
             this.txt_BUID.Name = "txt_BUID";
             this.txt_BUID.Size = new System.Drawing.Size(291, 21);
             this.txt_BUID.TabIndex = 23;
+            this.txt_BUID.TextChanged += new System.EventHandler(this.txt_BUID_TextChanged);
             // 
             // tp_OptionPack
             // 
@@ -328,6 +334,7 @@
             // 
             this.txt_Option_Down.Location = new System.Drawing.Point(100, 47);
             this.txt_Option_Down.Name = "txt_Option_Down";
+            this.txt_Option_Down.ReadOnly = true;
             this.txt_Option_Down.Size = new System.Drawing.Size(291, 21);
             this.txt_Option_Down.TabIndex = 26;
             // 
@@ -355,6 +362,7 @@
             this.txt_OUID.Name = "txt_OUID";
             this.txt_OUID.Size = new System.Drawing.Size(291, 21);
             this.txt_OUID.TabIndex = 23;
+            this.txt_OUID.TextChanged += new System.EventHandler(this.txt_OUID_TextChanged);
             // 
             // BSU_PackMaker
             // 

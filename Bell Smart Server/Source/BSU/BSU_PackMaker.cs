@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Bell_Smart_Server.Source.BSU
@@ -77,9 +78,11 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
-            FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
-            FTP_Info.MakeDir("Pack/" + txt_MUID.Text + "/Version/");
-            FTP_Info.Upload("Pack/" + txt_MUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
+            FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Pack/";
+            FTP_Info.MakeDir(FTP_Default_Info + txt_MUID.Text + "/");
+            FTP_Info.MakeDir(FTP_Default_Info + txt_MUID.Text + "/Version/");
+            FTP_Info.Upload(FTP_Default_Info + txt_MUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
             //File.Delete(xmlPath); // xml 파일 삭제
 
             List<string> list = new List<string>();
@@ -87,7 +90,7 @@ namespace Bell_Smart_Server.Source.BSU
             list.Add(txt_MUID.Text);
             MAW.WriteListXML(list.ToArray());
             xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
-            FTP_Info.Upload("Pack/", xmlPath, true); // 모드팩 리스트 업로드
+            FTP_Info.Upload(FTP_Default_Info, xmlPath, true); // 모드팩 리스트 업로드
 
             InitializeMod(); // 다시한번 로드
             btn_Mod_Upload.Enabled = true;
@@ -122,16 +125,18 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Base/";
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
-            FTP_Info.MakeDir("Base/" + txt_BUID.Text + "/Version/");
-            FTP_Info.Upload("Base/" + txt_BUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
+            FTP_Info.MakeDir(FTP_Default_Info + txt_BUID.Text + "/");
+            FTP_Info.MakeDir(FTP_Default_Info + txt_BUID.Text + "/Version/");
+            FTP_Info.Upload(FTP_Default_Info + txt_BUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
 
             List<string> list = new List<string>();
             list.AddRange(MAR.GetList(ModAnalysisRead.PackType.Base));
             list.Add(txt_BUID.Text);
             MAW.WriteListXML(list.ToArray());
             xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
-            FTP_Info.Upload("Base/", xmlPath, true); // 모드팩 리스트 업로드
+            FTP_Info.Upload(FTP_Default_Info, xmlPath, true); // 모드팩 리스트 업로드
 
             InitializeBase(); // 다시한번 로드
             InitializeMod(); // 다시한번 로드
@@ -167,22 +172,53 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Option/";
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
-            FTP_Info.MakeDir("Option/" + txt_OUID.Text + "/Version/");
-            FTP_Info.Upload("Option/" + txt_OUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
+            FTP_Info.MakeDir(FTP_Default_Info + txt_OUID.Text + "/");
+            FTP_Info.MakeDir(FTP_Default_Info + txt_OUID.Text + "/Version/");
+            FTP_Info.Upload(FTP_Default_Info + txt_OUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
 
             List<string> list = new List<string>();
             list.AddRange(MAR.GetList(ModAnalysisRead.PackType.Option));
             list.Add(txt_OUID.Text);
             MAW.WriteListXML(list.ToArray());
             xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
-            FTP_Info.Upload("Option/", xmlPath, true); // 모드팩 리스트 업로드
+            FTP_Info.Upload(FTP_Default_Info, xmlPath, true); // 모드팩 리스트 업로드
 
             InitializeOption(); // 다시한번 로드
             InitializeMod(); // 다시한번 로드
             btn_Option_Upload.Enabled = true;
             gb_OptionPack.Enabled = true;
             Common.Message("옵션팩 등록 성공!");
+        }
+
+        private void txt_MUID_TextChanged(object sender, EventArgs e)
+        {
+            txt_Mod_News.Text = Servers.Bell_Soft_Network.WEB_INFO_BSL + "Pack/" + txt_MUID.Text + "/News.html";
+            txt_Mod_Down.Text = Servers.SangDolE.WEB_CLOUD_BSL + "Pack/" + txt_MUID.Text + "/";
+        }
+
+        private void txt_BUID_TextChanged(object sender, EventArgs e)
+        {
+            txt_Base_Down.Text = Servers.SangDolE.WEB_CLOUD_BSL + "Base/" + txt_BUID.Text + "/";
+        }
+
+        private void txt_OUID_TextChanged(object sender, EventArgs e)
+        {
+            txt_Option_Down.Text = Servers.SangDolE.WEB_CLOUD_BSL + "Option/" + txt_OUID.Text + "/";
+        }
+        
+        private void txt_MUID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            /*if (!(Char.IsLetter(e.KeyChar)) && e.KeyChar != 8) // 영문만 입력
+            {
+                e.Handled = true;
+            }
+            if (!(Char.IsDigit(e.KeyChar)) && e.KeyChar != Convert.ToChar(Keys.Back)) // 숫자만 입력
+            {
+                e.Handled = true;
+            }*/
+
         }
     }
 }

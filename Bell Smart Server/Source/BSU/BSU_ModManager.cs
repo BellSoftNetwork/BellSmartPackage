@@ -597,6 +597,7 @@ namespace Bell_Smart_Server.Source.BSU
                 }
             }
             ModUploading(true);
+            btn_Mod_Load_Click(sender, e); // 혹시 모르니 리스트 새로고침
             List<string> list = new List<string>();
             Protection Pro = new Protection();
             string SetVer = txt_Mod_Version.Text; // 업로드시 설정 버전
@@ -725,6 +726,7 @@ namespace Bell_Smart_Server.Source.BSU
                 }
             }
             BaseUploading(true);
+            btn_Base_Load_Click(sender, e); // 혹시 모르니 리스트 새로고침
             List<string> list = new List<string>();
             Protection Pro = new Protection();
             string[] FileArray = lst_Base_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
