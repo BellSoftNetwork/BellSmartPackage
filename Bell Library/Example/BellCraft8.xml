@@ -1,23 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <BellCraft8>
   <Info>
+    <Activation>TRUE</Activation>
     <Name>방울크래프트</Name>
     <Recommended>8.5.0</Recommended>
     <Latest>8.8.0</Latest>
-    <Base>BCP_1.7.10</Base>
+    <Base>Forge_1.7.10</Base>
     <Option>BCO_1.7.10</Option>
-    <News>http://bellsoft.iptime.org:88/BSL/Pack/BellCraft8/News.html</News>
-    <Down>http://bellsoft.iptime.org:4135/FileServer/BSL/Pack/BellCraft8/</Down>
   </Info>
+  <Detail>
+    <Info Name="Multi Play Pack">TRUE</Info>
+    <Info Name="Minecraft Version">1.7.10</Info>
+  </Detail>
+  <Permission>
+    <User ID="bell04204@gmail.com">2</User>
+  </Permission>
+  <Server>
+    <UID>SangDolE</UID>
+    <UID>BellSoftNetwork</UID>
+  </Server>
   <Version>
-    <Ver>8.0.0</Ver>
-    <Ver>8.1.0</Ver>
-    <Ver>8.2.0</Ver>
-    <Ver>8.3.0</Ver>
-    <Ver>8.4.0</Ver>
-    <Ver>8.5.0</Ver>
-    <Ver>8.6.0</Ver>
-    <Ver>8.7.0</Ver>
-    <Ver>8.8.0</Ver>
+    <Data Ver="8.0.0">TRUE</Data>
+    <Data Ver="8.1.0">FALSE</Data>
+    <Data Ver="8.2.0">TRUE</Data>
   </Version>
 </BellCraft8>

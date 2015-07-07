@@ -14,12 +14,12 @@ namespace BellLib.Data
         {
             public const string SERVER_IP = "softbell.net";
 
-            public const string FTP_PATH_BSL = "HDD1/Info/BSL/";
+            public const string FTP_PATH_BSL = "HDD1/Info/BSP/BSL/";
             public const string FTP_PORT = "21";
             public const string FTP_INFO_ID = "BSNInfo";
             public const string FTP_INFO_PW = "bellsoftnetwork";
 
-            public const string WEB_INFO_BSL = "http://info.softbell.net/BSL/";
+            public const string WEB_INFO_BSL = "http://info.softbell.net/BSP/BSL/";
             public const string WEB_CLOUD_ROOT = "http://cloud.softbell.net/";
             public const string WEB_BSN_ROOT = "http://www.softbell.net/";
             public const string WEB_FILE_ROOT = "http://www.softbell.net:4135/";

@@ -13,6 +13,10 @@ namespace BellLib.Data
 
         public static Version BST_Current_Verion { get { return Deployment.CurrentVersion; } }
         public static Version BST_Latest_Version { get { return Deployment.LatestVersion; } }
+        /// <summary>
+        /// BSN 로컬 경로를 가져옵니다.
+        /// 기본값 : C:\BSN\
+        /// </summary>
         public static string BSN_Path
         {
             set

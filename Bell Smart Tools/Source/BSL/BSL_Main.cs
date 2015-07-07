@@ -47,7 +47,7 @@ namespace Bell_Smart_Tools.Source.BSL
             lst_ModPack.Tag = string.Empty;
 
             ModAnalysisRead MAR = new ModAnalysisRead();
-            string[] PackList = MAR.GetList(ModAnalysisRead.PackType.Mod);
+            string[] PackList = ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod);
             List<string> PackNameList = new List<string>();
 
             foreach (string tmp in PackList)

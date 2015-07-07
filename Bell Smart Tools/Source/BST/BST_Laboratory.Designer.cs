@@ -42,7 +42,7 @@
             // 
             this.Button_TicTacToe.Location = new System.Drawing.Point(2, 132);
             this.Button_TicTacToe.Name = "Button_TicTacToe";
-            this.Button_TicTacToe.Size = new System.Drawing.Size(246, 23);
+            this.Button_TicTacToe.Size = new System.Drawing.Size(213, 23);
             this.Button_TicTacToe.TabIndex = 0;
             this.Button_TicTacToe.Text = "ReflectionExample";
             this.Button_TicTacToe.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(358, 161);
+            this.ClientSize = new System.Drawing.Size(358, 157);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button4);

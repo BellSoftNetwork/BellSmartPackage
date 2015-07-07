@@ -31,13 +31,13 @@ namespace Bell_Smart_Server.Source.BSU
             llb_Option_Upload.Text = "업로드 폴더 : " + (string)llb_Option_Upload.Tag;
 
             ModAnalysisRead MAR = new ModAnalysisRead();
-            cb_MUID.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Mod));
+            cb_MUID.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod));
             cb_MUID.SelectedIndex = 0;
 
-            cb_BUID.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Base));
+            cb_BUID.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base));
             cb_BUID.SelectedIndex = 0;
 
-            cb_OUID.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Option));
+            cb_OUID.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option));
             cb_OUID.SelectedIndex = 0;
         }
         private bool InitializeMod()
@@ -58,13 +58,11 @@ namespace Bell_Smart_Server.Source.BSU
                 txt_Mod_Name.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name");
                 txt_Mod_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest");
                 txt_Mod_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended");
-                txt_Mod_News.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
-                txt_Mod_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
-
-                cb_Mod_Base.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Base));
+                
+                cb_Mod_Base.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base));
                 cb_BUID.SelectedItem = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
                 cb_Mod_Base.SelectedItem = (string)cb_BUID.SelectedItem;
-                cb_Mod_Option.Items.AddRange(MAR.GetList(ModAnalysisRead.PackType.Option));
+                cb_Mod_Option.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option));
                 cb_OUID.SelectedItem = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
                 cb_Mod_Option.SelectedItem = (string)cb_OUID.SelectedItem;
 
@@ -155,7 +153,7 @@ namespace Bell_Smart_Server.Source.BSU
                                     // 모드팩 리스트에서 현재 모드팩 제거
                                     List<string> list = new List<string>();
                                     ModAnalysisRead MAR = new ModAnalysisRead();
-                                    foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Mod))
+                                    foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod))
                                     {
                                         if (tmp != (string)cb_MUID.SelectedItem)
                                             list.Add(tmp);
@@ -203,7 +201,6 @@ namespace Bell_Smart_Server.Source.BSU
             if (txt_Mod_Latest.Text == string.Empty) stop = true;
             if (txt_Mod_Recommended.Text == string.Empty) stop = true;
             if (txt_Mod_Name.Text == string.Empty) stop = true;
-            if (txt_Mod_News.Text == string.Empty) stop = true;
             if ((string)cb_Mod_Base.SelectedItem == string.Empty) stop = true;
             if ((string)cb_Mod_Option.SelectedItem == string.Empty) stop = true;
 
@@ -330,7 +327,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 // 베이스팩 리스트에서 선택된 베이스팩 제거
                                 List<string> list = new List<string>();
                                 ModAnalysisRead MAR = new ModAnalysisRead();
-                                foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Base))
+                                foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base))
                                 {
                                     if (tmp != (string)cb_BUID.SelectedItem)
                                         list.Add(tmp);
@@ -417,7 +414,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 // 옵션팩 리스트에서 선택된 옵션팩 제거
                                 List<string> list = new List<string>();
                                 ModAnalysisRead MAR = new ModAnalysisRead();
-                                foreach (string tmp in MAR.GetList(ModAnalysisRead.PackType.Option))
+                                foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option))
                                 {
                                     if (tmp != (string)cb_OUID.SelectedItem)
                                         list.Add(tmp);

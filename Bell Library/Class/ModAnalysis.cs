@@ -11,63 +11,29 @@ namespace BellLib.Class
 {
     public struct Info_Modpack
     {
-        public string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down;
-        public string[] _Version, _List;
-
-        /*public Info_Modpack(string _Name = null, string _Recommended = null, string _Latest = null, string _Base = null,
-                            string _Option = null, string _News = null, string _Down = null, string[] _Version = null)
-        {
-            this._Name = _Name;
-            this._Recommended = _Recommended;
-            this._Latest = _Latest;
-            this._Base = _Base;
-            this._Option = _Option;
-            this._News = _News;
-            this._Down = _Down;
-            this._Version = _Version;
-        }*/
+        public string _Name, _Recommended, _Latest, _Base, _Option; //, _News, _Down;
+        public string[] _Detail;
+        public string[] _Permission;
+        public string[] _Server;
+        public string[] _Version;
     }
 
     public struct Info_Basepack
     {
         public string _Latest, _Recommended, _Down;
-        public string[] _Version, _List;
-
-        /*public Info_Basepack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
-        {
-            this._Latest = _Latest;
-            this._Recommended = _Recommended;
-            this._Down = _Down;
-            this._Version = _Version;
-        }*/
+        public string[] _Permission;
+        public string[] _Server;
+        public string[] _Version;
     }
 
     public struct Info_Optionpack
     {
         public string _Latest, _Recommended, _Down;
-        public string[] _Version, _List;
-
-        /*public Info_Optionpack(string _Latest = null, string _Recommended = null, string _Down = null, string[] _Version = null)
-        {
-            this._Latest = _Latest;
-            this._Recommended = _Recommended;
-            this._Down = _Down;
-            this._Version = _Version;
-        }*/
+        public string[] _Permission;
+        public string[] _Server;
+        public string[] _Version;
     }
-
-    public struct Info_ClientMod
-    {
-        public string _ModVersion, _BaseVersion, _OptionVersion;
-
-        public Info_ClientMod(string _ModVersion = null, string _BaseVersion = null, string _OptionVersion = null)
-        {
-            this._ModVersion = _ModVersion;
-            this._BaseVersion = _BaseVersion;
-            this._OptionVersion = _OptionVersion;
-        }
-    }
-
+    
     public struct Ver_Modpack
     {
         public string Base, Option;
@@ -90,17 +56,6 @@ namespace BellLib.Class
     /// </summary>
     public class ModAnalysisRead
     {
-        /* 임시로 생성한 xml 파일 웹 주소. 분석시 사용.
-         * Base.TOTAL_WEB_URL + "BSL/Pack/PackList.xml" // 팩 리스트
-         * Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8/BellCraft8.xml" // 팩 정보
-         * Base.TOTAL_WEB_URL + "BSL/Pack/BellCraft8/Version/8.8.0.xml" // 팩 설치 정보
-         * 
-         * Base.TOTAL_WEB_URL + "BSL/Option/BCO_1.7.10/BCO_1.7.10.xml" // 옵션 정보
-         * Base.TOTAL_WEB_URL + "BSL/Option/BCO_1.7.10/Version/1.0.0.xml" // 옵션 설치 정보
-         * 
-         * Base.TOTAL_WEB_URL + "BSL/Base/BCP_1.7.10/BCP_1.7.10.xml" // 베이스 정보
-         * Base.TOTAL_WEB_URL + "BSL/Base/BCP_1.7.10/Version/1.0.0.xml" // 베이스 설치 정보
-         */
         #region 필드
 
         // 사용하거든!
@@ -108,7 +63,6 @@ namespace BellLib.Class
         private Info_Modpack InfoModpack = new Info_Modpack();
         private Info_Basepack InfoBasepack = new Info_Basepack();
         private Info_Optionpack InfoOptionpack = new Info_Optionpack();
-        private Info_ClientMod InfoClientMod = new Info_ClientMod();
         private Ver_Modpack VerModpack = new Ver_Modpack();
         private Ver_Basepack VerBasepack = new Ver_Basepack();
         private Ver_Optionpack VerOptionpack = new Ver_Optionpack();
@@ -135,10 +89,9 @@ namespace BellLib.Class
         /// </summary>
         public ModAnalysisRead()
         {
-            LoadModList();
+            /*LoadModList();
             LoadBaseList();
-            LoadOptionList();
-            LoadClient();
+            LoadOptionList();*/
         }
 
         /// <summary>
@@ -149,10 +102,9 @@ namespace BellLib.Class
         {
             if (parse) // 공통 로드 부분
             {
-                if (!LoadModList()) return;
+                /*if (!LoadModList()) return;
                 if (!LoadBaseList()) return;
-                if (!LoadOptionList()) return;
-                LoadClient();
+                if (!LoadOptionList()) return;*/
             }
 
             switch (pt)
@@ -209,7 +161,7 @@ namespace BellLib.Class
             XmlNodeList xnList;
             try
             {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Pack/" + _MUID + "/" + _MUID + ".xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_BSL + "Pack/" + _MUID + "/" + _MUID + ".xml");
             }
             catch { return false; }
             xnList = doc.SelectNodes("/" + _MUID + "/Info");
@@ -252,7 +204,7 @@ namespace BellLib.Class
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             try {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Base/" + _BUID + "/" + _BUID + ".xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_BSL + "Base/" + _BUID + "/" + _BUID + ".xml");
             } catch { return false; }
             xnList = doc.SelectNodes("/" + _BUID + "/Info");
 
@@ -290,7 +242,7 @@ namespace BellLib.Class
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
             try {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Option/" + _OUID + "/" + _OUID + ".xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_BSL + "Option/" + _OUID + "/" + _OUID + ".xml");
             } catch { return false; }
             xnList = doc.SelectNodes("/" + _OUID + "/Info");
 
@@ -320,122 +272,51 @@ namespace BellLib.Class
             return true;
         }
 
-        /// <summary>
-        /// 모드팩 리스트를 로드합니다.
-        /// </summary>
-        /// <returns>MUID 리스트 배열</returns>
-        private bool LoadModList()
+
+        #region 인스턴스 필요없는 메서드
+
+        public static string[] LoadPackList(PackType Type)
         {
             XmlDocument doc = new XmlDocument();
             XmlNodeList xnList;
+            string Pack = null;
+            switch (Type)
+            {
+                case PackType.Mod:
+                    Pack = "Pack";
+                    break;
+                    
+                case PackType.Base:
+                    Pack = "Base";
+                    break;
+
+                case PackType.Option:
+                    Pack = "Option";
+                    break;
+            }
             try
             {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Pack/PackList.xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_BSL + "/" + Pack + "/PackList.xml");
             }
-            catch { return false; }
+            catch
+            {
+                throw new System.InvalidOperationException("팩 리스트 로드 실패" + Environment.NewLine + "Type : " + Type); // 데이터 읽기 실패
+                //return null;
+            }
             xnList = doc.SelectNodes("/List/Pack");
 
             StringBuilder str = new StringBuilder();
             foreach (XmlNode xn in xnList)
-            {
                 str.AppendLine(xn.InnerText);
-            }
+
             List<string> lst = new List<string>();
             foreach (string tmp in str.ToString().Split('\n'))
-                if (tmp != "")
+                if (tmp != string.Empty)
                     lst.Add(tmp.Replace("\r", string.Empty));
-            InfoModpack._List = lst.ToArray();
 
-            return true;
+            return lst.ToArray();
         }
-
-        /// <summary>
-        /// 베이스팩 리스트를 로드합니다.
-        /// </summary>
-        /// <returns>BUID 리스트 배열</returns>
-        private bool LoadBaseList()
-        {
-            XmlDocument doc = new XmlDocument();
-            XmlNodeList xnList;
-            try
-            {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Base/PackList.xml");
-            }
-            catch { return false; }
-            xnList = doc.SelectNodes("/List/Pack");
-
-            StringBuilder str = new StringBuilder();
-            foreach (XmlNode xn in xnList)
-            {
-                str.AppendLine(xn.InnerText);
-            }
-            List<string> lst = new List<string>();
-            foreach (string tmp in str.ToString().Split('\n'))
-                if (tmp != "")
-                    lst.Add(tmp.Replace("\r", string.Empty));
-            InfoBasepack._List = lst.ToArray();
-
-            return true;
-        }
-
-        /// <summary>
-        /// 옵션팩 리스트를 로드합니다.
-        /// </summary>
-        /// <returns>OUID 리스트 배열</returns>
-        private bool LoadOptionList()
-        {
-            XmlDocument doc = new XmlDocument();
-            XmlNodeList xnList;
-            try
-            {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Option/PackList.xml");
-            }
-            catch { return false; }
-            xnList = doc.SelectNodes("/List/Pack");
-
-            StringBuilder str = new StringBuilder();
-            foreach (XmlNode xn in xnList)
-            {
-                str.AppendLine(xn.InnerText);
-            }
-            List<string> lst = new List<string>();
-            foreach (string tmp in str.ToString().Split('\n'))
-                if (tmp != "")
-                    lst.Add(tmp.Replace("\r", string.Empty));
-            InfoOptionpack._List = lst.ToArray();
-
-            return true;
-        }
-
-        /// <summary>
-        /// 클라이언트 데이터를 로드합니다.
-        /// </summary>
-        private bool LoadClient()
-        {
-            string clientPath = User.BSL_Root + "ModPack\\" + _MUID + "\\" + _MUID + ".bsn";
-            if (File.Exists(clientPath))
-            {
-                string Temp = File.ReadAllText(clientPath);
-                Protection pt = new Protection();
-                Temp = pt.Base64(Temp, Protection.ProtectionType.PROTECTION_DECODE, 2); // 클라이언트 정보파일의 데이터를 2회 복호화
-                string[] Data = Temp.Split('\n');
-
-                TypedReference _tr = __makeref(InfoClientMod);
-                int i = 0;
-
-                // foreach문으로 ModAnalysis 클래스의 필드를 모두 구한다.
-                foreach (var fieldInfo in typeof(Info_ClientMod).GetFields(BindingFlags.Public | BindingFlags.Instance))
-                {
-                    string value = Data[i].Split('=')[1].Replace("_", String.Empty);
-                    fieldInfo.SetValueDirect(_tr, value);
-                    i++;
-                }
-
-                return true;
-            } else {
-                return false;
-            }
-        }
+        #endregion
 
         /// <summary>
         /// 지정한 버전의 모드팩 설치데이터를 로드 및 분석합니다.
@@ -448,7 +329,7 @@ namespace BellLib.Class
             StringBuilder str = new StringBuilder();
             try
             {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Pack/" + _MUID + "/Version/" + Version + ".xml");
+                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_BSL + "Pack/" + _MUID + "/Version/" + Version + ".xml");
             }
             catch { return; }
             xnList = doc.SelectNodes("/" + _MUID + "/Version/Base");
@@ -495,7 +376,7 @@ namespace BellLib.Class
             List<string> lst = new List<string>();
             try
             {
-                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/Base/" + _BUID + "/Version/" + Version + ".xml"); // 베이스 버전 데이터 로드
+                doc.Load(Servers.Bell_Soft_Network.WEB_INFO_BSL + "Base/" + _BUID + "/Version/" + Version + ".xml"); // 베이스 버전 데이터 로드
             }
             catch { return; }
             
@@ -570,34 +451,7 @@ namespace BellLib.Class
             }
             return null;
         }
-
-        /// <summary>
-        /// 선택한 팩 타입의 모든 리스트를 배열로 반환합니다.
-        /// </summary>
-        /// <param name="pt">팩 타입</param>
-        /// <returns>팩 리스트</returns>
-        public string[] GetList(PackType pt)
-        {
-            switch (pt)
-            {
-                case PackType.Mod:
-                    if (InfoModpack._List == null)
-                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
-                    return InfoModpack._List;
-
-                case PackType.Base:
-                    if (InfoBasepack._List == null)
-                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
-                    return InfoBasepack._List;
-
-                case PackType.Option:
-                    if (InfoOptionpack._List == null)
-                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
-                    return InfoOptionpack._List;
-            }
-            return null;
-        }
-
+        
         /// <summary>
         /// 선택된 팩 정보를 바탕으로 저장된 정보를 반환합니다.
         /// </summary>
@@ -687,6 +541,12 @@ namespace BellLib.Class
         }
         #endregion
     }
+
+
+
+
+
+
 
     public struct Data_Mod
     {
