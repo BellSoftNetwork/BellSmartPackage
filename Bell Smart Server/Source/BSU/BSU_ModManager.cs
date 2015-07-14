@@ -209,7 +209,7 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, (string)cb_MUID.SelectedItem, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
+            ModAnalysisWrite MAW = null;// new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, (string)cb_MUID.SelectedItem, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
             string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + (string)cb_MUID.SelectedItem + ".xml";
             MAW.WriteXML();
             

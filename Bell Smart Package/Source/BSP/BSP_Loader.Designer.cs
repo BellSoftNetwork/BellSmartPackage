@@ -30,31 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSP_Loader));
-            this.pb_Load = new System.Windows.Forms.ProgressBar();
-            this.lb_Log = new System.Windows.Forms.Label();
             this.ni_BSP = new System.Windows.Forms.NotifyIcon(this.components);
             this.ms_BSP = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mi_Restart = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_End = new System.Windows.Forms.ToolStripMenuItem();
+            this.pb_Logo = new System.Windows.Forms.PictureBox();
+            this.pb_Load = new System.Windows.Forms.ProgressBar();
+            this.lb_Log = new System.Windows.Forms.Label();
             this.ms_BSP.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Logo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pb_Load
-            // 
-            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pb_Load.Location = new System.Drawing.Point(0, 0);
-            this.pb_Load.Name = "pb_Load";
-            this.pb_Load.Size = new System.Drawing.Size(365, 34);
-            this.pb_Load.TabIndex = 0;
-            // 
-            // lb_Log
-            // 
-            this.lb_Log.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lb_Log.Location = new System.Drawing.Point(0, 37);
-            this.lb_Log.Name = "lb_Log";
-            this.lb_Log.Size = new System.Drawing.Size(365, 25);
-            this.lb_Log.TabIndex = 1;
-            this.lb_Log.Text = "진행상황 : ";
             // 
             // ni_BSP
             // 
@@ -69,30 +54,60 @@
             this.mi_Restart,
             this.mi_End});
             this.ms_BSP.Name = "ms_BSP";
-            this.ms_BSP.Size = new System.Drawing.Size(153, 70);
+            this.ms_BSP.Size = new System.Drawing.Size(136, 48);
             // 
             // mi_Restart
             // 
             this.mi_Restart.Name = "mi_Restart";
-            this.mi_Restart.Size = new System.Drawing.Size(152, 22);
+            this.mi_Restart.Size = new System.Drawing.Size(135, 22);
             this.mi_Restart.Text = "BSP 재시작";
             this.mi_Restart.Click += new System.EventHandler(this.mi_Restart_Click);
             // 
             // mi_End
             // 
             this.mi_End.Name = "mi_End";
-            this.mi_End.Size = new System.Drawing.Size(152, 22);
+            this.mi_End.Size = new System.Drawing.Size(135, 22);
             this.mi_End.Text = "BSP 종료";
             this.mi_End.Click += new System.EventHandler(this.mi_End_Click);
+            // 
+            // pb_Logo
+            // 
+            this.pb_Logo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_Logo.Image = ((System.Drawing.Image)(resources.GetObject("pb_Logo.Image")));
+            this.pb_Logo.Location = new System.Drawing.Point(0, 0);
+            this.pb_Logo.Name = "pb_Logo";
+            this.pb_Logo.Size = new System.Drawing.Size(365, 259);
+            this.pb_Logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_Logo.TabIndex = 2;
+            this.pb_Logo.TabStop = false;
+            // 
+            // pb_Load
+            // 
+            this.pb_Load.BackColor = System.Drawing.Color.Black;
+            this.pb_Load.Location = new System.Drawing.Point(0, 249);
+            this.pb_Load.Name = "pb_Load";
+            this.pb_Load.Size = new System.Drawing.Size(365, 10);
+            this.pb_Load.TabIndex = 4;
+            // 
+            // lb_Log
+            // 
+            this.lb_Log.BackColor = System.Drawing.Color.Transparent;
+            this.lb_Log.ForeColor = System.Drawing.Color.White;
+            this.lb_Log.Location = new System.Drawing.Point(0, 230);
+            this.lb_Log.Name = "lb_Log";
+            this.lb_Log.Size = new System.Drawing.Size(365, 16);
+            this.lb_Log.TabIndex = 5;
+            this.lb_Log.Text = "진행상황 : ";
             // 
             // BSP_Loader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(365, 62);
+            this.ClientSize = new System.Drawing.Size(365, 259);
             this.Controls.Add(this.lb_Log);
             this.Controls.Add(this.pb_Load);
+            this.Controls.Add(this.pb_Logo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BSP_Loader";
@@ -100,17 +115,19 @@
             this.Text = "BSP 로더";
             this.Shown += new System.EventHandler(this.BSP_Loader_Shown);
             this.ms_BSP.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Logo)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ProgressBar pb_Load;
-        private System.Windows.Forms.Label lb_Log;
         private System.Windows.Forms.NotifyIcon ni_BSP;
         private System.Windows.Forms.ContextMenuStrip ms_BSP;
         private System.Windows.Forms.ToolStripMenuItem mi_Restart;
         private System.Windows.Forms.ToolStripMenuItem mi_End;
+        private System.Windows.Forms.PictureBox pb_Logo;
+        private System.Windows.Forms.ProgressBar pb_Load;
+        private System.Windows.Forms.Label lb_Log;
     }
 }

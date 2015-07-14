@@ -245,7 +245,6 @@
       <DependentUpon>BST_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Bell Smart Tools_Key.pfx" />
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

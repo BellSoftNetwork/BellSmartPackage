@@ -136,6 +136,18 @@
   <data name="BellCraft8_8_8_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\example\bellcraft8 8.8.0.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Logo_BSN1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\logo_bsn1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_BSN1_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\logo_bsn1-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_BSN2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\logo_bsn2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_BSN3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\logo_bsn3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Photo_Bell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resource\photo\photo_bell.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

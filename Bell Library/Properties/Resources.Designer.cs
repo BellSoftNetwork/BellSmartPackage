@@ -145,21 +145,23 @@ namespace BellLib.Properties {
         ///   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
         ///&lt;BellCraft8&gt;
         ///  &lt;Info&gt;
+        ///    &lt;Activation&gt;TRUE&lt;/Activation&gt;
         ///    &lt;Name&gt;방울크래프트&lt;/Name&gt;
         ///    &lt;Recommended&gt;8.5.0&lt;/Recommended&gt;
         ///    &lt;Latest&gt;8.8.0&lt;/Latest&gt;
-        ///    &lt;Base&gt;BCP_1.7.10&lt;/Base&gt;
+        ///    &lt;Base&gt;Forge_1.7.10&lt;/Base&gt;
         ///    &lt;Option&gt;BCO_1.7.10&lt;/Option&gt;
-        ///    &lt;News&gt;http://bellsoft.iptime.org:88/BSL/Pack/BellCraft8/News.html&lt;/News&gt;
-        ///    &lt;Down&gt;http://bellsoft.iptime.org:4135/FileServer/BSL/Pack/BellCraft8/&lt;/Down&gt;
         ///  &lt;/Info&gt;
-        ///  &lt;Version&gt;
-        ///    &lt;Ver&gt;8.0.0&lt;/Ver&gt;
-        ///    &lt;Ver&gt;8.1.0&lt;/Ver&gt;
-        ///    &lt;Ver&gt;8.2.0&lt;/Ver&gt;
-        ///    &lt;Ver&gt;8.3.0&lt;/Ver&gt;
-        ///    &lt;Ver&gt;8.4.0&lt;/Ver&gt;
-        /// [나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///  &lt;Detail&gt;
+        ///    &lt;Info Name=&quot;Multi Play Pack&quot;&gt;TRUE&lt;/Info&gt;
+        ///    &lt;Info Name=&quot;Minecraft Version&quot;&gt;1.7.10&lt;/Info&gt;
+        ///  &lt;/Detail&gt;
+        ///  &lt;Permission&gt;
+        ///    &lt;User ID=&quot;bell04204@gmail.com&quot;&gt;2&lt;/User&gt;
+        ///  &lt;/Permission&gt;
+        ///  &lt;Server&gt;
+        ///    &lt;UID&gt;SangDolE&lt;/UID&gt;
+        ///    &lt;UID&gt;Be[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         public static string BellCraft8 {
             get {
@@ -190,6 +192,46 @@ namespace BellLib.Properties {
         public static string BellCraft8_8_8_0 {
             get {
                 return ResourceManager.GetString("BellCraft8_8_8_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo_BSN1 {
+            get {
+                object obj = ResourceManager.GetObject("Logo_BSN1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo_BSN1_1 {
+            get {
+                object obj = ResourceManager.GetObject("Logo_BSN1_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo_BSN2 {
+            get {
+                object obj = ResourceManager.GetObject("Logo_BSN2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo_BSN3 {
+            get {
+                object obj = ResourceManager.GetObject("Logo_BSN3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

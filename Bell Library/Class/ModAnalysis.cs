@@ -436,17 +436,17 @@ namespace BellLib.Class
             {
                 case PackType.Mod:
                     if (InfoModpack._Version == null)
-                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                        throw new System.InvalidOperationException("Failure to read mod version data."); // 데이터 읽기 실패
                     return InfoModpack._Version;
 
                 case PackType.Base:
                     if (InfoBasepack._Version == null)
-                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                        throw new System.InvalidOperationException("Failure to read base version data."); // 데이터 읽기 실패
                     return InfoBasepack._Version;
 
                 case PackType.Option:
                     if (InfoOptionpack._Version == null)
-                        throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                        throw new System.InvalidOperationException("Failure to read option version data."); // 데이터 읽기 실패
                     return InfoOptionpack._Version;
             }
             return null;
@@ -477,7 +477,7 @@ namespace BellLib.Class
             }
             catch
             {
-                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                throw new System.InvalidOperationException("Failure to read info data."); // 데이터 읽기 실패
             }
             return null;
         }
@@ -506,7 +506,7 @@ namespace BellLib.Class
             }
             catch
             {
-                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                throw new System.InvalidOperationException("Failure to read install info data."); // 데이터 읽기 실패
             }
             return null;
         }
@@ -535,7 +535,7 @@ namespace BellLib.Class
             }
             catch
             {
-                throw new System.InvalidOperationException("Failure to read data."); // 데이터 읽기 실패
+                throw new System.InvalidOperationException("Failure to read install data."); // 데이터 읽기 실패
             }
             return null;
         }

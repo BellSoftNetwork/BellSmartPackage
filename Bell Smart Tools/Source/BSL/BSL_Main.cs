@@ -537,7 +537,7 @@ namespace Bell_Smart_Tools.Source.BSL
                 }
 
                 wb_PackNews.AllowNavigation = true; // 뉴스페이지를 바꿔야되니 잠시 페이지 이동 허용해주고!
-                string News = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
+                string News = null;// MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
                 try
                 {
                     Uri URI = new Uri(News);
