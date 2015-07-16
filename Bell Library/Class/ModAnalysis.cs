@@ -11,7 +11,7 @@ namespace BellLib.Class
 {
     public struct Info_Modpack
     {
-        public string _Name, _Recommended, _Latest, _Base, _Option; //, _News, _Down;
+        public string _Name, _Recommended, _Latest, _Base, _Option, _News, _Down;
         public string[] _Detail;
         public string[] _Permission;
         public string[] _Server;

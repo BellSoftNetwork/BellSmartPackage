@@ -186,13 +186,14 @@
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(122, 22);
+            this.mi_Info.Size = new System.Drawing.Size(152, 22);
             this.mi_Info.Text = "BST 소개";
+            this.mi_Info.Click += new System.EventHandler(this.mi_Info_Click);
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // mi_DebugMenu
@@ -207,7 +208,7 @@
             this.mi_SS2,
             this.mi_DebugTool});
             this.mi_DebugMenu.Name = "mi_DebugMenu";
-            this.mi_DebugMenu.Size = new System.Drawing.Size(122, 22);
+            this.mi_DebugMenu.Size = new System.Drawing.Size(152, 22);
             this.mi_DebugMenu.Text = "Debug";
             // 
             // mi_DebugLevel_Disable
@@ -272,6 +273,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(538, 275);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.txt_Notice);

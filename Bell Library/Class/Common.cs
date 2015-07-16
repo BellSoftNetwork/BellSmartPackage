@@ -466,5 +466,23 @@ namespace BellLib.Class
         {
             Thread.Sleep(millisecondsTimeout);
         }
+
+        /// <summary>
+        /// 해당 폼 이름으로 폼이 실행되어있는지 여부를 판단합니다.
+        /// 폼이 실행되어있을경우, 폼을 활성화 시킵니다.
+        /// </summary>
+        /// <param name="formName">폼 이름 (대소문자 구별)</param>
+        /// <returns>폼 실행 가능 여부</returns>
+        public static bool Feasibility(string formName)
+        {
+            foreach (Form frm in Application.OpenForms)
+                if (frm.Name == formName)
+                {
+                    frm.Activate();
+                    return false; // 폼이 이미 켜져있음
+                }
+
+            return true; // 폼이 실행되어 있지 않을경우 폼 실행 가능
+        }
     }
 }

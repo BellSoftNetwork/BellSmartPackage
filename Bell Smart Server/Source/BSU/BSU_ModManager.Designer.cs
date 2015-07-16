@@ -33,6 +33,7 @@
             this.tp_ModPack = new System.Windows.Forms.TabPage();
             this.tc_Setting = new System.Windows.Forms.TabControl();
             this.tp_Normal = new System.Windows.Forms.TabPage();
+            this.cb_Mod_VerActive = new System.Windows.Forms.CheckBox();
             this.btn_Mod_DelVer = new System.Windows.Forms.Button();
             this.btn_Mod_SelectSave = new System.Windows.Forms.Button();
             this.cb_Mod_Option_Ver = new System.Windows.Forms.ComboBox();
@@ -52,6 +53,10 @@
             this.txt_Mod_Name = new System.Windows.Forms.TextBox();
             this.lb_Mod_Name = new System.Windows.Forms.Label();
             this.tp_Advance = new System.Windows.Forms.TabPage();
+            this.lb_Mod_Permission = new System.Windows.Forms.Label();
+            this.lb_Mod_Cloud = new System.Windows.Forms.Label();
+            this.lst_Mod_Permission = new System.Windows.Forms.ListView();
+            this.lst_Mod_Servers = new System.Windows.Forms.CheckedListBox();
             this.gb_Mod_Upload = new System.Windows.Forms.GroupBox();
             this.btn_Mod_Load = new System.Windows.Forms.Button();
             this.llb_Mod_Upload = new System.Windows.Forms.LinkLabel();
@@ -135,11 +140,8 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
-            this.cb_Mod_VerActive = new System.Windows.Forms.CheckBox();
-            this.lst_Mod_Servers = new System.Windows.Forms.CheckedListBox();
-            this.lst_Mod_Permission = new System.Windows.Forms.ListView();
-            this.lb_Mod_Cloud = new System.Windows.Forms.Label();
-            this.lb_Mod_Permission = new System.Windows.Forms.Label();
+            this.email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.permission = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.tc_Setting.SuspendLayout();
@@ -222,6 +224,18 @@
             this.tp_Normal.TabIndex = 0;
             this.tp_Normal.Text = "일반";
             this.tp_Normal.UseVisualStyleBackColor = true;
+            // 
+            // cb_Mod_VerActive
+            // 
+            this.cb_Mod_VerActive.AutoSize = true;
+            this.cb_Mod_VerActive.Checked = true;
+            this.cb_Mod_VerActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_Mod_VerActive.Location = new System.Drawing.Point(483, 131);
+            this.cb_Mod_VerActive.Name = "cb_Mod_VerActive";
+            this.cb_Mod_VerActive.Size = new System.Drawing.Size(116, 16);
+            this.cb_Mod_VerActive.TabIndex = 40;
+            this.cb_Mod_VerActive.Text = "선택 버전 활성화";
+            this.cb_Mod_VerActive.UseVisualStyleBackColor = true;
             // 
             // btn_Mod_DelVer
             // 
@@ -400,6 +414,47 @@
             this.tp_Advance.TabIndex = 1;
             this.tp_Advance.Text = "고급";
             this.tp_Advance.UseVisualStyleBackColor = true;
+            // 
+            // lb_Mod_Permission
+            // 
+            this.lb_Mod_Permission.AutoSize = true;
+            this.lb_Mod_Permission.Location = new System.Drawing.Point(205, 7);
+            this.lb_Mod_Permission.Name = "lb_Mod_Permission";
+            this.lb_Mod_Permission.Size = new System.Drawing.Size(97, 12);
+            this.lb_Mod_Permission.TabIndex = 3;
+            this.lb_Mod_Permission.Text = "모드팩 접근 권한";
+            // 
+            // lb_Mod_Cloud
+            // 
+            this.lb_Mod_Cloud.AutoSize = true;
+            this.lb_Mod_Cloud.Location = new System.Drawing.Point(19, 7);
+            this.lb_Mod_Cloud.Name = "lb_Mod_Cloud";
+            this.lb_Mod_Cloud.Size = new System.Drawing.Size(81, 12);
+            this.lb_Mod_Cloud.TabIndex = 2;
+            this.lb_Mod_Cloud.Text = "클라우드 서버";
+            // 
+            // lst_Mod_Permission
+            // 
+            this.lst_Mod_Permission.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.email,
+            this.permission});
+            this.lst_Mod_Permission.Location = new System.Drawing.Point(130, 22);
+            this.lst_Mod_Permission.Name = "lst_Mod_Permission";
+            this.lst_Mod_Permission.Size = new System.Drawing.Size(255, 97);
+            this.lst_Mod_Permission.TabIndex = 1;
+            this.lst_Mod_Permission.UseCompatibleStateImageBehavior = false;
+            this.lst_Mod_Permission.View = System.Windows.Forms.View.Details;
+            // 
+            // lst_Mod_Servers
+            // 
+            this.lst_Mod_Servers.FormattingEnabled = true;
+            this.lst_Mod_Servers.Items.AddRange(new object[] {
+            "BellSoftNetwork",
+            "SangDolE"});
+            this.lst_Mod_Servers.Location = new System.Drawing.Point(4, 22);
+            this.lst_Mod_Servers.Name = "lst_Mod_Servers";
+            this.lst_Mod_Servers.Size = new System.Drawing.Size(120, 132);
+            this.lst_Mod_Servers.TabIndex = 0;
             // 
             // gb_Mod_Upload
             // 
@@ -1266,54 +1321,14 @@
             this.lb_Option_Latest.TabIndex = 2;
             this.lb_Option_Latest.Text = "최신버전 :";
             // 
-            // cb_Mod_VerActive
+            // email
             // 
-            this.cb_Mod_VerActive.AutoSize = true;
-            this.cb_Mod_VerActive.Checked = true;
-            this.cb_Mod_VerActive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_Mod_VerActive.Location = new System.Drawing.Point(483, 131);
-            this.cb_Mod_VerActive.Name = "cb_Mod_VerActive";
-            this.cb_Mod_VerActive.Size = new System.Drawing.Size(116, 16);
-            this.cb_Mod_VerActive.TabIndex = 40;
-            this.cb_Mod_VerActive.Text = "선택 버전 활성화";
-            this.cb_Mod_VerActive.UseVisualStyleBackColor = true;
+            this.email.Text = "이메일";
+            this.email.Width = 185;
             // 
-            // lst_Mod_Servers
+            // permission
             // 
-            this.lst_Mod_Servers.FormattingEnabled = true;
-            this.lst_Mod_Servers.Items.AddRange(new object[] {
-            "BellSoftNetwork",
-            "SangDolE"});
-            this.lst_Mod_Servers.Location = new System.Drawing.Point(4, 22);
-            this.lst_Mod_Servers.Name = "lst_Mod_Servers";
-            this.lst_Mod_Servers.Size = new System.Drawing.Size(120, 132);
-            this.lst_Mod_Servers.TabIndex = 0;
-            // 
-            // lst_Mod_Permission
-            // 
-            this.lst_Mod_Permission.Location = new System.Drawing.Point(130, 22);
-            this.lst_Mod_Permission.Name = "lst_Mod_Permission";
-            this.lst_Mod_Permission.Size = new System.Drawing.Size(121, 97);
-            this.lst_Mod_Permission.TabIndex = 1;
-            this.lst_Mod_Permission.UseCompatibleStateImageBehavior = false;
-            // 
-            // lb_Mod_Cloud
-            // 
-            this.lb_Mod_Cloud.AutoSize = true;
-            this.lb_Mod_Cloud.Location = new System.Drawing.Point(19, 7);
-            this.lb_Mod_Cloud.Name = "lb_Mod_Cloud";
-            this.lb_Mod_Cloud.Size = new System.Drawing.Size(81, 12);
-            this.lb_Mod_Cloud.TabIndex = 2;
-            this.lb_Mod_Cloud.Text = "클라우드 서버";
-            // 
-            // lb_Mod_Permission
-            // 
-            this.lb_Mod_Permission.AutoSize = true;
-            this.lb_Mod_Permission.Location = new System.Drawing.Point(153, 7);
-            this.lb_Mod_Permission.Name = "lb_Mod_Permission";
-            this.lb_Mod_Permission.Size = new System.Drawing.Size(29, 12);
-            this.lb_Mod_Permission.TabIndex = 3;
-            this.lb_Mod_Permission.Text = "권한";
+            this.permission.Text = "권한";
             // 
             // BSU_ModManager
             // 
@@ -1470,6 +1485,8 @@
         private System.Windows.Forms.Label lb_Mod_Cloud;
         private System.Windows.Forms.ListView lst_Mod_Permission;
         private System.Windows.Forms.Label lb_Mod_Permission;
+        private System.Windows.Forms.ColumnHeader email;
+        private System.Windows.Forms.ColumnHeader permission;
 
     }
 }

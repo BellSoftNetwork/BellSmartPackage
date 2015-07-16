@@ -55,7 +55,7 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void NoticeLoad()
         {
-            string notice = Common.GetStringFromWeb(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BST/Integration Notice.bsn");
+            string notice = Common.GetStringFromWeb(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSP/BST/Integration Notice.bsn");
 
             if (notice == null) return; // notice가 있다가 오류로 안받아져서 공지가 없어지면 좀 그렇잖아요?
 
@@ -70,8 +70,11 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void mi_Laboratory_Click(object sender, EventArgs e)
         {
-            BST_Laboratory Lab = new BST_Laboratory();
-            Lab.Show();
+            if (Common.Feasibility("BST_Laboratory"))
+            {
+                BST_Laboratory Lab = new BST_Laboratory();
+                Lab.Show();
+            }
         }
 
         private void mi_AutoTray_Click(object sender, EventArgs e)
@@ -138,8 +141,11 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void mi_DebugTool_Click(object sender, EventArgs e)
         {
-            BST_Debug BSTD = new BST_Debug();
-            BSTD.Show();
+            if (Common.Feasibility("BST_Debug"))
+            {
+                BST_Debug BSTD = new BST_Debug();
+                BSTD.Show();
+            }
         }
 
         private void mi_Help_Click(object sender, EventArgs e)
@@ -149,14 +155,23 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button3_Click(object sender, EventArgs e)
         {
-            BSL_Main BSLM = new BSL_Main();
-            BSLM.Show();
+            if (Common.Feasibility("BSL_Main"))
+            {
+                BSL_Main BSLM = new BSL_Main();
+                BSLM.Show();
+            }
         }
 
         private void mi_Reader_Click(object sender, EventArgs e)
         {
             BST_Reader BSTR = new BST_Reader();
             BSTR.Show();
+        }
+
+        private void mi_Info_Click(object sender, EventArgs e)
+        {
+            BST_Info BSTI = new BST_Info();
+            BSTI.ShowDialog();
         }
     }
 }

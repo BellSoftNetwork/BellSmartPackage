@@ -1,6 +1,6 @@
-﻿namespace Bell_Smart_Server.Source.BSS
+﻿namespace Bell_Smart_Tools.Source.BST
 {
-    partial class BSS_Loader
+    partial class BST_Info
     {
         /// <summary>
         /// Required designer variable.
@@ -28,39 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSS_Loader));
-            this.pb_Load = new System.Windows.Forms.ProgressBar();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Info));
             this.SuspendLayout();
             // 
-            // pb_Load
-            // 
-            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pb_Load.Location = new System.Drawing.Point(0, 184);
-            this.pb_Load.Name = "pb_Load";
-            this.pb_Load.Size = new System.Drawing.Size(345, 10);
-            this.pb_Load.TabIndex = 0;
-            // 
-            // BSS_Loader
+            // BST_Info
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::Bell_Smart_Server.Properties.Resources.Logo_BSN1;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(345, 194);
-            this.Controls.Add(this.pb_Load);
+            this.ClientSize = new System.Drawing.Size(436, 245);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "BSS_Loader";
+            this.Name = "BST_Info";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BSS 로더";
-            this.Shown += new System.EventHandler(this.BSS_Loader_Shown);
+            this.Text = "BST_Info";
+            this.Click += new System.EventHandler(this.BST_Info_Click);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ProgressBar pb_Load;
     }
 }

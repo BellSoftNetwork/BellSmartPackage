@@ -157,7 +157,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BSS\BSS_Loader.resx">
@@ -216,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Photo\Photo_RedBell.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Photo\Logo_BSN1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

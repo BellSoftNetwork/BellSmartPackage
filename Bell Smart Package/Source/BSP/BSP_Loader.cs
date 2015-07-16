@@ -19,7 +19,6 @@ namespace Bell_Smart_Package.Source.BSP
         public BSP_Loader()
         {
             InitializeComponent();
-            lb_Log.Parent = pb_Logo; // 레이블 투명색상을 위해 부모를 설정
         }
         /// <summary>
         /// BSP 로딩 상태를 String으로 유저에게 나타내줍니다.
@@ -36,6 +35,7 @@ namespace Bell_Smart_Package.Source.BSP
             {
                 Log("Initialize complete.");
                 Application.DoEvents();
+
                 BSP_Management BSPM = new BSP_Management();
                 BSP_Login BSP = new BSP_Login();
                 Log("Instance generation complete.");
@@ -70,8 +70,7 @@ namespace Bell_Smart_Package.Source.BSP
                 pb_Load.Value += action.Value;
                 Application.DoEvents();
             }
-            InitDebug();
-            InitParameter();
+
             if (Deployment.UpdateAvailable()) // 최신버전 발견시
             {
                 BSP_Updater BSPU = new BSP_Updater();

@@ -150,6 +150,12 @@
     <Compile Include="Source\BST\BST_Debug.Designer.cs">
       <DependentUpon>BST_Debug.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BST\BST_Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BST\BST_Info.Designer.cs">
+      <DependentUpon>BST_Info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\BST\BST_Laboratory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,7 +211,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BSL\BSL_Console.resx">
@@ -225,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Debug.resx">
       <DependentUpon>BST_Debug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BST\BST_Info.resx">
+      <DependentUpon>BST_Info.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Laboratory.resx">
       <DependentUpon>BST_Laboratory.cs</DependentUpon>
@@ -288,6 +297,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Photo\Photo_Bell.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Photo\Logo_BSN1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

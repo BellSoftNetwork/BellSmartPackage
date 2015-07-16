@@ -53,6 +53,8 @@ namespace Bell_Smart_Server.Source.BSU
                 cb_Mod_Option_Ver.Items.Clear();
                 cb_Mod_Base_Upload.Items.Clear();
                 cb_Mod_Option_Upload.Items.Clear();
+                lst_Mod_Servers.Items.Clear();
+                lst_Mod_Permission.Items.Clear();
 
                 lst_Mod_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Mod));
                 txt_Mod_Name.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name");

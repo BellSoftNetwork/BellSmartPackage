@@ -34,10 +34,10 @@
             // 
             // pb_Load
             // 
-            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pb_Load.Location = new System.Drawing.Point(0, 0);
+            this.pb_Load.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pb_Load.Location = new System.Drawing.Point(0, 163);
             this.pb_Load.Name = "pb_Load";
-            this.pb_Load.Size = new System.Drawing.Size(414, 60);
+            this.pb_Load.Size = new System.Drawing.Size(305, 10);
             this.pb_Load.TabIndex = 0;
             // 
             // BST_Loader
@@ -45,7 +45,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(414, 60);
+            this.BackgroundImage = global::Bell_Smart_Tools.Properties.Resources.Logo_BSN1;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.ClientSize = new System.Drawing.Size(305, 173);
             this.ControlBox = false;
             this.Controls.Add(this.pb_Load);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
