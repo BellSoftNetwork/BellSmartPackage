@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Main));
-            this.txt_Notice = new System.Windows.Forms.TextBox();
             this.tmr_NoticeLoader = new System.Windows.Forms.Timer(this.components);
             this.ms_MainMenu = new System.Windows.Forms.MenuStrip();
             this.mi_BST = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,24 +55,15 @@
             this.mi_DebugLevel_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS2 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btn_BSL = new System.Windows.Forms.Button();
+            this.lstNotice = new System.Windows.Forms.ListBox();
             this.ms_MainMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txt_Notice
-            // 
-            this.txt_Notice.Location = new System.Drawing.Point(0, 25);
-            this.txt_Notice.Multiline = true;
-            this.txt_Notice.Name = "txt_Notice";
-            this.txt_Notice.ReadOnly = true;
-            this.txt_Notice.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txt_Notice.Size = new System.Drawing.Size(320, 250);
-            this.txt_Notice.TabIndex = 0;
             // 
             // tmr_NoticeLoader
             // 
             this.tmr_NoticeLoader.Enabled = true;
-            this.tmr_NoticeLoader.Interval = 1000;
+            this.tmr_NoticeLoader.Interval = 60000;
             this.tmr_NoticeLoader.Tick += new System.EventHandler(this.tmr_NoticeLoader_Tick);
             // 
             // ms_MainMenu
@@ -186,14 +176,14 @@
             // mi_Info
             // 
             this.mi_Info.Name = "mi_Info";
-            this.mi_Info.Size = new System.Drawing.Size(152, 22);
+            this.mi_Info.Size = new System.Drawing.Size(122, 22);
             this.mi_Info.Text = "BST 소개";
             this.mi_Info.Click += new System.EventHandler(this.mi_Info_Click);
             // 
             // mi_FeedBack
             // 
             this.mi_FeedBack.Name = "mi_FeedBack";
-            this.mi_FeedBack.Size = new System.Drawing.Size(152, 22);
+            this.mi_FeedBack.Size = new System.Drawing.Size(122, 22);
             this.mi_FeedBack.Text = "피드백";
             // 
             // mi_DebugMenu
@@ -208,7 +198,7 @@
             this.mi_SS2,
             this.mi_DebugTool});
             this.mi_DebugMenu.Name = "mi_DebugMenu";
-            this.mi_DebugMenu.Size = new System.Drawing.Size(152, 22);
+            this.mi_DebugMenu.Size = new System.Drawing.Size(122, 22);
             this.mi_DebugMenu.Text = "Debug";
             // 
             // mi_DebugLevel_Disable
@@ -258,15 +248,26 @@
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
             this.mi_DebugTool.Click += new System.EventHandler(this.mi_DebugTool_Click);
             // 
-            // button3
+            // btn_BSL
             // 
-            this.button3.Location = new System.Drawing.Point(326, 27);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(212, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "런처 실행";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btn_BSL.Location = new System.Drawing.Point(326, 27);
+            this.btn_BSL.Name = "btn_BSL";
+            this.btn_BSL.Size = new System.Drawing.Size(212, 23);
+            this.btn_BSL.TabIndex = 8;
+            this.btn_BSL.Text = "런처 실행";
+            this.btn_BSL.UseVisualStyleBackColor = true;
+            this.btn_BSL.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // lstNotice
+            // 
+            this.lstNotice.FormattingEnabled = true;
+            this.lstNotice.HorizontalScrollbar = true;
+            this.lstNotice.ItemHeight = 12;
+            this.lstNotice.Location = new System.Drawing.Point(0, 27);
+            this.lstNotice.Name = "lstNotice";
+            this.lstNotice.Size = new System.Drawing.Size(320, 244);
+            this.lstNotice.TabIndex = 10;
+            this.lstNotice.DoubleClick += new System.EventHandler(this.lstNotice_DoubleClick);
             // 
             // BST_Main
             // 
@@ -274,9 +275,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(538, 275);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.txt_Notice);
+            this.ClientSize = new System.Drawing.Size(538, 271);
+            this.Controls.Add(this.lstNotice);
+            this.Controls.Add(this.btn_BSL);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -295,7 +296,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txt_Notice;
         private System.Windows.Forms.Timer tmr_NoticeLoader;
         private System.Windows.Forms.MenuStrip ms_MainMenu;
         private System.Windows.Forms.ToolStripMenuItem mi_BST;
@@ -320,8 +320,9 @@
         private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Log;
         private System.Windows.Forms.ToolStripSeparator mi_SS2;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugTool;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btn_BSL;
         private System.Windows.Forms.ToolStripMenuItem mi_Reader;
+        private System.Windows.Forms.ListBox lstNotice;
 
     }
 }

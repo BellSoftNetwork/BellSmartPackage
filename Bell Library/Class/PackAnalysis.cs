@@ -89,9 +89,7 @@ namespace BellLib.Class
         /// </summary>
         public PackAnalysisRead()
         {
-            /*LoadModList();
-            LoadBaseList();
-            LoadOptionList();*/
+
         }
 
         /// <summary>
