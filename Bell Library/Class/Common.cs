@@ -475,14 +475,26 @@ namespace BellLib.Class
         /// <returns>폼 실행 가능 여부</returns>
         public static bool Feasibility(string formName)
         {
+            Form frm = GetForm(formName);
+            if (frm == null)
+                return true; // 폼이 실행되어 있지 않을경우 폼 실행 가능
+            
+            frm.Activate();
+            return false;
+        }
+
+        /// <summary>
+        /// 해당 폼 이름으로 폼이 실행되어 있으면, 해당 폼의 Form 값을 반환합니다.
+        /// </summary>
+        /// <param name="formName">폼 이름 (대소문자 구별)</param>
+        /// <returns>Form 정보</returns>
+        public static Form GetForm(string formName)
+        {
             foreach (Form frm in Application.OpenForms)
                 if (frm.Name == formName)
-                {
-                    frm.Activate();
-                    return false; // 폼이 이미 켜져있음
-                }
+                    return frm;
 
-            return true; // 폼이 실행되어 있지 않을경우 폼 실행 가능
+            return null;
         }
     }
 }

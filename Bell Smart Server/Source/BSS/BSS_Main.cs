@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BellLib.Class;
+using Bell_Smart_Server.Source.BSU;
 
 namespace Bell_Smart_Server.Source.BSS
 {
@@ -26,7 +27,7 @@ namespace Bell_Smart_Server.Source.BSS
         {
             if (Common.Feasibility("BSU_ModManager"))
             {
-                BSU.BSU_ModManager MM = new BSU.BSU_ModManager();
+                BSU_ModManager MM = new BSU_ModManager();
                 MM.Show();
             }
         }
@@ -35,7 +36,7 @@ namespace Bell_Smart_Server.Source.BSS
         {
             if (Common.Feasibility("BSU_RuntimeManager"))
             {
-                BSU.BSU_RuntimeManager RM = new BSU.BSU_RuntimeManager();
+                BSU_RuntimeManager RM = new BSU_RuntimeManager();
                 RM.Show();
             }
         }
@@ -44,8 +45,17 @@ namespace Bell_Smart_Server.Source.BSS
         {
             if (Common.Feasibility("BSU_PackMaker"))
             {
-                BSU.BSU_PackMaker PM = new BSU.BSU_PackMaker();
+                BSU_PackMaker PM = new BSU_PackMaker();
                 PM.Show();
+            }
+        }
+
+        private void btn_ServerManager_Click(object sender, EventArgs e)
+        {
+            if (Common.Feasibility("BSU_ServerManager"))
+            {
+                BSU_ServerManager SM = new BSU_ServerManager();
+                SM.Show();
             }
         }
     }

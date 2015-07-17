@@ -46,14 +46,14 @@ namespace Bell_Smart_Tools.Source.BSL
             lst_ModPack.Items.Clear(); // 리스트 전체 초기화!
             lst_ModPack.Tag = string.Empty;
 
-            ModAnalysisRead MAR = new ModAnalysisRead();
-            string[] PackList = ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod);
+            PackAnalysisRead MAR = new PackAnalysisRead();
+            string[] PackList = PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Mod);
             List<string> PackNameList = new List<string>();
 
             foreach (string tmp in PackList)
             {
-                MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, tmp); // 얻어온 MUID로 팩 정보 분석
-                PackNameList.Add(MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name")); // 팩 이름 리스트 추가
+                MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, tmp); // 얻어온 MUID로 팩 정보 분석
+                PackNameList.Add(MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Name")); // 팩 이름 리스트 추가
                 if (tmp == PackList[PackList.Length - 1])
                 {
                     lst_ModPack.Tag += tmp; // tmp값이 팩 리스트의 마지막값이면 파싱문자를 추가하지않음.
@@ -156,7 +156,7 @@ namespace Bell_Smart_Tools.Source.BSL
             }
             string strTemp;
             StringBuilder sb = new StringBuilder(1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
 
             sb.Append(Parameter);
 
@@ -241,43 +241,43 @@ namespace Bell_Smart_Tools.Source.BSL
             SetState("설치 및 업데이트 필요여부 검사 시작");
 
             // 서버에서 데이터 가져옴 - 모드팩 부분
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 인스턴스 생성
-            BUID = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base"); SetState("필요 베이스팩 고유이름 로드 완료");
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID); // 인스턴스 생성
+            BUID = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Base"); SetState("필요 베이스팩 고유이름 로드 완료");
             switch (SelectMod) // 유지 희망 버전이 상대적일경우,
             {
                 case "Recommended":
-                    SelectMod = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended"); // 모드팩 권장버전의 절대버전
+                    SelectMod = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Recommended"); // 모드팩 권장버전의 절대버전
                     break;
 
                 case "Latest":
-                    SelectMod = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest"); // 모드팩 최신버전의 절대버전
+                    SelectMod = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Latest"); // 모드팩 최신버전의 절대버전
                     break;
             }
             SetState("모드팩 상대버전 분석 완료");
             MAR.LoadMod(SelectMod); SetState("베이스팩 정보 로드 완료"); // 모드팩 선택버전의 데이터 로드
             SetState("모드팩 진행바 최대값 계산중");
-            LengthMod += MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory").Length; // 생성이 필요한 디렉토리 개수만큼 진행바 최대값 증가
-            LengthMod += MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash").Length; // 생성이 필요한 파일 개수만큼
+            LengthMod += MAR.GetInstallData(PackAnalysisRead.PackType.Mod, "Directory").Length; // 생성이 필요한 디렉토리 개수만큼 진행바 최대값 증가
+            LengthMod += MAR.GetInstallData(PackAnalysisRead.PackType.Mod, "Hash").Length; // 생성이 필요한 파일 개수만큼
             SetState("모드팩 진행바 최대값 계산완료");
-            SelectBase = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base"); SetState("베이스팩 필요버전 로드 완료"); // 베이스팩 필요 버전 로드 (상대 버전일 수도 있음)
+            SelectBase = MAR.GetInstallInfo(PackAnalysisRead.PackType.Mod, "Base"); SetState("베이스팩 필요버전 로드 완료"); // 베이스팩 필요 버전 로드 (상대 버전일 수도 있음)
 
             // 서버에서 데이터 가져옴 - 베이스팩 부분
-            MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, BUID); // 인스턴스 생성
+            MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Base, BUID); // 인스턴스 생성
             switch (SelectBase)
             {
                 case "Recommended":
-                    SelectBase = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Recommended"); // 베이스팩 권장버전의 절대버전
+                    SelectBase = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Recommended"); // 베이스팩 권장버전의 절대버전
                     break;
 
                 case "Latest":
-                    SelectBase = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Latest"); // 베이스팩 최신버전의 절대버전
+                    SelectBase = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Latest"); // 베이스팩 최신버전의 절대버전
                     break;
             }
             SetState("베이스팩 상대버전 분석 완료");
             MAR.LoadBase(SelectBase);
             SetState("베이스팩 진행바 최대값 계산중");
-            LengthBase += MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Directory").Length;
-            LengthBase += MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Hash").Length;
+            LengthBase += MAR.GetInstallData(PackAnalysisRead.PackType.Base, "Directory").Length;
+            LengthBase += MAR.GetInstallData(PackAnalysisRead.PackType.Base, "Hash").Length;
             SetState("베이스팩 진행바 최대값 계산완료");
 
             // 클라이언트 모드팩 데이터 가져옴
@@ -357,13 +357,13 @@ namespace Bell_Smart_Tools.Source.BSL
         /// <param name="Version">설치버전</param>
         private void InstallBase(string BUID, string Version)
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, BUID); // 선택된 팩정보로 인스턴스 생성
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Base, BUID); // 선택된 팩정보로 인스턴스 생성
             MAR.LoadBase(Version); SetState("모드팩 설치 데이터 로드 성공"); // 모드팩 설치 데이터 로드
-            string[] Dir = MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Directory"); // 디렉토리 배열 받아옴
-            string[] Hash = MAR.GetInstallData(ModAnalysisRead.PackType.Base, "Hash"); // 해시 배열 받아옴
+            string[] Dir = MAR.GetInstallData(PackAnalysisRead.PackType.Base, "Directory"); // 디렉토리 배열 받아옴
+            string[] Hash = MAR.GetInstallData(PackAnalysisRead.PackType.Base, "Hash"); // 해시 배열 받아옴
             Protection Pro = new Protection();
             string BasePath = User.BSL_Root + "Base\\" + BUID + "\\" + Version + "\\"; // 모드팩 기본 경로
-            string FileServer = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Down");
+            string FileServer = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Down");
 
             foreach (string tmp in Dir)
             {
@@ -410,14 +410,14 @@ namespace Bell_Smart_Tools.Source.BSL
         /// <param name="RelativeVersion">설치 상대버전</param>
         private void InstallMod(string MUID, string Version, string RelativeVersion)
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
             MAR.LoadMod(Version); SetState("모드팩 설치 데이터 로드 성공"); // 모드팩 설치 데이터 로드
-            string[] Dir = MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"); // 디렉토리 배열 받아옴
-            string[] Hash = MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"); // 해시 배열 받아옴
+            string[] Dir = MAR.GetInstallData(PackAnalysisRead.PackType.Mod, "Directory"); // 디렉토리 배열 받아옴
+            string[] Hash = MAR.GetInstallData(PackAnalysisRead.PackType.Mod, "Hash"); // 해시 배열 받아옴
             Protection Pro = new Protection();
             string RootPath = User.BSL_Root + "ModPack\\" + MUID + "\\"; // 모드팩 루트 경로
             string PackPath = RootPath + Version + "\\"; // 모드팩 기본 경로
-            string FileServer = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
+            string FileServer = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Down");
 
             foreach (string tmp in Dir)
             {
@@ -507,11 +507,11 @@ namespace Bell_Smart_Tools.Source.BSL
                 cb_Version.SelectedItem = "Recommended"; // 선택값을 권장버전으로 설정!
                 cb_Version.Enabled = true; // 버전정보 선택 활성화!
                 
-                ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
+                PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
                 try
                 {
                     // 선택 모드팩 버전 리스트 로드
-                    cb_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Mod)); // 선택 모드팩 버전정보 삽입!
+                    cb_Version.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Mod)); // 선택 모드팩 버전정보 삽입!
                 }
                 catch
                 {

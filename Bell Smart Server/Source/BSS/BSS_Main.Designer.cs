@@ -32,6 +32,7 @@
             this.btn_ModManager = new System.Windows.Forms.Button();
             this.btn_RuntimeManager = new System.Windows.Forms.Button();
             this.btn_PackMaker = new System.Windows.Forms.Button();
+            this.btn_ServerManager = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_ModManager
@@ -64,12 +65,23 @@
             this.btn_PackMaker.UseVisualStyleBackColor = true;
             this.btn_PackMaker.Click += new System.EventHandler(this.btn_PackMaker_Click);
             // 
+            // btn_ServerManager
+            // 
+            this.btn_ServerManager.Location = new System.Drawing.Point(311, 9);
+            this.btn_ServerManager.Name = "btn_ServerManager";
+            this.btn_ServerManager.Size = new System.Drawing.Size(95, 62);
+            this.btn_ServerManager.TabIndex = 3;
+            this.btn_ServerManager.Text = "서버 매니저";
+            this.btn_ServerManager.UseVisualStyleBackColor = true;
+            this.btn_ServerManager.Click += new System.EventHandler(this.btn_ServerManager_Click);
+            // 
             // BSS_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(473, 175);
+            this.Controls.Add(this.btn_ServerManager);
             this.Controls.Add(this.btn_PackMaker);
             this.Controls.Add(this.btn_RuntimeManager);
             this.Controls.Add(this.btn_ModManager);
@@ -89,5 +101,6 @@
         private System.Windows.Forms.Button btn_ModManager;
         private System.Windows.Forms.Button btn_RuntimeManager;
         private System.Windows.Forms.Button btn_PackMaker;
+        private System.Windows.Forms.Button btn_ServerManager;
     }
 }

@@ -141,6 +141,12 @@
     <Compile Include="Source\BSU\BSU_InputBox.Designer.cs">
       <DependentUpon>BSU_InputBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BSU\BSU_ServerManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSU\BSU_ServerManager.Designer.cs">
+      <DependentUpon>BSU_ServerManager.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -177,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BSU\BSU_InputBox.resx">
       <DependentUpon>BSU_InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSU\BSU_ServerManager.resx">
+      <DependentUpon>BSU_ServerManager.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Bell Smart Server_Key.pfx" />
     <None Include="Properties\app.manifest" />
@@ -219,6 +228,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Photo\Logo_BSN1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Photo\Logo_BSN2.png" />
+    <Resource Include="Resource\Photo\Logo_BSN3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

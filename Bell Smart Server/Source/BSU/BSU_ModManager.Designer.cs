@@ -53,9 +53,11 @@
             this.txt_Mod_Name = new System.Windows.Forms.TextBox();
             this.lb_Mod_Name = new System.Windows.Forms.Label();
             this.tp_Advance = new System.Windows.Forms.TabPage();
-            this.lb_Mod_Permission = new System.Windows.Forms.Label();
+            this.lb_Mod_Access = new System.Windows.Forms.Label();
             this.lb_Mod_Cloud = new System.Windows.Forms.Label();
-            this.lst_Mod_Permission = new System.Windows.Forms.ListView();
+            this.lst_Mod_Access = new System.Windows.Forms.ListView();
+            this.email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.permission = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lst_Mod_Servers = new System.Windows.Forms.CheckedListBox();
             this.gb_Mod_Upload = new System.Windows.Forms.GroupBox();
             this.btn_Mod_Load = new System.Windows.Forms.Button();
@@ -140,8 +142,14 @@
             this.txt_Option_Recommended = new System.Windows.Forms.TextBox();
             this.txt_Option_Latest = new System.Windows.Forms.TextBox();
             this.lb_Option_Latest = new System.Windows.Forms.Label();
-            this.email = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.permission = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lb_Mod_Email = new System.Windows.Forms.Label();
+            this.lb_Mod_Permission = new System.Windows.Forms.Label();
+            this.txt_Mod_Email = new System.Windows.Forms.TextBox();
+            this.cb_Mod_Permission = new System.Windows.Forms.ComboBox();
+            this.btn_Mod_Add = new System.Windows.Forms.Button();
+            this.btn_Mod_Delete = new System.Windows.Forms.Button();
+            this.btn_Mod_News = new System.Windows.Forms.Button();
+            this.btn_Mod_Detail = new System.Windows.Forms.Button();
             this.tc_Pack.SuspendLayout();
             this.tp_ModPack.SuspendLayout();
             this.tc_Setting.SuspendLayout();
@@ -190,6 +198,7 @@
             this.tc_Setting.Controls.Add(this.tp_Normal);
             this.tc_Setting.Controls.Add(this.tp_Advance);
             this.tc_Setting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tc_Setting.Enabled = false;
             this.tc_Setting.Location = new System.Drawing.Point(3, 46);
             this.tc_Setting.Name = "tc_Setting";
             this.tc_Setting.SelectedIndex = 0;
@@ -299,7 +308,7 @@
             // 
             // btn_Mod_Save
             // 
-            this.btn_Mod_Save.Location = new System.Drawing.Point(389, 127);
+            this.btn_Mod_Save.Location = new System.Drawing.Point(305, 127);
             this.btn_Mod_Save.Name = "btn_Mod_Save";
             this.btn_Mod_Save.Size = new System.Drawing.Size(75, 23);
             this.btn_Mod_Save.TabIndex = 33;
@@ -403,9 +412,17 @@
             // 
             // tp_Advance
             // 
+            this.tp_Advance.Controls.Add(this.btn_Mod_Detail);
+            this.tp_Advance.Controls.Add(this.btn_Mod_News);
+            this.tp_Advance.Controls.Add(this.btn_Mod_Delete);
+            this.tp_Advance.Controls.Add(this.btn_Mod_Add);
+            this.tp_Advance.Controls.Add(this.cb_Mod_Permission);
+            this.tp_Advance.Controls.Add(this.txt_Mod_Email);
             this.tp_Advance.Controls.Add(this.lb_Mod_Permission);
+            this.tp_Advance.Controls.Add(this.lb_Mod_Email);
+            this.tp_Advance.Controls.Add(this.lb_Mod_Access);
             this.tp_Advance.Controls.Add(this.lb_Mod_Cloud);
-            this.tp_Advance.Controls.Add(this.lst_Mod_Permission);
+            this.tp_Advance.Controls.Add(this.lst_Mod_Access);
             this.tp_Advance.Controls.Add(this.lst_Mod_Servers);
             this.tp_Advance.Location = new System.Drawing.Point(4, 22);
             this.tp_Advance.Name = "tp_Advance";
@@ -415,14 +432,14 @@
             this.tp_Advance.Text = "고급";
             this.tp_Advance.UseVisualStyleBackColor = true;
             // 
-            // lb_Mod_Permission
+            // lb_Mod_Access
             // 
-            this.lb_Mod_Permission.AutoSize = true;
-            this.lb_Mod_Permission.Location = new System.Drawing.Point(205, 7);
-            this.lb_Mod_Permission.Name = "lb_Mod_Permission";
-            this.lb_Mod_Permission.Size = new System.Drawing.Size(97, 12);
-            this.lb_Mod_Permission.TabIndex = 3;
-            this.lb_Mod_Permission.Text = "모드팩 접근 권한";
+            this.lb_Mod_Access.AutoSize = true;
+            this.lb_Mod_Access.Location = new System.Drawing.Point(205, 7);
+            this.lb_Mod_Access.Name = "lb_Mod_Access";
+            this.lb_Mod_Access.Size = new System.Drawing.Size(97, 12);
+            this.lb_Mod_Access.TabIndex = 3;
+            this.lb_Mod_Access.Text = "모드팩 접근 권한";
             // 
             // lb_Mod_Cloud
             // 
@@ -433,17 +450,26 @@
             this.lb_Mod_Cloud.TabIndex = 2;
             this.lb_Mod_Cloud.Text = "클라우드 서버";
             // 
-            // lst_Mod_Permission
+            // lst_Mod_Access
             // 
-            this.lst_Mod_Permission.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lst_Mod_Access.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.email,
             this.permission});
-            this.lst_Mod_Permission.Location = new System.Drawing.Point(130, 22);
-            this.lst_Mod_Permission.Name = "lst_Mod_Permission";
-            this.lst_Mod_Permission.Size = new System.Drawing.Size(255, 97);
-            this.lst_Mod_Permission.TabIndex = 1;
-            this.lst_Mod_Permission.UseCompatibleStateImageBehavior = false;
-            this.lst_Mod_Permission.View = System.Windows.Forms.View.Details;
+            this.lst_Mod_Access.Location = new System.Drawing.Point(130, 22);
+            this.lst_Mod_Access.Name = "lst_Mod_Access";
+            this.lst_Mod_Access.Size = new System.Drawing.Size(255, 132);
+            this.lst_Mod_Access.TabIndex = 1;
+            this.lst_Mod_Access.UseCompatibleStateImageBehavior = false;
+            this.lst_Mod_Access.View = System.Windows.Forms.View.Details;
+            // 
+            // email
+            // 
+            this.email.Text = "이메일";
+            this.email.Width = 185;
+            // 
+            // permission
+            // 
+            this.permission.Text = "권한";
             // 
             // lst_Mod_Servers
             // 
@@ -1321,14 +1347,76 @@
             this.lb_Option_Latest.TabIndex = 2;
             this.lb_Option_Latest.Text = "최신버전 :";
             // 
-            // email
+            // lb_Mod_Email
             // 
-            this.email.Text = "이메일";
-            this.email.Width = 185;
+            this.lb_Mod_Email.AutoSize = true;
+            this.lb_Mod_Email.Location = new System.Drawing.Point(390, 25);
+            this.lb_Mod_Email.Name = "lb_Mod_Email";
+            this.lb_Mod_Email.Size = new System.Drawing.Size(49, 12);
+            this.lb_Mod_Email.TabIndex = 4;
+            this.lb_Mod_Email.Text = "이메일 :";
             // 
-            // permission
+            // lb_Mod_Permission
             // 
-            this.permission.Text = "권한";
+            this.lb_Mod_Permission.AutoSize = true;
+            this.lb_Mod_Permission.Location = new System.Drawing.Point(390, 49);
+            this.lb_Mod_Permission.Name = "lb_Mod_Permission";
+            this.lb_Mod_Permission.Size = new System.Drawing.Size(37, 12);
+            this.lb_Mod_Permission.TabIndex = 5;
+            this.lb_Mod_Permission.Text = "권한 :";
+            // 
+            // txt_Mod_Email
+            // 
+            this.txt_Mod_Email.Location = new System.Drawing.Point(445, 22);
+            this.txt_Mod_Email.Name = "txt_Mod_Email";
+            this.txt_Mod_Email.Size = new System.Drawing.Size(192, 21);
+            this.txt_Mod_Email.TabIndex = 6;
+            // 
+            // cb_Mod_Permission
+            // 
+            this.cb_Mod_Permission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_Mod_Permission.FormattingEnabled = true;
+            this.cb_Mod_Permission.Location = new System.Drawing.Point(445, 46);
+            this.cb_Mod_Permission.Name = "cb_Mod_Permission";
+            this.cb_Mod_Permission.Size = new System.Drawing.Size(192, 20);
+            this.cb_Mod_Permission.TabIndex = 7;
+            // 
+            // btn_Mod_Add
+            // 
+            this.btn_Mod_Add.Location = new System.Drawing.Point(481, 72);
+            this.btn_Mod_Add.Name = "btn_Mod_Add";
+            this.btn_Mod_Add.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_Add.TabIndex = 8;
+            this.btn_Mod_Add.Text = "추가";
+            this.btn_Mod_Add.UseVisualStyleBackColor = true;
+            this.btn_Mod_Add.Click += new System.EventHandler(this.btn_Mod_Add_Click);
+            // 
+            // btn_Mod_Delete
+            // 
+            this.btn_Mod_Delete.Location = new System.Drawing.Point(562, 72);
+            this.btn_Mod_Delete.Name = "btn_Mod_Delete";
+            this.btn_Mod_Delete.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_Delete.TabIndex = 9;
+            this.btn_Mod_Delete.Text = "삭제";
+            this.btn_Mod_Delete.UseVisualStyleBackColor = true;
+            // 
+            // btn_Mod_News
+            // 
+            this.btn_Mod_News.Location = new System.Drawing.Point(726, 7);
+            this.btn_Mod_News.Name = "btn_Mod_News";
+            this.btn_Mod_News.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_News.TabIndex = 10;
+            this.btn_Mod_News.Text = "뉴스 편집";
+            this.btn_Mod_News.UseVisualStyleBackColor = true;
+            // 
+            // btn_Mod_Detail
+            // 
+            this.btn_Mod_Detail.Location = new System.Drawing.Point(726, 36);
+            this.btn_Mod_Detail.Name = "btn_Mod_Detail";
+            this.btn_Mod_Detail.Size = new System.Drawing.Size(75, 23);
+            this.btn_Mod_Detail.TabIndex = 11;
+            this.btn_Mod_Detail.Text = "상세정보";
+            this.btn_Mod_Detail.UseVisualStyleBackColor = true;
             // 
             // BSU_ModManager
             // 
@@ -1483,10 +1571,18 @@
         private System.Windows.Forms.CheckBox cb_Mod_VerActive;
         private System.Windows.Forms.CheckedListBox lst_Mod_Servers;
         private System.Windows.Forms.Label lb_Mod_Cloud;
-        private System.Windows.Forms.ListView lst_Mod_Permission;
-        private System.Windows.Forms.Label lb_Mod_Permission;
+        private System.Windows.Forms.ListView lst_Mod_Access;
+        private System.Windows.Forms.Label lb_Mod_Access;
         private System.Windows.Forms.ColumnHeader email;
         private System.Windows.Forms.ColumnHeader permission;
+        private System.Windows.Forms.ComboBox cb_Mod_Permission;
+        private System.Windows.Forms.TextBox txt_Mod_Email;
+        private System.Windows.Forms.Label lb_Mod_Permission;
+        private System.Windows.Forms.Label lb_Mod_Email;
+        private System.Windows.Forms.Button btn_Mod_Add;
+        private System.Windows.Forms.Button btn_Mod_Delete;
+        private System.Windows.Forms.Button btn_Mod_Detail;
+        private System.Windows.Forms.Button btn_Mod_News;
 
     }
 }

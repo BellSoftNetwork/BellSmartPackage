@@ -25,12 +25,12 @@ namespace Bell_Smart_Server.Source.BSU
             cb_Mod_Base.Items.Clear();
             cb_Mod_Option.Items.Clear();
 
-            ModAnalysisRead MAR = new ModAnalysisRead();
+            PackAnalysisRead MAR = new PackAnalysisRead();
             
-            cb_Mod_Base.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base)); // 팩 리스트 로드!
+            cb_Mod_Base.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Base)); // 팩 리스트 로드!
             cb_Mod_Base.SelectedIndex = 0; // 첫번째 모드팩 기본 선택
 
-            cb_Mod_Option.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option)); // 팩 리스트 로드!
+            cb_Mod_Option.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Option)); // 팩 리스트 로드!
             cb_Mod_Option.SelectedIndex = 0; // 첫번째 모드팩 기본 선택
 
             txt_MUID.Text = null;
@@ -60,8 +60,8 @@ namespace Bell_Smart_Server.Source.BSU
                 return;
             }
             
-            ModAnalysisRead MAR = new ModAnalysisRead();
-            foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod))
+            PackAnalysisRead MAR = new PackAnalysisRead();
+            foreach (string tmp in PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Mod))
             {
                 if (txt_MUID.Text == tmp)
                 {
@@ -73,7 +73,7 @@ namespace Bell_Smart_Server.Source.BSU
             gb_ModPack.Enabled = false;
 
             // 작성 시작
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, null, null, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, null);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.ModPack, txt_MUID.Text, txt_Mod_Name.Text, null, null, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, null);
             string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + txt_MUID.Text + ".xml";
             MAW.WriteXML();
 
@@ -86,7 +86,7 @@ namespace Bell_Smart_Server.Source.BSU
             //File.Delete(xmlPath); // xml 파일 삭제
 
             List<string> list = new List<string>();
-            list.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod));
+            list.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Mod));
             list.Add(txt_MUID.Text);
             MAW.WriteListXML(list.ToArray());
             xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
@@ -107,8 +107,8 @@ namespace Bell_Smart_Server.Source.BSU
                 return;
             }
 
-            ModAnalysisRead MAR = new ModAnalysisRead();
-            foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base))
+            PackAnalysisRead MAR = new PackAnalysisRead();
+            foreach (string tmp in PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Base))
             {
                 if (txt_BUID.Text == tmp)
                 {
@@ -120,7 +120,7 @@ namespace Bell_Smart_Server.Source.BSU
             gb_BasePack.Enabled = false;
 
             // 작성 시작
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, txt_BUID.Text, null, null, txt_Base_Down.Text, null);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.BasePack, txt_BUID.Text, null, null, txt_Base_Down.Text, null);
             string xmlPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + txt_BUID.Text + ".xml";
             MAW.WriteXML();
 
@@ -132,7 +132,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTP_Info.Upload(FTP_Default_Info + txt_BUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
 
             List<string> list = new List<string>();
-            list.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base));
+            list.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Base));
             list.Add(txt_BUID.Text);
             MAW.WriteListXML(list.ToArray());
             xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
@@ -154,8 +154,8 @@ namespace Bell_Smart_Server.Source.BSU
                 return;
             }
 
-            ModAnalysisRead MAR = new ModAnalysisRead();
-            foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option))
+            PackAnalysisRead MAR = new PackAnalysisRead();
+            foreach (string tmp in PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Option))
             {
                 if (txt_OUID.Text == tmp)
                 {
@@ -167,7 +167,7 @@ namespace Bell_Smart_Server.Source.BSU
             gb_OptionPack.Enabled = false;
 
             // 작성 시작
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, txt_OUID.Text, null, null, txt_Option_Down.Text, null);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.OptionPack, txt_OUID.Text, null, null, txt_Option_Down.Text, null);
             string xmlPath = User.BSN_Temp + "BSU\\Data\\OptionPack\\" + txt_OUID.Text + ".xml";
             MAW.WriteXML();
 
@@ -179,7 +179,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTP_Info.Upload(FTP_Default_Info + txt_OUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
 
             List<string> list = new List<string>();
-            list.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option));
+            list.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Option));
             list.Add(txt_OUID.Text);
             MAW.WriteListXML(list.ToArray());
             xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";

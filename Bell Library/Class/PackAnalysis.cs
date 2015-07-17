@@ -54,7 +54,7 @@ namespace BellLib.Class
     /// 클라이언트 전용
     /// 웹 XML 데이터를 바탕으로 모드팩, 베이스팩, 옵션팩 정보 분석을 시행합니다.
     /// </summary>
-    public class ModAnalysisRead
+    public class PackAnalysisRead
     {
         #region 필드
 
@@ -87,7 +87,7 @@ namespace BellLib.Class
         /// <summary>
         /// 빈 ModAnalysis 인스턴스를 만듭니다. SelectModpack(string MUID) 메서드를 사용하십시오.
         /// </summary>
-        public ModAnalysisRead()
+        public PackAnalysisRead()
         {
             /*LoadModList();
             LoadBaseList();
@@ -98,7 +98,7 @@ namespace BellLib.Class
         /// UID로 지정팩.xml을 로드 및 분석합니다.
         /// </summary>
         /// <param name="UID">Unique Identifier. 고유 식별자</param>
-        public ModAnalysisRead(PackType pt, string UID, bool parse = true)
+        public PackAnalysisRead(PackType pt, string UID, bool parse = true)
         {
             if (parse) // 공통 로드 부분
             {
@@ -567,7 +567,7 @@ namespace BellLib.Class
     /// 서버 전용
     /// 모드팩, 베이스팩, 옵션팩 정보 분석 및 XML 작성을 시행합니다.
     /// </summary>
-    public class ModAnalysisWrite
+    public class PackAnalysisWrite
     {
         public enum Type
         {
@@ -586,7 +586,7 @@ namespace BellLib.Class
         /// 호출 시 정보를 제공하는 메서드 사용 시 생성합니다.
         /// 일부 인스턴스 생성시 입력한 정보를 사용하는 메서드는 이 생성자로 작동하지 않습니다.
         /// </summary>
-        public ModAnalysisWrite()
+        public PackAnalysisWrite()
         {
             
         }
@@ -596,7 +596,7 @@ namespace BellLib.Class
         /// </summary>
         /// <param name="Typ">팩 타입</param>
         /// <param name="UID">고유이름</param>
-        public ModAnalysisWrite(Type Typ, string UID)
+        public PackAnalysisWrite(Type Typ, string UID)
         {
             this.Pack = Typ;
             this.UID = UID;
@@ -605,7 +605,7 @@ namespace BellLib.Class
         /// 모드분석 후 XML 데이터를 작성합니다.
         /// 모드팩 전용
         /// </summary>
-        public ModAnalysisWrite(Type Typ, string UID, string Name, string Latest, string Recommended, string Base, string Option, string News, string Down, string[] Version)
+        public PackAnalysisWrite(Type Typ, string UID, string Name, string Latest, string Recommended, string Base, string Option, string News, string Down, string[] Version)
         {
             this.Pack = Typ;
             this.UID = UID;
@@ -633,7 +633,7 @@ namespace BellLib.Class
         /// <param name="Recommended"></param>
         /// <param name="Down"></param>
         /// <param name="Version"></param>
-        public ModAnalysisWrite(Type Typ, string UID, string Latest, string Recommended, string Down, string[] Version)
+        public PackAnalysisWrite(Type Typ, string UID, string Latest, string Recommended, string Down, string[] Version)
         {
             this.Pack = Typ;
             this.UID = UID;

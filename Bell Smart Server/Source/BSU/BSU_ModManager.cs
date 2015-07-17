@@ -30,19 +30,19 @@ namespace Bell_Smart_Server.Source.BSU
             llb_Option_Upload.Tag = User.BSN_Path + "Upload\\OptionPack\\";
             llb_Option_Upload.Text = "업로드 폴더 : " + (string)llb_Option_Upload.Tag;
 
-            ModAnalysisRead MAR = new ModAnalysisRead();
-            cb_MUID.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod));
+            PackAnalysisRead MAR = new PackAnalysisRead();
+            cb_MUID.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Mod));
             cb_MUID.SelectedIndex = 0;
 
-            cb_BUID.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base));
+            cb_BUID.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Base));
             cb_BUID.SelectedIndex = 0;
 
-            cb_OUID.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option));
+            cb_OUID.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Option));
             cb_OUID.SelectedIndex = 0;
         }
         private bool InitializeMod()
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, (string)cb_MUID.SelectedItem);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, (string)cb_MUID.SelectedItem);
 
             if (MAR.Availability())
             {
@@ -54,32 +54,32 @@ namespace Bell_Smart_Server.Source.BSU
                 cb_Mod_Base_Upload.Items.Clear();
                 cb_Mod_Option_Upload.Items.Clear();
                 lst_Mod_Servers.Items.Clear();
-                lst_Mod_Permission.Items.Clear();
+                lst_Mod_Access.Items.Clear();
 
-                lst_Mod_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Mod));
-                txt_Mod_Name.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name");
-                txt_Mod_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest");
-                txt_Mod_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended");
+                lst_Mod_Version.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Mod));
+                txt_Mod_Name.Text = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Name");
+                txt_Mod_Latest.Text = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Latest");
+                txt_Mod_Recommended.Text = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Recommended");
                 
-                cb_Mod_Base.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base));
-                cb_BUID.SelectedItem = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
+                cb_Mod_Base.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Base));
+                cb_BUID.SelectedItem = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Base");
                 cb_Mod_Base.SelectedItem = (string)cb_BUID.SelectedItem;
-                cb_Mod_Option.Items.AddRange(ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option));
-                cb_OUID.SelectedItem = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
+                cb_Mod_Option.Items.AddRange(PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Option));
+                cb_OUID.SelectedItem = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Option");
                 cb_Mod_Option.SelectedItem = (string)cb_OUID.SelectedItem;
 
                 string[] Ver_Base = { "Latest", "Recommended" };
                 cb_Mod_Base_Ver.Items.AddRange(Ver_Base);
-                cb_Mod_Base_Ver.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+                cb_Mod_Base_Ver.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Base));
                 cb_Mod_Base_Ver.Enabled = false;
                 cb_Mod_Base_Upload.Items.AddRange(Ver_Base);
-                cb_Mod_Base_Upload.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+                cb_Mod_Base_Upload.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Base));
                 cb_Mod_Base_Upload.SelectedItem = Ver_Base[1];
                 cb_Mod_Option_Ver.Items.AddRange(Ver_Base);
-                cb_Mod_Option_Ver.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+                cb_Mod_Option_Ver.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Option));
                 cb_Mod_Option_Ver.Enabled = false;
                 cb_Mod_Option_Upload.Items.AddRange(Ver_Base);
-                cb_Mod_Option_Upload.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+                cb_Mod_Option_Upload.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Option));
                 cb_Mod_Option_Upload.SelectedItem = Ver_Base[1];
 
                 return true;
@@ -111,7 +111,7 @@ namespace Bell_Smart_Server.Source.BSU
                     //txt_MUID.ReadOnly = true;
                     //gb_Mod_Info.Enabled = false;
                     cb_MUID.Enabled = false;
-                    gb_Mod_Setting.Enabled = true;
+                    tc_Setting.Enabled = true;
                     gb_Mod_Upload.Enabled = true;
 
                     if (btn_Base_Set.Text == "불러오기")
@@ -141,7 +141,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 if (InputBox("불러온 모드팩의 권장버전을 입력 해 주세요.", "모드팩 삭제") == txt_Mod_Recommended.Text)
                                 {
                                     gb_Mod_Info.Enabled = false;
-                                    gb_Mod_Setting.Enabled = false;
+                                    tc_Setting.Enabled = false;
                                     gb_Mod_Upload.Enabled = false;
                                     btn_Mod_Set.Enabled = false;
 
@@ -154,13 +154,13 @@ namespace Bell_Smart_Server.Source.BSU
 
                                     // 모드팩 리스트에서 현재 모드팩 제거
                                     List<string> list = new List<string>();
-                                    ModAnalysisRead MAR = new ModAnalysisRead();
-                                    foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Mod))
+                                    PackAnalysisRead MAR = new PackAnalysisRead();
+                                    foreach (string tmp in PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Mod))
                                     {
                                         if (tmp != (string)cb_MUID.SelectedItem)
                                             list.Add(tmp);
                                     }
-                                    ModAnalysisWrite MAW = new ModAnalysisWrite();
+                                    PackAnalysisWrite MAW = new PackAnalysisWrite();
                                     MAW.WriteListXML(list.ToArray());
                                     FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
                                     string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
@@ -211,7 +211,7 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = null;// new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, (string)cb_MUID.SelectedItem, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
+            PackAnalysisWrite MAW = null;// new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, (string)cb_MUID.SelectedItem, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
             string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\" + (string)cb_MUID.SelectedItem + ".xml";
             MAW.WriteXML();
             
@@ -232,13 +232,13 @@ namespace Bell_Smart_Server.Source.BSU
                     Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
                     return;
                 }
-                gb_Mod_Setting.Enabled = false;
+                tc_Setting.Enabled = false;
                 // 해당 버전을 FTP서버에서 삭제
                 FTPUtil FTP_Delete = new FTPUtil(FTPUtil.OfficialServer.SangDolE_Cloud); // FTP 객체 생성
                 string RootPath = "Pack/" + (string)cb_MUID.SelectedItem + "/" + SelectVer + "/";
                 FTP_Delete.DeletePath(RootPath); // FTP 서버에서 버전 폴더 삭제
                 lst_Mod_Version.Items.Remove(lst_Mod_Version.SelectedItem);
-                gb_Mod_Setting.Enabled = true;
+                tc_Setting.Enabled = true;
                 btn_Mod_Save_Click(sender, e);
             }
             else
@@ -255,25 +255,25 @@ namespace Bell_Smart_Server.Source.BSU
                 cb_Mod_Option_Ver.Enabled = true;
                 btn_Mod_DelVer.Enabled = true;
                 btn_Mod_SelectSave.Enabled = true;
-                ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, (string)cb_MUID.SelectedItem);
+                PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, (string)cb_MUID.SelectedItem);
                 MAR.LoadMod((string)lst_Mod_Version.SelectedItem);
-                cb_Mod_Base_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Base");
-                cb_Mod_Option_Ver.SelectedItem = MAR.GetInstallInfo(ModAnalysisRead.PackType.Mod, "Option");
+                cb_Mod_Base_Ver.SelectedItem = MAR.GetInstallInfo(PackAnalysisRead.PackType.Mod, "Base");
+                cb_Mod_Option_Ver.SelectedItem = MAR.GetInstallInfo(PackAnalysisRead.PackType.Mod, "Option");
             }
         }
 
         private bool InitializeBase()
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, (string)cb_BUID.SelectedItem);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Base, (string)cb_BUID.SelectedItem);
 
             if (MAR.Availability())
             {
                 lst_Base_Version.Items.Clear();
 
-                txt_Base_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Latest");
-                txt_Base_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Recommended");
-                txt_Base_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Down");
-                lst_Base_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Base));
+                txt_Base_Latest.Text = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Latest");
+                txt_Base_Recommended.Text = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Recommended");
+                txt_Base_Down.Text = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Down");
+                lst_Base_Version.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Base));
 
                 return true;
             }
@@ -328,13 +328,13 @@ namespace Bell_Smart_Server.Source.BSU
 
                                 // 베이스팩 리스트에서 선택된 베이스팩 제거
                                 List<string> list = new List<string>();
-                                ModAnalysisRead MAR = new ModAnalysisRead();
-                                foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Base))
+                                PackAnalysisRead MAR = new PackAnalysisRead();
+                                foreach (string tmp in PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Base))
                                 {
                                     if (tmp != (string)cb_BUID.SelectedItem)
                                         list.Add(tmp);
                                 }
-                                ModAnalysisWrite MAW = new ModAnalysisWrite();
+                                PackAnalysisWrite MAW = new PackAnalysisWrite();
                                 MAW.WriteListXML(list.ToArray());
                                 FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
                                 string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
@@ -351,16 +351,16 @@ namespace Bell_Smart_Server.Source.BSU
 
         private bool InitializeOption()
         {
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, (string)cb_OUID.SelectedItem);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Option, (string)cb_OUID.SelectedItem);
 
             if (MAR.Availability())
             {
                 lst_Option_Version.Items.Clear();
 
-                txt_Option_Latest.Text = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Latest");
-                txt_Option_Recommended.Text = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Recommended");
-                txt_Option_Down.Text = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Down");
-                lst_Option_Version.Items.AddRange(MAR.GetVersion(ModAnalysisRead.PackType.Option));
+                txt_Option_Latest.Text = MAR.GetInfo(PackAnalysisRead.PackType.Option, "Latest");
+                txt_Option_Recommended.Text = MAR.GetInfo(PackAnalysisRead.PackType.Option, "Recommended");
+                txt_Option_Down.Text = MAR.GetInfo(PackAnalysisRead.PackType.Option, "Down");
+                lst_Option_Version.Items.AddRange(MAR.GetVersion(PackAnalysisRead.PackType.Option));
 
                 return true;
             }
@@ -415,13 +415,13 @@ namespace Bell_Smart_Server.Source.BSU
 
                                 // 옵션팩 리스트에서 선택된 옵션팩 제거
                                 List<string> list = new List<string>();
-                                ModAnalysisRead MAR = new ModAnalysisRead();
-                                foreach (string tmp in ModAnalysisRead.LoadPackList(ModAnalysisRead.PackType.Option))
+                                PackAnalysisRead MAR = new PackAnalysisRead();
+                                foreach (string tmp in PackAnalysisRead.LoadPackList(PackAnalysisRead.PackType.Option))
                                 {
                                     if (tmp != (string)cb_OUID.SelectedItem)
                                         list.Add(tmp);
                                 }
-                                ModAnalysisWrite MAW = new ModAnalysisWrite();
+                                PackAnalysisWrite MAW = new PackAnalysisWrite();
                                 MAW.WriteListXML(list.ToArray());
                                 FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
                                 string xmlPath = User.BSN_Temp + "BSU\\Data\\PackList.xml";
@@ -500,10 +500,10 @@ namespace Bell_Smart_Server.Source.BSU
             string SetVer = (string)lst_Mod_Version.SelectedItem;
             string MUID = (string)cb_MUID.SelectedItem;
             string xmlPath = User.BSN_Temp + "BSU\\Data\\ModPack\\Version\\" + SetVer + ".xml";
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID);
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.ModPack, MUID);
             MAR.LoadMod(SetVer);
-            MAW.WriteInstallXML(SetVer, (string)cb_Mod_Base_Ver.SelectedItem, (string)cb_Mod_Option_Ver.SelectedItem, MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Directory"), MAR.GetInstallData(ModAnalysisRead.PackType.Mod, "Hash"));
+            MAW.WriteInstallXML(SetVer, (string)cb_Mod_Base_Ver.SelectedItem, (string)cb_Mod_Option_Ver.SelectedItem, MAR.GetInstallData(PackAnalysisRead.PackType.Mod, "Directory"), MAR.GetInstallData(PackAnalysisRead.PackType.Mod, "Hash"));
             // FTP 서버에 업로드.
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.Upload("Pack/" + MUID + "/Version/", xmlPath); // 버전 데이터 업로드
@@ -523,7 +523,7 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, (string)cb_BUID.SelectedItem, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.BasePack, (string)cb_BUID.SelectedItem, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
@@ -546,7 +546,7 @@ namespace Bell_Smart_Server.Source.BSU
                 Common.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, (string)cb_OUID.SelectedItem, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.OptionPack, (string)cb_OUID.SelectedItem, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
@@ -614,25 +614,25 @@ namespace Bell_Smart_Server.Source.BSU
                 list.Add(tmp + "|" + Pro.MD5Hash(Path));
             }
             Hash = list.ToArray();
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.ModPack, MUID);
             MAW.WriteInstallXML(SetVer, RequireBase, RequireOption, Directory, Hash);
             Application.DoEvents(); // 반복문 수행시 UI가 렉먹는걸 방지하기 위해 메시지 큐 처리!
 
             // 모드팩.XML 생성
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Mod, MUID);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID);
             if (MAR.Availability())
             {
                 string Name, Latest, Recommended, Base, Option, News, Down;
                 List<string> Version = new List<string>();
-                Name = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Name");
-                Latest = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Latest");
-                Recommended = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Recommended");
-                News = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "News");
-                Down = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Down");
-                Base = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Base");
-                Option = MAR.GetInfo(ModAnalysisRead.PackType.Mod, "Option");
+                Name = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Name");
+                Latest = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Latest");
+                Recommended = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Recommended");
+                News = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "News");
+                Down = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Down");
+                Base = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Base");
+                Option = MAR.GetInfo(PackAnalysisRead.PackType.Mod, "Option");
 
-                foreach (string tmp in MAR.GetVersion(ModAnalysisRead.PackType.Mod))
+                foreach (string tmp in MAR.GetVersion(PackAnalysisRead.PackType.Mod))
                 {
                     Version.Add(tmp);
                     Version.Sort();
@@ -644,7 +644,7 @@ namespace Bell_Smart_Server.Source.BSU
                     Latest = SetVer;
                 if (cb_Mod_Recommended.Checked)
                     Recommended = SetVer;
-                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, MUID, Name, Latest, Recommended, Base, Option, News, Down, Version.ToArray());
+                MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.ModPack, MUID, Name, Latest, Recommended, Base, Option, News, Down, Version.ToArray());
                 MAW.WriteXML();
             }
             else
@@ -742,20 +742,20 @@ namespace Bell_Smart_Server.Source.BSU
                 list.Add(tmp + "|" + Pro.MD5Hash(Path));
             }
             Hash = list.ToArray();
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, BUID);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.BasePack, BUID);
             MAW.WriteInstallXML(SetVer, Directory, Hash);
             
             // 베이스팩.XML 생성
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Base, BUID);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Base, BUID);
             if (MAR.Availability())
             {
                 string Latest, Recommended, Down;
                 List<string> Version = new List<string>();
-                Latest = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Latest");
-                Recommended = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Recommended");
-                Down = MAR.GetInfo(ModAnalysisRead.PackType.Base, "Down");
+                Latest = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Latest");
+                Recommended = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Recommended");
+                Down = MAR.GetInfo(PackAnalysisRead.PackType.Base, "Down");
 
-                foreach (string tmp in MAR.GetVersion(ModAnalysisRead.PackType.Base))
+                foreach (string tmp in MAR.GetVersion(PackAnalysisRead.PackType.Base))
                 {
                     Version.Add(tmp);
                     Version.Sort();
@@ -767,7 +767,7 @@ namespace Bell_Smart_Server.Source.BSU
                     Latest = SetVer;
                 if (cb_Base_Recommended.Checked)
                     Recommended = SetVer;
-                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.BasePack, BUID, Latest, Recommended, Down, Version.ToArray());
+                MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.BasePack, BUID, Latest, Recommended, Down, Version.ToArray());
                 MAW.WriteXML();
             }
             else
@@ -878,20 +878,20 @@ namespace Bell_Smart_Server.Source.BSU
                 FileList.Add(item.SubItems[3].Text);
             }
             FileArray = FileList.ToArray();
-            ModAnalysisWrite MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, OUID);
+            PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.OptionPack, OUID);
             MAW.WriteInstallXML(SetVer, Option.ToArray(), Directory, Hash.ToArray());
             
             // 옵션팩.XML 생성
-            ModAnalysisRead MAR = new ModAnalysisRead(ModAnalysisRead.PackType.Option, OUID);
+            PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Option, OUID);
             if (MAR.Availability())
             {
                 string Latest, Recommended, Down;
                 List<string> Version = new List<string>();
-                Latest = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Latest");
-                Recommended = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Recommended");
-                Down = MAR.GetInfo(ModAnalysisRead.PackType.Option, "Down");
+                Latest = MAR.GetInfo(PackAnalysisRead.PackType.Option, "Latest");
+                Recommended = MAR.GetInfo(PackAnalysisRead.PackType.Option, "Recommended");
+                Down = MAR.GetInfo(PackAnalysisRead.PackType.Option, "Down");
 
-                foreach (string tmp in MAR.GetVersion(ModAnalysisRead.PackType.Option))
+                foreach (string tmp in MAR.GetVersion(PackAnalysisRead.PackType.Option))
                 {
                     Version.Add(tmp);
                     Version.Sort();
@@ -903,7 +903,7 @@ namespace Bell_Smart_Server.Source.BSU
                     Latest = SetVer;
                 if (cb_Option_Recommended.Checked)
                     Recommended = SetVer;
-                MAW = new ModAnalysisWrite(ModAnalysisWrite.Type.OptionPack, OUID, Latest, Recommended, Down, Version.ToArray());
+                MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.OptionPack, OUID, Latest, Recommended, Down, Version.ToArray());
                 MAW.WriteXML();
             }
             else
@@ -1101,6 +1101,11 @@ namespace Bell_Smart_Server.Source.BSU
             }
             txt_Option_Name.Text = string.Empty;
             txt_Option_UID.Text = string.Empty;
+        }
+
+        private void btn_Mod_Add_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
