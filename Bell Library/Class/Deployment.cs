@@ -15,11 +15,18 @@ namespace BellLib.Class
         /// <returns>업데이트 이용 가능 여부</returns>
         public static bool UpdateAvailable()
         {
-            if (ApplicationDeployment.IsNetworkDeployed)
+            try
             {
-                return ApplicationDeployment.CurrentDeployment.CheckForUpdate();
+                if (ApplicationDeployment.IsNetworkDeployed)
+                {
+                    return ApplicationDeployment.CurrentDeployment.CheckForUpdate();
+                }
+                return false;
             }
-            return false;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static Version CurrentVersion

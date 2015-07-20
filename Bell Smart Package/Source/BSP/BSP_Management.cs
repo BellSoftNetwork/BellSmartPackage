@@ -23,17 +23,35 @@ namespace Bell_Smart_Package.Source.BSP
             this.Opacity = 0; // 폼 투명도를 0으로 설정하여 안보이게함.
         }
 
+        private int errCount;
         private void tmr_AutoUpdate_Tick(object sender, EventArgs e)
         {
             if (User.BSP_AutoUpdate)
             {
-                if (Deployment.UpdateAvailable())
+                try
                 {
-                    BSP_Updater BSPU = new BSP_Updater();
-                    BSPU.Show();
+                    if (Deployment.UpdateAvailable())
+                    {
+                        BSP_Updater BSPU = new BSP_Updater();
+                        BSPU.Show();
 
-                    tmr_AutoUpdate.Enabled = false;
+                        tmr_AutoUpdate.Enabled = false;
+                    }
                 }
+                catch (Exception ex)
+                {
+                    if (errCount > 2)
+                    {
+                        Common.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + "errCount = " + errCount + Environment.NewLine + ex.Message);
+                    }
+                    else
+                    {
+                        errCount += 1;
+                    }
+
+                    return;
+                }
+                errCount = 0;
             }
         }
 

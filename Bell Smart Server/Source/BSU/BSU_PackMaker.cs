@@ -79,7 +79,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             // FTP서버에 정보 업로드
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
-            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Pack/";
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Pack/";
             FTP_Info.MakeDir(FTP_Default_Info + txt_MUID.Text + "/");
             FTP_Info.MakeDir(FTP_Default_Info + txt_MUID.Text + "/Version/");
             FTP_Info.Upload(FTP_Default_Info + txt_MUID.Text + "/", xmlPath, true); // 모드팩 데이터 업로드
@@ -125,7 +125,7 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
-            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Base/";
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Base/";
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.MakeDir(FTP_Default_Info + txt_BUID.Text + "/");
             FTP_Info.MakeDir(FTP_Default_Info + txt_BUID.Text + "/Version/");
@@ -172,7 +172,7 @@ namespace Bell_Smart_Server.Source.BSU
             MAW.WriteXML();
 
             // FTP서버에 정보 업로드
-            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_BSL + "Option/";
+            string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Option/";
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.MakeDir(FTP_Default_Info + txt_OUID.Text + "/");
             FTP_Info.MakeDir(FTP_Default_Info + txt_OUID.Text + "/Version/");

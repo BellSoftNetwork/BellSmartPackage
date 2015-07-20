@@ -86,6 +86,7 @@
     <None Include="Example\BellCraft8.xml" />
     <None Include="Example\PackList.xml" />
     <None Include="Example\Servers.xml" />
+    <Content Include="Example\JAVA.xml" />
     <Content Include="Resource\Photo\Logo_BSN1-1.png" />
     <Content Include="Resource\Photo\Logo_BSN1.png" />
     <Content Include="Resource\Photo\Logo_BSN2.png" />

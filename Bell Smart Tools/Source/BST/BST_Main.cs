@@ -57,41 +57,46 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void NoticeLoad()
         {
-            string original = Common.GetStringFromWeb("http://www.softbell.net/Notice");
-            original = original.Substring(original.IndexOf("<tbody>"));
-            original = original.Substring(original.IndexOf("<tbody>"), original.IndexOf("</tbody>"));
-            string[] data = original.Split('\n');
-            List<string> listNotice = new List<string>();
-            //List<string> listURL = new List<string>();
-            foreach (string tmp in data)
+            try
             {
-                if (tmp.Contains("<a href=\"/Notice/") && !tmp.Contains("</td>"))
+                string original = Common.GetStringFromWeb("http://www.softbell.net/Notice");
+                original = original.Substring(original.IndexOf("<tbody>"));
+                original = original.Substring(original.IndexOf("<tbody>"), original.IndexOf("</tbody>"));
+                string[] data = original.Split('\n');
+                List<string> listNotice = new List<string>();
+                foreach (string tmp in data)
                 {
-                    string temp = tmp.Substring(tmp.IndexOf("<a href=\"/"));
-                    temp = temp.Substring(temp.IndexOf("<a href=\"/"), temp.IndexOf("</a"));
-                    string Notice = temp.Substring(temp.IndexOf("\">") + 2);
+                    if (tmp.Contains("<a href=\"/Notice/") && !tmp.Contains("</td>"))
+                    {
+                        string temp = tmp.Substring(tmp.IndexOf("<a href=\"/"));
+                        temp = temp.Substring(temp.IndexOf("<a href=\"/"), temp.IndexOf("</a"));
+                        string Notice = temp.Substring(temp.IndexOf("\">") + 2);
 
-                    string URL = temp.Substring(temp.IndexOf("\"/Notice/") + 9);
-                    URL = URL.Substring(0, URL.IndexOf("\">"));
-                    if (Notice.Contains("<span style="))
-                    { // 제목 굵음 처리 되어있을시
-                        Notice = Notice.Replace("<span style=\"font-weight:bold;\">", null).Replace("</span>", null);
+                        string URL = temp.Substring(temp.IndexOf("\"/Notice/") + 9);
+                        URL = URL.Substring(0, URL.IndexOf("\">"));
+                        if (Notice.Contains("<span style="))
+                        { // 제목 굵음 처리 되어있을시
+                            Notice = "[중요] " + Notice.Replace("<span style=\"font-weight:bold;\">", null).Replace("</span>", null);
+                        }
+                        else
+                        {
+                            Notice = "------ " + Notice;
+                        }
+
+                        listNotice.Add(Notice);
+                        lstNotice.Tag += Servers.Bell_Soft_Network.WEB_BSN_ROOT + "Notice/" + URL + "|";
                     }
-
-                    listNotice.Add(Notice);
-                    //lstURL.Add(URL);
-                    lstNotice.Tag += Servers.Bell_Soft_Network.WEB_BSN_ROOT + "Notice/" + URL + "|";
                 }
+
+                string tempSelected = (string)lstNotice.SelectedItem;
+                lstNotice.Items.Clear();
+                lstNotice.Items.AddRange(listNotice.ToArray());
+                lstNotice.SelectedItem = tempSelected;
             }
-            lstNotice.Items.Clear();
-            lstNotice.Items.AddRange(listNotice.ToArray());
-
-            /*string notice = Common.GetStringFromWeb(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSP/BST/Integration Notice.bsn", false);
-
-            if (notice == null) return; // notice가 있다가 오류로 안받아져서 공지가 없어지면 좀 그렇잖아요?
-
-            if (txt_Notice.Text != notice || txt_Notice.Text == null)
-                txt_Notice.Text = notice;*/
+            catch (Exception ex)
+            {
+                Debug.Message(Debug.Level.Middle, "NoticeLoad" + Environment.NewLine + ex.Message);
+            }
         }
 
         private void mi_TopMost_Click(object sender, EventArgs e)

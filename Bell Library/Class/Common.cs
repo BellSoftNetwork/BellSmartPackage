@@ -173,6 +173,8 @@ namespace BellLib.Class
             CreateFolder(Data.User.BSN_Path + "Upload\\ModPack");
             CreateFolder(Data.User.BSN_Path + "Upload\\BasePack");
             CreateFolder(Data.User.BSN_Path + "Upload\\OptionPack");
+            CreateFolder(Data.User.BSN_Path + "Upload\\Runtime");
+            CreateFolder(Data.User.BSN_Path + "Upload\\Runtime\\JAVA");
 
             CreateFolder(Data.User.BSN_Path + "Data");
 
@@ -186,9 +188,9 @@ namespace BellLib.Class
             CreateFolder(Data.User.BSL_Root + "Runtime");
         }
 
-        private static void CreateFolder(string folderPath)
+        public static void CreateFolder(string folderPath)
         {
-            System.IO.Directory.CreateDirectory(folderPath);
+            Directory.CreateDirectory(folderPath);
         }
 
         /// <summary>

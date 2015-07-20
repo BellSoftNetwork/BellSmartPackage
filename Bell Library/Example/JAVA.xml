@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<JAVA>
+  <Directory>
+    <Dir>디렉토리</Dir>
+  </Directory>
+  <File>
+    <loc>경로</loc>
+    <loc>경로</loc>
+  </File>
+</JAVA>

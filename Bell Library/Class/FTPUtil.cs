@@ -28,6 +28,7 @@ namespace BellLib.Class
         public enum OfficialServer
         {
             Bell_Soft_Network_Info,
+            Bell_Soft_Network_Cloud,
             SangDolE_Cloud
         }
 
@@ -57,6 +58,14 @@ namespace BellLib.Class
             switch (Server)
             {
                 case OfficialServer.Bell_Soft_Network_Info:
+                    this.ftpServerIP = Servers.Bell_Soft_Network.SERVER_IP;
+                    this.ftpUserID = Servers.Bell_Soft_Network.FTP_INFO_ID;
+                    this.ftpPassword = Servers.Bell_Soft_Network.FTP_INFO_PW;
+                    this.ftpPort = Servers.Bell_Soft_Network.FTP_PORT;
+                    this.usePassive = false;
+                    break;
+
+                case OfficialServer.Bell_Soft_Network_Cloud:
                     this.ftpServerIP = Servers.Bell_Soft_Network.SERVER_IP;
                     this.ftpUserID = Servers.Bell_Soft_Network.FTP_INFO_ID;
                     this.ftpPassword = Servers.Bell_Soft_Network.FTP_INFO_PW;

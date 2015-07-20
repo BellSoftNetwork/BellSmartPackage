@@ -57,6 +57,7 @@
             this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_BSL = new System.Windows.Forms.Button();
             this.lstNotice = new System.Windows.Forms.ListBox();
+            this.lb_Notice = new System.Windows.Forms.Label();
             this.ms_MainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -263,11 +264,21 @@
             this.lstNotice.FormattingEnabled = true;
             this.lstNotice.HorizontalScrollbar = true;
             this.lstNotice.ItemHeight = 12;
-            this.lstNotice.Location = new System.Drawing.Point(0, 27);
+            this.lstNotice.Location = new System.Drawing.Point(0, 51);
             this.lstNotice.Name = "lstNotice";
-            this.lstNotice.Size = new System.Drawing.Size(320, 244);
+            this.lstNotice.Size = new System.Drawing.Size(320, 208);
             this.lstNotice.TabIndex = 10;
             this.lstNotice.DoubleClick += new System.EventHandler(this.lstNotice_DoubleClick);
+            // 
+            // lb_Notice
+            // 
+            this.lb_Notice.AutoSize = true;
+            this.lb_Notice.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.lb_Notice.Location = new System.Drawing.Point(3, 32);
+            this.lb_Notice.Name = "lb_Notice";
+            this.lb_Notice.Size = new System.Drawing.Size(317, 12);
+            this.lb_Notice.TabIndex = 11;
+            this.lb_Notice.Text = "BSN 공지사항 (더블클릭시 해당 공지사항으로 이동)";
             // 
             // BST_Main
             // 
@@ -275,7 +286,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(538, 271);
+            this.ClientSize = new System.Drawing.Size(538, 259);
+            this.Controls.Add(this.lb_Notice);
             this.Controls.Add(this.lstNotice);
             this.Controls.Add(this.btn_BSL);
             this.Controls.Add(this.ms_MainMenu);
@@ -323,6 +335,7 @@
         private System.Windows.Forms.Button btn_BSL;
         private System.Windows.Forms.ToolStripMenuItem mi_Reader;
         private System.Windows.Forms.ListBox lstNotice;
+        private System.Windows.Forms.Label lb_Notice;
 
     }
 }
