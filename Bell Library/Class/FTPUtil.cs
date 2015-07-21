@@ -67,8 +67,8 @@ namespace BellLib.Class
 
                 case OfficialServer.Bell_Soft_Network_Cloud:
                     this.ftpServerIP = Servers.Bell_Soft_Network.SERVER_IP;
-                    this.ftpUserID = Servers.Bell_Soft_Network.FTP_INFO_ID;
-                    this.ftpPassword = Servers.Bell_Soft_Network.FTP_INFO_PW;
+                    this.ftpUserID = Servers.Bell_Soft_Network.FTP_CLOUD_ID;
+                    this.ftpPassword = Servers.Bell_Soft_Network.FTP_CLOUD_PW;
                     this.ftpPort = Servers.Bell_Soft_Network.FTP_PORT;
                     this.usePassive = false;
                     break;

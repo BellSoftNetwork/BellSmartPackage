@@ -111,13 +111,13 @@ namespace BellLib.Class
             return GetAvailable;
         }
 
-        public void CreateDirectory()
+        public void CreateDirectory(string LocalPath)
         {
             if (!GetAvailable)
                 throw new System.MethodAccessException("설치 데이터가 로드되지 않았습니다.");
 
             foreach (string tmp in Directory)
-                Common.CreateFolder(tmp);
+                Common.CreateFolder(LocalPath + tmp);
         }
 
         public string[] GetInstallData(DataType DType)

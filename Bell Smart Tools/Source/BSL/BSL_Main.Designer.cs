@@ -193,6 +193,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bell Smart Launcher";
             this.Load += new System.EventHandler(this.BSL_Main_Load);
+            this.Shown += new System.EventHandler(this.BSL_Main_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

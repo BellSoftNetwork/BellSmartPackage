@@ -15,9 +15,25 @@ namespace Bell_Smart_Tools.Source.BSL
     public partial class BSL_Profile : Form
     {
         private string ProfileName;
+        
+        /// <summary>
+        /// 새 프로필을 생성합니다.
+        /// </summary>
         public BSL_Profile()
         {
             InitializeComponent();
+            txt_Java.Text = User.BSN_Path + "Runtime\\JAVA\\";
+            if (Environment.Is64BitOperatingSystem)
+            {
+                txt_Java.Text += "x64\\";
+                txt_Parameter.Text = "-Xmx2G";
+            }
+            else
+            {
+                txt_Java.Text += "x86\\";
+                txt_Parameter.Text = "-Xmx1G";
+            }
+            txt_Java.Text += "bin\\java.exe";
         }
 
         /// <summary>

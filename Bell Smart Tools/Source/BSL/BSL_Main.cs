@@ -491,7 +491,26 @@ namespace Bell_Smart_Tools.Source.BSL
         /// </summary>
         private void InstallRuntime()
         {
+            string LocalPathTag = "x86\\";
+            if (Environment.Is64BitOperatingSystem)
+                LocalPathTag = "x64\\";
+            try
+            {
+                string[] Data = Common.ReadBDXFile(User.BSN_Path + "Runtime\\JAVA\\" + LocalPathTag + "data.bdx");
+                if (Data[0] == "Runtime|JAVA")
+                { // 런타임 자바가 설치되어 있는경우,
+                    return;
+                }
+            } catch { }
 
+            // 런타임 자바가 설치되어 있지 않은경우,
+            BST.BST_Runtime BSTR = new BST.BST_Runtime(BST.BST_Runtime.RunType.JAVA, FormStartPosition.CenterParent);
+            if (Environment.Is64BitOperatingSystem)
+                BSTR.SetJAVA(RuntimeAnalysis.JAVAType.x64);
+            else
+                BSTR.SetJAVA(RuntimeAnalysis.JAVAType.x86);
+            BSTR.ShowDialog();
+            BSTR.Dispose();
         }
 
         private void lst_ModPack_SelectedIndexChanged(object sender, EventArgs e)
@@ -688,6 +707,12 @@ namespace Bell_Smart_Tools.Source.BSL
             BSLP.ShowDialog();
             ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
             SettingLoad(); // 데이터가 다시 로드됬으니 다시 셋팅!
+        }
+
+        private void BSL_Main_Shown(object sender, EventArgs e)
+        {
+            Application.DoEvents();
+            InstallRuntime();
         }
     }
 }

@@ -186,6 +186,12 @@
     <Compile Include="Source\BST\BST_Reader.Designer.cs">
       <DependentUpon>BST_Reader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\BST\BST_Runtime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BST\BST_Runtime.Designer.cs">
+      <DependentUpon>BST_Runtime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\BST\BST_Updater.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +256,9 @@
     <EmbeddedResource Include="Source\BST\BST_Reader.resx">
       <DependentUpon>BST_Reader.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\BST\BST_Runtime.resx">
+      <DependentUpon>BST_Runtime.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Updater.resx">
       <DependentUpon>BST_Updater.cs</DependentUpon>
     </EmbeddedResource>
@@ -300,6 +309,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Photo\Logo_BSN1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Photo\Logo_BSN3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -30,7 +30,6 @@ namespace Bell_Smart_Server.Source.BSU
         {
             lst_JAVA_File.Items.Clear();
             lst_JAVA_File.Items.AddRange(Common.GetFileArray((string)llb_JAVA_Upload.Tag, true));
-            btn_JAVA_Upload.Enabled = true;
         }
 
         private void llb_JAVA_Upload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -47,6 +46,7 @@ namespace Bell_Smart_Server.Source.BSU
 
         private void btn_JAVA_Upload_Click(object sender, EventArgs e)
         {
+            btn_JAVA_Upload.Enabled = false;
             btn_JAVA_Load_Click(sender, e);
             Application.DoEvents();
             bool x64 = rb_JAVA_64.Checked;
@@ -65,17 +65,26 @@ namespace Bell_Smart_Server.Source.BSU
             string[] Files = Common.GetFileArray((string)llb_JAVA_Upload.Tag, true);
             if (!RAW.WriteInstallData(Directory, Files))
             {
+                btn_JAVA_Upload.Enabled = true;
                 Common.Message("런타임팩 설치데이터 작성 중 문제가 발생하였습니다.");
                 return;
             }
 
-            FTPUtil FTP_Data = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
-            string FTP_Default_Cloud = Servers.Bell_Soft_Network.FTP_PATH_CLOUD_ROOT + "JAVA/"; // FTP 서버접속시 기본경로
+            FTPUtil FTP_Data = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Cloud); // 클라우드 FTP 객체 생성
+            string FTP_Default_Cloud = Servers.Bell_Soft_Network.FTP_PATH_CLOUD_ROOT + "Runtime/JAVA/"; // 클라우드 FTP 서버접속시 기본경로
             string FTP_Default_Info = Servers.Bell_Soft_Network.FTP_PATH_INFO_ROOT + "BSP/Runtime/JAVA/";
-            string[] FileArray = lst_JAVA_File.Items.Cast<string>().ToArray();
             string LocalRoot = (string)llb_JAVA_Upload.Tag;
 
-            pb_JAVA_Upload.Maximum = Directory.Length + FileArray.Length;
+            pb_JAVA_Upload.Value = 0;
+            pb_JAVA_Upload.Maximum = Directory.Length + Files.Length;
+            if (x64)
+            {
+                FTP_Default_Cloud += "x64/";
+            }
+            else
+            {
+                FTP_Default_Cloud += "x86/";
+            }
 
             // 디렉토리 생성
             FTP_Data.MakeDir(FTP_Default_Cloud);
@@ -87,7 +96,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             
             // 파일 업로드
-            foreach (string tmp in FileArray)
+            foreach (string tmp in Files)
             {
                 // 파일 리스트 배열에 값을 디렉토리, 파일명으로 나눠야됨.
                 FileInfo FI = new FileInfo(LocalRoot + tmp);
@@ -101,6 +110,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.Upload(FTP_Default_Info, RAW.xmlFilePath + RAW.xmlFileName, true); // 모드팩 데이터 업로드
 
+            btn_JAVA_Upload.Enabled = true;
             Common.Message("런타임팩 업로드가 완료되었습니다!");
         }
 

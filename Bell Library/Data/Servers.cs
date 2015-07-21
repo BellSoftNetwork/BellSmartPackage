@@ -20,6 +20,8 @@ namespace BellLib.Data
             public const string FTP_PORT = "21";
             public const string FTP_INFO_ID = "BSNInfo";
             public const string FTP_INFO_PW = "bellsoftnetwork";
+            public const string FTP_CLOUD_ID = "BSNCloud";
+            public const string FTP_CLOUD_PW = "bellsoftnetwork";
             
             public const string WEB_INFO_BSL = "http://info.softbell.net/BSP/BSL/";
             public const string WEB_CLOUD_ROOT = "http://cloud.softbell.net/";

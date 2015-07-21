@@ -55,6 +55,11 @@ namespace Bell_Smart_Package.Source.BSP
         {
             Application.DoEvents();
             Common.CreateDefaultForder();
+#if DEBUG
+            //DEBUG 모드
+#else
+            //RELEASE 모드
+#endif
             var actions = new Dictionary<Action, int> 
             {
                 {InitDebug, 1},
