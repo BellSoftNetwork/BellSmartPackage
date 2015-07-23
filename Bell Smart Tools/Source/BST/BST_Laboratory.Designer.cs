@@ -36,6 +36,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
+            this.btn_DataUD = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Button_TicTacToe
@@ -100,12 +101,23 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // btn_DataUD
+            // 
+            this.btn_DataUD.Location = new System.Drawing.Point(2, 161);
+            this.btn_DataUD.Name = "btn_DataUD";
+            this.btn_DataUD.Size = new System.Drawing.Size(132, 23);
+            this.btn_DataUD.TabIndex = 12;
+            this.btn_DataUD.Text = "정보 송수신";
+            this.btn_DataUD.UseVisualStyleBackColor = true;
+            this.btn_DataUD.Click += new System.EventHandler(this.btn_DataUD_Click);
+            // 
             // BST_Laboratory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(358, 157);
+            this.ClientSize = new System.Drawing.Size(358, 214);
+            this.Controls.Add(this.btn_DataUD);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button4);
@@ -131,5 +143,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn_DataUD;
     }
 }

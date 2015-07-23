@@ -11,8 +11,8 @@ namespace BellLib.Data
         public static string BSN_Email, BSN_Password;
         public static string MC_NickName, MC_UUID, MC_AccessToken;
 
-        public static Version BST_Current_Verion { get { return Deployment.CurrentVersion; } }
-        public static Version BST_Latest_Version { get { return Deployment.LatestVersion; } }
+        public static Version BST_Current_Verion { get { return Deploy.CurrentVersion; } }
+        public static Version BST_Latest_Version { get { return Deploy.LatestVersion; } }
         /// <summary>
         /// BSN 로컬 경로를 가져옵니다.
         /// 기본값 : C:\BSN\

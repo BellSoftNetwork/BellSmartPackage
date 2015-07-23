@@ -76,7 +76,7 @@ namespace Bell_Smart_Package.Source.BSP
                 Application.DoEvents();
             }
 
-            if (Deployment.UpdateAvailable()) // 최신버전 발견시
+            if (Deploy.UpdateAvailable()) // 최신버전 발견시
             {
                 BSP_Updater BSPU = new BSP_Updater();
                 BSPU.Show(); // 업데이트 실행

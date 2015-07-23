@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace BellLib.Class
 {
-    public class Deployment
+    public class Deploy
     {
         /// <summary>
         /// 업데이트 이용 가능 여부를 반환합니다.

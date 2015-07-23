@@ -30,7 +30,7 @@ namespace Bell_Smart_Package.Source.BSP
             {
                 try
                 {
-                    if (Deployment.UpdateAvailable())
+                    if (Deploy.UpdateAvailable())
                     {
                         BSP_Updater BSPU = new BSP_Updater();
                         BSPU.Show();
@@ -42,6 +42,7 @@ namespace Bell_Smart_Package.Source.BSP
                 {
                     if (errCount > 2)
                     {
+                        errCount = 0;
                         Common.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + "errCount = " + errCount + Environment.NewLine + ex.Message);
                     }
                     else

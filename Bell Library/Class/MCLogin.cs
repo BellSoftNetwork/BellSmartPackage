@@ -75,7 +75,16 @@ namespace BellLib.Class
             wRequest.UserAgent = ".NET Framework 4.5 Client Application";
 
             //make datastream, and send it to minecraft authserver.
-            Stream dataStream = wRequest.GetRequestStream();
+            Stream dataStream;
+            try
+            {
+                dataStream = wRequest.GetRequestStream();
+            }
+            catch (WebException ex)
+            {
+                Common.Message("모장 계정서버에 접속할 수 없습니다." + Environment.NewLine + ex.Message);
+                return false;
+            }
             dataStream.Write(byteBuffer, 0, byteBuffer.Length);
 
             dataStream.Close();

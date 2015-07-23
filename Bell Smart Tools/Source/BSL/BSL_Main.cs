@@ -639,6 +639,7 @@ namespace Bell_Smart_Tools.Source.BSL
                     Password = BSLPw.getPassword();
                 }
 
+                SetState("마인크래프트 계정 로그인 시도중");
                 if (MCLogin.Login(User.MC_ID, Password, MCLogin.LoginType.Authenticate))
                 {
                     SetState("마인크래프트 계정 로그인 성공");
