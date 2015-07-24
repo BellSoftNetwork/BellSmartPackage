@@ -8,6 +8,7 @@ using Debug = BellLib.Class.Debug;
 using Bell_Smart_Tools.Source.BSL;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace Bell_Smart_Tools.Source.BST
 {
@@ -59,7 +60,7 @@ namespace Bell_Smart_Tools.Source.BST
         {
             try
             {
-                string original = Common.GetStringFromWeb("http://www.softbell.net/Notice");
+                string original = Common.GetStringFromWeb("http://www.softbell.net/Notice", Encoding.UTF8);
                 original = original.Substring(original.IndexOf("<tbody>"));
                 original = original.Substring(original.IndexOf("<tbody>"), original.IndexOf("</tbody>"));
                 string[] data = original.Split('\n');

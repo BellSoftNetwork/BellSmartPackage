@@ -127,13 +127,17 @@ namespace BellLib.Class
         /// <param name="URL">웹 주소</param>
         /// <param name="UTF8">인코딩 방식 (UTF8, Default)</param>
         /// <returns>웹 텍스트</returns>
-        public static string GetStringFromWeb(string URL, bool UTF8 = true)
+        public static string GetStringFromWeb(string URL, Encoding Enc = null)
         {
+            if (Enc == null)
+                Enc = Encoding.Default;
             try
             {
                 WebClient wc = new WebClient();
                 wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705; Combat;)");
-                byte[] bd = wc.DownloadData(URL);
+                wc.Encoding = Enc;
+                return wc.DownloadString(URL);
+                /*byte[] bd = wc.DownloadData(URL);
                 if (UTF8)
                 {
                     return (Encoding.UTF8.GetString(bd));
@@ -141,7 +145,7 @@ namespace BellLib.Class
                 else
                 {
                     return (Encoding.Default.GetString(bd));
-                }
+                }*/
             } catch { }
 
             return null;
