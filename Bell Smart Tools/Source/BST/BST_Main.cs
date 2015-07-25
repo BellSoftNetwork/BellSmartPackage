@@ -216,5 +216,15 @@ namespace Bell_Smart_Tools.Source.BST
             if (lstNotice.SelectedIndex != -1)
                 Process.Start(lstNotice.Tag.ToString().Split('|')[lstNotice.SelectedIndex]);
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstNotice_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

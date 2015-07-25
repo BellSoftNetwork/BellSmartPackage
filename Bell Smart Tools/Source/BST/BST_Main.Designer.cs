@@ -58,7 +58,9 @@
             this.btn_BSL = new System.Windows.Forms.Button();
             this.lstNotice = new System.Windows.Forms.ListBox();
             this.lb_Notice = new System.Windows.Forms.Label();
+            this.BPB_Main1 = new System.Windows.Forms.PictureBox();
             this.ms_MainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BPB_Main1)).BeginInit();
             this.SuspendLayout();
             // 
             // tmr_NoticeLoader
@@ -268,6 +270,7 @@
             this.lstNotice.Name = "lstNotice";
             this.lstNotice.Size = new System.Drawing.Size(320, 208);
             this.lstNotice.TabIndex = 10;
+            this.lstNotice.SelectedIndexChanged += new System.EventHandler(this.lstNotice_SelectedIndexChanged);
             this.lstNotice.DoubleClick += new System.EventHandler(this.lstNotice_DoubleClick);
             // 
             // lb_Notice
@@ -280,6 +283,19 @@
             this.lb_Notice.TabIndex = 11;
             this.lb_Notice.Text = "BSN 공지사항 (더블클릭시 해당 공지사항으로 이동)";
             // 
+            // BPB_Main1
+            // 
+            this.BPB_Main1.BackColor = System.Drawing.Color.Transparent;
+            this.BPB_Main1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BPB_Main1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.BPB_Main1.Image = global::Bell_Smart_Tools.Properties.Resources.Tarjetas042_2_;
+            this.BPB_Main1.Location = new System.Drawing.Point(326, 78);
+            this.BPB_Main1.Name = "BPB_Main1";
+            this.BPB_Main1.Size = new System.Drawing.Size(212, 150);
+            this.BPB_Main1.TabIndex = 12;
+            this.BPB_Main1.TabStop = false;
+            this.BPB_Main1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // BST_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -287,6 +303,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(538, 259);
+            this.Controls.Add(this.BPB_Main1);
             this.Controls.Add(this.lb_Notice);
             this.Controls.Add(this.lstNotice);
             this.Controls.Add(this.btn_BSL);
@@ -301,6 +318,7 @@
             this.Load += new System.EventHandler(this.BST_Main_Load);
             this.ms_MainMenu.ResumeLayout(false);
             this.ms_MainMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BPB_Main1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -336,6 +354,7 @@
         private System.Windows.Forms.ToolStripMenuItem mi_Reader;
         private System.Windows.Forms.ListBox lstNotice;
         private System.Windows.Forms.Label lb_Notice;
+        private System.Windows.Forms.PictureBox BPB_Main1;
 
     }
 }
