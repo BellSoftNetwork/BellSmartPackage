@@ -167,9 +167,6 @@
     <Compile Include="Source\BSP\BSP_Updater.Designer.cs">
       <DependentUpon>BSP_Updater.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BSP\Test Loader.xaml.cs">
-      <DependentUpon>Test Loader.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -224,12 +221,6 @@
       <Project>{c73d1113-3afe-4814-874e-465e9e5a47ad}</Project>
       <Name>Bell Smart Tools</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Source\BSP\Test Loader.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

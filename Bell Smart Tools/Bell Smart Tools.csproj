@@ -83,9 +83,6 @@
     <ApplicationIcon>Resource\Photo\Photo_Bell.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MahApps.Metro">
-      <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net40\MahApps.Metro.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -198,9 +195,6 @@
     <Compile Include="Source\BST\BST_Updater.Designer.cs">
       <DependentUpon>BST_Updater.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BST\Test WPF.xaml.cs">
-      <DependentUpon>Test WPF.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -275,12 +269,6 @@
       <Project>{dc04ad6b-647f-4ab9-890a-c8d276d3f8b7}</Project>
       <Name>Bell Library</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Source\BST\Test WPF.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
