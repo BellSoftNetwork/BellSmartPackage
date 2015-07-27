@@ -68,7 +68,10 @@ namespace Bell_Smart_Package.Source.BSP
         private void btn_Login_Click(object sender, EventArgs e)
         {
             FormEnable(false);
-            if (BSN.Login(txt_Email.Text,txt_PW.Text)) // BSN 회원 인증 성공시
+
+            BSN.Login(txt_Email.Text,txt_PW.Text); // 작업 성공 여부를 반환하는게 목표지 로그인된걸 반환하는게 아냐!
+
+            if (BSN.LoginStatus) // BSN 회원 인증 성공시
             {
                 BSN.SaveUserdata(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
                 BSP_Selector BSP = new BSP_Selector(); // BSP_Selector 인스턴스 생성

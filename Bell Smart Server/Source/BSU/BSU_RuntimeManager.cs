@@ -54,11 +54,11 @@ namespace Bell_Smart_Server.Source.BSU
 
             if (x64)
             {
-                RAW.SetJAVA(RuntimeAnalysis.JAVAType.x64);
+                RAW.SetJava(RuntimeAnalysis.JAVAType.x64);
             }
             else
             {
-                RAW.SetJAVA(RuntimeAnalysis.JAVAType.x86);
+                RAW.SetJava(RuntimeAnalysis.JAVAType.x86);
             }
 
             string[] Directory = Common.GetDirectoryArray((string)llb_JAVA_Upload.Tag, true);

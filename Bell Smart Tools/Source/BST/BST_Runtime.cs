@@ -99,7 +99,7 @@ namespace Bell_Smart_Tools.Source.BST
             {
                 Initialize();
                 RuntimeAnalysisRead RAR = new RuntimeAnalysisRead(RuntimeAnalysis.RunType.JAVA);
-                RAR.SetJAVA(this.SelectJAVA);
+                RAR.SetJava(this.SelectJAVA);
                 RAR.LoadInstallData();
                 RAR.CreateDirectory(LocalPath + LocalPathTag);
                 string[] Files = RAR.GetInstallData(RuntimeAnalysisRead.DataType.File);

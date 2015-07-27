@@ -10,47 +10,42 @@ namespace BellLib.Class
     /// <summary>
     /// BSN 로그인 관련 메서드와 필드를 가지고 있는 클래스입니다.
     /// </summary>
-    public class BSN
+    public static class BSN
     {
         private const string MidURL = "MC";
-        private static bool LoggedIn = false;
         private static CookieContainer wCookie = new CookieContainer();
 
         /// <summary>
         /// BSN에 로그인 된 상태를 반환합니다.
         /// </summary>
-        public static bool LoginStatus
-        {
-            set { LoggedIn = value; }
-            get { return LoggedIn; }
-        }
+        public static bool LoginStatus { get; set; }
 
         public static void SaveUserdata(bool email, bool password, bool autoLogin)
         {
+            // 단순 반복엔 액션!
+            Action<bool, RegistryManager> SetOrDeleteValue = delegate(bool b, RegistryManager rm)
+            {
+                if (b)
+                    rm.SetValue();
+                else
+                    rm.DeleteValue();
+            };
+
             using (RegistryManager rManager = new RegistryManager())
             {
                 rManager.RegKind = RegKind.String; // 모든 레지스트리 기록에는 String!
 
                 // email
                 rManager.RegPair = new KeyValuePair<string, object>("BSN_Email", User.BSN_Email);
-                if (email)
-                    rManager.SetValue();
-                else
-                    rManager.DeleteValue();
+                SetOrDeleteValue(email, rManager);
 
                 // password
                 rManager.RegPair = new KeyValuePair<string, object>("BSN_Password", User.BSN_Password);
-                if (password)
-                    rManager.SetValue();
-                else
-                    rManager.DeleteValue();
+                SetOrDeleteValue(password, rManager);
 
                 // autoLogin
                 rManager.RegPair = new KeyValuePair<string, object>("BSN_AutoLogin", Boolean.TrueString.ToUpper());
-                if (autoLogin)
-                    rManager.SetValue();
-                else
-                    rManager.DeleteValue();
+                SetOrDeleteValue(autoLogin, rManager);
             }
 
         }
@@ -100,7 +95,7 @@ namespace BellLib.Class
 
             if (p) { GetUserdata(email, password); }
             LoginStatus = p;
-            return p;
+            return true;
         }
 
         /// <summary>

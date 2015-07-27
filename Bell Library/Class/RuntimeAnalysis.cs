@@ -59,19 +59,20 @@ namespace BellLib.Class
             }
         }
 
-        public void SetJAVA(RuntimeAnalysis.JAVAType Architecture)
+        public void SetJava(RuntimeAnalysis.JAVAType Architecture)
         {
-            if (Architecture == RuntimeAnalysis.JAVAType.x64)
+            switch (Architecture)
             {
-                xmlName = "x64.xml";
-            }
-            else if (Architecture == RuntimeAnalysis.JAVAType.x86)
-            {
-                xmlName = "x86.xml";
-            }
-            else
-            {
-                throw new System.InvalidCastException("잘못된 설정입니다.");
+                case RuntimeAnalysis.JAVAType.x86:
+                    xmlName = "x86.xml";
+                    break;
+                case RuntimeAnalysis.JAVAType.x64:
+                    xmlName = "x64.xml";
+                    break;
+                default:
+                    throw new NotSupportedException("잘못된 설정입니다.");
+                // 하지만 결과적으로는 x86과 x64를 제외한 값을 받을 수가 없음.
+                // enum은 nullable타입이 아닌 이상 x86과 x64를 제외한 null값을 지원하지 않기 때문임.
             }
 
             ReadAvailable = true;
@@ -151,13 +152,13 @@ namespace BellLib.Class
         /// <param name="Runtime">작성할 런타임 종류</param>
         public RuntimeAnalysisWrite(RuntimeAnalysis.RunType Runtime)
         {
-            string TempPath = User.BSN_Temp + "BSU\\Data\\Runtime\\";
+            string TempPath = User.BSN_Temp + @"BSU\Data\Runtime\";
 
             this.Runtime = Runtime;
             switch (Runtime)
             {
                 case RuntimeAnalysis.RunType.JAVA:
-                    xmlPath = TempPath + "JAVA\\";
+                    xmlPath = TempPath + @"JAVA\";
                     break;
             }
         }
@@ -166,19 +167,20 @@ namespace BellLib.Class
         /// 자바 런타임팩 세부설정
         /// </summary>
         /// <param name="Architecture">자바 아키텍쳐</param>
-        public void SetJAVA(RuntimeAnalysis.JAVAType Architecture)
+        public void SetJava(RuntimeAnalysis.JAVAType Architecture)
         {
-            if (Architecture == RuntimeAnalysis.JAVAType.x64)
+            switch (Architecture)
             {
-                xmlName = "x64.xml";
-            }
-            else if (Architecture == RuntimeAnalysis.JAVAType.x86)
-            {
-                xmlName = "x86.xml";
-            }
-            else
-            {
-                throw new System.InvalidCastException("잘못된 설정입니다.");
+                case RuntimeAnalysis.JAVAType.x86:
+                    xmlName = "x86.xml";
+                    break;
+                case RuntimeAnalysis.JAVAType.x64:
+                    xmlName = "x64.xml";
+                    break;
+                default:
+                    throw new NotSupportedException("잘못된 설정입니다.");
+                // 하지만 결과적으로는 x86과 x64를 제외한 값을 받을 수가 없음.
+                // enum은 nullable타입이 아닌 이상 x86과 x64를 제외한 null값을 지원하지 않기 때문임.
             }
 
             WriteAvailable = true;
