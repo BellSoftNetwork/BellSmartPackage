@@ -661,7 +661,7 @@ namespace Bell_Smart_Tools.Source.BSL
             Enjoy(MUID, BUID, PathBase, PathPack, BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
             pb_Load.PerformStep(); // 진행
             string[] tmp = {"Select Version|" + SelectMod};
-            Common.WriteBDXFile(User.BSL_Root + "ModPack\\" + MUID + "\\" + "data.bdx", tmp); // 현재 실행한 버전을 저장함.
+            Common.WriteBDXFile(Path.Combine(User.BSL_Root, "ModPack", MUID, "data.bdx"), tmp); // 현재 실행한 버전을 저장함.
             pb_Load.PerformStep(); // 진행
 
             SaveSetting(); SetState("클라이언트 설정정보 저장 성공"); // 클라이언트 설정 저장.
