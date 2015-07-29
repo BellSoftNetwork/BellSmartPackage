@@ -113,7 +113,7 @@ namespace BellLib.Class
             } catch { }
         }
 
-        private static string GetLogFileName()
+        public static string GetLogFileName()
         {
             return Path.Combine(Data.User.BSN_Path, logPath, logPrefix + logTime + logSuffix);
         }
