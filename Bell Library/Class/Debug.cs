@@ -14,9 +14,12 @@ namespace BellLib.Class
     [Serializable]
     public class Debug
     {
+        private readonly static string logPath = @"logs";
+        private readonly static string logPrefix = "debug-";
+        private readonly static string logSuffix = ".log";
+        private readonly static string logTime = DateTime.Now.ToString("yyyy-MM-dd_hh.mm.ss"); // string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now)
+
         private static Level Mode;
-        public static string LogFile =
-            Data.User.BSN_Path + "logs\\debug-" + DateTime.Now.ToString("yyyy-MM-dd_hh.mm.ss") +".log"; // string.Format("yyyy-MM-dd_hh.mm.ss", DateTime.Now)
 
         public enum Level : int
         {
@@ -50,7 +53,7 @@ namespace BellLib.Class
             {
                 try
                 {
-                    Common.WriteTextFile(LogFile, "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
+                    Common.WriteTextFile(GetLogFileName(), "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
                     // Example: [2015/6/6 01:23:45 PM - Initialize Bell Smart Debug Tools]
                 }
                 catch
@@ -86,7 +89,7 @@ namespace BellLib.Class
             MessageBoxDefaultButton DefaultButton = MessageBoxDefaultButton.Button1, string Info = "Debug")
         {
 	        if (Mode != Level.Disable) {
-		        TxtWrite(Text, Info);
+		        WriteToText(Text, Info);
 	        }
 	        //디버그모드가 활성화 되어있을때
 	        if (Mode >= OutputLevel && Mode < Level.Log) {
@@ -96,7 +99,7 @@ namespace BellLib.Class
 	        return DialogResult.None;
         }
 
-        private static void TxtWrite(string strText, string Info = null)
+        private static void WriteToText(string strText, string Info = null)
         {
 	        //string strTab = Environment.ta + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab + Constants.vbTab;
 	        string strTemp = "[" + DateTime.Now;
@@ -106,8 +109,13 @@ namespace BellLib.Class
 	        strTemp += "] ";
             try
             {
-                Common.WriteTextFile(LogFile, strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
+                Common.WriteTextFile(GetLogFileName(), strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
             } catch { }
+        }
+
+        private static string GetLogFileName()
+        {
+            return Path.Combine(Data.User.BSN_Path, logPath, logPrefix + logTime + logSuffix);
         }
     }
 }
