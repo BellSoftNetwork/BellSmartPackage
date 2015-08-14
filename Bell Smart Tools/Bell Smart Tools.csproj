@@ -77,7 +77,7 @@
     <ManifestKeyFile>Bell Smart Tools_Key.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Bell_Smart_Tools.App</StartupObject>
+    <StartupObject>Bell_Smart_Tools.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resource\Photo\Photo_Bell.ico</ApplicationIcon>
@@ -85,6 +85,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -111,35 +112,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Console.cs">
+    <Compile Include="Program.cs" />
+    <Compile Include="Source\BST\BST_Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Console.Designer.cs">
-      <DependentUpon>BSL_Console.cs</DependentUpon>
+    <Compile Include="Source\BST\BST_Login.Designer.cs">
+      <DependentUpon>BST_Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Main.cs">
+    <Compile Include="Source\BST\BST_Management.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Main.Designer.cs">
-      <DependentUpon>BSL_Main.cs</DependentUpon>
+    <Compile Include="Source\BST\BST_Management.Designer.cs">
+      <DependentUpon>BST_Management.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Option.cs">
+    <Compile Include="Source\BST\BSP_Updater.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Option.Designer.cs">
-      <DependentUpon>BSL_Option.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Password.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Password.Designer.cs">
-      <DependentUpon>BSL_Password.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Profile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Profile.Designer.cs">
-      <DependentUpon>BSL_Profile.cs</DependentUpon>
+    <Compile Include="Source\BST\BSP_Updater.Designer.cs">
+      <DependentUpon>BSP_Updater.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\BST\BST_Debug.cs">
       <SubType>Form</SubType>
@@ -189,12 +179,6 @@
     <Compile Include="Source\BST\BST_Runtime.Designer.cs">
       <DependentUpon>BST_Runtime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BST\BST_Updater.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Updater.Designer.cs">
-      <DependentUpon>BST_Updater.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -213,21 +197,16 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Console.resx">
-      <DependentUpon>BSL_Console.cs</DependentUpon>
+    <EmbeddedResource Include="Source\BST\BST_Login.resx">
+      <DependentUpon>BST_Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Main.resx">
-      <DependentUpon>BSL_Main.cs</DependentUpon>
+    <EmbeddedResource Include="Source\BST\BST_Management.resx">
+      <DependentUpon>BST_Management.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Option.resx">
-      <DependentUpon>BSL_Option.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Password.resx">
-      <DependentUpon>BSL_Password.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Profile.resx">
-      <DependentUpon>BSL_Profile.cs</DependentUpon>
+    <EmbeddedResource Include="Source\BST\BSP_Updater.resx">
+      <DependentUpon>BSP_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Debug.resx">
       <DependentUpon>BST_Debug.cs</DependentUpon>
@@ -252,9 +231,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Runtime.resx">
       <DependentUpon>BST_Runtime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Updater.resx">
-      <DependentUpon>BST_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Bell Smart Tools_Key.pfx" />
     <None Include="Properties\app.manifest" />
@@ -303,9 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Photo\Tarjetas042%282%29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Tarjetas042%282%29.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Package.Source.BSP
+﻿namespace Bell_Smart_Tools.Source.BST
 {
     partial class BSP_Selector
     {

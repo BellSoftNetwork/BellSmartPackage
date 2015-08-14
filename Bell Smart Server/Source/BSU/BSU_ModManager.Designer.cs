@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Server.Source.BSU
+﻿namespace Bell_Smart_Tools.Source.BSU
 {
     partial class BSU_ModManager
     {

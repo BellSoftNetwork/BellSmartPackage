@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Server.Source.BSS
+﻿namespace Bell_Smart_Tools.Source.BST
 {
     partial class BSS_Loader
     {
@@ -45,7 +45,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::Bell_Smart_Server.Properties.Resources.Logo_BSN1;
+            this.BackgroundImage = global::Bell_Smart_Tools.Properties.Resources.Logo_BSN1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(345, 194);
             this.Controls.Add(this.pb_Load);

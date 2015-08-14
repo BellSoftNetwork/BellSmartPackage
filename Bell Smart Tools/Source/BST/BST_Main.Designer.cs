@@ -55,12 +55,9 @@
             this.mi_DebugLevel_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.mi_SS2 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_DebugTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_BSL = new System.Windows.Forms.Button();
             this.lstNotice = new System.Windows.Forms.ListBox();
             this.lb_Notice = new System.Windows.Forms.Label();
-            this.BPB_Main1 = new System.Windows.Forms.PictureBox();
             this.ms_MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BPB_Main1)).BeginInit();
             this.SuspendLayout();
             // 
             // tmr_NoticeLoader
@@ -251,16 +248,6 @@
             this.mi_DebugTool.Text = "Bell Smart Debug Tools";
             this.mi_DebugTool.Click += new System.EventHandler(this.mi_DebugTool_Click);
             // 
-            // btn_BSL
-            // 
-            this.btn_BSL.Location = new System.Drawing.Point(326, 27);
-            this.btn_BSL.Name = "btn_BSL";
-            this.btn_BSL.Size = new System.Drawing.Size(212, 23);
-            this.btn_BSL.TabIndex = 8;
-            this.btn_BSL.Text = "런처 실행";
-            this.btn_BSL.UseVisualStyleBackColor = true;
-            this.btn_BSL.Click += new System.EventHandler(this.button3_Click);
-            // 
             // lstNotice
             // 
             this.lstNotice.FormattingEnabled = true;
@@ -283,19 +270,6 @@
             this.lb_Notice.TabIndex = 11;
             this.lb_Notice.Text = "BSN 공지사항 (더블클릭시 해당 공지사항으로 이동)";
             // 
-            // BPB_Main1
-            // 
-            this.BPB_Main1.BackColor = System.Drawing.Color.Transparent;
-            this.BPB_Main1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BPB_Main1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.BPB_Main1.Image = global::Bell_Smart_Tools.Properties.Resources.Tarjetas042_2_;
-            this.BPB_Main1.Location = new System.Drawing.Point(326, 78);
-            this.BPB_Main1.Name = "BPB_Main1";
-            this.BPB_Main1.Size = new System.Drawing.Size(212, 150);
-            this.BPB_Main1.TabIndex = 12;
-            this.BPB_Main1.TabStop = false;
-            this.BPB_Main1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
             // BST_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -303,10 +277,8 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(538, 259);
-            this.Controls.Add(this.BPB_Main1);
             this.Controls.Add(this.lb_Notice);
             this.Controls.Add(this.lstNotice);
-            this.Controls.Add(this.btn_BSL);
             this.Controls.Add(this.ms_MainMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -318,7 +290,6 @@
             this.Load += new System.EventHandler(this.BST_Main_Load);
             this.ms_MainMenu.ResumeLayout(false);
             this.ms_MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BPB_Main1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,11 +321,9 @@
         private System.Windows.Forms.ToolStripMenuItem mi_DebugLevel_Log;
         private System.Windows.Forms.ToolStripSeparator mi_SS2;
         private System.Windows.Forms.ToolStripMenuItem mi_DebugTool;
-        private System.Windows.Forms.Button btn_BSL;
         private System.Windows.Forms.ToolStripMenuItem mi_Reader;
         private System.Windows.Forms.ListBox lstNotice;
         private System.Windows.Forms.Label lb_Notice;
-        private System.Windows.Forms.PictureBox BPB_Main1;
 
     }
 }

@@ -6,13 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Bell_Smart_Server.Source.BSS;
+using Bell_Smart_Tools.Source.BST;
 using Bell_Smart_Tools.Source.BST;
 using System.IO;
 using BellLib.Class;
 using BellLib.Data;
 
-namespace Bell_Smart_Package.Source.BSP
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BSP_Selector : Form
     {

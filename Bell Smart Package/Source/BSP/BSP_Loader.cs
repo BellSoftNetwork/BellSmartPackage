@@ -6,13 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Bell_Smart_Package.Source.BSP;
-using Bell_Smart_Server.Source.BSS;
+using Bell_Smart_Tools.Source.BST;
+using Bell_Smart_Tools.Source.BST;
 using Bell_Smart_Tools.Source.BST;
 using BellLib.Class;
 
 
-namespace Bell_Smart_Package.Source.BSP
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BSP_Loader : Form
     {
@@ -36,8 +36,8 @@ namespace Bell_Smart_Package.Source.BSP
                 Log("Initialize complete.");
                 Application.DoEvents();
 
-                BSP_Management BSPM = new BSP_Management();
-                BSP_Login BSP = new BSP_Login();
+                BSS_Management BSPM = new BSS_Management();
+                BSS_Login BSP = new BSS_Login();
                 Log("Instance generation complete.");
                 
                 BSPM.Show();
@@ -78,7 +78,7 @@ namespace Bell_Smart_Package.Source.BSP
 
             if (Deploy.UpdateAvailable()) // 최신버전 발견시
             {
-                BSP_Updater BSPU = new BSP_Updater();
+                BSS_Updater BSPU = new BSS_Updater();
                 BSPU.Show(); // 업데이트 실행
                 this.Hide();
 

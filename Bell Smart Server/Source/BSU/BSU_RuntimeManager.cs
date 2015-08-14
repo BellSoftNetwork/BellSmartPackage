@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Server.Source.BSU
+namespace Bell_Smart_Tools.Source.BSU
 {
     public partial class BSU_RuntimeManager : Form
     {

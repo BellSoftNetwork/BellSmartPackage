@@ -1,4 +1,4 @@
-﻿<Application x:Class="Bell_Smart_Package.App"
+﻿<Application x:Class="Bell_Smart_Tools.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="Source/BSP/Test Loader.xaml">

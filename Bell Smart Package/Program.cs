@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BellLib;
 
-namespace Bell_Smart_Package
+namespace Bell_Smart_Tools
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Bell_Smart_Package
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Source.BSP.BSP_Loader());
+            Application.Run(new Source.BST.BSP_Loader());
         }
     }
 }

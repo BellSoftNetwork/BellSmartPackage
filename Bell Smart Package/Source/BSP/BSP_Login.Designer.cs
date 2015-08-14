@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Package.Source.BSP
+﻿namespace Bell_Smart_Tools.Source.BST
 {
     partial class BSP_Login
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSP_Login));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSS_Login));
             this.cb_PWSave = new System.Windows.Forms.CheckBox();
             this.cb_AutoLogin = new System.Windows.Forms.CheckBox();
             this.cb_EmailSave = new System.Windows.Forms.CheckBox();

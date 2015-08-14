@@ -11,7 +11,7 @@ using BellLib.Class;
 using BellLib.Data;
 using System.Diagnostics;
 
-namespace Bell_Smart_Server.Source.BSU
+namespace Bell_Smart_Tools.Source.BSU
 {
     public partial class BSU_ModManager : Form
     {

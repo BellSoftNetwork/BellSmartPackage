@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Package.Source.BSP
+﻿namespace Bell_Smart_Tools.Source.BST
 {
     partial class BSP_Management
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSP_Management));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSS_Management));
             this.tmr_AutoUpdate = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 

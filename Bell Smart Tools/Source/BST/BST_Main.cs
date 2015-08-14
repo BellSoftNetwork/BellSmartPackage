@@ -5,7 +5,6 @@ using System.Reflection;
 using BellLib.Class;
 using BellLib.Data;
 using Debug = BellLib.Class.Debug;
-using Bell_Smart_Tools.Source.BSL;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -192,11 +191,6 @@ namespace Bell_Smart_Tools.Source.BST
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BSL_Main"))
-            {
-                BSL_Main BSLM = new BSL_Main();
-                BSLM.Show();
-            }
         }
 
         private void mi_Reader_Click(object sender, EventArgs e)

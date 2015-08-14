@@ -7,7 +7,7 @@
     <ProjectGuid>{2903F9DD-0DEB-4F1E-BA80-D342BD35576A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bell_Smart_Package</RootNamespace>
+    <RootNamespace>Bell_Smart_Tools</RootNamespace>
     <AssemblyName>Bell Smart Package</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

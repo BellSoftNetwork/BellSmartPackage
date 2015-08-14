@@ -7,7 +7,7 @@
     <ProjectGuid>{AC33D68E-FA0D-4AD3-8ABF-90E8B86D64AC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bell_Smart_Server</RootNamespace>
+    <RootNamespace>Bell_Smart_Tools</RootNamespace>
     <AssemblyName>Bell Smart Server</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -17,6 +17,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>게시\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,7 +30,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -79,9 +79,13 @@
   <PropertyGroup>
     <ApplicationIcon>Resource\Photo\Photo_RedBell.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Bell_Smart_Server.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -104,6 +108,25 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Source\BSS\BSS_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSS\BSS_Login.Designer.cs">
+      <DependentUpon>BSS_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSS\BSS_Management.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSS\BSS_Management.Designer.cs">
+      <DependentUpon>BSS_Management.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSS\BSS_Updater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSS\BSS_Updater.Designer.cs">
+      <DependentUpon>BSS_Updater.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\BSS\BSS_Loader.cs">
       <SubType>Form</SubType>
@@ -165,6 +188,15 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSS\BSS_Login.resx">
+      <DependentUpon>BSS_Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSS\BSS_Management.resx">
+      <DependentUpon>BSS_Management.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSS\BSS_Updater.resx">
+      <DependentUpon>BSS_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BSS\BSS_Loader.resx">
       <DependentUpon>BSS_Loader.cs</DependentUpon>

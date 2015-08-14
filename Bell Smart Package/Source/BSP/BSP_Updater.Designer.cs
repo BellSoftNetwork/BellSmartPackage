@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Package.Source.BSP
+﻿namespace Bell_Smart_Tools.Source.BST
 {
     partial class BSP_Updater
     {
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSP_Updater));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BSS_Updater));
             this.pb_Down = new System.Windows.Forms.ProgressBar();
             this.downloadStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();

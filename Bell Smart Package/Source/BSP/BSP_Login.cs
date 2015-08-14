@@ -11,11 +11,11 @@ using Bell_Smart_Tools.Source.BST;
 using BellLib.Class;
 using BellLib.Data;
 
-namespace Bell_Smart_Package.Source.BSP
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BSP_Login : Form
     {
-        public BSP_Login()
+        public BSS_Login()
         {
             InitializeComponent();
             this.txt_PW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_KeyDown);

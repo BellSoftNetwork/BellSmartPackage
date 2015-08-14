@@ -9,11 +9,11 @@ using System.Text;
 using System.Windows.Forms;
 using BellLib.Class;
 
-namespace Bell_Smart_Package.Source.BSP
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BSP_Updater : Form
     {
-        public BSP_Updater()
+        public BSS_Updater()
         {
             InitializeComponent();
         }

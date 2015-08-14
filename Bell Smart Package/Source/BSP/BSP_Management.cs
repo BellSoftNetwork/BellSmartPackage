@@ -9,11 +9,11 @@ using System.Windows.Forms;
 using BellLib.Class;
 using BellLib.Data;
 
-namespace Bell_Smart_Package.Source.BSP
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BSP_Management : Form
     {
-        public BSP_Management()
+        public BSS_Management()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace Bell_Smart_Package.Source.BSP
                 {
                     if (Deploy.UpdateAvailable())
                     {
-                        BSP_Updater BSPU = new BSP_Updater();
+                        BSS_Updater BSPU = new BSS_Updater();
                         BSPU.Show();
 
                         tmr_AutoUpdate.Enabled = false;

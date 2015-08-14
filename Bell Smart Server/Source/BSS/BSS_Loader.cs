@@ -8,20 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Server.Source.BSS
+namespace Bell_Smart_Tools.Source.BST
 {
     public partial class BSS_Loader : Form
     {
-        public BSS_Loader(string ID)
+        public BSS_Loader()//string ID)
         {
-            if (ID == "bell04204@gmail.com")
-            {
-                InitializeComponent();
-            }
-            else
-            {
-                this.Close();
-            }
+            InitializeComponent();
         }
 
         private bool Initialize()
@@ -52,12 +45,9 @@ namespace Bell_Smart_Server.Source.BSS
         {
             if (Initialize())
             {
-                if (User.BSN_Email == "bell04204@gmail.com")
-                {
-                    BSS_Main Main = new BSS_Main();
-                    Main.Show();
-                    this.Close();
-                }
+                BSS_Login Main = new BSS_Login();
+                Main.Show();
+                this.Hide();
             }
         }
     }
