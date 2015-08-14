@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Tools.Source.BSL
+namespace Bell_Smart_Server.Source.BSL
 {
     public partial class BSL_Console : Form
     {

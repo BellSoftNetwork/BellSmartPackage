@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Tools.Source.BSL
+﻿namespace Bell_Smart_Server.Source.BSL
 {
     partial class BSL_Console
     {

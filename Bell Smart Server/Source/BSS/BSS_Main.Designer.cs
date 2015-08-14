@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Tools.Source.BST
+﻿namespace Bell_Smart_Server.Source.BST
 {
     partial class BSS_Main
     {

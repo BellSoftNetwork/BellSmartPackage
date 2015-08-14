@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using BellLib;
 
-namespace Bell_Smart_Tools
+namespace Bell_Smart_Server
 {
     static class Program
     {

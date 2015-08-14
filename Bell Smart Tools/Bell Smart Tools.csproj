@@ -7,7 +7,7 @@
     <ProjectGuid>{C73D1113-3AFE-4814-874E-465E9E5A47AD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bell_Smart_Tools</RootNamespace>
+    <RootNamespace>Bell_Smart_Server</RootNamespace>
     <AssemblyName>Bell Smart Tools</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -17,20 +17,33 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <PublishUrl>게시\</PublishUrl>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>ftp://softbell.net/HDD1/BSN/publish/BST/</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
+    <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <MapFileExtensions>false</MapFileExtensions>
+    <InstallUrl>http://www.softbell.net/BST/</InstallUrl>
+    <SupportUrl>http://www.softbell.net/</SupportUrl>
+    <ErrorReportUrl>http://www.softbell.net/</ErrorReportUrl>
+    <TargetCulture>ko-KR</TargetCulture>
+    <ProductName>Bell Smart Tools</ProductName>
+    <PublisherName>Bell Soft Network</PublisherName>
+    <SuiteName>Bell Smart Package</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -113,6 +126,36 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="Source\BSL\BSL_Console.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Console.Designer.cs">
+      <DependentUpon>BSL_Console.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Main.Designer.cs">
+      <DependentUpon>BSL_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Option.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Option.Designer.cs">
+      <DependentUpon>BSL_Option.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Password.Designer.cs">
+      <DependentUpon>BSL_Password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Profile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\BSL\BSL_Profile.Designer.cs">
+      <DependentUpon>BSL_Profile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\BST\BST_Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,11 +168,11 @@
     <Compile Include="Source\BST\BST_Management.Designer.cs">
       <DependentUpon>BST_Management.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BST\BSP_Updater.cs">
+    <Compile Include="Source\BST\BST_Updater.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\BST\BSP_Updater.Designer.cs">
-      <DependentUpon>BSP_Updater.cs</DependentUpon>
+    <Compile Include="Source\BST\BST_Updater.Designer.cs">
+      <DependentUpon>BST_Updater.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\BST\BST_Debug.cs">
       <SubType>Form</SubType>
@@ -199,14 +242,29 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSL\BSL_Console.resx">
+      <DependentUpon>BSL_Console.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSL\BSL_Main.resx">
+      <DependentUpon>BSL_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSL\BSL_Option.resx">
+      <DependentUpon>BSL_Option.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSL\BSL_Password.resx">
+      <DependentUpon>BSL_Password.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\BSL\BSL_Profile.resx">
+      <DependentUpon>BSL_Profile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Login.resx">
       <DependentUpon>BST_Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Management.resx">
       <DependentUpon>BST_Management.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BSP_Updater.resx">
-      <DependentUpon>BSP_Updater.cs</DependentUpon>
+    <EmbeddedResource Include="Source\BST\BST_Updater.resx">
+      <DependentUpon>BST_Updater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Debug.resx">
       <DependentUpon>BST_Debug.cs</DependentUpon>

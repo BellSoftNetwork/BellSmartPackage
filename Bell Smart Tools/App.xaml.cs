@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace Bell_Smart_Tools
+namespace Bell_Smart_Server
 {
     /// <summary>
     /// App.xaml에 대한 상호 작용 논리

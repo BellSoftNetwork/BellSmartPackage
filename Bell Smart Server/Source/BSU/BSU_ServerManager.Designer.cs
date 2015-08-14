@@ -1,4 +1,4 @@
-﻿namespace Bell_Smart_Tools.Source.BSU
+﻿namespace Bell_Smart_Server.Source.BSU
 {
     partial class BSU_ServerManager
     {
@@ -240,7 +240,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::Bell_Smart_Tools.Properties.Resources.Logo_BSN2;
+            this.BackgroundImage = global::Bell_Smart_Server.Properties.Resources.Logo_BSN2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(572, 322);
             this.Controls.Add(this.gb_Cloud);

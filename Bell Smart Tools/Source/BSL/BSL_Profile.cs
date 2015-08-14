@@ -10,7 +10,7 @@ using BellLib.Class;
 using BellLib.Data;
 using System.IO;
 
-namespace Bell_Smart_Tools.Source.BSL
+namespace Bell_Smart_Server.Source.BSL
 {
     public partial class BSL_Profile : Form
     {

@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Tools.Source.BSU
+namespace Bell_Smart_Server.Source.BSU
 {
     public partial class BSU_PackMaker : Form
     {

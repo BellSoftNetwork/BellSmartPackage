@@ -9,7 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using BellLib.Class;
 
-namespace Bell_Smart_Tools.Source.BST
+namespace Bell_Smart_Server.Source.BST
 {
     public partial class BST_Updater : Form
     {

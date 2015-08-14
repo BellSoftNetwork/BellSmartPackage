@@ -12,7 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Net;
 
-namespace Bell_Smart_Tools.Source.BSL
+namespace Bell_Smart_Server.Source.BSL
 {
     public partial class BSL_Main : Form
     {

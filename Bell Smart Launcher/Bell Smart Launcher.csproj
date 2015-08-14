@@ -17,20 +17,33 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>ftp://softbell.net/HDD1/BSN/publish/BSL/</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
+    <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <MapFileExtensions>false</MapFileExtensions>
+    <InstallUrl>http://www.softbell.net/BSL/</InstallUrl>
+    <SupportUrl>http://www.softbell.net/</SupportUrl>
+    <ErrorReportUrl>http://www.softbell.net/</ErrorReportUrl>
+    <TargetCulture>ko-KR</TargetCulture>
+    <ProductName>Bell Smart Launcher</ProductName>
+    <PublisherName>Bell Soft Network</PublisherName>
+    <SuiteName>Bell Smart Package</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -103,37 +116,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Source\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Console.cs" />
-    <Compile Include="Source\BSL\BSL_Console.Designer.cs">
-      <DependentUpon>BSL_Console.cs</DependentUpon>
+    <Compile Include="Source\BSL_Loader.xaml.cs">
+      <DependentUpon>BSL_Loader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\BSL\BSL_Main.cs" />
-    <Compile Include="Source\BSL\BSL_Main.Designer.cs">
-      <DependentUpon>BSL_Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Option.cs" />
-    <Compile Include="Source\BSL\BSL_Option.Designer.cs">
-      <DependentUpon>BSL_Option.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Password.cs" />
-    <Compile Include="Source\BSL\BSL_Password.Designer.cs">
-      <DependentUpon>BSL_Password.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSL\BSL_Profile.cs" />
-    <Compile Include="Source\BSL\BSL_Profile.Designer.cs">
-      <DependentUpon>BSL_Profile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Source\BSL_Main.xaml.cs">
+      <DependentUpon>BSL_Main.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -153,21 +144,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Console.resx">
-      <DependentUpon>BSL_Console.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Main.resx">
-      <DependentUpon>BSL_Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Option.resx">
-      <DependentUpon>BSL_Option.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Password.resx">
-      <DependentUpon>BSL_Password.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSL\BSL_Profile.resx">
-      <DependentUpon>BSL_Profile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Bell Smart Launcher_Key.pfx" />
     <None Include="Properties\app.manifest" />
@@ -214,6 +190,17 @@
       <Name>Bell Library</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="Source\BSL_Loader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\BSL_Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
