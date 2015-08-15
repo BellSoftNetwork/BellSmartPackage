@@ -13,7 +13,7 @@ using BellLib.Data;
 using System.IO;
 using System.Collections.Specialized;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Tools.Source.BSS
 {
     public partial class BST_Laboratory : Form
     {

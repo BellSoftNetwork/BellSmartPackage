@@ -12,7 +12,7 @@ using BellLib.Data;
 using System.IO;
 using Debug = BellLib.Class.Debug;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Tools.Source.BSS
 {
     public partial class BST_Debug : Form
     {

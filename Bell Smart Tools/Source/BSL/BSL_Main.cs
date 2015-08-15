@@ -12,7 +12,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Net;
 
-namespace Bell_Smart_Server.Source.BSL
+namespace Bell_Smart_Tools.Source.BSL
 {
     public partial class BSL_Main : Form
     {
@@ -100,7 +100,7 @@ namespace Bell_Smart_Server.Source.BSL
             string[] DataList;
             try
             {
-                DataList = Common.ReadBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx");
+                DataList = Protection.ReadBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx");
             }
             catch
             {
@@ -139,7 +139,7 @@ namespace Bell_Smart_Server.Source.BSL
             }
             list.Add("MODPACK|" + (string)lst_ModPack.SelectedItem);
 
-            Common.WriteBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx", list.ToArray()); // 모든 값 저장
+            Protection.WriteBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx", list.ToArray()); // 모든 값 저장
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Bell_Smart_Server.Source.BSL
             // 클라이언트 모드팩 데이터 가져옴
             try
             {
-                string[] modData = Common.ReadBDXFile(RootPath + "\\ModPack\\" + MUID + "\\" + SelectMod + "\\data.bdx"); // 클라이언트 모드팩 데이터 로드
+                string[] modData = Protection.ReadBDXFile(RootPath + "\\ModPack\\" + MUID + "\\" + SelectMod + "\\data.bdx"); // 클라이언트 모드팩 데이터 로드
                 foreach (string tmp in modData)
                 {
                     string[] Value = tmp.Split('|');
@@ -308,7 +308,7 @@ namespace Bell_Smart_Server.Source.BSL
             // 클라이언트 베이스팩 데이터 가져옴
             try
             {
-                string[] baseData = Common.ReadBDXFile(RootPath + "\\Base\\" + BUID + "\\" + SelectBase + "\\data.bdx");
+                string[] baseData = Protection.ReadBDXFile(RootPath + "\\Base\\" + BUID + "\\" + SelectBase + "\\data.bdx");
                 foreach (string tmp in baseData)
                 {
                     string[] Value = tmp.Split('|');
@@ -398,7 +398,7 @@ namespace Bell_Smart_Server.Source.BSL
             }
             string[] versionData = { "Current Version|" + Version }; // 신규설치일때 기본값을 그대로 작성
 
-            Common.WriteBDXFile(BasePath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
+            Protection.WriteBDXFile(BasePath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
             SetState("베이스팩 설치 완료");
         }
 
@@ -457,7 +457,7 @@ namespace Bell_Smart_Server.Source.BSL
             try
             {
                 List<string> list = new List<string>();
-                localData = Common.ReadBDXFile(PackPath + "data.bdx"); // 저장되있는 클라이언트 데이터를 불러옴
+                localData = Protection.ReadBDXFile(PackPath + "data.bdx"); // 저장되있는 클라이언트 데이터를 불러옴
                 foreach (string tmp in localData)
                 {
                     string[] Value = tmp.Split('|');
@@ -481,8 +481,8 @@ namespace Bell_Smart_Server.Source.BSL
                 SetState("모드팩 신규설치 완료");
             }
 
-            Common.WriteBDXFile(RootPath + "data.bdx", baseData); // 모드팩 전체 데이터 저장
-            Common.WriteBDXFile(PackPath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
+            Protection.WriteBDXFile(RootPath + "data.bdx", baseData); // 모드팩 전체 데이터 저장
+            Protection.WriteBDXFile(PackPath + "data.bdx", versionData); // 모드팩 버전 데이터 저장
             SetState("모드팩 데이터 작성 완료");
         }
 
@@ -496,7 +496,7 @@ namespace Bell_Smart_Server.Source.BSL
                 LocalPathTag = "x64\\";
             try
             {
-                string[] Data = Common.ReadBDXFile(User.BSN_Path + "Runtime\\JAVA\\" + LocalPathTag + "data.bdx");
+                string[] Data = Protection.ReadBDXFile(User.BSN_Path + "Runtime\\JAVA\\" + LocalPathTag + "data.bdx");
                 if (Data[0] == "Runtime|JAVA")
                 { // 런타임 자바가 설치되어 있는경우,
                     return;
@@ -504,7 +504,7 @@ namespace Bell_Smart_Server.Source.BSL
             } catch { }
 
             // 런타임 자바가 설치되어 있지 않은경우,
-            BST.BST_Runtime BSTR = new BST.BST_Runtime(BST.BST_Runtime.RunType.JAVA, FormStartPosition.CenterParent);
+            BSS.BST_Runtime BSTR = new BSS.BST_Runtime(BSS.BST_Runtime.RunType.JAVA, FormStartPosition.CenterParent);
             if (Environment.Is64BitOperatingSystem)
                 BSTR.SetJAVA(RuntimeAnalysis.JAVAType.x64);
             else
@@ -540,7 +540,7 @@ namespace Bell_Smart_Server.Source.BSL
                 // 마지막에 실행했던 버전 로드
                 try
                 {
-                    string[] modData = Common.ReadBDXFile(User.BSL_Root + "\\ModPack\\" + MUID + "\\data.bdx"); // 클라이언트 모드팩 데이터 로드
+                    string[] modData = Protection.ReadBDXFile(User.BSL_Root + "\\ModPack\\" + MUID + "\\data.bdx"); // 클라이언트 모드팩 데이터 로드
                     foreach (string tmp in modData)
                     {
                         string[] Value = tmp.Split('|');
@@ -661,7 +661,7 @@ namespace Bell_Smart_Server.Source.BSL
             Enjoy(MUID, BUID, PathBase, PathPack, BSLP.getData(BSL_Profile.Data.JAVA), BSLP.getData(BSL_Profile.Data.Parameter), User.MC_NickName, User.MC_UUID, User.MC_AccessToken); SetState("클라이언트 실행 성공");
             pb_Load.PerformStep(); // 진행
             string[] tmp = {"Select Version|" + SelectMod};
-            Common.WriteBDXFile(Path.Combine(User.BSL_Root, "ModPack", MUID, "data.bdx"), tmp); // 현재 실행한 버전을 저장함.
+            Protection.WriteBDXFile(Path.Combine(User.BSL_Root, "ModPack", MUID, "data.bdx"), tmp); // 현재 실행한 버전을 저장함.
             pb_Load.PerformStep(); // 진행
 
             SaveSetting(); SetState("클라이언트 설정정보 저장 성공"); // 클라이언트 설정 저장.

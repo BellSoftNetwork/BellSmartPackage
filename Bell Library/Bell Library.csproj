@@ -60,6 +60,7 @@
     <Compile Include="Class\Common.cs" />
     <Compile Include="Class\Debug.cs" />
     <Compile Include="Class\Deploy.cs" />
+    <Compile Include="Class\FileSystem.cs" />
     <Compile Include="Class\FTPUtil.cs" />
     <Compile Include="Class\MCLogin.cs" />
     <Compile Include="Class\PackAnalysis.cs" />

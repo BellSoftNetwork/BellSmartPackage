@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bell_Smart_Launcher.Source.Class;
+using BellLib.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Bell_Smart_Launcher.Source
+namespace Bell_Smart_Launcher.Source.Frame
 {
     /// <summary>
     /// BSL_Main.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class BSL_Main : Window
+    public partial class Main : Window
     {
-        public BSL_Main()
+        public Main()
         {
             InitializeComponent();
         }

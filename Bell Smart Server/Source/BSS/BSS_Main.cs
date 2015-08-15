@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using BellLib.Class;
 using Bell_Smart_Server.Source.BSU;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Server.Source.BSS
 {
     public partial class BSS_Main : Form
     {

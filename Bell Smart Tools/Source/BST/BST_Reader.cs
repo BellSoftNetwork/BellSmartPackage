@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Tools.Source.BSS
 {
     public partial class BST_Reader : Form
     {
@@ -26,7 +26,7 @@ namespace Bell_Smart_Server.Source.BST
             switch (Path[Path.Length - 1])
             {
                 case "bdx":
-                    string[] Data = Common.ReadBDXFile(FilePath);
+                    string[] Data = Protection.ReadBDXFile(FilePath);
                     StringBuilder sb = new StringBuilder();
                     foreach (string tmp in Data)
                     {
@@ -36,7 +36,7 @@ namespace Bell_Smart_Server.Source.BST
                     break;
 
                 case "bd":
-                    txt_Content.Text = Common.ReadBDFile(FilePath);
+                    txt_Content.Text = Protection.ReadBDFile(FilePath);
                     break;
 
                 default:

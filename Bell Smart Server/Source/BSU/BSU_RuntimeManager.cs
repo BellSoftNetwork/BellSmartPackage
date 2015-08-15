@@ -29,7 +29,7 @@ namespace Bell_Smart_Server.Source.BSU
         private void btn_JAVA_Load_Click(object sender, EventArgs e)
         {
             lst_JAVA_File.Items.Clear();
-            lst_JAVA_File.Items.AddRange(Common.GetFileArray((string)llb_JAVA_Upload.Tag, true));
+            lst_JAVA_File.Items.AddRange(FileSystem.GetFileArray((string)llb_JAVA_Upload.Tag, true));
         }
 
         private void llb_JAVA_Upload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -61,8 +61,8 @@ namespace Bell_Smart_Server.Source.BSU
                 RAW.SetJava(RuntimeAnalysis.JAVAType.x86);
             }
 
-            string[] Directory = Common.GetDirectoryArray((string)llb_JAVA_Upload.Tag, true);
-            string[] Files = Common.GetFileArray((string)llb_JAVA_Upload.Tag, true);
+            string[] Directory = FileSystem.GetDirectoryArray((string)llb_JAVA_Upload.Tag, true);
+            string[] Files = FileSystem.GetFileArray((string)llb_JAVA_Upload.Tag, true);
             if (!RAW.WriteInstallData(Directory, Files))
             {
                 btn_JAVA_Upload.Enabled = true;

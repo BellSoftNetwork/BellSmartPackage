@@ -1,0 +1,8 @@
+﻿<Window x:Class="Bell_Smart_Launcher.Source.Frame.Loader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="BSL 로더" Height="253.597" Width="622.662" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+
+    </Grid>
+</Window>

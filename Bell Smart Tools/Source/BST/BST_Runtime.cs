@@ -10,7 +10,7 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Tools.Source.BSS
 {
     public partial class BST_Runtime : Form
     {
@@ -121,7 +121,7 @@ namespace Bell_Smart_Server.Source.BST
                 }
 
                 string[] Data = { "Runtime|" + SelectType.ToString() };
-                Common.WriteBDXFile(LocalPath + LocalPathTag + "data.bdx", Data); // 모드팩 버전 데이터 저장
+                Protection.WriteBDXFile(LocalPath + LocalPathTag + "data.bdx", Data); // 모드팩 버전 데이터 저장
 
                 lb_Name.Text = "Installation complete.";
                 Application.DoEvents();

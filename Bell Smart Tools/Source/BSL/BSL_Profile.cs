@@ -10,7 +10,7 @@ using BellLib.Class;
 using BellLib.Data;
 using System.IO;
 
-namespace Bell_Smart_Server.Source.BSL
+namespace Bell_Smart_Tools.Source.BSL
 {
     public partial class BSL_Profile : Form
     {
@@ -44,7 +44,7 @@ namespace Bell_Smart_Server.Source.BSL
         {
             InitializeComponent();
             this.ProfileName = ProfileName;
-            string[] Data = Common.ReadBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
+            string[] Data = Protection.ReadBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
 
             txt_Name.Text = ProfileName;
             foreach (string Value in Data)
@@ -200,7 +200,7 @@ namespace Bell_Smart_Server.Source.BSL
 
             if (ProfileName != string.Empty)
                 File.Delete(User.BSL_Root + "Data\\BSL\\Profile\\" + ProfileName + ".bdx"); // 열렸던 파일 삭제
-            Common.WriteBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
+            Protection.WriteBDXFile(User.BSL_Root + "Data\\BSL\\Profile\\" + txt_Name.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
             ProfileName = txt_Name.Text;
             
             this.Close();

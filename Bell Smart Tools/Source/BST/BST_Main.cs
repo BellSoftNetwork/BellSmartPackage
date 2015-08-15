@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Tools.Source.BSS
 {
     public partial class BST_Main : Form
     {

@@ -605,7 +605,7 @@ namespace Bell_Smart_Server.Source.BSU
             string RequireBase = (string)cb_Mod_Base_Upload.SelectedItem; // 필요 베이스팩 버전
             string RequireOption = (string)cb_Mod_Option_Upload.SelectedItem; // 필요 옵션팩 버전
             string[] FileArray = lst_Mod_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
-            string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
+            string[] Directory = FileSystem.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
             string[] Hash; // 파일 해시
             // 모드팩 버전.xml 생성
             foreach (string tmp in FileArray)
@@ -732,7 +732,7 @@ namespace Bell_Smart_Server.Source.BSU
             string SetVer = txt_Base_Version.Text; // 업로드시 설정버전
             string BUID = (string)cb_BUID.SelectedItem; // BUID
             string LocalRoot = (string)llb_Base_Upload.Tag; // 업로드 루트폴더
-            string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
+            string[] Directory = FileSystem.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
             string[] Hash; // 파일 해시
 
             // 베이스팩 버전.xml 생성
@@ -862,7 +862,7 @@ namespace Bell_Smart_Server.Source.BSU
             string[] FileArray; // = lst_Option_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
             string OUID = (string)cb_OUID.SelectedItem; // OUID
             string LocalRoot = (string)llb_Option_Upload.Tag; // 업로드 루트폴더
-            string[] Directory = Common.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
+            string[] Directory = FileSystem.GetDirectoryArray(LocalRoot, true); // 생성이 필요한 디렉토리 배열
 
             // 옵션팩 버전.xml 생성
             foreach (ListViewItem item in lst_Option_File.Items)
@@ -994,14 +994,14 @@ namespace Bell_Smart_Server.Source.BSU
         private void btn_Mod_Load_Click(object sender, EventArgs e)
         {
             lst_Mod_File.Items.Clear();
-            lst_Mod_File.Items.AddRange(Common.GetFileArray((string)llb_Mod_Upload.Tag, true));
+            lst_Mod_File.Items.AddRange(FileSystem.GetFileArray((string)llb_Mod_Upload.Tag, true));
             btn_Mod_Upload.Enabled = true;
         }
 
         private void btn_Base_Load_Click(object sender, EventArgs e)
         {
             lst_Base_File.Items.Clear();
-            lst_Base_File.Items.AddRange(Common.GetFileArray((string)llb_Base_Upload.Tag, true));
+            lst_Base_File.Items.AddRange(FileSystem.GetFileArray((string)llb_Base_Upload.Tag, true));
 
             btn_Base_Upload.Enabled = true;
         }
@@ -1016,7 +1016,7 @@ namespace Bell_Smart_Server.Source.BSU
             lst_Option_File.Items.Clear();
             lst_Option_File.BeginUpdate();
             ListViewItem lvi;
-            foreach (string tmp in Common.GetFileArray((string)llb_Option_Upload.Tag, true))
+            foreach (string tmp in FileSystem.GetFileArray((string)llb_Option_Upload.Tag, true))
             {
                 lvi = new ListViewItem(string.Empty);
                 lvi.SubItems.Add(string.Empty);

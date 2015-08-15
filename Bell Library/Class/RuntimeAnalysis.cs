@@ -118,7 +118,7 @@ namespace BellLib.Class
                 throw new System.MethodAccessException("설치 데이터가 로드되지 않았습니다.");
 
             foreach (string tmp in Directory)
-                Common.CreateFolder(LocalPath + tmp);
+                FileSystem.CreateFolder(LocalPath + tmp);
         }
 
         public string[] GetInstallData(DataType DType)
@@ -199,7 +199,7 @@ namespace BellLib.Class
 
             try
             {
-                Common.CreateFolder(xmlPath);
+                FileSystem.CreateFolder(xmlPath);
                 XmlTextWriter XTW = new XmlTextWriter(xmlPath + xmlName, Encoding.UTF8);
                 XTW.Formatting = Formatting.Indented;
                 XTW.WriteStartDocument();

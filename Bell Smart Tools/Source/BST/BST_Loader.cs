@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using BellLib.Class;
 using BellLib.Data;
 
-namespace Bell_Smart_Server.Source.BST
+namespace Bell_Smart_Tools.Source.BSS
 {
     public partial class BST_Loader : Form
     {

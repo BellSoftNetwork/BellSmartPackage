@@ -16,7 +16,7 @@ namespace Bell_Smart_Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Source.BST.BSS_Loader());
+            Application.Run(new Source.BSS.BSS_Loader());
         }
     }
 }

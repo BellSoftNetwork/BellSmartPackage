@@ -53,12 +53,12 @@ namespace BellLib.Class
             {
                 try
                 {
-                    Common.WriteTextFile(GetLogFileName(), "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
+                    FileSystem.WriteTextFile(GetLogFileName(), "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
                     // Example: [2015/6/6 01:23:45 PM - Initialize Bell Smart Debug Tools]
                 }
                 catch
                 {
-                    Common.CreateDefaultForder();
+                    FileSystem.CreateDefaultForder();
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace BellLib.Class
 	        strTemp += "] ";
             try
             {
-                Common.WriteTextFile(GetLogFileName(), strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
+                FileSystem.WriteTextFile(GetLogFileName(), strTemp + strText.Replace(Environment.NewLine, Environment.NewLine + "\t").Replace("\\n", Environment.NewLine) + Environment.NewLine, true);
             } catch { }
         }
 
