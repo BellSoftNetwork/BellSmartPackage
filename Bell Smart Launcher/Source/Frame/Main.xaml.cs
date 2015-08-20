@@ -38,8 +38,12 @@ namespace Bell_Smart_Launcher.Source.Frame
 
 
             //MODPACKS
-            mod_PackList.Items.Clear(); // 팩 리스트 초기화!
-            
+            mod_lst_PackList.Items.Clear(); // 팩 리스트 초기화!
+            mod_lst_DetailList.Items.Clear(); // 팩 상세정보 초기화
+            mod_cb_Profile.Items.Clear(); // 프로필 리스트 초기화
+            mod_cb_Version.Items.Clear(); // 팩 버전 리스트 초기화
+            mod_expander_Detail.IsExpanded = false;
+
             //MAPS
 
 
@@ -62,10 +66,17 @@ namespace Bell_Smart_Launcher.Source.Frame
 
 
             //MODPACKS
-            mod_PackList.Items.Add("테스트1");
-            mod_PackList.Items.Add("테스트2");
-            mod_PackList.Items.Add("테스트3");
-
+            mod_lst_PackList.Items.Add("BellCraft9"); // 테스트용 추후 삭제
+            mod_lst_PackList.Items.Add("TestPack");
+            mod_lst_PackList.Items.Add("FTB Pack");
+            Mod_Expand(mod_expander_Detail.IsExpanded); // 모드탭 익스펜더 설정
+            mod_cb_Profile.Items.Add("Select Profile");
+            mod_cb_Profile.Items.Add("Create Profile");
+            mod_cb_Profile.SelectedIndex = 0;
+            mod_cb_Version.Items.Add("Recommended");
+            mod_cb_Version.Items.Add("Latest");
+            mod_cb_Version.SelectedIndex = 0;
+            
             //MAPS
 
 
@@ -76,9 +87,41 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         }
 
+        private void Mod_Expand(bool expand)
+        {
+            if (expand)
+            { // 활성화
+                mod_lst_DetailList.Visibility = Visibility.Visible;
+                mod_wb_Notice.Height = 284;
+            }
+            else
+            { // 비활성화
+                mod_lst_DetailList.Visibility = Visibility.Hidden;
+                mod_wb_Notice.Height = 347;
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Initialize();
+        }
+        private void mod_expander_Detail_Expanded(object sender, RoutedEventArgs e)
+        { // 익스펜더 열음
+            Mod_Expand(true);
+        }
+
+        private void mod_expander_Detail_Collapsed(object sender, RoutedEventArgs e)
+        { // 익스펜더 접음
+            Mod_Expand(false);
+        }
+
+        private void mod_cb_Profile_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (mod_cb_Profile.SelectedIndex == 1)
+            {
+                mod_cb_Profile.SelectedIndex = 0;
+                Com.Message("Create Profile");
+            }
         }
     }
 }

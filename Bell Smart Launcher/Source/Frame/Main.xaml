@@ -15,7 +15,29 @@
             </TabItem>
             <TabItem Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid>
-                    <ListBox x:Name="mod_PackList" HorizontalAlignment="Left" Height="412" VerticalAlignment="Top" Width="251"/>
+                    <ListBox x:Name="mod_lst_PackList" HorizontalAlignment="Left" Height="323" VerticalAlignment="Top" Width="298" Background="{x:Null}" FontWeight="Bold" FontSize="20" Margin="546,27,0,0">
+                        <ListBoxItem Content="테스트1"/>
+                        <ListBoxItem Content="테스트2"/>
+                    </ListBox>
+                    <WebBrowser x:Name="mod_wb_Notice" HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="541" Margin="0,27,0,0"/>
+                    <ComboBox x:Name="mod_cb_Profile" HorizontalAlignment="Left" Margin="587,355,0,0" VerticalAlignment="Top" Width="247" SelectedIndex="0" SelectionChanged="mod_cb_Profile_SelectionChanged">
+                        <ComboBoxItem Content="Select Profile"/>
+                        <ComboBoxItem Content="Create Profile"/>
+                    </ComboBox>
+                    <Button x:Name="mod_btn_Enjoy" Content="Enjoy" HorizontalAlignment="Left" Margin="759,382,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="mod_btn_Edit" Content="Edit" HorizontalAlignment="Left" Margin="544,355,0,0" VerticalAlignment="Top" Width="38" Height="22"/>
+                    <ComboBox x:Name="mod_cb_Version" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" SelectedIndex="0">
+                        <ComboBoxItem Content="Recommended"/>
+                        <ComboBoxItem Content="Latest"/>
+                    </ComboBox>
+                    <Expander x:Name="mod_expander_Detail" Header="Detail" HorizontalAlignment="Left" Margin="0,379,0,0" VerticalAlignment="Top" Collapsed="mod_expander_Detail_Collapsed" Expanded="mod_expander_Detail_Expanded">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <ListBox x:Name="mod_lst_DetailList" HorizontalAlignment="Left" Height="58" Margin="0,316,0,0" VerticalAlignment="Top" Width="541"/>
+                    <Button x:Name="mod_btn_Filter" Content="Filter" HorizontalAlignment="Left" Margin="546,0,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
+                    <Button x:Name="mod_btn_DownServer" Content="Download Server" HorizontalAlignment="Left" Margin="155,0,0,0" VerticalAlignment="Top" Width="111" Height="22"/>
+                    <Button x:Name="mod_btn_PackSetting" Content="Pack Setting" HorizontalAlignment="Left" Margin="749,0,0,0" VerticalAlignment="Top" Width="85" Height="22"/>
+                    <Label x:Name="mod_lb_Filter" Content="Filter : " HorizontalAlignment="Left" Margin="626,0,0,0" VerticalAlignment="Top" Width="118"/>
                 </Grid>
             </TabItem>
             <TabItem Header="MAPS" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">
