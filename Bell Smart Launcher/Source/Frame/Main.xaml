@@ -25,7 +25,7 @@
                         <ComboBoxItem Content="Create Profile"/>
                     </ComboBox>
                     <Button x:Name="mod_btn_Enjoy" Content="Enjoy" HorizontalAlignment="Left" Margin="759,382,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="mod_btn_Edit" Content="Edit" HorizontalAlignment="Left" Margin="544,355,0,0" VerticalAlignment="Top" Width="38" Height="22"/>
+                    <Button x:Name="mod_btn_Edit" Content="Edit" HorizontalAlignment="Left" Margin="544,355,0,0" VerticalAlignment="Top" Width="38" Height="22" Click="mod_btn_Edit_Click"/>
                     <ComboBox x:Name="mod_cb_Version" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" SelectedIndex="0">
                         <ComboBoxItem Content="Recommended"/>
                         <ComboBoxItem Content="Latest"/>
@@ -34,10 +34,8 @@
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <ListBox x:Name="mod_lst_DetailList" HorizontalAlignment="Left" Height="58" Margin="0,316,0,0" VerticalAlignment="Top" Width="541"/>
-                    <Button x:Name="mod_btn_Filter" Content="Filter" HorizontalAlignment="Left" Margin="546,0,0,0" VerticalAlignment="Top" Width="75" Height="22"/>
                     <Button x:Name="mod_btn_DownServer" Content="Download Server" HorizontalAlignment="Left" Margin="155,0,0,0" VerticalAlignment="Top" Width="111" Height="22"/>
                     <Button x:Name="mod_btn_PackSetting" Content="Pack Setting" HorizontalAlignment="Left" Margin="749,0,0,0" VerticalAlignment="Top" Width="85" Height="22"/>
-                    <Label x:Name="mod_lb_Filter" Content="Filter : " HorizontalAlignment="Left" Margin="626,0,0,0" VerticalAlignment="Top" Width="118"/>
                 </Grid>
             </TabItem>
             <TabItem Header="MAPS" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">

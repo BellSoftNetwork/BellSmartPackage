@@ -1,0 +1,8 @@
+﻿<Window x:Class="Bell_Smart_Launcher.Source.Frame.Installer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Installer" Height="125.18" Width="399.281" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico">
+    <Grid>
+
+    </Grid>
+</Window>

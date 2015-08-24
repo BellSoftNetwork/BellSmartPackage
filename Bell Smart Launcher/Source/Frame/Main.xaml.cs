@@ -69,6 +69,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             mod_lst_PackList.Items.Add("BellCraft9"); // 테스트용 추후 삭제
             mod_lst_PackList.Items.Add("TestPack");
             mod_lst_PackList.Items.Add("FTB Pack");
+            mod_lst_PackList.SelectedIndex = 0; // 마지막에 선택했던 팩 자동선택
             Mod_Expand(mod_expander_Detail.IsExpanded); // 모드탭 익스펜더 설정
             mod_cb_Profile.Items.Add("Select Profile");
             mod_cb_Profile.Items.Add("Create Profile");
@@ -120,8 +121,15 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (mod_cb_Profile.SelectedIndex == 1)
             {
                 mod_cb_Profile.SelectedIndex = 0;
-                Com.Message("Create Profile");
+                Profile Pro = new Profile();
+                Pro.ShowDialog();
             }
+        }
+
+        private void mod_btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            Profile pro = new Profile();
+            pro.ShowDialog();
         }
     }
 }
