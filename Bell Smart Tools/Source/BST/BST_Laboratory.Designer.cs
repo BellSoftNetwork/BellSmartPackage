@@ -37,6 +37,9 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.btn_DataUD = new System.Windows.Forms.Button();
+            this.btnUploadOK = new System.Windows.Forms.Button();
+            this.txtPOST = new System.Windows.Forms.TextBox();
+            this.txtURL = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // Button_TicTacToe
@@ -111,12 +114,41 @@
             this.btn_DataUD.UseVisualStyleBackColor = true;
             this.btn_DataUD.Click += new System.EventHandler(this.btn_DataUD_Click);
             // 
+            // btnUploadOK
+            // 
+            this.btnUploadOK.Location = new System.Drawing.Point(140, 161);
+            this.btnUploadOK.Name = "btnUploadOK";
+            this.btnUploadOK.Size = new System.Drawing.Size(88, 23);
+            this.btnUploadOK.TabIndex = 13;
+            this.btnUploadOK.Text = "파일 업로드";
+            this.btnUploadOK.UseVisualStyleBackColor = true;
+            this.btnUploadOK.Click += new System.EventHandler(this.btnUploadOK_Click);
+            // 
+            // txtPOST
+            // 
+            this.txtPOST.Location = new System.Drawing.Point(2, 216);
+            this.txtPOST.Multiline = true;
+            this.txtPOST.Name = "txtPOST";
+            this.txtPOST.Size = new System.Drawing.Size(350, 78);
+            this.txtPOST.TabIndex = 14;
+            // 
+            // txtURL
+            // 
+            this.txtURL.Location = new System.Drawing.Point(2, 190);
+            this.txtURL.Name = "txtURL";
+            this.txtURL.Size = new System.Drawing.Size(350, 21);
+            this.txtURL.TabIndex = 15;
+            this.txtURL.Text = "http://info.softbell.net/BSL/modpack.php";
+            // 
             // BST_Laboratory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(358, 214);
+            this.ClientSize = new System.Drawing.Size(358, 295);
+            this.Controls.Add(this.txtURL);
+            this.Controls.Add(this.txtPOST);
+            this.Controls.Add(this.btnUploadOK);
             this.Controls.Add(this.btn_DataUD);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.textBox3);
@@ -144,5 +176,8 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btn_DataUD;
+        private System.Windows.Forms.Button btnUploadOK;
+        private System.Windows.Forms.TextBox txtPOST;
+        private System.Windows.Forms.TextBox txtURL;
     }
 }

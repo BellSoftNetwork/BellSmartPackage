@@ -11,9 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Library", "Bell Librar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Launcher", "Bell Smart Launcher\Bell Smart Launcher.csproj", "{6DF23086-0116-4E4E-8449-B9E981EF562E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bell Smart Manager", "Bell Smart Manager\Bell Smart Manager.csproj", "{F3EC7F96-179F-453D-B09D-DC75B318C39C}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://bellsoftnetwork.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -29,6 +31,9 @@ Global
 		SccProjectUniqueName4 = Bell\u0020Smart\u0020Launcher\\Bell\u0020Smart\u0020Launcher.csproj
 		SccProjectName4 = Bell\u0020Smart\u0020Launcher
 		SccLocalPath4 = Bell\u0020Smart\u0020Launcher
+		SccProjectUniqueName5 = Bell\u0020Smart\u0020Manager\\Bell\u0020Smart\u0020Manager.csproj
+		SccProjectName5 = Bell\u0020Smart\u0020Manager
+		SccLocalPath5 = Bell\u0020Smart\u0020Manager
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +56,10 @@ Global
 		{6DF23086-0116-4E4E-8449-B9E981EF562E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DF23086-0116-4E4E-8449-B9E981EF562E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DF23086-0116-4E4E-8449-B9E981EF562E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3EC7F96-179F-453D-B09D-DC75B318C39C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3EC7F96-179F-453D-B09D-DC75B318C39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3EC7F96-179F-453D-B09D-DC75B318C39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3EC7F96-179F-453D-B09D-DC75B318C39C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

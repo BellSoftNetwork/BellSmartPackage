@@ -1,0 +1,8 @@
+﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bell Smart Manager" Height="315.108" Width="404.676" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico">
+    <Grid>
+
+    </Grid>
+</Window>
