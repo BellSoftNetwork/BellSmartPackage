@@ -124,7 +124,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Source\Class\Com.cs" />
     <Compile Include="Source\Frame\Console.xaml.cs">
       <DependentUpon>Console.xaml</DependentUpon>
     </Compile>
@@ -235,6 +234,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Source\Class\" />
     <Folder Include="Source\Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

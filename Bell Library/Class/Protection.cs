@@ -234,9 +234,9 @@ namespace BellLib.Class
         public static string WriteBDText(string Text)
         {
             Protection Pro = new Protection();
-            Text += "BELL" + Common.GetRandomString(2) + "DATA"; // 원본 텍스트에 10자리의 쓰레기값을 추가함.
+            Text += "BELL" + Common.getRandomString(2) + "DATA"; // 원본 텍스트에 10자리의 쓰레기값을 추가함.
             Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_ENCODE); // 암호화
-            Text += Common.GetRandomString(6) + "BELL"; // 암호화된 텍스트에 10자리의 쓰레기값을 추가함.
+            Text += Common.getRandomString(6) + "BELL"; // 암호화된 텍스트에 10자리의 쓰레기값을 추가함.
 
             return Text;
         }

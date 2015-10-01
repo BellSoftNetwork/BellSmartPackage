@@ -44,16 +44,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resource\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\BSN.cs" />
@@ -69,6 +73,8 @@
     <Compile Include="Class\RegistryManager.cs" />
     <Compile Include="Class\RuntimeAnalysis.cs" />
     <Compile Include="Class\Socket.cs" />
+    <Compile Include="Class\WinCom.cs" />
+    <Compile Include="Class\WPFCom.cs" />
     <Compile Include="Data\Base.cs" />
     <Compile Include="Data\Servers.cs" />
     <Compile Include="Data\User.cs" />

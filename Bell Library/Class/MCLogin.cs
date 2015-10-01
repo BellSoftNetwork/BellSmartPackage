@@ -82,7 +82,7 @@ namespace BellLib.Class
             }
             catch (WebException ex)
             {
-                Common.Message("모장 계정서버에 접속할 수 없습니다." + Environment.NewLine + ex.Message);
+                WinCom.Message("모장 계정서버에 접속할 수 없습니다." + Environment.NewLine + ex.Message);
                 return false;
             }
             dataStream.Write(byteBuffer, 0, byteBuffer.Length);

@@ -45,18 +45,18 @@ namespace Bell_Smart_Server.Source.BSS
         {
             if (e.Cancelled)
             {
-                Common.Message("응용 프로그램의 최신 버전의 업데이트가 취소되었습니다.");
-                Common.End();
+                WinCom.Message("응용 프로그램의 최신 버전의 업데이트가 취소되었습니다.");
+                WinCom.End();
                 return;
             }
             else if (e.Error != null)
             {
-                Common.Message("오류 : 응용 프로그램의 최신 버전을 설치 할 수 없습니다. 이유: \n" + e.Error.Message + "\n시스템 관리자에게 이 오류를 보고하십시오.");
-                Common.End();
+                WinCom.Message("오류 : 응용 프로그램의 최신 버전을 설치 할 수 없습니다. 이유: \n" + e.Error.Message + "\n시스템 관리자에게 이 오류를 보고하십시오.");
+                WinCom.End();
                 return;
             }
 
-            Common.End(true);
+            WinCom.End(true);
         }
     }
 }

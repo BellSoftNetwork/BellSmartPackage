@@ -16,59 +16,18 @@ namespace BellLib.Class
 {
     delegate void OnEnd();
 
+    /// <summary>
+    /// 모든 프로젝트 공통함수
+    /// </summary>
     public class Common
     {
-        static bool onExit = false;
-
-        static OnEnd onEnd;
-
-        /// <summary>
-        /// 메시지 박스를 띄웁니다.
-        /// </summary>
-        /// <param name="Text">메시지박스 내용</param>
-        /// <param name="Caption">메시지박스 제목</param>
-        /// <param name="buttons">메시지박스 버튼</param>
-        /// <param name="icon">메시지박스 아이콘</param>
-        /// <param name="defaultButton">메시지박스 기본 버튼</param>
-        /// <returns>선택한 버튼값</returns>
-        public static DialogResult Message(string Text, string Caption = "Bell Smart Package", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
-        {
-            Debug.Message(Debug.Level.Log, Text, Caption, buttons, icon, defaultButton, "MessageBox");
-            return MessageBox.Show(Text, Caption, buttons, icon, defaultButton);
-        }
-        
-        /// <summary>
-        /// 프로그램을 종료합니다.
-        /// </summary>
-        /// <param name="Restart">프로그램 재시작 여부</param>
-        public static void End(bool Restart = false)
-        {
-            // 콜백에 프로그램 종료를 알린다.
-            onEnd += new OnEnd(() => {
-                if (!onExit)
-                    Debug.Message(Debug.Level.Log, "End point of program. Exiting.");
-            });
-
-            // 콜백이 한번만 실행되도록 한다.
-            onEnd += new OnEnd(() => onExit = true);
-
-            // 콜백에 프로그램 종료를 체인한다.
-            if (Restart)
-                onEnd += Application.Restart;
-            else
-                onEnd += Application.Exit;
-
-            // 콜백을 호출한다.
-            onEnd();
-        }
-
         /// <summary>
         /// 해당 웹 텍스트를 전부 가져옵니다.
         /// </summary>
         /// <param name="URL">웹 주소</param>
         /// <param name="UTF8">인코딩 방식 (UTF8, Default)</param>
         /// <returns>웹 텍스트</returns>
-        public static string GetStringFromWeb(string URL, Encoding Enc = null)
+        public static string getStringFromWeb(string URL, Encoding Enc = null)
         {
             if (Enc == null)
                 Enc = Encoding.Default;
@@ -107,7 +66,7 @@ namespace BellLib.Class
         /// Bell Library 내부에서 호출 할 경우에는 값을 할당하지 않아도 됩니다.
         /// </param>
         /// <returns>성공 여부를 반환합니다.</returns>
-        public static bool CreateFormAndShow(string iName, bool throwException = false)
+        public static bool createFormAndShow(string iName, bool throwException = false)
         {
             try
             {
@@ -142,10 +101,10 @@ namespace BellLib.Class
         /// </summary>
         /// <param name="length">필요한 문자열 길이</param>
         /// <returns>랜덤 문자열</returns>
-        public static string GetRandomString(int length)
+        public static string getRandomString(int length)
         {
             Random rnd = new Random();
-            return GetRandomString(length, rnd);
+            return getRandomString(length, rnd);
         }
 
         /// <summary>
@@ -155,7 +114,7 @@ namespace BellLib.Class
         /// <param name="rnd">랜덤 시드</param>
         /// <param name="charPool">랜덤 허용 문자열</param>
         /// <returns>랜덤 문자열</returns>
-        public static string GetRandomString(int length, Random rnd, string charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw xyz1234567890")
+        public static string getRandomString(int length, Random rnd, string charPool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw xyz1234567890")
         {
             StringBuilder rs = new StringBuilder();
 
@@ -175,33 +134,48 @@ namespace BellLib.Class
         }
 
         /// <summary>
-        /// 해당 폼 이름으로 폼이 실행되어있는지 여부를 판단합니다.
-        /// 폼이 실행되어있을경우, 폼을 활성화 시킵니다.
+        /// 문자열을 구분자로 잘라냅니다.
         /// </summary>
-        /// <param name="formName">폼 이름 (대소문자 구별)</param>
-        /// <returns>폼 실행 가능 여부</returns>
-        public static bool Feasibility(string formName)
+        /// <param name="input">원본 문자열</param>
+        /// <param name="pattern">구분할 단어</param>
+        /// <returns>구분된 문자배열</returns>
+        public static string[] stringSplit(string input, string pattern)
         {
-            Form frm = GetForm(formName);
-            if (frm == null)
-                return true; // 폼이 실행되어 있지 않을경우 폼 실행 가능
-            
-            frm.Activate();
-            return false;
+            return System.Text.RegularExpressions.Regex.Split(input, pattern);
         }
 
         /// <summary>
-        /// 해당 폼 이름으로 폼이 실행되어 있으면, 해당 폼의 Form 값을 반환합니다.
+        /// 필요한 요소값 배열을 가져옵니다.
         /// </summary>
-        /// <param name="formName">폼 이름 (대소문자 구별)</param>
-        /// <returns>Form 정보</returns>
-        public static Form GetForm(string formName)
+        /// <param name="data">전체 데이터</param>
+        /// <param name="name">요소 이름</param>
+        /// <returns>요소 값 배열</returns>
+        public static string[] getElementArray(string data, string name)
         {
-            foreach (Form frm in Application.OpenForms)
-                if (frm.Name == formName)
-                    return frm;
+            List<string> list = new List<string>();
+            string[] temp = Common.stringSplit(data, "<" + name + ">"); // 값 이름 시작 구분
+            foreach (string tmp in temp)
+            { // 값 이름 끝 구분
+                if (tmp != string.Empty)
+                {
+                    string value = Common.stringSplit(tmp, "</" + name + ">")[0];
+                    if (value != string.Empty)
+                        list.Add(value);
+                }
+            }
 
-            return null;
+            return list.ToArray();
+        }
+
+        /// <summary>
+        /// 필요한 요소의 값을 가져옵니다.
+        /// </summary>
+        /// <param name="data">전체 데이터</param>
+        /// <param name="name">요소 이름</param>
+        /// <returns>요소 값</returns>
+        public static string getElement(string data, string name)
+        {
+            return Common.stringSplit(Common.stringSplit(data, "<" + name + ">")[1], "</" + name + ">")[0];
         }
     }
 }

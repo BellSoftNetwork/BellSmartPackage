@@ -170,7 +170,7 @@ namespace Bell_Smart_Tools.Source.BSL
                     if (list[list.Count - 1] != tmp)
                         strTemp += ", ";
                 }
-                Common.Message(strTemp + " 값을 입력해주세요.");
+                WinCom.Message(strTemp + " 값을 입력해주세요.");
                 return;
             }
 

@@ -77,7 +77,7 @@ namespace Bell_Smart_Server.Source.BSS
                 BSS.Show(); // BSP_Selector 실행
                 this.Hide(); // BST_Login 숨김
             } else {
-                Common.Message("인증 실패");
+                WinCom.Message("인증 실패");
             }
             FormEnable(true);
         }
@@ -128,7 +128,7 @@ namespace Bell_Smart_Server.Source.BSS
 
         private void BSP_Login_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Common.End();
+            WinCom.End();
         }
 
         private void BSP_Login_Shown(object sender, EventArgs e)

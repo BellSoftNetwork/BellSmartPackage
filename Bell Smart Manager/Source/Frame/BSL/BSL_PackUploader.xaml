@@ -1,0 +1,8 @@
+﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackUploader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="팩 업로더" Height="265.468" Width="487.77" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+
+    </Grid>
+</Window>

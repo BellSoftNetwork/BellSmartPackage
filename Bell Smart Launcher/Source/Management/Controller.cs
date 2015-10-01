@@ -1,5 +1,4 @@
-﻿using Bell_Smart_Launcher.Source.Class;
-using Bell_Smart_Launcher.Source.Frame;
+﻿using Bell_Smart_Launcher.Source.Frame;
 using BellLib.Class;
 using BellLib.Data;
 using System;
@@ -51,7 +50,7 @@ namespace Bell_Smart_Launcher.Source.Management
                 {
                     if (errCount > 2)
                     {
-                        Com.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + "errCount = " + errCount + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace);
+                        WPFCom.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + "errCount = " + errCount + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace);
                         errCount = 0;
                     }
                     else

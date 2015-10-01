@@ -1,5 +1,4 @@
-﻿using Bell_Smart_Launcher.Source.Class;
-using BellLib.Class;
+﻿using BellLib.Class;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -49,18 +48,18 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             if (e.Cancelled)
             {
-                Com.Message("응용 프로그램의 최신 버전의 업데이트가 취소되었습니다.");
-                Com.End();
+                WPFCom.Message("응용 프로그램의 최신 버전의 업데이트가 취소되었습니다.");
+                WPFCom.End();
                 return;
             }
             else if (e.Error != null)
             {
-                Com.Message("오류 : 응용 프로그램의 최신 버전을 설치 할 수 없습니다. 이유: \n" + e.Error.Message + "\n시스템 관리자에게 이 오류를 보고하십시오.");
-                Com.End();
+                WPFCom.Message("오류 : 응용 프로그램의 최신 버전을 설치 할 수 없습니다. 이유: \n" + e.Error.Message + "\n시스템 관리자에게 이 오류를 보고하십시오.");
+                WPFCom.End();
                 return;
             }
 
-            Com.End(true);
+            WPFCom.End(true);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

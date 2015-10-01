@@ -20,12 +20,12 @@ namespace Bell_Smart_Server.Source.BSS
 
         private void BSS_Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Common.End();
+            WinCom.End();
         }
 
         private void btn_ModManager_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BSU_ModManager"))
+            if (WinCom.Feasibility("BSU_ModManager"))
             {
                 BSU_ModManager MM = new BSU_ModManager();
                 MM.Show();
@@ -34,7 +34,7 @@ namespace Bell_Smart_Server.Source.BSS
 
         private void btn_RuntimeManager_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BSU_RuntimeManager"))
+            if (WinCom.Feasibility("BSU_RuntimeManager"))
             {
                 BSU_RuntimeManager RM = new BSU_RuntimeManager();
                 RM.Show();
@@ -43,7 +43,7 @@ namespace Bell_Smart_Server.Source.BSS
 
         private void btn_PackMaker_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BSU_PackMaker"))
+            if (WinCom.Feasibility("BSU_PackMaker"))
             {
                 BSU_PackMaker PM = new BSU_PackMaker();
                 PM.Show();
@@ -52,7 +52,7 @@ namespace Bell_Smart_Server.Source.BSS
 
         private void btn_ServerManager_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BSU_ServerManager"))
+            if (WinCom.Feasibility("BSU_ServerManager"))
             {
                 BSU_ServerManager SM = new BSU_ServerManager();
                 SM.Show();

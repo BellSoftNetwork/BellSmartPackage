@@ -60,7 +60,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
             byte[] responseBytes = webClient.UploadValues(txtURL.Text, "POST", formData);
             string responsefromserver = Encoding.UTF8.GetString(responseBytes);
-            Common.Message(responsefromserver);
+            WinCom.Message(responsefromserver);
             webClient.Dispose();
         }
 
@@ -79,7 +79,7 @@ namespace Bell_Smart_Tools.Source.BSS
             byte[] responseBytes = client.UploadValues(siteURL, "POST", formData);
             byte[] responseArray = client.UploadFile(siteURL, "POST", fileName);
             string responsefromserver = Encoding.UTF8.GetString(responseArray);
-            Common.Message(responsefromserver);
+            WinCom.Message(responsefromserver);
             client.Dispose();*/
             string dumpPath = @"M:\Test.jar";
             string address = "http://info.softbell.net/BSL/upload.php";
@@ -105,7 +105,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
                 byte[] result = UploadFiles(address, files, values);
                 string responsefromserver = Encoding.UTF8.GetString(result);
-                Common.Message(responsefromserver);
+                WinCom.Message(responsefromserver);
             }
         }
         public byte[] UploadFiles(string address, IEnumerable<UploadFile> files, NameValueCollection values)

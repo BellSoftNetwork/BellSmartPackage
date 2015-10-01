@@ -56,7 +56,7 @@ namespace Bell_Smart_Server.Source.BSU
             // 필드 검사
             if (txt_MUID.Text == string.Empty || txt_Mod_Down.Text == string.Empty || txt_Mod_Name.Text == string.Empty || txt_Mod_News.Text == string.Empty || cb_Mod_Base.SelectedItem == null || cb_Mod_Option.SelectedItem == null)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             
@@ -65,7 +65,7 @@ namespace Bell_Smart_Server.Source.BSU
             {
                 if (txt_MUID.Text == tmp)
                 {
-                    Common.Message("이미 존재하는 MUID입니다." + Environment.NewLine + "다른 MUID 값으로 시도하거나, 모드팩 관리자 기능으로 수정하십시오.");
+                    WinCom.Message("이미 존재하는 MUID입니다." + Environment.NewLine + "다른 MUID 값으로 시도하거나, 모드팩 관리자 기능으로 수정하십시오.");
                     return;
                 }
             }
@@ -95,7 +95,7 @@ namespace Bell_Smart_Server.Source.BSU
             InitializeMod(); // 다시한번 로드
             btn_Mod_Upload.Enabled = true;
             gb_ModPack.Enabled = true;
-            Common.Message("모드팩 등록 성공!");
+            WinCom.Message("모드팩 등록 성공!");
         }
 
         private void btn_Base_Upload_Click(object sender, EventArgs e)
@@ -103,7 +103,7 @@ namespace Bell_Smart_Server.Source.BSU
             // 필드 검사
             if (txt_BUID.Text == string.Empty || txt_Base_Down.Text == string.Empty)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace Bell_Smart_Server.Source.BSU
             {
                 if (txt_BUID.Text == tmp)
                 {
-                    Common.Message("이미 존재하는 BUID입니다." + Environment.NewLine + "다른 BUID 값으로 시도하거나, 모드팩 관리자 기능으로 수정하십시오.");
+                    WinCom.Message("이미 존재하는 BUID입니다." + Environment.NewLine + "다른 BUID 값으로 시도하거나, 모드팩 관리자 기능으로 수정하십시오.");
                     return;
                 }
             }
@@ -142,7 +142,7 @@ namespace Bell_Smart_Server.Source.BSU
             InitializeMod(); // 다시한번 로드
             btn_Base_Upload.Enabled = true;
             gb_BasePack.Enabled = true;
-            Common.Message("베이스팩 등록 성공!");
+            WinCom.Message("베이스팩 등록 성공!");
         }
 
         private void btn_Option_Upload_Click(object sender, EventArgs e)
@@ -150,7 +150,7 @@ namespace Bell_Smart_Server.Source.BSU
             // 필드 검사
             if (txt_OUID.Text == string.Empty || txt_Option_Down.Text == string.Empty)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
 
@@ -159,7 +159,7 @@ namespace Bell_Smart_Server.Source.BSU
             {
                 if (txt_OUID.Text == tmp)
                 {
-                    Common.Message("이미 존재하는 OUID입니다." + Environment.NewLine + "다른 OUID 값으로 시도하거나, 모드팩 관리자 기능으로 수정하십시오.");
+                    WinCom.Message("이미 존재하는 OUID입니다." + Environment.NewLine + "다른 OUID 값으로 시도하거나, 모드팩 관리자 기능으로 수정하십시오.");
                     return;
                 }
             }
@@ -189,7 +189,7 @@ namespace Bell_Smart_Server.Source.BSU
             InitializeMod(); // 다시한번 로드
             btn_Option_Upload.Enabled = true;
             gb_OptionPack.Enabled = true;
-            Common.Message("옵션팩 등록 성공!");
+            WinCom.Message("옵션팩 등록 성공!");
         }
 
         private void txt_MUID_TextChanged(object sender, EventArgs e)

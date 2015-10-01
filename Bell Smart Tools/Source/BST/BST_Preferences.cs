@@ -64,7 +64,7 @@ namespace Bell_Smart_Tools.Source.BSS
             using (RegistryManager rm = new RegistryManager("BSN_AutoLogin"))
                 rm.DeleteValue();
             Initialize(); // 폼 새로고침
-            //Common.Message("자동 로그인 설정이 정상적으로 해제되었습니다.");
+            //WinCom.Message("자동 로그인 설정이 정상적으로 해제되었습니다.");
         }
 
         private void BST_Preferences_Load(object sender, EventArgs e)

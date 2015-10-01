@@ -125,12 +125,12 @@ namespace Bell_Smart_Server.Source.BSU
                 }
                 else
                 {
-                    Common.Message("존재하지 않는 MUID 입니다.");
+                    WinCom.Message("존재하지 않는 MUID 입니다.");
                 }
             }
             else
             { // 모드팩 삭제하기
-                if (Common.Message("정말로 불러온 모드팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.","모드팩 영구 삭제",MessageBoxButtons.YesNo,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                if (WinCom.Message("정말로 불러온 모드팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.","모드팩 영구 삭제",MessageBoxButtons.YesNo,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                 {
                     if (InputBox("불러온 모드팩의 MUID값을 입력 해 주세요.", "모드팩 삭제") == (string)cb_MUID.SelectedItem)
                     {
@@ -167,7 +167,7 @@ namespace Bell_Smart_Server.Source.BSU
                                     FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Pack/", xmlPath, true); // 모드팩 리스트 업로드
                                     FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
-                                    Common.Message("모드팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 모드팩에 접근하시려면 관리창을 재 실행하세요.");
+                                    WinCom.Message("모드팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 모드팩에 접근하시려면 관리창을 재 실행하세요.");
                                 }
                             }
                         }
@@ -208,7 +208,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             if (stop)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             PackAnalysisWrite MAW = null;// new ModAnalysisWrite(ModAnalysisWrite.Type.ModPack, (string)cb_MUID.SelectedItem, txt_Mod_Name.Text, txt_Mod_Latest.Text, txt_Mod_Recommended.Text, (string)cb_Mod_Base.SelectedItem, (string)cb_Mod_Option.SelectedItem, txt_Mod_News.Text, txt_Mod_Down.Text, lst_Mod_Version.Items.Cast<string>().ToArray());
@@ -219,7 +219,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Pack/" + (string)cb_MUID.SelectedItem + "/", xmlPath, true); // 모드팩 데이터 업로드
             InitializeMod(); // 다시한번 로드
-            Common.Message("설정값 업로드 성공!");
+            WinCom.Message("설정값 업로드 성공!");
         }
                 
         private void btn_Mod_DelVer_Click(object sender, EventArgs e)
@@ -229,7 +229,7 @@ namespace Bell_Smart_Server.Source.BSU
                 string SelectVer = (string)lst_Mod_Version.SelectedItem;
                 if (txt_Mod_Latest.Text == SelectVer || txt_Mod_Recommended.Text == SelectVer) // 최신버전이나 권장버전이 삭제하려는 버전이면 먼저 버전 수정 요청
                 {
-                    Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
+                    WinCom.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
                     return;
                 }
                 tc_Setting.Enabled = false;
@@ -243,7 +243,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             else
             {
-                Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
+                WinCom.Message("최소 한개 이상의 버전이 존재해야합니다.");
             }
         }
 
@@ -299,12 +299,12 @@ namespace Bell_Smart_Server.Source.BSU
                 }
                 else
                 {
-                    Common.Message("존재하지 않는 BUID 입니다.");
+                    WinCom.Message("존재하지 않는 BUID 입니다.");
                 }
             }
             else
             { // 베이스팩 삭제
-                if (Common.Message("정말로 불러온 베이스팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "베이스팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                if (WinCom.Message("정말로 불러온 베이스팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "베이스팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                 {
                     if (InputBox("불러온 베이스팩의 BUID값을 입력 해 주세요.", "베이스팩 삭제") == (string)cb_BUID.SelectedItem)
                     {
@@ -341,7 +341,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Base/", xmlPath, true); // 베이스팩 리스트 업로드
                                 FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
-                                Common.Message("베이스팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 베이스팩에 접근하시려면 관리창을 재 실행하세요.");
+                                WinCom.Message("베이스팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 베이스팩에 접근하시려면 관리창을 재 실행하세요.");
                             }
                         }
                     }
@@ -386,12 +386,12 @@ namespace Bell_Smart_Server.Source.BSU
                 }
                 else
                 {
-                    Common.Message("존재하지 않는 OUID 입니다.");
+                    WinCom.Message("존재하지 않는 OUID 입니다.");
                 }
             }
             else
             { // 옵션팩 삭제
-                if (Common.Message("정말로 불러온 옵션팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "옵션팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
+                if (WinCom.Message("정말로 불러온 옵션팩을 삭제하시겠습니까?" + Environment.NewLine + "삭제 요청 시 서버에서 즉시 삭제되며, 복구하실 수 없습니다.", "옵션팩 영구 삭제", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == System.Windows.Forms.DialogResult.Yes)
                 {
                     if (InputBox("불러온 옵션팩의 OUID값을 입력 해 주세요.", "옵션팩 삭제") == (string)cb_OUID.SelectedItem)
                     {
@@ -428,7 +428,7 @@ namespace Bell_Smart_Server.Source.BSU
                                 FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Option/", xmlPath, true); // 모드팩 리스트 업로드
                                 FTP_Info.DeletePath(RootPath); // FTP 서버에서 팩 정보 루트 폴더 삭제
 
-                                Common.Message("옵션팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 옵션팩에 접근하시려면 관리창을 재 실행하세요.");
+                                WinCom.Message("옵션팩 삭제가 완료되었습니다." + Environment.NewLine + "다른 옵션팩에 접근하시려면 관리창을 재 실행하세요.");
                             }
                         }
                     }
@@ -443,7 +443,7 @@ namespace Bell_Smart_Server.Source.BSU
                 string SelectVer = (string)lst_Base_Version.SelectedItem;
                 if (txt_Base_Latest.Text == SelectVer || txt_Base_Recommended.Text == SelectVer) // 최신버전이나 권장버전이 삭제하려는 버전이면 먼저 버전 수정 요청
                 {
-                    Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
+                    WinCom.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
                     return;
                 }
                 gb_Base_Setting.Enabled = false;
@@ -457,7 +457,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             else
             {
-                Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
+                WinCom.Message("최소 한개 이상의 버전이 존재해야합니다.");
             }
         }
 
@@ -468,7 +468,7 @@ namespace Bell_Smart_Server.Source.BSU
                 string SelectVer = (string)lst_Option_Version.SelectedItem;
                 if (txt_Option_Latest.Text == SelectVer || txt_Option_Recommended.Text == SelectVer) // 최신버전이나 권장버전이 삭제하려는 버전이면 먼저 버전 수정 요청
                 {
-                    Common.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
+                    WinCom.Message("이 버전은 최신버전 또는 권장버전으로 지정되어 있으므로 삭제할 수 없습니다.");
                     return;
                 }
                 gb_Option_Setting.Enabled = false;
@@ -482,7 +482,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             else
             {
-                Common.Message("최소 한개 이상의 버전이 존재해야합니다.");
+                WinCom.Message("최소 한개 이상의 버전이 존재해야합니다.");
             }
         }
         
@@ -494,7 +494,7 @@ namespace Bell_Smart_Server.Source.BSU
             if ((string)cb_Mod_Option.SelectedItem == string.Empty) stop = true;
             if (stop)
             {
-                Common.Message("누락된 정보가 있습니다." + Environment.NewLine + "빠진 값이 없는지 확인해주세요.");
+                WinCom.Message("누락된 정보가 있습니다." + Environment.NewLine + "빠진 값이 없는지 확인해주세요.");
                 return;
             }
             string SetVer = (string)lst_Mod_Version.SelectedItem;
@@ -508,7 +508,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTPUtil FTP_Info = new FTPUtil(FTPUtil.OfficialServer.Bell_Soft_Network_Info); // FTP 객체 생성
             FTP_Info.Upload("Pack/" + MUID + "/Version/", xmlPath); // 버전 데이터 업로드
             File.Delete(xmlPath); // 로컬 버전 데이터 삭제
-            Common.Message(SetVer + "버전 설정값 업로드 성공!");
+            WinCom.Message(SetVer + "버전 설정값 업로드 성공!");
         }
 
         private void btn_Base_Save_Click(object sender, EventArgs e)
@@ -520,7 +520,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             if (stop)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.BasePack, (string)cb_BUID.SelectedItem, txt_Base_Latest.Text, txt_Base_Recommended.Text, txt_Base_Down.Text, lst_Base_Version.Items.Cast<string>().ToArray());
@@ -531,7 +531,7 @@ namespace Bell_Smart_Server.Source.BSU
             string xmlPath = User.BSN_Temp + "BSU\\Data\\BasePack\\" + (string)cb_BUID.SelectedItem + ".xml";
             FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Base/" + (string)cb_BUID.SelectedItem + "/", xmlPath, true); // 베이스팩 데이터 업로드
             InitializeBase(); // 다시한번 로드
-            Common.Message("설정값 업로드 성공!");
+            WinCom.Message("설정값 업로드 성공!");
         }
 
         private void btn_Option_Save_Click(object sender, EventArgs e)
@@ -543,7 +543,7 @@ namespace Bell_Smart_Server.Source.BSU
 
             if (stop)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             PackAnalysisWrite MAW = new PackAnalysisWrite(PackAnalysisWrite.Type.OptionPack, (string)cb_OUID.SelectedItem, txt_Option_Latest.Text, txt_Option_Recommended.Text, txt_Option_Down.Text, lst_Option_Version.Items.Cast<string>().ToArray());
@@ -555,7 +555,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTP_Info.Upload(Servers.Bell_Soft_Network.FTP_PATH_INFO_BSL + "Option/" + (string)cb_OUID.SelectedItem + "/", xmlPath, true); // 옵션팩 데이터 업로드
 
             InitializeOption(); // 다시한번 로드
-            Common.Message("설정값 업로드 성공!");
+            WinCom.Message("설정값 업로드 성공!");
         }
 
         /// <summary>
@@ -584,14 +584,14 @@ namespace Bell_Smart_Server.Source.BSU
             if ((string)cb_Mod_Option_Upload.SelectedItem == string.Empty) stop = true;
             if (stop)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             foreach (string tmp in lst_Mod_Version.Items)
             {
                 if (txt_Mod_Version.Text == tmp)
                 {
-                    Common.Message("이미 서버에 등록되어 있는 버전입니다.");
+                    WinCom.Message("이미 서버에 등록되어 있는 버전입니다.");
                     return;
                 }
             }
@@ -650,7 +650,7 @@ namespace Bell_Smart_Server.Source.BSU
             else
             {
                 ModUploading(false);
-                Common.Message(MUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
+                WinCom.Message(MUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
 
@@ -692,7 +692,7 @@ namespace Bell_Smart_Server.Source.BSU
             cb_Mod_Latest.Checked = false;
             cb_Mod_Recommended.Checked = false;
             InitializeMod();
-            Common.Message("모드팩이 정상적으로 업로드 되었습니다!");
+            WinCom.Message("모드팩이 정상적으로 업로드 되었습니다!");
         }
 
         private void BaseUploading(bool value)
@@ -713,14 +713,14 @@ namespace Bell_Smart_Server.Source.BSU
             if (txt_Base_Version.Text == string.Empty) stop = true;
             if (stop)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             foreach (string tmp in lst_Base_Version.Items)
             {
                 if (txt_Base_Version.Text == tmp)
                 {
-                    Common.Message("이미 서버에 등록되어 있는 버전입니다.");
+                    WinCom.Message("이미 서버에 등록되어 있는 버전입니다.");
                     return;
                 }
             }
@@ -773,7 +773,7 @@ namespace Bell_Smart_Server.Source.BSU
             else
             {
                 BaseUploading(false);
-                Common.Message(BUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
+                WinCom.Message(BUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
 
@@ -816,7 +816,7 @@ namespace Bell_Smart_Server.Source.BSU
             cb_Base_Latest.Checked = false;
             cb_Base_Recommended.Checked = false;
             InitializeBase(); // 화면 새로고침
-            Common.Message("베이스팩이 정상적으로 업로드 되었습니다!");
+            WinCom.Message("베이스팩이 정상적으로 업로드 되었습니다!");
         }
 
         private void OptionUploading(bool value)
@@ -842,14 +842,14 @@ namespace Bell_Smart_Server.Source.BSU
             if (txt_Option_Version.Text == string.Empty) stop = true;
             if (stop)
             {
-                Common.Message("모든 필드에 값을 입력해 주세요.");
+                WinCom.Message("모든 필드에 값을 입력해 주세요.");
                 return;
             }
             foreach (string tmp in lst_Option_Version.Items)
             {
                 if (txt_Option_Version.Text == tmp)
                 {
-                    Common.Message("이미 서버에 등록되어 있는 버전입니다.");
+                    WinCom.Message("이미 서버에 등록되어 있는 버전입니다.");
                     return;
                 }
             }
@@ -870,7 +870,7 @@ namespace Bell_Smart_Server.Source.BSU
                 if (item.SubItems[0].Text == string.Empty || item.SubItems[1].Text == string.Empty || item.SubItems[2].Text == string.Empty || item.SubItems[3].Text == string.Empty)
                 {
                     OptionUploading(false);
-                    Common.Message("옵션파일 상세리스트 모든 필드에 값을 입력해 주세요.");
+                    WinCom.Message("옵션파일 상세리스트 모든 필드에 값을 입력해 주세요.");
                     return;
                 }
                 Option.Add(item.SubItems[0].Text + "|" + item.SubItems[1].Text + "|" + item.SubItems[2].Text);
@@ -909,7 +909,7 @@ namespace Bell_Smart_Server.Source.BSU
             else
             {
                 OptionUploading(false);
-                Common.Message(OUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
+                WinCom.Message(OUID + ".xml 파일 작성을 시도하던 중 문제가 발생하였습니다." + Environment.NewLine + "MAR.Availability() = false");
                 return;
             }
 
@@ -952,7 +952,7 @@ namespace Bell_Smart_Server.Source.BSU
             cb_Option_Latest.Checked = false;
             cb_Option_Recommended.Checked = false;
             InitializeOption(); // 화면 새로고침
-            Common.Message("옵션팩이 정상적으로 업로드 되었습니다!");
+            WinCom.Message("옵션팩이 정상적으로 업로드 되었습니다!");
         }
 
         private void llb_Mod_Upload_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -963,7 +963,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             catch (Exception ex)
             {
-                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+                WinCom.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
             }
         }
 
@@ -975,7 +975,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             catch (Exception ex)
             {
-                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+                WinCom.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
             }
         }
 
@@ -987,7 +987,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             catch (Exception ex)
             {
-                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+                WinCom.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
             }
         }
 
@@ -1088,7 +1088,7 @@ namespace Bell_Smart_Server.Source.BSU
         {
             if (txt_Option_UID.Text == string.Empty || txt_Option_Name.Text == string.Empty)
             {
-                Common.Message("필드에 누락된 값이 있습니다.");
+                WinCom.Message("필드에 누락된 값이 있습니다.");
                 return;
             }
             ListView.SelectedListViewItemCollection col = lst_Option_File.SelectedItems;

@@ -40,7 +40,7 @@ namespace Bell_Smart_Server.Source.BSU
             }
             catch (Exception ex)
             {
-                Common.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+                WinCom.Message("해당 폴더를 여는 중, 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Bell_Smart_Server.Source.BSU
             if (!RAW.WriteInstallData(Directory, Files))
             {
                 btn_JAVA_Upload.Enabled = true;
-                Common.Message("런타임팩 설치데이터 작성 중 문제가 발생하였습니다.");
+                WinCom.Message("런타임팩 설치데이터 작성 중 문제가 발생하였습니다.");
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace Bell_Smart_Server.Source.BSU
             FTP_Info.Upload(FTP_Default_Info, RAW.xmlFilePath + RAW.xmlFileName, true); // 모드팩 데이터 업로드
 
             btn_JAVA_Upload.Enabled = true;
-            Common.Message("런타임팩 업로드가 완료되었습니다!");
+            WinCom.Message("런타임팩 업로드가 완료되었습니다!");
         }
 
         private void BSU_RuntimeManager_Load(object sender, EventArgs e)

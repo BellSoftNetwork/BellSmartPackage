@@ -151,7 +151,7 @@ namespace Bell_Smart_Tools.Source.BSL
         {
             if (MUID == string.Empty || PathBase == string.Empty || PathPack == string.Empty || UUID == string.Empty || AccessToken == string.Empty)
             {
-                Common.Message("게임 실행 중 매개변수값이 정상적으로 전달되지 않아 실행을 중단합니다.");
+                WinCom.Message("게임 실행 중 매개변수값이 정상적으로 전달되지 않아 실행을 중단합니다.");
                 return;
             }
             string strTemp;
@@ -212,7 +212,7 @@ namespace Bell_Smart_Tools.Source.BSL
             }
             catch (Exception ex)
             {
-                Common.Message(ex.Message);
+                WinCom.Message(ex.Message);
                 /*BC_PID = -1;
                 BST_Manager.Message("방울크래프트 실행 중 문제가 발생하였습니다." + Constants.vbCrLf + "자바 경로가 정상적으로 설정되어있는지 확인하시기 바랍니다." + Constants.vbCrLf + Constants.vbCrLf + ex.Message);
                 BC_Button(false);*/
@@ -534,7 +534,7 @@ namespace Bell_Smart_Tools.Source.BSL
                 }
                 catch
                 {
-                    Common.Message("버전정보 로드중 문제가 발생하였습니다.");
+                    WinCom.Message("버전정보 로드중 문제가 발생하였습니다.");
                     return;
                 }
                 // 마지막에 실행했던 버전 로드
@@ -597,7 +597,7 @@ namespace Bell_Smart_Tools.Source.BSL
             // 기본값 설정 유무 확인
             if (cb_Profile.SelectedIndex == 0)
             {
-                Common.Message("사용하실 프로필파일을 선택해주세요.");
+                WinCom.Message("사용하실 프로필파일을 선택해주세요.");
                 return;
             }
 

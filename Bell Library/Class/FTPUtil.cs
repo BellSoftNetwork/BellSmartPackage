@@ -145,7 +145,7 @@ namespace BellLib.Class
             {
                 if (Recursive) // 함수가 다시 호출되었을때 무한루프를 막기위함.
                 {
-                    Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
+                    WinCom.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
                     fs.Close();
                     return false;
                 }
@@ -164,7 +164,7 @@ namespace BellLib.Class
             }
             catch (Exception ex)
             {
-                Common.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
+                WinCom.Message("FTP 파일 전송중 문제가 발생하였습니다." + Environment.NewLine + "네트워크 상황 또는 접속정보를 살펴 보시기 바랍니다." + Environment.NewLine + "folder : " + folder + Environment.NewLine + "filename : " + filename + Environment.NewLine + ex.Message);
                 return false;
             }
             if (AfterDelete)
@@ -370,7 +370,7 @@ namespace BellLib.Class
             }
             catch// (Exception ex)
             {
-                //Common.Message(ex.Message);
+                //WinCom.Message(ex.Message);
             }
         }
 

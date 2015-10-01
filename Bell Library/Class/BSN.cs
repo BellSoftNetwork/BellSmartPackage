@@ -4,11 +4,13 @@ using System.IO;
 using System.Net;
 using BellLib.Data;
 using RegKind = Microsoft.Win32.RegistryValueKind;
+using System.Text;
+using System.Collections.Specialized;
 
 namespace BellLib.Class
 {
     /// <summary>
-    /// BSN 로그인 관련 메서드와 필드를 가지고 있는 클래스입니다.
+    /// Bell Soft Network 공식 홈페이지 회원정보 관련
     /// </summary>
     public static class BSN
     {
@@ -89,7 +91,7 @@ namespace BellLib.Class
             }
             catch (Exception ex)
             {
-                Common.Message(ex.Message);
+                WinCom.Message(ex.Message);
                 return false;
             }
 
@@ -136,6 +138,117 @@ namespace BellLib.Class
                 return false;
             else // 로그인 성공
                 return true;
+        }
+    }
+
+    /// <summary>
+    /// Bell Soft Network 정보서버 제어관련
+    /// </summary>
+    public class BSN_Info
+    {
+        private static string baseURL = Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/";
+
+        public enum PACK
+        {
+            ModPack,
+            BasePack
+        }
+
+        public static string[] loadPackList(PACK kind)
+        {
+            NameValueCollection formData = new NameValueCollection();
+            string result = null;
+
+            switch (kind)
+            {
+                case PACK.ModPack:
+                    formData["list"] = "modpack";
+                    result = sendPOST(baseURL + "modpack.php", formData);
+                    break;
+
+                case PACK.BasePack:
+                    formData["list"] = "basepack";
+                    result = sendPOST(baseURL + "basepack.php", formData);
+                    break;
+            }
+
+            return Common.getElementArray(result, "pack");
+        }
+
+        /// <summary>
+        /// 신규 모드팩을 등록합니다.
+        /// </summary>
+        /// <param name="MUID">MUID값</param>
+        /// <param name="name">모드팩 이름</param>
+        /// <param name="baseid">베이스팩 id</param>
+        /// <param name="detail">모드팩 상세사항</param>
+        /// <returns>등록 성공여부</returns>
+        public static bool registerModPack(string MUID, string name, string baseid, string detail)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["insert"] = "modpack";
+            formData["MUID"] = MUID;
+            formData["name"] = name;
+            formData["baseid"] = baseid;
+            formData["detail"] = detail;
+
+            string result = sendPOST(baseURL + "management/modpack.php", formData);
+            switch (result)
+            {
+                case "모드팩 정보가 정상적으로 등록되었습니다.":
+                    return true;
+
+                case "모드팩 등록에 실패하였습니다.":
+                    return false;
+
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// 베이스팩 정보를 등록합니다.
+        /// </summary>
+        /// <param name="BUID">BUID값</param>
+        /// <param name="MCVer">마인크래프트 버전정보</param>
+        /// <returns>등록 성공여부</returns>
+        public static bool registerBasePack(string BUID, string MCVer)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["insert"] = "basepack";
+            formData["BUID"] = BUID;
+            formData["mcversion"] = MCVer;
+
+            string result = sendPOST(baseURL + "management/basepack.php", formData);
+            switch (result)
+            {
+                case "베이스팩 정보가 정상적으로 등록되었습니다.":
+                    return true;
+
+                case "베이스팩 등록에 실패하였습니다.":
+                    return false;
+
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// PHP 웹페이지에 POST값 전송 후 결과값을 받아옵니다.
+        /// </summary>
+        /// <param name="adress">웹 주소</param>
+        /// <param name="formData">POST 값</param>
+        /// <returns>POST 전송 후 결과값</returns>
+        private static string sendPOST(string adress, NameValueCollection formData)
+        {
+            WebClient webClient = new WebClient();
+            byte[] responseBytes = webClient.UploadValues(adress, "POST", formData);
+            string result = Encoding.UTF8.GetString(responseBytes);
+            webClient.Dispose();
+
+            return result;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            Common.End();
+            WinCom.End();
         }
 
         private void tmr_NoticeLoader_Tick(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace Bell_Smart_Tools.Source.BSS
         {
             try
             {
-                string original = Common.GetStringFromWeb("http://www.softbell.net/Notice", Encoding.UTF8);
+                string original = Common.getStringFromWeb("http://www.softbell.net/Notice", Encoding.UTF8);
                 original = original.Substring(original.IndexOf("<tbody>"));
                 original = original.Substring(original.IndexOf("<tbody>"), original.IndexOf("</tbody>"));
                 string[] data = original.Split('\n');
@@ -106,7 +106,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
         private void mi_Laboratory_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BST_Laboratory"))
+            if (WinCom.Feasibility("BST_Laboratory"))
             {
                 BST_Laboratory Lab = new BST_Laboratory();
                 Lab.Show();
@@ -125,12 +125,12 @@ namespace Bell_Smart_Tools.Source.BSS
 
         private void mi_End_Click(object sender, EventArgs e)
         {
-            Common.End();
+            WinCom.End();
         }
 
         private void mi_Restart_Click(object sender, EventArgs e)
         {
-            Common.End(true);
+            WinCom.End(true);
         }
 
         private void mi_BST_Preferences_Click(object sender, EventArgs e)
@@ -177,7 +177,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
         private void mi_DebugTool_Click(object sender, EventArgs e)
         {
-            if (Common.Feasibility("BST_Debug"))
+            if (WinCom.Feasibility("BST_Debug"))
             {
                 BST_Debug BSTD = new BST_Debug();
                 BSTD.Show();
