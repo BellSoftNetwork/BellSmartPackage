@@ -72,7 +72,7 @@ namespace Bell_Smart_Server.Source.BSS
 
             if (BSN.LoginStatus) // BSN 회원 인증 성공시
             {
-                BSN.SaveUserdata(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
+                BSN.SaveUserdata(cb_EmailSave.Checked, cb_AutoLogin.Checked);
                 BSS_Main BSS = new BSS_Main(); // BSP_Selector 인스턴스 생성
                 BSS.Show(); // BSP_Selector 실행
                 this.Hide(); // BST_Login 숨김

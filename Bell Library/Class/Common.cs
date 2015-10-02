@@ -156,7 +156,7 @@ namespace BellLib.Class
             string[] temp = Common.stringSplit(data, "<" + name + ">"); // 값 이름 시작 구분
             foreach (string tmp in temp)
             { // 값 이름 끝 구분
-                if (tmp != string.Empty)
+                if (tmp != string.Empty && tmp.Contains("</" + name + ">"))
                 {
                     string value = Common.stringSplit(tmp, "</" + name + ">")[0];
                     if (value != string.Empty)

@@ -26,8 +26,8 @@ namespace Bell_Smart_Manager.Source.Frame
             InitializeComponent();
             Controller Cont = new Controller();
             Cont.Initialize();
-            Main Main = new Main();
-            Main.Show();
+            Login login = new Login();
+            login.Show();
             this.Close();
         }
     }

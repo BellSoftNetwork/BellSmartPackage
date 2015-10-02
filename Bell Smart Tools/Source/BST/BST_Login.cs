@@ -25,7 +25,6 @@ namespace Bell_Smart_Tools.Source.BSS
         {
             string Email;
             string PW;
-            string AutoLogin;
 
             RegistryReader rReader = new RegistryReader();
 
@@ -33,8 +32,6 @@ namespace Bell_Smart_Tools.Source.BSS
             Email = (string)rReader.GetValue();
             rReader.Key = "BSN_Password";
             PW = (string)rReader.GetValue();
-            rReader.Key = "BSN_AutoLogin";
-            AutoLogin = (string)rReader.GetValue();
 
             /*
             string Email = Common.RegLoad("BSN_Email"); // 레지스트리에서 저장된 Email 값 로드
@@ -48,9 +45,9 @@ namespace Bell_Smart_Tools.Source.BSS
             if (PW != null) // 레지스트리에 PW 값이 존재한다면,
             {
                 txt_PW.Text = PW; // PW 텍스트 박스에 값 대입
-                cb_PWSave.Checked = true; // PW 저장 체크박스 활성화
+                cb_AutoLogin.Checked = true;
+                FormEnable(false);
             }
-            if (AutoLogin == "TRUE") { cb_AutoLogin.Checked = true; FormEnable(false); }
         }
 
         private void FormEnable(bool value)
@@ -59,7 +56,6 @@ namespace Bell_Smart_Tools.Source.BSS
             txt_PW.Enabled = value;
             btn_Login.Enabled = value;
             cb_EmailSave.Enabled = value;
-            cb_PWSave.Enabled = value;
             cb_AutoLogin.Enabled = value;
             llb_text.Enabled = value;
         }
@@ -72,7 +68,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
             if (BSN.LoginStatus) // BSN 회원 인증 성공시
             {
-                BSN.SaveUserdata(cb_EmailSave.Checked, cb_PWSave.Checked, cb_AutoLogin.Checked);
+                BSN.SaveUserdata(cb_EmailSave.Checked, cb_AutoLogin.Checked);
                 BST_Main BSP = new BST_Main(); // BSP_Selector 인스턴스 생성
                 BSP.Show(); // BSP_Selector 실행
                 this.Hide(); // BST_Login 숨김
@@ -103,27 +99,13 @@ namespace Bell_Smart_Tools.Source.BSS
         private void cb_EmailSave_CheckedChanged(object sender, EventArgs e)
         {
             if (cb_EmailSave.Checked == false)
-            {
-                cb_PWSave.Checked = false;
                 cb_AutoLogin.Checked = false;
-            }
-        }
-
-        private void cb_PWSave_CheckedChanged(object sender, EventArgs e)
-        {
-            if (cb_PWSave.Checked == true)
-            {
-                cb_EmailSave.Checked = true;
-            }
         }
 
         private void cb_AutoLogin_CheckedChanged(object sender, EventArgs e)
         {
             if (cb_AutoLogin.Checked == true)
-            {
                 cb_EmailSave.Checked = true;
-                cb_PWSave.Checked = true;
-            }
         }
 
         private void BSP_Login_FormClosing(object sender, FormClosingEventArgs e)

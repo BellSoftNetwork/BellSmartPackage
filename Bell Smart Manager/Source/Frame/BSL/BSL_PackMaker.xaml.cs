@@ -24,6 +24,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             InitializeComponent();
             Initialize();
+            // 로그인한 사용자가 팩 생성권한이 있는지 확인
+
+            //tiBasePack.Visibility = System.Windows.Visibility.Collapsed; // 베이스팩 생성불가
         }
 
         private void Initialize()
@@ -46,7 +49,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnModRegister_Click(object sender, RoutedEventArgs e)
         {
             //필드 검사
-            if (txtMUID.Text == "" && txtName.Text == "" && cbBasePack.SelectedIndex == -1)
+            if (txtMUID.Text == "" && txtModName.Text == "" && cbBasePack.SelectedIndex == -1)
             {
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
@@ -55,7 +58,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             //등록 시작
             btnModRegister.IsEnabled = false;
             string baseid = cbBasePack.Tag.ToString().Split('|')[cbBasePack.SelectedIndex];
-            if (BSN_Info.registerModPack(txtMUID.Text, txtName.Text, baseid, txtDetail.Text))
+            if (BSN_Info.registerModPack(txtMUID.Text, txtModName.Text, baseid, txtModDetail.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
@@ -65,7 +68,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnBaseRegister_Click(object sender, RoutedEventArgs e)
         {
             //필드 검사
-            if (txtBUID.Text == "" && txtMCVer.Text == "")
+            if (txtBUID.Text == "" && txtBaseMCVer.Text == "")
             {
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
@@ -73,11 +76,32 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             //등록 시작
             btnBaseRegister.IsEnabled = false;
-            if (BSN_Info.registerBasePack(txtBUID.Text, txtMCVer.Text))
+            if (BSN_Info.registerBasePack(txtBUID.Text, txtBaseMCVer.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
             btnBaseRegister.IsEnabled = true;
+        }
+
+        private void btnResRegister_Click(object sender, RoutedEventArgs e)
+        {
+            // 필드검사
+            if (txtRUID.Text == "" && txtResName.Text == "" && txtResMCVer.Text == "" && txtResDetail.Text == "")
+            {
+                WPFCom.Message("항목을 전부 입력해주세요.");
+                return;
+            }
+
+            // 등록 시작
+            btnResRegister.IsEnabled = false;
+            string type = "resourcepack";
+            if (rbMapPack.IsChecked == true)
+                type = "mappack";
+            if (BSN_Info.registerResourcePack(txtRUID.Text, type, txtResName.Text, txtResMCVer.Text, txtResDetail.Text, User.BSN_member_srl))
+                WPFCom.Message("정상적으로 신청되었습니다.");
+            else
+                WPFCom.Message("등록에 실패하였습니다.");
+            btnResRegister.IsEnabled = true;
         }
     }
 }

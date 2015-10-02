@@ -29,16 +29,7 @@ namespace Bell_Smart_Manager.Source.Frame
         {
             WPFCom.End();
         }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            string[] data = BSN_Info.loadPackList(BSN_Info.PACK.BasePack);
-            foreach (string tmp in data)
-            {
-                WPFCom.Message(Common.getElement(tmp, "BUID"));
-            }
-        }
-
+        
         private void btnPackMaker_Click(object sender, RoutedEventArgs e)
         {
             if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackMaker"))
@@ -54,6 +45,15 @@ namespace Bell_Smart_Manager.Source.Frame
             {
                 BSL_PackEditor PE = new BSL_PackEditor();
                 PE.Show();
+            }
+        }
+
+        private void btnPackUploader_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackUploader"))
+            {
+                BSL_PackUploader PU = new BSL_PackUploader();
+                PU.Show();
             }
         }
     }

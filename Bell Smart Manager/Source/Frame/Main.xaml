@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Bell Smart Manager" Height="315.108" Width="404.676" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" Closed="Window_Closed">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="102,112,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
         <Button x:Name="btnPackMaker" Content="팩 제작기" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="btnPackMaker_Click"/>
         <Button x:Name="btnPackEditor" Content="팩 편집기" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="btnPackEditor_Click"/>
+        <Button x:Name="btnPackUploader" Content="팩 업로더" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Click="btnPackUploader_Click"/>
 
     </Grid>
 </Window>

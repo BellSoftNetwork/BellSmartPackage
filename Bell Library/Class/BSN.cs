@@ -22,7 +22,7 @@ namespace BellLib.Class
         /// </summary>
         public static bool LoginStatus { get; set; }
 
-        public static void SaveUserdata(bool email, bool password, bool autoLogin)
+        public static void SaveUserdata(bool email, bool autoLogin)
         {
             // 단순 반복엔 액션!
             Action<bool, RegistryManager> SetOrDeleteValue = delegate(bool b, RegistryManager rm)
@@ -43,11 +43,11 @@ namespace BellLib.Class
 
                 // password
                 rManager.RegPair = new KeyValuePair<string, object>("BSN_Password", User.BSN_Password);
-                SetOrDeleteValue(password, rManager);
-
-                // autoLogin
-                rManager.RegPair = new KeyValuePair<string, object>("BSN_AutoLogin", Boolean.TrueString.ToUpper());
                 SetOrDeleteValue(autoLogin, rManager);
+
+                /*// autoLogin
+                rManager.RegPair = new KeyValuePair<string, object>("BSN_AutoLogin", Boolean.TrueString.ToUpper());
+                SetOrDeleteValue(autoLogin, rManager);*/
             }
 
         }
@@ -95,9 +95,19 @@ namespace BellLib.Class
                 return false;
             }
 
-            if (p) { GetUserdata(email, password); }
+            if (p)
+                GetUserdata(email, password);
             LoginStatus = p;
             return true;
+        }
+
+        private static void getMember(string originalData)
+        {
+            string data = Common.getElement(originalData, "member_data");
+            User.BSN_member_srl = Common.getElement(data, "member_srl");
+            User.BSN_nick_name = Common.getElement(data, "nick_name");
+            User.BSN_is_admin = Common.getElement(data, "is_admin");
+            User.BSN_group = Common.getElementArray(data, "group");
         }
 
         /// <summary>
@@ -108,7 +118,7 @@ namespace BellLib.Class
         /// <returns>초기화 된 HttpWebRequest 인스턴스를 반환합니다.</returns>
         private static HttpWebRequest GetInstance()
         {
-            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
+            HttpWebRequest wRequestBSN = (HttpWebRequest)HttpWebRequest.Create("http://" + Servers.Bell_Soft_Network.SERVER_IP + "/" + "index.php?mid=" + MidURL + "&act=dispMemberLoginForm");
             wRequestBSN.Method = "POST";
             wRequestBSN.Referer = Servers.Bell_Soft_Network.WEB_BSN_ROOT;
             wRequestBSN.ContentType = "application/x-www-form-urlencoded";
@@ -136,8 +146,13 @@ namespace BellLib.Class
                 return false;
             else if (response.IndexOf("<div class=\"login-footer\">") != -1) //(ResponseText.IndexOf("<p>여기는 로그인에 성공해야 들어올 수 있는 미지의 공간입니다.</p>") == -1)
                 return false;
+            else if (response.Contains("기본 URL 설정이 안 되어 있습니다.")) // XE문제로 실패할경우 예외처리
+                return false;
             else // 로그인 성공
+            {
+                getMember(response);
                 return true;
+            }
         }
     }
 
@@ -183,7 +198,7 @@ namespace BellLib.Class
         /// <param name="baseid">베이스팩 id</param>
         /// <param name="detail">모드팩 상세사항</param>
         /// <returns>등록 성공여부</returns>
-        public static bool registerModPack(string MUID, string name, string baseid, string detail)
+        public static bool registerModPack(string MUID, string name, string baseid, string detail, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
@@ -192,6 +207,7 @@ namespace BellLib.Class
             formData["name"] = name;
             formData["baseid"] = baseid;
             formData["detail"] = detail;
+            formData["member_srl"] = member_srl;
 
             string result = sendPOST(baseURL + "management/modpack.php", formData);
             switch (result)
@@ -200,6 +216,12 @@ namespace BellLib.Class
                     return true;
 
                 case "모드팩 등록에 실패하였습니다.":
+                    return false;
+
+                case "모드팩 관리자 정보 등록에 실패하였습니다.":
+                    return false;
+
+                case "모드팩 등록정보를 로드하는데 실패하였습니다.":
                     return false;
 
                 default:
@@ -213,13 +235,14 @@ namespace BellLib.Class
         /// <param name="BUID">BUID값</param>
         /// <param name="MCVer">마인크래프트 버전정보</param>
         /// <returns>등록 성공여부</returns>
-        public static bool registerBasePack(string BUID, string MCVer)
+        public static bool registerBasePack(string BUID, string MCVer, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = "basepack";
             formData["BUID"] = BUID;
             formData["mcversion"] = MCVer;
+            formData["member_srl"] = member_srl;
 
             string result = sendPOST(baseURL + "management/basepack.php", formData);
             switch (result)
@@ -230,9 +253,68 @@ namespace BellLib.Class
                 case "베이스팩 등록에 실패하였습니다.":
                     return false;
 
+                case "베이스팩 관리자 정보 등록에 실패하였습니다.":
+                    return false;
+
+                case "베이스팩 등록정보를 로드하는데 실패하였습니다.":
+                    return false;
+
                 default:
                     return false;
             }
+        }
+
+        /// <summary>
+        /// 리소스팩 정보를 등록합니다.
+        /// </summary>
+        /// <param name="RUID">RUID값</param>
+        /// <param name="type">팩 타입</param>
+        /// <param name="name">팩 이름</param>
+        /// <param name="mcversion">MC 버전</param>
+        /// <param name="detail">팩 상세정보</param>
+        /// <returns>등록 성공여부</returns>
+        public static bool registerResourcePack(string RUID, string type, string name, string mcversion, string detail, string member_srl)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["insert"] = type;
+            formData["RUID"] = RUID;
+            formData["name"] = name;
+            formData["mcversion"] = mcversion;
+            formData["detail"] = detail;
+            formData["member_srl"] = member_srl;
+
+            string result = sendPOST(baseURL + "management/resource.php", formData);
+            switch (result)
+            {
+                case "리소스 정보가 정상적으로 등록되었습니다.":
+                    return true;
+
+                case "리소스 등록에 실패하였습니다.":
+                    return false;
+
+                case "리소스 관리자 정보 등록에 실패하였습니다.":
+                    return false;
+
+                case "리소스 등록정보를 로드하는데 실패하였습니다.":
+                    return false;
+
+                default:
+                    return false;
+            }
+        }
+
+        public static string[] loadModPack(string member_srl)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["load"] = "modpack";
+            formData["member_srl"] = member_srl;
+
+            string result = sendPOST(baseURL + "management/modpack.php", formData);
+            string[] data = Common.getElementArray(result, "MUID");
+
+            return data;
         }
 
         /// <summary>

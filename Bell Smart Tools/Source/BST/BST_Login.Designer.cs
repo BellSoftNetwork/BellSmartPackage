@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BST_Login));
-            this.cb_PWSave = new System.Windows.Forms.CheckBox();
             this.cb_AutoLogin = new System.Windows.Forms.CheckBox();
             this.cb_EmailSave = new System.Windows.Forms.CheckBox();
             this.btn_Login = new System.Windows.Forms.Button();
@@ -40,21 +39,10 @@
             this.llb_text = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
-            // cb_PWSave
-            // 
-            this.cb_PWSave.AutoSize = true;
-            this.cb_PWSave.Location = new System.Drawing.Point(99, 76);
-            this.cb_PWSave.Name = "cb_PWSave";
-            this.cb_PWSave.Size = new System.Drawing.Size(100, 16);
-            this.cb_PWSave.TabIndex = 110;
-            this.cb_PWSave.Text = "비밀번호 저장";
-            this.cb_PWSave.UseVisualStyleBackColor = true;
-            this.cb_PWSave.CheckedChanged += new System.EventHandler(this.cb_PWSave_CheckedChanged);
-            // 
             // cb_AutoLogin
             // 
             this.cb_AutoLogin.AutoSize = true;
-            this.cb_AutoLogin.Location = new System.Drawing.Point(268, 76);
+            this.cb_AutoLogin.Location = new System.Drawing.Point(160, 76);
             this.cb_AutoLogin.Name = "cb_AutoLogin";
             this.cb_AutoLogin.Size = new System.Drawing.Size(88, 16);
             this.cb_AutoLogin.TabIndex = 106;
@@ -65,7 +53,7 @@
             // cb_EmailSave
             // 
             this.cb_EmailSave.AutoSize = true;
-            this.cb_EmailSave.Location = new System.Drawing.Point(5, 76);
+            this.cb_EmailSave.Location = new System.Drawing.Point(66, 76);
             this.cb_EmailSave.Name = "cb_EmailSave";
             this.cb_EmailSave.Size = new System.Drawing.Size(88, 16);
             this.cb_EmailSave.TabIndex = 105;
@@ -139,7 +127,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(368, 91);
-            this.Controls.Add(this.cb_PWSave);
             this.Controls.Add(this.cb_AutoLogin);
             this.Controls.Add(this.cb_EmailSave);
             this.Controls.Add(this.btn_Login);
@@ -164,7 +151,6 @@
 
         #endregion
 
-        internal System.Windows.Forms.CheckBox cb_PWSave;
         internal System.Windows.Forms.CheckBox cb_AutoLogin;
         internal System.Windows.Forms.CheckBox cb_EmailSave;
         internal System.Windows.Forms.Button btn_Login;

@@ -26,6 +26,7 @@ namespace BellLib.Data
             public const string WEB_INFO_BSL = "http://info.softbell.net/BSP/BSL/";
             public const string WEB_CLOUD_ROOT = "http://cloud.softbell.net/";
             public const string WEB_BSN_ROOT = "http://www.softbell.net/";
+            public const string WEB_BC_ROOT = "http://bc.softbell.net/";
             public const string WEB_INFO_ROOT = "http://info.softbell.net/";
         }
 
