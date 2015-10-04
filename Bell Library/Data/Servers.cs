@@ -22,12 +22,15 @@ namespace BellLib.Data
             public const string FTP_INFO_PW = "bellsoftnetwork";
             public const string FTP_CLOUD_ID = "BSNCloud";
             public const string FTP_CLOUD_PW = "bellsoftnetwork";
-            
-            public const string WEB_INFO_BSL = "http://info.softbell.net/BSP/BSL/";
-            public const string WEB_CLOUD_ROOT = "http://cloud.softbell.net/";
-            public const string WEB_BSN_ROOT = "http://www.softbell.net/";
-            public const string WEB_BC_ROOT = "http://bc.softbell.net/";
-            public const string WEB_INFO_ROOT = "http://info.softbell.net/";
+
+            public const string WEB_BLOG_URL = "http://blog." + SERVER_IP + "/";
+            public const string WEB_INFO_BSL = "http://info." + SERVER_IP + "/BSP/BSL/";
+            public const string WEB_CLOUD_ROOT = "http://cloud." + SERVER_IP + "/";
+            public const string WEB_BSN_ROOT = "http://www." + SERVER_IP + "/";
+            public const string WEB_BC_ROOT = "http://bc." + SERVER_IP + "/";
+            public const string WEB_INFO_ROOT = "http://info." + SERVER_IP + "/";
+
+            public const int BC_SERVER_PORT = 25555;
         }
 
         /// <summary>

@@ -141,7 +141,14 @@ namespace BellLib.Class
         /// <returns>구분된 문자배열</returns>
         public static string[] stringSplit(string input, string pattern)
         {
-            return System.Text.RegularExpressions.Regex.Split(input, pattern);
+            try
+            {
+                return System.Text.RegularExpressions.Regex.Split(input, pattern);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -152,19 +159,26 @@ namespace BellLib.Class
         /// <returns>요소 값 배열</returns>
         public static string[] getElementArray(string data, string name)
         {
-            List<string> list = new List<string>();
-            string[] temp = Common.stringSplit(data, "<" + name + ">"); // 값 이름 시작 구분
-            foreach (string tmp in temp)
-            { // 값 이름 끝 구분
-                if (tmp != string.Empty && tmp.Contains("</" + name + ">"))
-                {
-                    string value = Common.stringSplit(tmp, "</" + name + ">")[0];
-                    if (value != string.Empty)
-                        list.Add(value);
+            try
+            {
+                List<string> list = new List<string>();
+                string[] temp = Common.stringSplit(data, "<" + name + ">"); // 값 이름 시작 구분
+                foreach (string tmp in temp)
+                { // 값 이름 끝 구분
+                    if (tmp != string.Empty && tmp.Contains("</" + name + ">"))
+                    {
+                        string value = Common.stringSplit(tmp, "</" + name + ">")[0];
+                        if (value != string.Empty)
+                            list.Add(value);
+                    }
                 }
-            }
 
-            return list.ToArray();
+                return list.ToArray();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -175,7 +189,17 @@ namespace BellLib.Class
         /// <returns>요소 값</returns>
         public static string getElement(string data, string name)
         {
-            return Common.stringSplit(Common.stringSplit(data, "<" + name + ">")[1], "</" + name + ">")[0];
+            try
+            {
+                string result = Common.stringSplit(Common.stringSplit(data, "<" + name + ">")[1], "</" + name + ">")[0];
+                if (result == string.Empty)
+                    throw new System.InvalidCastException("해당 요소값이 존재하지 않습니다.");
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

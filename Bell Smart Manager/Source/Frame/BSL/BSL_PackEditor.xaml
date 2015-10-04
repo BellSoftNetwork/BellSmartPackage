@@ -20,25 +20,25 @@
                                 <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,48,0,0"/>
                                 <TextBox x:Name="txtModName" HorizontalAlignment="Left" Height="23" Margin="70,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="최신버전 :" HorizontalAlignment="Left" Margin="0,74,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtModLatest" HorizontalAlignment="Left" Height="23" Margin="70,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="권장버전 :" HorizontalAlignment="Left" Margin="0,100,0,0" VerticalAlignment="Top"/>
                                 <ComboBox x:Name="cbModRecommended" HorizontalAlignment="Left" Margin="70,104,0,0" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="베이스팩 :" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtBUID" HorizontalAlignment="Left" Height="23" Margin="70,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
                                 <CheckBox x:Name="cbModActivate" Content="모드팩 활성화" HorizontalAlignment="Left" Margin="70,157,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnModSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" VerticalAlignment="Top" Width="92"/>
-                                <Button x:Name="btnModDel" Content="모드팩 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="75"/>
+                                <Button x:Name="btnModSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" Width="92" Click="btnModSave_Click"/>
+                                <Button x:Name="btnModDel" Content="모드팩 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="75" Click="btnModDel_Click"/>
                                 <ListBox x:Name="lstModVersion" HorizontalAlignment="Left" Height="141" Margin="321,0,0,0" VerticalAlignment="Top" Width="294"/>
                                 <Label Content="베이스팩 필요버전 :" HorizontalAlignment="Left" Margin="321,172,0,0" VerticalAlignment="Top"/>
                                 <ComboBox x:Name="cbBaseVer" HorizontalAlignment="Left" Margin="443,173,0,0" VerticalAlignment="Top" Width="172"/>
                                 <CheckBox x:Name="cbModSelActivate" Content="선택버전 활성화" HorizontalAlignment="Left" Margin="321,199,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnModSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" VerticalAlignment="Top" Width="92"/>
-                                <Button x:Name="btnModSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84"/>
+                                <Button x:Name="btnModSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" VerticalAlignment="Top" Width="92" Click="btnModSelSave_Click"/>
+                                <Button x:Name="btnModSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84" Click="btnModSelDel_Click"/>
                                 <Label x:Name="lbModState" Content="검토 요청" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Top"/>
                                 <Label Content="버전 상태 :" HorizontalAlignment="Left" Margin="321,146,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="lbModVerState" Content="검토 요청" HorizontalAlignment="Left" Margin="443,146,0,0" VerticalAlignment="Top"/>
                                 <Label Content="요금제 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="lbModPlan" Content="Basic" HorizontalAlignment="Left" Margin="70,26,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbModLatest" Content="" HorizontalAlignment="Left" Margin="70,74,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbModBUID" Content="" HorizontalAlignment="Left" Margin="70,126,0,0" VerticalAlignment="Top"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="고급">
@@ -59,10 +59,10 @@
                                 <Label Content="권한 :" HorizontalAlignment="Left" Margin="287,26,0,0" VerticalAlignment="Top"/>
                                 <ComboBox x:Name="cbModPermission" HorizontalAlignment="Left" Margin="345,30,0,0" VerticalAlignment="Top" Width="270"/>
                                 <Button x:Name="btnModAuthAdd" Content="추가" HorizontalAlignment="Left" Margin="516,57,0,0" VerticalAlignment="Top" Width="47" Click="btnModAdd_Click"/>
-                                <Button x:Name="btnModAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47"/>
-                                <Button x:Name="btnModNews" Content="뉴스 편집" HorizontalAlignment="Left" Margin="287,82,0,0" VerticalAlignment="Top" Width="75"/>
-                                <Button x:Name="btnModDetail" Content="상세정보" HorizontalAlignment="Left" Margin="367,82,0,0" VerticalAlignment="Top" Width="75"/>
-                                <Button x:Name="btnModAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="345,57,0,0" VerticalAlignment="Top" Width="75"/>
+                                <Button x:Name="btnModAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47" Click="btnModAuthDel_Click"/>
+                                <Button x:Name="btnModNews" Content="뉴스 편집" HorizontalAlignment="Left" Margin="287,82,0,0" VerticalAlignment="Top" Width="75" Click="btnModNews_Click"/>
+                                <Button x:Name="btnModDetail" Content="상세정보" HorizontalAlignment="Left" Margin="367,82,0,0" VerticalAlignment="Top" Width="75" Click="btnModDetail_Click"/>
+                                <Button x:Name="btnModAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="345,57,0,0" VerticalAlignment="Top" Width="75" Click="btnModAuthRefresh_Click"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -82,19 +82,19 @@
                             <Grid Background="White">
                                 <Label Content="팩 상태 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <Label Content="최신버전 :" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtBaseLatest" HorizontalAlignment="Left" Height="23" Margin="70,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="권장버전 :" HorizontalAlignment="Left" Margin="0,49,0,0" VerticalAlignment="Top"/>
                                 <ComboBox x:Name="cbBaseRecommended" HorizontalAlignment="Left" Margin="70,53,0,0" VerticalAlignment="Top" Width="246"/>
                                 <CheckBox x:Name="cbBaseActivate" Content="베이스팩 활성화" HorizontalAlignment="Left" Margin="70,80,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnBaseSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" VerticalAlignment="Top" Width="92"/>
-                                <Button x:Name="btnBaseDel" Content="베이스팩 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="86"/>
+                                <Button x:Name="btnBaseSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" VerticalAlignment="Top" Width="92" Click="btnBaseSave_Click"/>
+                                <Button x:Name="btnBaseDel" Content="베이스팩 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="86" Click="btnBaseDel_Click"/>
                                 <ListBox x:Name="lstBaseVersion" HorizontalAlignment="Left" Height="163" Margin="321,0,0,0" VerticalAlignment="Top" Width="294"/>
                                 <CheckBox x:Name="cbBaseSelActivate" Content="선택버전 활성화" HorizontalAlignment="Left" Margin="321,199,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnBaseSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" VerticalAlignment="Top" Width="92"/>
-                                <Button x:Name="btnBaseSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84"/>
+                                <Button x:Name="btnBaseSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" Width="92" Click="btnBaseSelSave_Click"/>
+                                <Button x:Name="btnBaseSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84" Click="btnBaseSelDel_Click"/>
                                 <Label x:Name="lbBaseState" Content="검토 요청" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Top"/>
                                 <Label Content="버전 상태 :" HorizontalAlignment="Left" Margin="321,168,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="lbBaseVerState" Content="검토 요청" HorizontalAlignment="Left" Margin="434,168,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbBaseLatest" Content="" HorizontalAlignment="Left" Margin="70,23,0,0" VerticalAlignment="Top"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="고급">
@@ -114,9 +114,9 @@
                                 <TextBox x:Name="txtBaseEmail" HorizontalAlignment="Left" Height="23" Margin="345,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
                                 <Label Content="권한 :" HorizontalAlignment="Left" Margin="287,26,0,0" VerticalAlignment="Top"/>
                                 <ComboBox x:Name="cbBasePermission" HorizontalAlignment="Left" Margin="345,30,0,0" VerticalAlignment="Top" Width="270"/>
-                                <Button x:Name="btnBaseAuthAdd" Content="추가" HorizontalAlignment="Left" Margin="516,57,0,0" VerticalAlignment="Top" Width="47"/>
-                                <Button x:Name="btnBaseAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47"/>
-                                <Button x:Name="btnBaseAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="345,57,0,0" VerticalAlignment="Top" Width="75"/>
+                                <Button x:Name="btnBaseAuthAdd" Content="추가" HorizontalAlignment="Left" Margin="516,57,0,0" VerticalAlignment="Top" Width="47" Click="btnBaseAuthAdd_Click"/>
+                                <Button x:Name="btnBaseAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47" Click="btnBaseAuthDel_Click"/>
+                                <Button x:Name="btnBaseAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="345,57,0,0" VerticalAlignment="Top" Width="75" Click="btnBaseAuthRefresh_Click"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -128,7 +128,7 @@
                         <Grid HorizontalAlignment="Left" Height="27" Margin="0,0,-2,0" VerticalAlignment="Top" Width="621">
                             <Label Content="RUID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <ComboBox x:Name="cbRUID" HorizontalAlignment="Left" Margin="53,4,0,0" VerticalAlignment="Top" Width="478"/>
-                            <Button x:Name="btnResourceLoad" Content="불러오기" HorizontalAlignment="Left" Margin="536,4,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btnResourceLoad_Click"/>
+                            <Button x:Name="btnResLoad" Content="불러오기" HorizontalAlignment="Left" Margin="536,4,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btnResLoad_Click"/>
                         </Grid>
                     </GroupBox>
                     <TabControl x:Name="tcResource" HorizontalAlignment="Left" Height="247" Margin="0,54,0,0" VerticalAlignment="Top" Width="621" IsEnabled="False">
@@ -136,33 +136,33 @@
                             <Grid Background="White">
                                 <Label Content="팩 상태 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,48,0,0"/>
-                                <TextBox x:Name="txtResourceName" HorizontalAlignment="Left" Height="23" Margin="70,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
+                                <TextBox x:Name="txtResName" HorizontalAlignment="Left" Height="23" Margin="70,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="최신버전 :" HorizontalAlignment="Left" Margin="0,74,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtResourceLatest" HorizontalAlignment="Left" Height="23" Margin="70,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="권장버전 :" HorizontalAlignment="Left" Margin="0,100,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="cbResourceRecommended" HorizontalAlignment="Left" Margin="70,104,0,0" VerticalAlignment="Top" Width="246"/>
+                                <ComboBox x:Name="cbResRecommended" HorizontalAlignment="Left" Margin="70,104,0,0" VerticalAlignment="Top" Width="246"/>
                                 <Label Content="MC 버전 :" HorizontalAlignment="Left" Margin="0,126,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtResourceMCVer" HorizontalAlignment="Left" Height="23" Margin="70,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
-                                <CheckBox x:Name="cbResourceActivate" Content="리소스 활성화" HorizontalAlignment="Left" Margin="70,177,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnResourceSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" VerticalAlignment="Top" Width="92"/>
-                                <Button x:Name="btnResourceDel" Content="리소스 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="75"/>
-                                <ListBox x:Name="lstResourceVersion" HorizontalAlignment="Left" Height="163" Margin="321,0,0,0" VerticalAlignment="Top" Width="294"/>
-                                <CheckBox x:Name="cbResourceSelActivate" Content="선택버전 활성화" HorizontalAlignment="Left" Margin="321,199,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnResourceSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" VerticalAlignment="Top" Width="92"/>
-                                <Button x:Name="btnResourceSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84"/>
-                                <Label x:Name="lbResourceState" Content="검토 요청" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txtResMCVer" HorizontalAlignment="Left" Height="23" Margin="70,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="246"/>
+                                <CheckBox x:Name="cbResActivate" Content="리소스 활성화" HorizontalAlignment="Left" Margin="70,177,0,0" VerticalAlignment="Top"/>
+                                <Button x:Name="btnResSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" VerticalAlignment="Top" Width="92" Click="btnResSave_Click"/>
+                                <Button x:Name="btnResDel" Content="리소스 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="75" Click="btnResDel_Click"/>
+                                <ListBox x:Name="lstResVersion" HorizontalAlignment="Left" Height="163" Margin="321,0,0,0" VerticalAlignment="Top" Width="294"/>
+                                <CheckBox x:Name="cbResSelActivate" Content="선택버전 활성화" HorizontalAlignment="Left" Margin="321,199,0,0" VerticalAlignment="Top"/>
+                                <Button x:Name="btnResSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" VerticalAlignment="Top" Width="92" Click="btnResSelSave_Click"/>
+                                <Button x:Name="btnResSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84" Click="btnResSelDel_Click"/>
+                                <Label x:Name="lbResState" Content="검토 요청" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Top"/>
                                 <Label Content="버전 상태 :" HorizontalAlignment="Left" Margin="321,168,0,0" VerticalAlignment="Top"/>
-                                <Label x:Name="lbResourceVerState" Content="검토 요청" HorizontalAlignment="Left" Margin="434,168,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbResVerState" Content="검토 요청" HorizontalAlignment="Left" Margin="434,168,0,0" VerticalAlignment="Top"/>
                                 <Label Content="요금제 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
-                                <Label x:Name="lbResourcePlan" Content="Basic" HorizontalAlignment="Left" Margin="70,26,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbResPlan" Content="Basic" HorizontalAlignment="Left" Margin="70,26,0,0" VerticalAlignment="Top"/>
                                 <Label Content="팩 타입 :" HorizontalAlignment="Left" Margin="0,152,0,0" VerticalAlignment="Top"/>
                                 <RadioButton x:Name="rbResPack" Content="리소스팩" HorizontalAlignment="Left" Margin="70,157,0,0" VerticalAlignment="Top" IsChecked="True"/>
                                 <RadioButton x:Name="rbMapPack" Content="맵팩" HorizontalAlignment="Left" Margin="142,157,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbResLatest" Content="" HorizontalAlignment="Left" Margin="70,74,0,0" VerticalAlignment="Top"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="고급">
                             <Grid Background="White">
-                                <ListView x:Name="lstResourcePermission" HorizontalAlignment="Left" Height="219" VerticalAlignment="Top" Width="282">
+                                <ListView x:Name="lstResPermission" HorizontalAlignment="Left" Height="219" VerticalAlignment="Top" Width="282">
                                     <ListView.View>
                                         <GridView>
                                             <GridView.ColumnHeaderContextMenu>
@@ -174,14 +174,14 @@
                                     </ListView.View>
                                 </ListView>
                                 <Label Content="이메일 :" HorizontalAlignment="Left" Margin="287,0,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txtResourceEmail" HorizontalAlignment="Left" Height="23" Margin="345,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
+                                <TextBox x:Name="txtResEmail" HorizontalAlignment="Left" Height="23" Margin="345,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270"/>
                                 <Label Content="권한 :" HorizontalAlignment="Left" Margin="287,26,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="cbResourcePermission" HorizontalAlignment="Left" Margin="345,30,0,0" VerticalAlignment="Top" Width="270"/>
-                                <Button x:Name="btnResourceAuthAdd" Content="추가" HorizontalAlignment="Left" Margin="516,57,0,0" VerticalAlignment="Top" Width="47"/>
-                                <Button x:Name="btnResourceAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47"/>
-                                <Button x:Name="btnResourceNews" Content="뉴스 편집" HorizontalAlignment="Left" Margin="287,82,0,0" VerticalAlignment="Top" Width="75"/>
-                                <Button x:Name="btnResourceDetail" Content="상세정보" HorizontalAlignment="Left" Margin="367,82,0,0" VerticalAlignment="Top" Width="75"/>
-                                <Button x:Name="btnResourceAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="345,57,0,0" VerticalAlignment="Top" Width="75"/>
+                                <ComboBox x:Name="cbResPermission" HorizontalAlignment="Left" Margin="345,30,0,0" VerticalAlignment="Top" Width="270"/>
+                                <Button x:Name="btnResAuthAdd" Content="추가" HorizontalAlignment="Left" Margin="516,57,0,0" VerticalAlignment="Top" Width="47" Click="btnResAuthAdd_Click"/>
+                                <Button x:Name="btnResAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47" Click="btnResAuthDel_Click"/>
+                                <Button x:Name="btnResNews" Content="뉴스 편집" HorizontalAlignment="Left" Margin="287,82,0,0" VerticalAlignment="Top" Width="75" Click="btnResNews_Click"/>
+                                <Button x:Name="btnResDetail" Content="상세정보" HorizontalAlignment="Left" Margin="367,82,0,0" VerticalAlignment="Top" Width="75" Click="btnResDetail_Click"/>
+                                <Button x:Name="btnResAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="345,57,0,0" VerticalAlignment="Top" Width="75" Click="btnResAuthRefresh_Click"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
