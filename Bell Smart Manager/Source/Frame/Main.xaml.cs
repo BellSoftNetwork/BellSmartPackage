@@ -56,5 +56,23 @@ namespace Bell_Smart_Manager.Source.Frame
                 PU.Show();
             }
         }
+
+        private void btnPackReview_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackReview"))
+            {
+                BSL_PackReview PR = new BSL_PackReview();
+                PR.Show();
+            }
+        }
+
+        private void btnPackControl_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackControl"))
+            {
+                BSL_PackControl PC = new BSL_PackControl();
+                PC.Show();
+            }
+        }
     }
 }

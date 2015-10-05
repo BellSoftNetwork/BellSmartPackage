@@ -59,7 +59,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             //등록 시작
             btnModRegister.IsEnabled = false;
             string baseid = cbBasePack.Tag.ToString().Split('|')[cbBasePack.SelectedIndex];
-            if (BSN_BSL.registerModPack(txtMUID.Text, txtModName.Text, baseid, txtModDetail.Text, User.BSN_member_srl))
+            if (BSN_BSM.registerModPack(txtMUID.Text, txtModName.Text, baseid, txtModDetail.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
@@ -77,7 +77,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             //등록 시작
             btnBaseRegister.IsEnabled = false;
-            if (BSN_BSL.registerBasePack(txtBUID.Text, txtBaseMCVer.Text, User.BSN_member_srl))
+            if (BSN_BSM.registerBasePack(txtBUID.Text, txtBaseMCVer.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
@@ -98,7 +98,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string type = "resourcepack";
             if (rbMapPack.IsChecked == true)
                 type = "mappack";
-            if (BSN_BSL.registerResourcePack(txtRUID.Text, type, txtResName.Text, txtResMCVer.Text, txtResDetail.Text, User.BSN_member_srl))
+            if (BSN_BSM.registerResourcePack(txtRUID.Text, type, txtResName.Text, txtResMCVer.Text, txtResDetail.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");

@@ -1,0 +1,56 @@
+﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackReview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="팩 검토기" Height="445.684" Width="686.331" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TabControl HorizontalAlignment="Left" Height="407" VerticalAlignment="Top" Width="670">
+            <TabItem Header="검토 요약">
+                <Grid Background="White"/>
+            </TabItem>
+            <TabItem Header="정보 검토">
+                <Grid Background="White">
+                    <ComboBox x:Name="cbInfoType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="182" SelectedIndex="0" SelectionChanged="cbInfoType_SelectionChanged">
+                        <ListBoxItem Content="전체"/>
+                        <ListBoxItem Content="모드팩"/>
+                        <ListBoxItem Content="베이스팩"/>
+                        <ListBoxItem Content="리소스"/>
+                    </ComboBox>
+                    <ListBox x:Name="lstInfoList" HorizontalAlignment="Left" Height="327" Margin="0,27,0,0" VerticalAlignment="Top" Width="182" SelectionChanged="lstInfoList_SelectionChanged"/>
+                    <Label Content="팩 타입 :" HorizontalAlignment="Left" Margin="187,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbInfoType" Content="모드팩" HorizontalAlignment="Left" Margin="244,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+                    <Label Content="UID :" HorizontalAlignment="Left" Margin="394,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbInfoUID" Content="Test" HorizontalAlignment="Left" Margin="431,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
+                    <Label Content="팩 이름 :" HorizontalAlignment="Left" Margin="187,26,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbInfoName" Content="방울크래프트" HorizontalAlignment="Left" Margin="244,26,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
+                    <Label Content="[M] 베이스팩 :" HorizontalAlignment="Left" Margin="187,52,0,0" VerticalAlignment="Top"/>
+                    <Label Content="[R] MC버전 :" HorizontalAlignment="Left" Margin="394,52,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbInfoBUID" Content="Forge" HorizontalAlignment="Left" Margin="274,52,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label x:Name="lbInfoMCVer" Content="1.7.10" HorizontalAlignment="Left" Margin="472,52,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="제작 :" HorizontalAlignment="Left" Margin="187,78,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtInfoProEmail" HorizontalAlignment="Left" Height="23" Margin="228,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" Text="bell04204@gmail.com" IsReadOnly="True" FontWeight="Bold"/>
+                    <Label x:Name="lbInfoProNick" Content="방울" HorizontalAlignment="Left" Margin="228,78,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="문의 :" HorizontalAlignment="Left" Margin="187,104,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btnInfoApproval" Content="검토 승인" HorizontalAlignment="Left" Margin="509,359,0,0" VerticalAlignment="Top" Width="75" Background="LightBlue" FontWeight="Bold" Click="btnInfoApproval_Click"/>
+                    <Button x:Name="btnInfoRefusal" Content="검토 거부" HorizontalAlignment="Left" Margin="589,359,0,0" VerticalAlignment="Top" Width="75" Background="Orange" FontWeight="Bold" Click="btnInfoRefusal_Click"/>
+                    <Label Content="상세정보 :" HorizontalAlignment="Left" Margin="187,161,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtInfoDetail" HorizontalAlignment="Left" Height="193" Margin="257,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="397" IsReadOnly="True" VerticalScrollBarVisibility="Visible"/>
+                    <Button x:Name="btnInfoRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="0,359,0,0" VerticalAlignment="Top" Width="182" Click="btnInfoRefresh_Click"/>
+                    <Label Content="생성 :" HorizontalAlignment="Left" Margin="187,130,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbInfoStart" Content="2015-10-05" HorizontalAlignment="Left" Margin="228,130,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="버전 검토">
+                <Grid Background="White">
+                    <ComboBox x:Name="cbVerType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="182" SelectedIndex="0">
+                        <ListBoxItem Content="전체"/>
+                        <ListBoxItem Content="모드팩"/>
+                        <ListBoxItem Content="베이스팩"/>
+                        <ListBoxItem Content="리소스"/>
+                    </ComboBox>
+                    <ListBox x:Name="lstVerList" HorizontalAlignment="Left" Height="352" Margin="0,27,0,0" VerticalAlignment="Top" Width="182"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

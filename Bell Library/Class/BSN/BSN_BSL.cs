@@ -8,16 +8,21 @@ using System.Text;
 namespace BellLib.Class.BSN
 {
     /// <summary>
-    /// Bell Soft Network 정보서버 제어관련
+    /// Bell Smart Launcher 제어관련
     /// </summary>
     public class BSN_BSL
     {
         public class Manager
         {
+            public string member_srl { get; set; }
             public string email { get; set; }
             public string permission { get; set; }
+            public string start { get; set; }
         }
 
+        /// <summary>
+        /// 팩 종류 열거형
+        /// </summary>
         public enum PACK
         {
             ModPack,
@@ -25,8 +30,38 @@ namespace BellLib.Class.BSN
             Resource
         }
 
-        private const string baseURL = "BSL/";
+        /// <summary>
+        /// 상태 열거형
+        /// </summary>
+        public enum STATE
+        {
+            BANNED = -1,
+            PENDING = 0,
+            HIDDEN = 1,
+            ACTIVATE = 10
+        }
 
+        /// <summary>
+        /// 요금제 열거형
+        /// </summary>
+        public enum PLAN
+        {
+            Basic = 0,
+            Premium = 1,
+            Partner = 2,
+            BSN_Special = 10
+        }
+
+        private const string BASEURL = "BSL/";
+
+        #region *** 리스트 로드 ***
+
+        /// <summary>
+        /// 팩 리스트를 로드합니다.
+        /// </summary>
+        /// <param name="kind">팩 타입</param>
+        /// <param name="member_srl">(옵션) member_srl의 관리가능 팩</param>
+        /// <returns>팩 정보 배열</returns>
         public static string[] loadPackList(PACK kind)
         {
             NameValueCollection formData = new NameValueCollection();
@@ -47,169 +82,119 @@ namespace BellLib.Class.BSN
             }
             formData["list"] = "pack";
 
-            string result = BSN_Info.sendPOST(baseURL + "compack.php", formData);
+            string result = BSN_Info.sendPOST(BASEURL + "compack.php", formData);
             return Common.getElementArray(result, "pack");
         }
 
-        #region *** 팩 등록 ***
-
         /// <summary>
-        /// 신규 모드팩을 등록합니다.
+        /// 팩 버전 리스트를 로드합니다.
         /// </summary>
-        /// <param name="MUID">MUID값</param>
-        /// <param name="name">모드팩 이름</param>
-        /// <param name="baseid">베이스팩 id</param>
-        /// <param name="detail">모드팩 상세사항</param>
-        /// <returns>등록 성공여부</returns>
-        public static bool registerModPack(string MUID, string name, string baseid, string detail, string member_srl)
-        {
-            NameValueCollection formData = new NameValueCollection();
-
-            formData["insert"] = "modpack";
-            formData["MUID"] = MUID;
-            formData["name"] = name;
-            formData["baseid"] = baseid;
-            formData["detail"] = detail;
-            formData["member_srl"] = member_srl;
-
-            string result = BSN_Info.sendPOST(baseURL + "management/modpack.php", formData);
-            switch (result)
-            {
-                case "모드팩 정보가 정상적으로 등록되었습니다.":
-                    return true;
-
-                case "모드팩 등록에 실패하였습니다.":
-                    return false;
-
-                case "모드팩 관리자 정보 등록에 실패하였습니다.":
-                    return false;
-
-                case "모드팩 등록정보를 로드하는데 실패하였습니다.":
-                    return false;
-
-                default:
-                    return false;
-            }
-        }
-
-        /// <summary>
-        /// 베이스팩 정보를 등록합니다.
-        /// </summary>
-        /// <param name="BUID">BUID값</param>
-        /// <param name="MCVer">마인크래프트 버전정보</param>
-        /// <returns>등록 성공여부</returns>
-        public static bool registerBasePack(string BUID, string MCVer, string member_srl)
-        {
-            NameValueCollection formData = new NameValueCollection();
-
-            formData["insert"] = "basepack";
-            formData["BUID"] = BUID;
-            formData["mcversion"] = MCVer;
-            formData["member_srl"] = member_srl;
-
-            string result = BSN_Info.sendPOST(baseURL + "management/basepack.php", formData);
-            switch (result)
-            {
-                case "베이스팩 정보가 정상적으로 등록되었습니다.":
-                    return true;
-
-                case "베이스팩 등록에 실패하였습니다.":
-                    return false;
-
-                case "베이스팩 관리자 정보 등록에 실패하였습니다.":
-                    return false;
-
-                case "베이스팩 등록정보를 로드하는데 실패하였습니다.":
-                    return false;
-
-                default:
-                    return false;
-            }
-        }
-
-        /// <summary>
-        /// 리소스팩 정보를 등록합니다.
-        /// </summary>
-        /// <param name="RUID">RUID값</param>
         /// <param name="type">팩 타입</param>
-        /// <param name="name">팩 이름</param>
-        /// <param name="mcversion">MC 버전</param>
-        /// <param name="detail">팩 상세정보</param>
-        /// <returns>등록 성공여부</returns>
-        public static bool registerResourcePack(string RUID, string type, string name, string mcversion, string detail, string member_srl)
+        /// <param name="UID">팩 고유ID</param>
+        /// <param name="allState">모든 상태 로드여부</param>
+        /// <returns>버전 배열</returns>
+        public static string[] loadPackVersion(PACK type, string UID, bool allState = false)
         {
             NameValueCollection formData = new NameValueCollection();
+            string data, idType = null;
 
-            formData["insert"] = type;
-            formData["RUID"] = RUID;
-            formData["name"] = name;
-            formData["mcversion"] = mcversion;
-            formData["detail"] = detail;
-            formData["member_srl"] = member_srl;
-
-            string result = BSN_Info.sendPOST(baseURL + "management/resource.php", formData);
-            switch (result)
+            switch (type)
             {
-                case "리소스 정보가 정상적으로 등록되었습니다.":
-                    return true;
+                case PACK.ModPack:
+                    idType = "MUID";
+                    break;
 
-                case "리소스 등록에 실패하였습니다.":
-                    return false;
+                case PACK.BasePack:
+                    idType = "BUID";
+                    break;
 
-                case "리소스 관리자 정보 등록에 실패하였습니다.":
-                    return false;
-
-                case "리소스 등록정보를 로드하는데 실패하였습니다.":
-                    return false;
+                case PACK.Resource:
+                    idType = "RUID";
+                    break;
 
                 default:
-                    return false;
+                    return null;
             }
-        }
-        #endregion
+            formData["list"] = "version";
+            formData[idType] = UID;
+            if (allState)
+                formData["state"] = "all";
 
-        #region *** 팩 리스트 로드 ***
+            data = BSN_Info.sendPOST(BASEURL + "compack.php", formData);
+            return Common.getElementArray(data, "version");
+        }
 
         /// <summary>
-        /// 관리권한이 있는 모드팩을 로드합니다.
+        /// 팩 관리자 리스트를 로드합니다.
         /// </summary>
-        /// <param name="member_srl">멤버 고유번호</param>
-        /// <returns>MUID 배열</returns>
-        public static string[] loadModPackList(string member_srl)
+        /// <param name="type">팩 타입</param>
+        /// <param name="UID">팩 고유ID</param>
+        /// <returns>매니저 배열</returns>
+        public static Manager[] loadPackManager(PACK type, string UID)
         {
             NameValueCollection formData = new NameValueCollection();
+            string dbType = null;
 
-            formData["load"] = "modpack";
-            formData["member_srl"] = member_srl;
+            switch (type)
+            {
+                case PACK.ModPack:
+                    dbType = "modpack";
+                    break;
 
-            string result = BSN_Info.sendPOST(baseURL + "management/modpack.php", formData);
-            string[] data = Common.getElementArray(result, "MUID");
+                case PACK.BasePack:
+                    dbType = "basepack";
+                    break;
 
-            return data;
+                case PACK.Resource:
+                    dbType = "resource";
+                    break;
+            }
+
+            formData["list"] = "manager";
+            formData["type"] = dbType;
+            formData["UID"] = UID;
+
+            string data = BSN_Info.sendPOST(BASEURL + "compack.php", formData);
+            List<Manager> list = new List<Manager>();
+            foreach (string tmp in Common.getElementArray(data, "manager"))
+            {
+                Manager mg = new Manager();
+                mg.member_srl = Common.getElement(tmp, "member_srl");
+                mg.email = BSN_Info.getEmail(mg.member_srl);
+                mg.permission = Common.getElement(tmp, "permission");
+                mg.start = Common.getElement(tmp, "start");
+                list.Add(mg);
+            }
+
+            return list.ToArray<Manager>();
         }
 
         #endregion
-
+        
         #region *** 팩 상세정보 로드 ***
 
         /// <summary>
         /// MUID에 맞는 모드팩의 상세정보를 로드합니다.
         /// </summary>
         /// <param name="MUID">MUID 값</param>
+        /// <param name="id">id 값</param>
         /// <param name="name">모드팩 이름</param>
         /// <param name="recommended">모드팩 권장버전</param>
         /// <param name="BUID">선택된 BUID</param>
         /// <param name="state">상태</param>
         /// <param name="plan">플랜</param>
+        /// <param name="detail">상세정보</param>
+        /// <param name="start">생성일</param>
+        /// <param name="endtime">요금제 종료시간</param>
         /// <returns>로드 성공 여부</returns>
-        public static bool loadModPackDetail(string MUID, out string name, out string latest, out string recommended, out string BUID, out string state, out string plan)//, out string detail, out string start, out string endtime)
+        public static bool loadModPackDetail(string MUID, out string id, out string name, out string latest, out string recommended, out string BUID, out string state, out string plan, out string detail, out string start, out string endtime)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["detail"] = "modpack";
             formData["MUID"] = MUID;
 
-            string data = BSN_Info.sendPOST(baseURL + "modpack.php", formData);
+            string data = BSN_Info.sendPOST(BASEURL + "modpack.php", formData);
             state = "사용불가";
             switch (Common.getElement(data, "state"))
             {
@@ -250,9 +235,13 @@ namespace BellLib.Class.BSN
                     break;
             }
 
+            id = Common.getElement(data, "id");
             name = Common.getElement(data, "name");
             latest = "0.0.0"; // 활성화된 버전리스트를 로드해서 최신버전을 구한다.
             recommended = Common.getElement(data, "recommended");
+            detail = Common.getElement(data, "detail");
+            start = Common.getElement(data, "start");
+            endtime = Common.getElement(data, "endtime");
             string baseid = Common.getElement(data, "baseid");
 
             formData = new NameValueCollection();
@@ -261,91 +250,171 @@ namespace BellLib.Class.BSN
             formData["baseid"] = baseid;
             formData["state"] = "all";
 
-            data = BSN_Info.sendPOST(baseURL + "basepack.php", formData);
+            data = BSN_Info.sendPOST(BASEURL + "basepack.php", formData);
             BUID = Common.getElement(data, "BUID");
-            /*detail = Common.getElement(data, "detail");
+            
+            return true;
+        }
+
+        /// <summary>
+        /// BUID에 맞는 베이스팩 상세정보를 로드합니다.
+        /// </summary>
+        /// <param name="BUID">BUID 값</param>
+        /// <param name="id">id 값</param>
+        /// <param name="recommended">권장버전</param>
+        /// <param name="state">팩 상태</param>
+        /// <param name="mcversion">마크 버전</param>
+        /// <param name="plan">요금제</param>
+        /// <param name="start">생성일</param>
+        /// <param name="endtime">요금제 종료시간</param>
+        /// <returns></returns>
+        public static bool loadBasePackDetail(string BUID, out string id, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string start, out string endtime)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["detail"] = "basepack";
+            formData["BUID"] = BUID;
+
+            string data = BSN_Info.sendPOST(BASEURL + "basepack.php", formData);
+            state = "사용불가";
+            switch (Common.getElement(data, "state"))
+            {
+                case "-1":
+                    state = "사용불가";
+                    break;
+
+                case "0":
+                    state = "검토 요청";
+                    break;
+
+                case "1":
+                    state = "비활성화";
+                    break;
+
+                case "10":
+                    state = "활성화";
+                    break;
+            }
+
+            plan = "Basic";
+            switch (Common.getElement(data, "plan"))
+            {
+                case "0":
+                    plan = "Basic";
+                    break;
+
+                case "1":
+                    plan = "Premium";
+                    break;
+
+                case "2":
+                    plan = "Partner";
+                    break;
+
+                case "10":
+                    plan = "BSN Special";
+                    break;
+            }
+
+            id = Common.getElement(data, "id");
+            mcversion = Common.getElement(data, "mcversion");
+            latest = "0.0.0"; // 활성화된 버전리스트를 로드해서 최신버전을 구한다.
+            recommended = Common.getElement(data, "recommended");
             start = Common.getElement(data, "start");
-            endtime = Common.getElement(data, "endtime");*/
+            endtime = Common.getElement(data, "endtime");
+
+            return true;
+        }
+
+        /// <summary>
+        /// RUID에 맞는 리소스 상세정보를 로드합니다.
+        /// </summary>
+        /// <param name="RUID">RUID 값</param>
+        /// <param name="id">id</param>
+        /// <param name="type">타입</param>
+        /// <param name="name">이름</param>
+        /// <param name="latest">최신버전</param>
+        /// <param name="recommended">권장버전</param>
+        /// <param name="state">팩 상태</param>
+        /// <param name="mcversion">마크 버전</param>
+        /// <param name="plan">요금제</param>
+        /// <param name="detail">상세 정보</param>
+        /// <param name="start">생성일</param>
+        /// <param name="endtime">요금제 종료일</param>
+        /// <returns>성공 여부</returns>
+        public static bool loadResPackDetail(string RUID, out string id, out string type, out string name, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string detail, out string start, out string endtime)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["detail"] = "resource";
+            formData["RUID"] = RUID;
+
+            string data = BSN_Info.sendPOST(BASEURL + "resource.php", formData);
+            state = "사용불가";
+            switch (Common.getElement(data, "state"))
+            {
+                case "-1":
+                    state = "사용불가";
+                    break;
+
+                case "0":
+                    state = "검토 요청";
+                    break;
+
+                case "1":
+                    state = "비활성화";
+                    break;
+
+                case "10":
+                    state = "활성화";
+                    break;
+            }
+
+            plan = "Basic";
+            switch (Common.getElement(data, "plan"))
+            {
+                case "0":
+                    plan = "Basic";
+                    break;
+
+                case "1":
+                    plan = "Premium";
+                    break;
+
+                case "2":
+                    plan = "Partner";
+                    break;
+
+                case "10":
+                    plan = "BSN Special";
+                    break;
+            }
+
+            type = "리소스팩";
+            switch (Common.getElement(data, "type"))
+            {
+                case "res":
+                    type = "리소스팩";
+                    break;
+
+                case "map":
+                    type = "맵팩";
+                    break;
+            }
+
+            id = Common.getElement(data, "id");
+            mcversion = Common.getElement(data, "mcversion");
+            latest = "0.0.0"; // 활성화된 버전리스트를 로드해서 최신버전을 구한다.
+            recommended = Common.getElement(data, "recommended");
+            start = Common.getElement(data, "start");
+            endtime = Common.getElement(data, "endtime");
+            name = Common.getElement(data, "name");
+            detail = Common.getElement(data, "detail");
 
             return true;
         }
 
         #endregion
 
-        #region *** 팩 버전정보 로드 ***
-
-        public static string[] loadPackVersion(PACK type, string UID, bool allState = false)
-        {
-            NameValueCollection formData = new NameValueCollection();
-            string data, idType = null;
-
-            switch (type)
-            {
-                case PACK.ModPack:
-                    idType = "MUID";
-                    break;
-
-                case PACK.BasePack:
-                    idType = "BUID";
-                    break;
-
-                case PACK.Resource:
-                    idType = "RUID";
-                    break;
-
-                default:
-                    return null;
-            }
-            formData["list"] = "version";
-            formData[idType] = UID;
-            if (allState)
-                formData["state"] = "all";
-
-            data = BSN_Info.sendPOST(baseURL + "compack.php", formData);
-            return Common.getElementArray(data, "version");
-        }
-
-        #endregion
-
-        #region *** 팩 매니저 로드 ***
-
-        public static Manager[] loadPackManager(PACK type, string UID)
-        {
-            NameValueCollection formData = new NameValueCollection();
-            string dbType = null;
-
-            switch (type)
-            {
-                case PACK.ModPack:
-                    dbType = "modpack";
-                    break;
-
-                case PACK.BasePack:
-                    dbType = "basepack";
-                    break;
-
-                case PACK.Resource:
-                    dbType = "resource";
-                    break;
-            }
-
-            formData["list"] = "manager";
-            formData["type"] = dbType;
-            formData["UID"] = UID;
-
-            string data = BSN_Info.sendPOST(baseURL + "compack.php", formData);
-            List<Manager> list = new List<Manager>();
-            foreach (string tmp in Common.getElementArray(data, "manager"))
-            {
-                Manager mg = new Manager();
-                string member_srl = Common.getElement(tmp, "member_srl");
-                mg.email = BSN_Info.getEmail(member_srl);
-                mg.permission = Common.getElement(tmp, "permission");
-                list.Add(mg);
-            }
-
-            return list.ToArray<Manager>();
-        }
-        #endregion
     }
 }

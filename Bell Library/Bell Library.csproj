@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Class\BSN\BSN_BSL.cs" />
     <Compile Include="Class\BSN\BSN.cs" />
+    <Compile Include="Class\BSN\BSN_BSM.cs" />
     <Compile Include="Class\BSN\BSN_Info.cs" />
     <Compile Include="Class\Common.cs" />
     <Compile Include="Class\Debug.cs" />

@@ -118,11 +118,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Source\Frame\BSL\BSL_PackControl.xaml.cs">
+      <DependentUpon>BSL_PackControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Frame\BSL\BSL_PackEditor.xaml.cs">
       <DependentUpon>BSL_PackEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\BSL\BSL_PackMaker.xaml.cs">
       <DependentUpon>BSL_PackMaker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\BSL\BSL_PackReview.xaml.cs">
+      <DependentUpon>BSL_PackReview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\BSL\BSL_PackUploader.xaml.cs">
       <DependentUpon>BSL_PackUploader.xaml</DependentUpon>
@@ -137,11 +143,19 @@
       <DependentUpon>Updater.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Management\Controller.cs" />
+    <Page Include="Source\Frame\BSL\BSL_PackControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Frame\BSL\BSL_PackEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Frame\BSL\BSL_PackMaker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\BSL\BSL_PackReview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
