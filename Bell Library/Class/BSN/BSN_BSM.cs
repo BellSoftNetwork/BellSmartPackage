@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BellLib.Class.BSN
 {
@@ -13,22 +14,32 @@ namespace BellLib.Class.BSN
     {
         private const string BASEURL = "BSL/management/";
 
+        /// <summary>
+        /// 해당 문자열이 UID 작성법을 준수하는지 검사합니다.
+        /// </summary>
+        /// <param name="UID">검사할 UID 문자열</param>
+        /// <returns>UID 값 유효성 여부</returns>
+        public static bool checkUID(string UID)
+        {
+            return Regex.IsMatch(UID, @"^[a-zA-Z0-9_]+$");
+        }
+
         #region *** 팩 등록 ***
 
         /// <summary>
         /// 신규 모드팩을 등록합니다.
         /// </summary>
-        /// <param name="MUID">MUID값</param>
+        /// <param name="UID">UID값</param>
         /// <param name="name">모드팩 이름</param>
         /// <param name="baseid">베이스팩 id</param>
         /// <param name="detail">모드팩 상세사항</param>
         /// <returns>등록 성공여부</returns>
-        public static bool registerModPack(string MUID, string name, string baseid, string detail, string member_srl)
+        public static bool registerModPack(string UID, string name, string baseid, string detail, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = "modpack";
-            formData["MUID"] = MUID;
+            formData["UID"] = UID;
             formData["name"] = name;
             formData["baseid"] = baseid;
             formData["detail"] = detail;
@@ -57,15 +68,15 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 베이스팩 정보를 등록합니다.
         /// </summary>
-        /// <param name="BUID">BUID값</param>
+        /// <param name="UID">UID값</param>
         /// <param name="MCVer">마인크래프트 버전정보</param>
         /// <returns>등록 성공여부</returns>
-        public static bool registerBasePack(string BUID, string MCVer, string member_srl)
+        public static bool registerBasePack(string UID, string MCVer, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = "basepack";
-            formData["BUID"] = BUID;
+            formData["UID"] = UID;
             formData["mcversion"] = MCVer;
             formData["member_srl"] = member_srl;
 
@@ -92,18 +103,18 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 리소스팩 정보를 등록합니다.
         /// </summary>
-        /// <param name="RUID">RUID값</param>
+        /// <param name="UID">UID값</param>
         /// <param name="type">팩 타입</param>
         /// <param name="name">팩 이름</param>
         /// <param name="mcversion">MC 버전</param>
         /// <param name="detail">팩 상세정보</param>
         /// <returns>등록 성공여부</returns>
-        public static bool registerResourcePack(string RUID, string type, string name, string mcversion, string detail, string member_srl)
+        public static bool registerResourcePack(string UID, string type, string name, string mcversion, string detail, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = type;
-            formData["RUID"] = RUID;
+            formData["UID"] = UID;
             formData["name"] = name;
             formData["mcversion"] = mcversion;
             formData["detail"] = detail;
@@ -166,29 +177,25 @@ namespace BellLib.Class.BSN
         public static string[] loadReviewList(BSN_BSL.PACK kind)
         {
             NameValueCollection formData = new NameValueCollection();
-            string idType = null;
-
+            
             switch (kind)
             {
                 case BSN_BSL.PACK.ModPack:
                     formData["type"] = "modpack";
-                    idType = "MUID";
                     break;
 
                 case BSN_BSL.PACK.BasePack:
                     formData["type"] = "basepack";
-                    idType = "BUID";
                     break;
 
                 case BSN_BSL.PACK.Resource:
                     formData["type"] = "resource";
-                    idType = "RUID";
                     break;
             }
             formData["list"] = "review";
 
             string result = BSN_Info.sendPOST(BASEURL + "compack.php", formData);
-            return Common.getElementArray(result, idType);
+            return Common.getElementArray(result, "UID");
         }
 
         #endregion

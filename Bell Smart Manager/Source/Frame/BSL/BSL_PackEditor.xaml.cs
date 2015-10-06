@@ -30,30 +30,30 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void Initialize()
         {
             // 필드 초기화
-            cbMUID.Items.Clear();
-            cbBUID.Items.Clear();
-            cbRUID.Items.Clear();
+            cbModUID.Items.Clear();
+            cbBaseUID.Items.Clear();
+            cbResUID.Items.Clear();
 
             // 모드팩 데이터 로드
             foreach (string tmp in BSN_BSM.loadPackList(BSN_BSL.PACK.ModPack, User.BSN_member_srl))
-                cbMUID.Items.Add(Common.getElement(tmp, "MUID"));
+                cbModUID.Items.Add(Common.getElement(tmp, "UID"));
             // 베이스팩 데이터 로드
             foreach (string tmp in BSN_BSM.loadPackList(BSN_BSL.PACK.BasePack, User.BSN_member_srl))
-                cbBUID.Items.Add(Common.getElement(tmp, "BUID"));
+                cbBaseUID.Items.Add(Common.getElement(tmp, "UID"));
             // 리소스 데이터 로드
             foreach (string tmp in BSN_BSM.loadPackList(BSN_BSL.PACK.Resource, User.BSN_member_srl))
-                cbRUID.Items.Add(Common.getElement(tmp, "RUID"));
+                cbResUID.Items.Add(Common.getElement(tmp, "UID"));
 
             // 기본값 선택
-            cbMUID.SelectedIndex = 0;
-            cbBUID.SelectedIndex = 0;
-            cbRUID.SelectedIndex = 0;
+            cbModUID.SelectedIndex = 0;
+            cbBaseUID.SelectedIndex = 0;
+            cbResUID.SelectedIndex = 0;
         }
         
         private void btnModLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string MUID = (string)cbMUID.SelectedItem;
+            string MUID = (string)cbModUID.SelectedItem;
             string id, name, latest, recommended, BUID, state, plan, detail, start, endtime;
 
             // 초기화
@@ -88,7 +88,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnBaseLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string BUID = (string)cbBUID.SelectedItem;
+            string BUID = (string)cbBaseUID.SelectedItem;
             string id, latest, recommended, state, plan, mcversion, start, endtime;
 
             // 초기화
@@ -122,7 +122,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnResLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string RUID = (string)cbRUID.SelectedItem;
+            string RUID = (string)cbResUID.SelectedItem;
             string id, type, name, latest, recommended, state, mcversion, plan, detail, start, endtime;
 
             // 초기화
@@ -157,7 +157,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnModSave_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSM.modifyPackBasic(BSN_BSL.PACK.ModPack, (string)cbMUID.SelectedItem, (string)cbModRecommended.SelectedItem, (bool)cbModActivate.IsChecked))
+            if (BSN_BSM.modifyPackBasic(BSN_BSL.PACK.ModPack, (string)cbModUID.SelectedItem, (string)cbModRecommended.SelectedItem, (bool)cbModActivate.IsChecked))
             {
                 btnModLoad_Click(sender, e);
                 WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
@@ -185,7 +185,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.addPackManager(BSN_BSL.PACK.ModPack, (string)cbMUID.SelectedItem, member_srl, cbModPermission.SelectedIndex.ToString()))
+            if (BSN_BSM.addPackManager(BSN_BSL.PACK.ModPack, (string)cbModUID.SelectedItem, member_srl, cbModPermission.SelectedIndex.ToString()))
             {
                 btnModAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 등록되었습니다.");
@@ -211,7 +211,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.delPackManager(BSN_BSL.PACK.ModPack, (string)cbMUID.SelectedItem, member_srl, permission))
+            if (BSN_BSM.delPackManager(BSN_BSL.PACK.ModPack, (string)cbModUID.SelectedItem, member_srl, permission))
             {
                 btnModAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 삭제되었습니다.");
@@ -224,7 +224,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             lstModPermission.Items.Clear();
             lstModPermission.Tag = null;
-            foreach (BSN_BSL.Manager auth in BSN_BSL.loadPackManager(BSN_BSL.PACK.ModPack, (string)cbMUID.SelectedItem))
+            foreach (BSN_BSL.Manager auth in BSN_BSL.loadPackManager(BSN_BSL.PACK.ModPack, (string)cbModUID.SelectedItem))
             {
                 lstModPermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
                 if (auth.permission != "4")
@@ -253,7 +253,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnBaseSave_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSM.modifyPackBasic(BSN_BSL.PACK.BasePack, (string)cbBUID.SelectedItem, (string)cbBaseRecommended.SelectedItem, (bool)cbBaseActivate.IsChecked))
+            if (BSN_BSM.modifyPackBasic(BSN_BSL.PACK.BasePack, (string)cbBaseUID.SelectedItem, (string)cbBaseRecommended.SelectedItem, (bool)cbBaseActivate.IsChecked))
             {
                 btnBaseLoad_Click(sender, e);
                 WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
@@ -286,7 +286,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.addPackManager(BSN_BSL.PACK.BasePack, (string)cbBUID.SelectedItem, member_srl, cbBasePermission.SelectedIndex.ToString()))
+            if (BSN_BSM.addPackManager(BSN_BSL.PACK.BasePack, (string)cbBaseUID.SelectedItem, member_srl, cbBasePermission.SelectedIndex.ToString()))
             {
                 btnBaseAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 등록되었습니다.");
@@ -307,7 +307,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.delPackManager(BSN_BSL.PACK.BasePack, (string)cbBUID.SelectedItem, member_srl, permission))
+            if (BSN_BSM.delPackManager(BSN_BSL.PACK.BasePack, (string)cbBaseUID.SelectedItem, member_srl, permission))
             {
                 btnBaseAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 삭제되었습니다.");
@@ -320,7 +320,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             lstBasePermission.Items.Clear();
             lstBasePermission.Tag = null;
-            foreach (BSN_BSL.Manager auth in BSN_BSL.loadPackManager(BSN_BSL.PACK.BasePack, (string)cbBUID.SelectedItem))
+            foreach (BSN_BSL.Manager auth in BSN_BSL.loadPackManager(BSN_BSL.PACK.BasePack, (string)cbBaseUID.SelectedItem))
             {
                 lstBasePermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
                 if (auth.permission != "4")
@@ -339,7 +339,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnResSave_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSM.modifyPackBasic(BSN_BSL.PACK.Resource, (string)cbRUID.SelectedItem, (string)cbResRecommended.SelectedItem, (bool)cbResActivate.IsChecked))
+            if (BSN_BSM.modifyPackBasic(BSN_BSL.PACK.Resource, (string)cbResUID.SelectedItem, (string)cbResRecommended.SelectedItem, (bool)cbResActivate.IsChecked))
             {
                 btnResLoad_Click(sender, e);
                 WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
@@ -372,7 +372,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.addPackManager(BSN_BSL.PACK.Resource, (string)cbRUID.SelectedItem, member_srl, cbResPermission.SelectedIndex.ToString()))
+            if (BSN_BSM.addPackManager(BSN_BSL.PACK.Resource, (string)cbResUID.SelectedItem, member_srl, cbResPermission.SelectedIndex.ToString()))
             {
                 btnResAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 등록되었습니다.");
@@ -393,7 +393,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.delPackManager(BSN_BSL.PACK.Resource, (string)cbRUID.SelectedItem, member_srl, permission))
+            if (BSN_BSM.delPackManager(BSN_BSL.PACK.Resource, (string)cbResUID.SelectedItem, member_srl, permission))
             {
                 btnResAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 삭제되었습니다.");
@@ -406,7 +406,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             lstResPermission.Items.Clear();
             lstResPermission.Tag = null;
-            foreach (BSN_BSL.Manager auth in BSN_BSL.loadPackManager(BSN_BSL.PACK.Resource, (string)cbRUID.SelectedItem))
+            foreach (BSN_BSL.Manager auth in BSN_BSL.loadPackManager(BSN_BSL.PACK.Resource, (string)cbResUID.SelectedItem))
             {
                 lstResPermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
                 if (auth.permission != "4")

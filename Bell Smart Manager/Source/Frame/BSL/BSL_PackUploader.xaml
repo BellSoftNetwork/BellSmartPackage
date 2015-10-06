@@ -3,17 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="팩 업로더" Height="445.684" Width="686.331" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="407" VerticalAlignment="Top" Width="670">
-            <TabItem Header="모드팩">
-                <Grid Background="White"/>
-            </TabItem>
-            <TabItem Header="베이스팩">
-                <Grid Background="White"/>
-            </TabItem>
-            <TabItem Header="리소스">
-                <Grid Background="White"/>
-            </TabItem>
-        </TabControl>
-
+        <GroupBox Header="팩 정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="75" Width="670">
+            <Grid>
+                <RadioButton x:Name="rbModPack" Content="모드팩" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True" Checked="rbModPack_Checked" Margin="62,6,0,0"/>
+                <RadioButton x:Name="rbBasePack" Content="베이스팩" HorizontalAlignment="Left" Margin="122,6,0,0" VerticalAlignment="Top" Checked="rbBasePack_Checked"/>
+                <RadioButton x:Name="rbResource" Content="리소스" HorizontalAlignment="Left" Margin="194,6,0,0" VerticalAlignment="Top" Checked="rbResource_Checked"/>
+                <Label Content="UID :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cbUID" HorizontalAlignment="Left" Margin="62,30,0,0" VerticalAlignment="Top" Width="521"/>
+                <Button x:Name="btnLoad" Content="불러오기" HorizontalAlignment="Left" Margin="588,30,0,0" VerticalAlignment="Top" Width="70" Height="22" Click="btnLoad_Click"/>
+                <Label Content="팩 타입 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

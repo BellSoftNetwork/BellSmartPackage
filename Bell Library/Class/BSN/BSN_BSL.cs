@@ -176,7 +176,7 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// MUID에 맞는 모드팩의 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="MUID">MUID 값</param>
+        /// <param name="UID">UID 값</param>
         /// <param name="id">id 값</param>
         /// <param name="name">모드팩 이름</param>
         /// <param name="recommended">모드팩 권장버전</param>
@@ -187,12 +187,12 @@ namespace BellLib.Class.BSN
         /// <param name="start">생성일</param>
         /// <param name="endtime">요금제 종료시간</param>
         /// <returns>로드 성공 여부</returns>
-        public static bool loadModPackDetail(string MUID, out string id, out string name, out string latest, out string recommended, out string BUID, out string state, out string plan, out string detail, out string start, out string endtime)
+        public static bool loadModPackDetail(string UID, out string id, out string name, out string latest, out string recommended, out string BUID, out string state, out string plan, out string detail, out string start, out string endtime)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["detail"] = "modpack";
-            formData["MUID"] = MUID;
+            formData["UID"] = UID;
 
             string data = BSN_Info.sendPOST(BASEURL + "modpack.php", formData);
             state = "사용불가";
@@ -251,7 +251,7 @@ namespace BellLib.Class.BSN
             formData["state"] = "all";
 
             data = BSN_Info.sendPOST(BASEURL + "basepack.php", formData);
-            BUID = Common.getElement(data, "BUID");
+            BUID = Common.getElement(data, "UID");
             
             return true;
         }
@@ -259,7 +259,7 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// BUID에 맞는 베이스팩 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="BUID">BUID 값</param>
+        /// <param name="UID">UID 값</param>
         /// <param name="id">id 값</param>
         /// <param name="recommended">권장버전</param>
         /// <param name="state">팩 상태</param>
@@ -268,12 +268,12 @@ namespace BellLib.Class.BSN
         /// <param name="start">생성일</param>
         /// <param name="endtime">요금제 종료시간</param>
         /// <returns></returns>
-        public static bool loadBasePackDetail(string BUID, out string id, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string start, out string endtime)
+        public static bool loadBasePackDetail(string UID, out string id, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string start, out string endtime)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["detail"] = "basepack";
-            formData["BUID"] = BUID;
+            formData["UID"] = UID;
 
             string data = BSN_Info.sendPOST(BASEURL + "basepack.php", formData);
             state = "사용불가";
@@ -329,7 +329,7 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// RUID에 맞는 리소스 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="RUID">RUID 값</param>
+        /// <param name="UID">UID 값</param>
         /// <param name="id">id</param>
         /// <param name="type">타입</param>
         /// <param name="name">이름</param>
@@ -342,12 +342,12 @@ namespace BellLib.Class.BSN
         /// <param name="start">생성일</param>
         /// <param name="endtime">요금제 종료일</param>
         /// <returns>성공 여부</returns>
-        public static bool loadResPackDetail(string RUID, out string id, out string type, out string name, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string detail, out string start, out string endtime)
+        public static bool loadResPackDetail(string UID, out string id, out string type, out string name, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string detail, out string start, out string endtime)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["detail"] = "resource";
-            formData["RUID"] = RUID;
+            formData["UID"] = UID;
 
             string data = BSN_Info.sendPOST(BASEURL + "resource.php", formData);
             state = "사용불가";

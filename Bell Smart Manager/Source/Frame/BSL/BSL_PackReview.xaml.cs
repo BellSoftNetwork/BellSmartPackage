@@ -36,6 +36,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
 
             // 정보 검토
+            btnInfoApproval.IsEnabled = false;
+            btnInfoRefusal.IsEnabled = false;
             lbInfoBUID.Content = null;
             lbInfoMCVer.Content = null;
             lbInfoName.Content = null;
@@ -97,6 +99,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void lstInfoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            btnInfoApproval.IsEnabled = false;
+            btnInfoRefusal.IsEnabled = false;
+
             // 검사
             if (lstInfoList.Tag == null)
                 return;
@@ -124,63 +129,85 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 로드
             lbInfoUID.Content = (string)lstInfoList.SelectedItem;
+            string id, name, latest, recommended, state, plan, detail, start, endtime;
             switch (kind)
             {
                 case "ModPack":
                     string MUID = (string)lstInfoList.SelectedItem;
-                    string id, name, latest, recommended, SelBUID, state, plan, detail, start, endtime;
-                    BSN_BSL.loadModPackDetail(MUID, out id, out name, out latest, out recommended, out SelBUID, out state, out plan, out detail, out start, out endtime);
-                    lbInfoType.Content = "모드팩";
-                    lbInfoType.Foreground = new SolidColorBrush(Colors.Blue);
-                    lbInfoName.Content = name;
-                    lbInfoBUID.Content = SelBUID;
-                    lbInfoStart.Content = start;
-                    txtInfoDetail.Text = detail;
-                    /*foreach (BSN_BSL.Manager member in BSN_BSL.loadPackManager(BSN_BSL.PACK.ModPack, MUID))
+                    string SelBUID;
+                    if (BSN_BSL.loadModPackDetail(MUID, out id, out name, out latest, out recommended, out SelBUID, out state, out plan, out detail, out start, out endtime))
                     {
-                        if (member.permission == "4")
+                        // 로드 성공시
+                        lbInfoType.Content = "모드팩";
+                        lbInfoType.Foreground = new SolidColorBrush(Colors.Blue);
+                        lbInfoName.Content = name;
+                        lbInfoBUID.Content = SelBUID;
+                        lbInfoStart.Content = start;
+                        txtInfoDetail.Text = detail;
+                        foreach (BSN_BSL.Manager member in BSN_BSL.loadPackManager(BSN_BSL.PACK.ModPack, MUID))
                         {
-                            txtInfoProEmail.Text = member.email;
-                            lbInfoProNick.Content = BSN_Info.getNickName(member.member_srl);
+                            if (member.permission == "4")
+                            {
+                                txtInfoProEmail.Text = member.email;
+                                lbInfoProNick.Content = BSN_Info.getNickName(member.member_srl);
+                            }
                         }
-                    }*/ // 렉이 심해서 임시로 주석처리
+                    }
                     break;
 
                 case "BasePack":
                     string BUID = (string)lstInfoList.SelectedItem;
+                    string mcversion;
 
-                    lbInfoType.Content = "베이스팩";
-                    lbInfoType.Foreground = new SolidColorBrush(Colors.Red);
-                    lbInfoStart.Content = "시작일";
-                    lbInfoProNick.Content = "제작자 닉네임";
-                    txtInfoProEmail.Text = "제작자 이메일";
+                    if (BSN_BSL.loadBasePackDetail(BUID, out id, out latest, out recommended, out state, out mcversion, out plan, out start, out endtime))
+                    {
+                        // 로드 성공시
+                        lbInfoType.Content = "베이스팩";
+                        lbInfoType.Foreground = new SolidColorBrush(Colors.Red);
+                        lbInfoStart.Content = start;
+                        lbInfoMCVer.Content = mcversion;
+                        foreach (BSN_BSL.Manager member in BSN_BSL.loadPackManager(BSN_BSL.PACK.BasePack, BUID))
+                        {
+                            if (member.permission == "4")
+                            {
+                                txtInfoProEmail.Text = member.email;
+                                lbInfoProNick.Content = BSN_Info.getNickName(member.member_srl);
+                            }
+                        }
+                    }
                     break;
 
                 case "Resource":
                     string RUID = (string)lstInfoList.SelectedItem;
+                    string type;
 
-                    switch ("리소스타입")
+                    if (BSN_BSL.loadResPackDetail(RUID, out id, out type, out name, out latest, out recommended, out state, out mcversion, out plan, out detail, out start, out endtime))
                     {
-                        case "리소스팩":
-                            lbInfoType.Content = "리소스팩";
-                            break;
-
-                        case "맵팩":
-                            lbInfoType.Content = "맵팩";
+                        lbInfoType.Foreground = new SolidColorBrush(Colors.Green);
+                        lbInfoType.Content = type;
+                        lbInfoName.Content = name;
+                        lbInfoMCVer.Content = mcversion;
+                        lbInfoStart.Content = start;
+                        txtInfoDetail.Text = detail;
+                        foreach (BSN_BSL.Manager member in BSN_BSL.loadPackManager(BSN_BSL.PACK.Resource, RUID))
+                        {
+                            if (member.permission == "4")
+                            {
+                                txtInfoProEmail.Text = member.email;
+                                lbInfoProNick.Content = BSN_Info.getNickName(member.member_srl);
+                            }
+                        }
                     }
-                    lbInfoType.Foreground = new SolidColorBrush(Colors.Green);
-                    lbInfoName.Content = "리소스 이름";
-                    lbInfoMCVer.Content = "마크 버전";
-                    lbInfoStart.Content = "생성일";
-                    lbInfoProNick.Content = "제작자 닉네임";
-                    txtInfoProEmail.Text = "제작자 이메일";
-                    txtInfoDetail.Text = "상세정보";
                     break;
             }
+            btnInfoApproval.IsEnabled = true;
+            btnInfoRefusal.IsEnabled = true;
         }
 
         private void btnInfoApproval_Click(object sender, RoutedEventArgs e)
         {
+            if (lstInfoList.SelectedIndex == -1)
+                return;
             BSN_BSL.PACK kind = BSN_BSL.PACK.ModPack;
             switch (lstInfoList.Tag.ToString().Split('|')[lstInfoList.SelectedIndex])
             {
@@ -203,7 +230,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             if (BSN_BSM.approvalPack(kind, (string)lbInfoUID.Content, true))
             {
-                btnInfoRefresh_Click(sender, e);
+                //btnInfoRefresh_Click(sender, e);
+                Initialize();
                 WPFCom.Message("성공적으로 활성화 하였습니다.");
             }
             else
@@ -212,6 +240,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnInfoRefusal_Click(object sender, RoutedEventArgs e)
         {
+            if (lstInfoList.SelectedIndex == -1)
+                return;
             BSN_BSL.PACK kind = BSN_BSL.PACK.ModPack;
             switch (lstInfoList.Tag.ToString().Split('|')[lstInfoList.SelectedIndex])
             {
@@ -234,7 +264,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             if (BSN_BSM.approvalPack(kind, (string)lbInfoUID.Content, false))
             {
-                btnInfoRefresh_Click(sender, e);
+                //btnInfoRefresh_Click(sender, e);
+                Initialize();
                 WPFCom.Message("성공적으로 비활성화 하였습니다.");
             }
             else

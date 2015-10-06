@@ -23,15 +23,15 @@
                     <Label Content="팩 이름 :" HorizontalAlignment="Left" Margin="187,26,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="lbInfoName" Content="방울크래프트" HorizontalAlignment="Left" Margin="244,26,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
                     <Label Content="[M] 베이스팩 :" HorizontalAlignment="Left" Margin="187,52,0,0" VerticalAlignment="Top"/>
-                    <Label Content="[R] MC버전 :" HorizontalAlignment="Left" Margin="394,52,0,0" VerticalAlignment="Top"/>
+                    <Label Content="[BR] MC버전 :" HorizontalAlignment="Left" Margin="387,52,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="lbInfoBUID" Content="Forge" HorizontalAlignment="Left" Margin="274,52,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label x:Name="lbInfoMCVer" Content="1.7.10" HorizontalAlignment="Left" Margin="472,52,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label Content="제작 :" HorizontalAlignment="Left" Margin="187,78,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtInfoProEmail" HorizontalAlignment="Left" Height="23" Margin="228,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="227" Text="bell04204@gmail.com" IsReadOnly="True" FontWeight="Bold"/>
                     <Label x:Name="lbInfoProNick" Content="방울" HorizontalAlignment="Left" Margin="228,78,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                     <Label Content="문의 :" HorizontalAlignment="Left" Margin="187,104,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="btnInfoApproval" Content="검토 승인" HorizontalAlignment="Left" Margin="509,359,0,0" VerticalAlignment="Top" Width="75" Background="LightBlue" FontWeight="Bold" Click="btnInfoApproval_Click"/>
-                    <Button x:Name="btnInfoRefusal" Content="검토 거부" HorizontalAlignment="Left" Margin="589,359,0,0" VerticalAlignment="Top" Width="75" Background="Orange" FontWeight="Bold" Click="btnInfoRefusal_Click"/>
+                    <Button x:Name="btnInfoApproval" Content="검토 승인" HorizontalAlignment="Left" Margin="509,359,0,0" VerticalAlignment="Top" Width="75" Background="LightBlue" FontWeight="Bold" Click="btnInfoApproval_Click" IsEnabled="False"/>
+                    <Button x:Name="btnInfoRefusal" Content="검토 거부" HorizontalAlignment="Left" Margin="589,359,0,0" VerticalAlignment="Top" Width="75" Background="Orange" FontWeight="Bold" Click="btnInfoRefusal_Click" IsEnabled="False"/>
                     <Label Content="상세정보 :" HorizontalAlignment="Left" Margin="187,161,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtInfoDetail" HorizontalAlignment="Left" Height="193" Margin="257,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="397" IsReadOnly="True" VerticalScrollBarVisibility="Visible"/>
                     <Button x:Name="btnInfoRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="0,359,0,0" VerticalAlignment="Top" Width="182" Click="btnInfoRefresh_Click"/>
