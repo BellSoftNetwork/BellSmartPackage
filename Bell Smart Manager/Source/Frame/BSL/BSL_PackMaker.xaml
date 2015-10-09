@@ -1,6 +1,7 @@
-﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackMaker"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackMaker"
         Title="팩 만들기" Height="300" Width="423.022" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico">
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="271" VerticalAlignment="Top" Width="417">
@@ -20,10 +21,12 @@
             <TabItem x:Name="tiBasePack" Header="베이스팩">
                 <Grid Background="White">
                     <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Label Content="MC 버전 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
+                    <Label Content="MC 버전 :" HorizontalAlignment="Left" Margin="0,51.92,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtBaseUID" HorizontalAlignment="Left" Height="23" Margin="69,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
-                    <TextBox x:Name="txtBaseMCVer" HorizontalAlignment="Left" Height="23" Margin="69,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
+                    <TextBox x:Name="txtBaseName" Height="23" Margin="69,28.92,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtBaseMCVer" HorizontalAlignment="Left" Height="23" Margin="69,54.88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
                     <Button x:Name="btnBaseRegister" Content="등록 신청" HorizontalAlignment="Left" Margin="326,213,0,0" VerticalAlignment="Top" Width="75" Click="btnBaseRegister_Click"/>
+                    <Label x:Name="label" Content="이름 :" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tiRes" Header="리소스">
@@ -34,12 +37,12 @@
                     <Label Content="이름 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtResName" HorizontalAlignment="Left" Height="23" Margin="70,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
                     <TextBox x:Name="txtResMCVer" HorizontalAlignment="Left" Height="23" Margin="70,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
-                    <Button x:Name="btnResRegister" Content="등록 신청" HorizontalAlignment="Left" Margin="326,213,0,0" VerticalAlignment="Top" Width="75" Click="btnResRegister_Click"/>
                     <Label Content="리소스 타입 :" HorizontalAlignment="Left" Margin="0,78,0,0" VerticalAlignment="Top"/>
                     <RadioButton x:Name="rbResPack" Content="리소스팩" HorizontalAlignment="Left" Margin="86,84,0,0" VerticalAlignment="Top" IsChecked="True"/>
                     <RadioButton x:Name="rbMapPack" Content="맵팩" HorizontalAlignment="Left" Margin="158,84,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtResDetail" HorizontalAlignment="Left" Height="104" Margin="70,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" VerticalScrollBarVisibility="Visible" AcceptsReturn="True"/>
                     <Label Content="팩 설명 :" HorizontalAlignment="Left" Margin="0,104,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="btnResRegister" Content="등록 신청" HorizontalAlignment="Left" Margin="326,213,0,0" VerticalAlignment="Top" Width="75" Click="btnResRegister_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

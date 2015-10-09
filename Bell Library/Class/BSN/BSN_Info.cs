@@ -16,7 +16,7 @@ namespace BellLib.Class.BSN
         /// <param name="adress">정보 주소</param>
         /// <param name="formData">POST 값</param>
         /// <returns>POST 전송 후 결과값</returns>
-        public static string sendPOST(string adress, NameValueCollection formData, bool defaultInfoAdress = true)
+        public static string SendPOST(string adress, NameValueCollection formData, bool defaultInfoAdress = true)
         {
             WebClient webClient = new WebClient();
             if (defaultInfoAdress)
@@ -42,13 +42,13 @@ namespace BellLib.Class.BSN
         /// </summary>
         /// <param name="member_srl">member_srl 값</param>
         /// <returns>이메일 주소</returns>
-        public static string getEmail(string member_srl)
+        public static string GetEmail(string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["member_srl"] = member_srl;
 
-            string data = sendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_srl.php", formData, false);
+            string data = SendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_srl.php", formData, false);
             return Common.getElement(data, "email_address");
         }
 
@@ -57,13 +57,13 @@ namespace BellLib.Class.BSN
         /// </summary>
         /// <param name="member_srl">member_srl 값</param>
         /// <returns>닉네임</returns>
-        public static string getNickName(string member_srl)
+        public static string GetNickName(string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["member_srl"] = member_srl;
 
-            string data = sendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_srl.php", formData, false);
+            string data = SendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_srl.php", formData, false);
             return Common.getElement(data, "nick_name");
         }
 
@@ -72,13 +72,13 @@ namespace BellLib.Class.BSN
         /// </summary>
         /// <param name="email_address">이메일 주소</param>
         /// <returns>member_srl</returns>
-        public static string getMember_srl(string email_address)
+        public static string GetMember_srl(string email_address)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["email_address"] = email_address;
 
-            string data = sendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_email.php", formData, false);
+            string data = SendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_email.php", formData, false);
             return Common.getElement(data, "member_srl");
         }
     }

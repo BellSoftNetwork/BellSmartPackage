@@ -36,7 +36,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbBasePack.Items.Clear();
 
             //값 로드
-            string[] data = BSN_BSL.loadPackList(BSN_BSL.PACK.BasePack);
+            string[] data = BSN_BSL.LoadPackList(BSN_BSL.PACK.basepack);
             foreach (string value in data)
             {
                 cbBasePack.Tag += Common.getElement(value, "id") + "|";
@@ -55,7 +55,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
             }
-            if (!BSN_BSM.checkUID(txtModUID.Text))
+            if (!BSN_BSM.CheckUID(txtModUID.Text))
             {
                 WPFCom.Message("비 정상적인 UID 값입니다.");
                 return;
@@ -64,7 +64,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             //등록 시작
             btnModRegister.IsEnabled = false;
             string baseid = cbBasePack.Tag.ToString().Split('|')[cbBasePack.SelectedIndex];
-            if (BSN_BSM.registerModPack(txtModUID.Text, txtModName.Text, baseid, txtModDetail.Text, User.BSN_member_srl))
+            if (BSN_BSM.RegisterModPack(txtModUID.Text, txtModName.Text, baseid, txtModDetail.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
@@ -74,12 +74,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnBaseRegister_Click(object sender, RoutedEventArgs e)
         {
             //필드 검사
-            if (txtBaseUID.Text == "" || txtBaseMCVer.Text == "")
+            if (txtBaseUID.Text == "" || txtBaseName.Text == "" || txtBaseMCVer.Text == "")
             {
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
             }
-            if (!BSN_BSM.checkUID(txtBaseUID.Text))
+            if (!BSN_BSM.CheckUID(txtBaseUID.Text))
             {
                 WPFCom.Message("비 정상적인 UID 값입니다.");
                 return;
@@ -87,7 +87,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             //등록 시작
             btnBaseRegister.IsEnabled = false;
-            if (BSN_BSM.registerBasePack(txtBaseUID.Text, txtBaseMCVer.Text, User.BSN_member_srl))
+            if (BSN_BSM.RegisterBasePack(txtBaseUID.Text, txtBaseName.Text, txtBaseMCVer.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
@@ -102,7 +102,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
             }
-            if (!BSN_BSM.checkUID(txtResUID.Text))
+            if (!BSN_BSM.CheckUID(txtResUID.Text))
             {
                 WPFCom.Message("비 정상적인 UID 값입니다.");
                 return;
@@ -113,7 +113,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string type = "resourcepack";
             if (rbMapPack.IsChecked == true)
                 type = "mappack";
-            if (BSN_BSM.registerResourcePack(txtResUID.Text, type, txtResName.Text, txtResMCVer.Text, txtResDetail.Text, User.BSN_member_srl))
+            if (BSN_BSM.RegisterResourcePack(txtResUID.Text, type, txtResName.Text, txtResMCVer.Text, txtResDetail.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");

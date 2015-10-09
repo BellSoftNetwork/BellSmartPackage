@@ -50,19 +50,19 @@ namespace BellLib.Class
             CreateFolder(Data.User.BSN_Path);
             CreateFolder(Data.User.BSN_Path + "logs");
             CreateFolder(Data.User.BSN_Path + "Temp");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU");
+            /*CreateFolder(Data.User.BSN_Path + "Temp\\BSU");
             CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data");
             CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\ModPack");
             CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\ModPack\\Version");
             CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\BasePack");
             CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\BasePack\\Version");
             CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\OptionPack");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\OptionPack\\Version");
+            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\OptionPack\\Version");*/
 
             CreateFolder(Data.User.BSN_Path + "Upload");
             CreateFolder(Data.User.BSN_Path + "Upload\\ModPack");
             CreateFolder(Data.User.BSN_Path + "Upload\\BasePack");
-            CreateFolder(Data.User.BSN_Path + "Upload\\OptionPack");
+            CreateFolder(Data.User.BSN_Path + "Upload\\Resource");
             CreateFolder(Data.User.BSN_Path + "Upload\\Runtime");
             CreateFolder(Data.User.BSN_Path + "Upload\\Runtime\\JAVA");
 

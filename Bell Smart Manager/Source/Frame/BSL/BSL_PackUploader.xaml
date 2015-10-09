@@ -1,9 +1,10 @@
-﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackUploader"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="팩 업로더" Height="445.684" Width="686.331" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackUploader"
+        Title="팩 업로더" Height="459.184" Width="686.331" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <GroupBox Header="팩 정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="75" Width="670">
+        <GroupBox x:Name="gbPack" Header="팩 정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="75" Width="670">
             <Grid>
                 <RadioButton x:Name="rbModPack" Content="모드팩" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True" Checked="rbModPack_Checked" Margin="62,6,0,0"/>
                 <RadioButton x:Name="rbBasePack" Content="베이스팩" HorizontalAlignment="Left" Margin="122,6,0,0" VerticalAlignment="Top" Checked="rbBasePack_Checked"/>
@@ -12,6 +13,37 @@
                 <ComboBox x:Name="cbUID" HorizontalAlignment="Left" Margin="62,30,0,0" VerticalAlignment="Top" Width="521"/>
                 <Button x:Name="btnLoad" Content="불러오기" HorizontalAlignment="Left" Margin="588,30,0,0" VerticalAlignment="Top" Width="70" Height="22" Click="btnLoad_Click"/>
                 <Label Content="팩 타입 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="gbUpload" Header="업로드 정보" Margin="0,80,10,10" IsEnabled="False">
+            <Grid>
+                <Label Content="팩 버전 : " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox x:Name="txtVersion" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="61.287,0,0,0" HorizontalAlignment="Left" Width="236.774"/>
+                <Label x:Name="lbBaseVer" Content="베이스팩 버전 :" Margin="303.061,0,0,0" VerticalAlignment="Top" d:LayoutOverrides="Width" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="cbBaseVer" Margin="397.061,4,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="251.27"/>
+                <ListView x:Name="lstServer" Margin="0,30.96,0,0" Height="101.839" VerticalAlignment="Top">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding select}" Tag="{Binding id}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding name}" Header="서버 이름"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding upload}" Header="업로드 방식"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding download}" Header="다운로드 방식"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding plan}" Header="필요 요금제"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Label Content="업로드 폴더 :" VerticalAlignment="Top" Margin="0,137.799,0,0" HorizontalAlignment="Left"/>
+                <Label x:Name="lbUploadURL" Content="C:\BSN\Upload\ModPack\" HorizontalAlignment="Left" Margin="81.066,137.799,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="btnRefresh" Content="업로드 폴더 로드" Margin="0,140.798,0,142.964" HorizontalAlignment="Right" Width="98.067" Click="btnRefresh_Click" VerticalAlignment="Top"/>
+                <ListBox x:Name="lstFile" Height="94.066" VerticalAlignment="Top" Margin="0,168.759,0,0"/>
+                <ProgressBar x:Name="pbUpload" Height="10.934" VerticalAlignment="Bottom"/>
+                <Button x:Name="btnUpload" Content="업로드" HorizontalAlignment="Right" Margin="0,0,0,15.934" VerticalAlignment="Bottom" Width="75" Click="btnUpload_Click"/>
             </Grid>
         </GroupBox>
     </Grid>

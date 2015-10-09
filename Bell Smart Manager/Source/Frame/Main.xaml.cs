@@ -1,17 +1,7 @@
 ﻿using Bell_Smart_Manager.Source.Frame.BSL;
 using BellLib.Class;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Bell_Smart_Manager.Source.Frame
 {
@@ -72,6 +62,23 @@ namespace Bell_Smart_Manager.Source.Frame
             {
                 BSL_PackControl PC = new BSL_PackControl();
                 PC.Show();
+            }
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            long start = DateTime.Now.Ticks;
+            Common.Delay(100);
+            long end = DateTime.Now.Ticks;
+            WPFCom.Message("소요 시간 : " + ((end - start)/10000));
+        }
+
+        private void btnServerMaker_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_ServerMaker"))
+            {
+                BSL_ServerMaker SM = new BSL_ServerMaker();
+                SM.Show();
             }
         }
     }

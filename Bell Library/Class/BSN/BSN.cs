@@ -101,7 +101,7 @@ namespace BellLib.Class.BSN
             return true;
         }
 
-        private static void getMember(string originalData)
+        private static void GetMember(string originalData)
         {
             string data = Common.getElement(originalData, "member_data");
             User.BSN_member_srl = Common.getElement(data, "member_srl");
@@ -144,7 +144,7 @@ namespace BellLib.Class.BSN
 
             if (response.Contains("<BSN>이 곳은 Bell Soft Network 홈페이지에 로그인해야 접속할 수 있는 미지의 공간입니다.</BSN>"))
             {
-                getMember(response);
+                GetMember(response);
                 return true;
             }
 
