@@ -49,107 +49,135 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbBaseUID.SelectedIndex = 0;
             cbResUID.SelectedIndex = 0;
         }
-        
+
         private void btnModLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string MUID = (string)cbModUID.SelectedItem;
-            //string id, name, latest, recommended, BUID, state, plan, detail, start, endtime;
+            string UID = (string)cbModUID.SelectedItem;
             BSN_BSL.ModPack mp = new BSN_BSL.ModPack();
 
             // 초기화
             tcMod.IsEnabled = false;
             cbModActivate.IsChecked = false;
+            lstModVersion.Items.Clear();
+            lstModVersion.Tag = null;
+            cbModRecommended.Items.Clear();
 
-            // 로드
-            mp = BSN_BSL.LoadModPackDetail(MUID); //, out id, out name, out latest, out recommended, out BUID, out state, out plan, out detail, out start, out endtime)
-                // 로드 성공시
-                lbModName.Content = mp.name;
-                lbModLatest.Content = mp.latest;
-                foreach (string tmp in BSN_BSL.LoadPackVersion(BSN_BSL.PACK.modpack, MUID, true))
-                    cbModRecommended.Items.Add(tmp);
-                cbModRecommended.SelectedItem = mp.recommended; //cbModRecommended.Items.Add(recommended); // 업로드된 모든 버전 추가 (수정필요)
-                //cbModRecommended.SelectedIndex = 0; // 콤보박스에서 권장버전 선택 (수정필요)
-                lbModBUID.Content = mp.BUID;
-                lbModState.Content = mp.state;
-                lbModPlan.Content = mp.plan;
-                if (mp.state == "활성화")
-                    cbModActivate.IsChecked = true;
+            // 기본정보 로드
+            mp = BSN_BSL.LoadModPackDetail(UID);
+            lbModName.Content = mp.name;
+            lbModLatest.Content = mp.latest;
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, UID))
+                cbModRecommended.Items.Add(Common.getElement(tmp, "version"));
+            cbModRecommended.SelectedItem = mp.recommended; // 권장버전 선택
+            lbModBUID.Content = mp.BUID;
+            lbModState.Content = mp.state;
+            lbModPlan.Content = mp.plan;
+            if (mp.state == "활성화")
+                cbModActivate.IsChecked = true;
 
-                btnModAuthRefresh_Click(sender, e);
+            // 버전정보 로드
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, UID, true))
+            {
+                lstModVersion.Items.Add(Common.getElement(data, "version"));
+                lstModPermission.Tag += Common.getElement(data, "id") + "|";
+            }
+            lstModVersion.SelectedIndex = 0;
 
-                if (mp.state == "사용불가" || mp.state == "검토 요청")
-                    return;
-                //gbMod.IsEnabled = false;
-                tcMod.IsEnabled = true;
+            // 관리자 정보 로드
+            btnModAuthRefresh_Click(sender, e);
+
+            if (mp.state == "사용불가" || mp.state == "검토 요청")
+                return;
+            //gbMod.IsEnabled = false;
+            tcMod.IsEnabled = true;
         }
 
         private void btnBaseLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string BUID = (string)cbBaseUID.SelectedItem;
-            //string id, latest, recommended, state, plan, mcversion, start, endtime;
+            string UID = (string)cbBaseUID.SelectedItem;
             BSN_BSL.BasePack bp = new BSN_BSL.BasePack();
 
             // 초기화
             tcBase.IsEnabled = false;
             cbBaseActivate.IsChecked = false;
+            lstBaseVersion.Items.Clear();
+            lstBaseVersion.Tag = null;
+            cbBaseRecommended.Items.Clear();
 
-            // 로드
-            bp = BSN_BSL.LoadBasePackDetail(BUID); //, out id, out latest, out recommended, out state, out mcversion, out plan, out start, out endtime))
-                // 로드 성공시
-                lbBaseLatest.Content = bp.latest;
-                foreach (string tmp in BSN_BSL.LoadPackVersion(BSN_BSL.PACK.basepack, BUID, true))
-                    cbBaseRecommended.Items.Add(tmp);
-                cbBaseRecommended.SelectedItem = bp.recommended; //cbModRecommended.Items.Add(recommended); // 업로드된 모든 버전 추가 (수정필요)
-                //cbModRecommended.SelectedIndex = 0; // 콤보박스에서 권장버전 선택 (수정필요)
-                lbBaseState.Content = bp.state;
-                lbBasePlan.Content = bp.plan;
-                lbBaseMCVer.Content = bp.mcversion;
-                if (bp.state == "활성화")
-                    cbBaseActivate.IsChecked = true;
+            // 기본정보 로드
+            bp = BSN_BSL.LoadBasePackDetail(UID);
+            lbBaseName.Content = bp.name;
+            lbBaseLatest.Content = bp.latest;
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, UID))
+                cbBaseRecommended.Items.Add(Common.getElement(tmp, "version"));
+            cbBaseRecommended.SelectedItem = bp.recommended; // 권장버전 선택
+            lbBaseState.Content = bp.state;
+            lbBasePlan.Content = bp.plan;
+            lbBaseMCVer.Content = bp.mcversion;
+            if (bp.state == "활성화")
+                cbBaseActivate.IsChecked = true;
 
-                btnBaseAuthRefresh_Click(sender, e);
+            // 버전정보 로드
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, UID, true))
+            {
+                lstBaseVersion.Items.Add(Common.getElement(data, "version"));
+                lstBaseVersion.Tag += Common.getElement(data, "id") + "|";
+            }
+            lstBaseVersion.SelectedIndex = 0;
 
-                if (bp.state == "사용불가" || bp.state == "검토 요청")
-                    return;
-                //gbBase.IsEnabled = false;
-                tcBase.IsEnabled = true;
+            // 관리자 정보 로드
+            btnBaseAuthRefresh_Click(sender, e);
+
+            if (bp.state == "사용불가" || bp.state == "검토 요청")
+                return;
+            //gbBase.IsEnabled = false;
+            tcBase.IsEnabled = true;
         }
 
         private void btnResLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string RUID = (string)cbResUID.SelectedItem;
-            //string id, type, name, latest, recommended, state, mcversion, plan, detail, start, endtime;
+            string UID = (string)cbResUID.SelectedItem;
             BSN_BSL.Resource res = new BSN_BSL.Resource();
 
             // 초기화
             tcResource.IsEnabled = false;
             cbResActivate.IsChecked = false;
+            lstResVersion.Items.Clear();
+            lstResVersion.Tag = null;
+            cbResRecommended.Items.Clear();
 
-            // 로드
-            res = BSN_BSL.LoadResPackDetail(RUID); //, out id, out type, out name, out latest, out recommended, out state, out mcversion, out plan, out detail, out start, out endtime))
-                // 로드 성공시
-                lbResName.Content = res.name;
-                lbResLatest.Content = res.latest;
-                foreach (string tmp in BSN_BSL.LoadPackVersion(BSN_BSL.PACK.resource, RUID, true))
-                    cbResRecommended.Items.Add(tmp);
-                cbResRecommended.SelectedItem = res.recommended; //cbModRecommended.Items.Add(recommended); // 업로드된 모든 버전 추가 (수정필요)
-                //cbModRecommended.SelectedIndex = 0; // 콤보박스에서 권장버전 선택 (수정필요)
-                lbResState.Content = res.state;
-                lbResPlan.Content = res.plan;
-                lbResMCVer.Content = res.mcversion;
-                lbResType.Content = res.type;
-                if (res.state == "활성화")
-                    cbResActivate.IsChecked = true;
+            // 기본정보 로드
+            res = BSN_BSL.LoadResPackDetail(UID);
+            lbResName.Content = res.name;
+            lbResLatest.Content = res.latest;
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.resource, UID))
+                cbResRecommended.Items.Add(Common.getElement(tmp, "version"));
+            cbResRecommended.SelectedItem = res.recommended; // 권장버전 선택
+            lbResState.Content = res.state;
+            lbResPlan.Content = res.plan;
+            lbResMCVer.Content = res.mcversion;
+            lbResType.Content = res.type;
+            if (res.state == "활성화")
+                cbResActivate.IsChecked = true;
 
-                btnResAuthRefresh_Click(sender, e);
+            // 버전정보 로드
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.resource, UID, true))
+            {
+                lstResVersion.Items.Add(Common.getElement(data, "version"));
+                lstResVersion.Tag += Common.getElement(data, "id") + "|";
+            }
+            lstResVersion.SelectedIndex = 0;
 
-                if (res.state == "사용불가" || res.state == "검토 요청")
-                    return;
-                //gbResource.IsEnabled = false;
-                tcResource.IsEnabled = true;
+            // 관리자 정보 로드
+            btnResAuthRefresh_Click(sender, e);
+
+            if (res.state == "사용불가" || res.state == "검토 요청")
+                return;
+            //gbResource.IsEnabled = false;
+            tcResource.IsEnabled = true;
         }
 
         private void btnModSave_Click(object sender, RoutedEventArgs e)
@@ -428,6 +456,70 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnResDetail_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void LoadVersion(BSN_BSL.PACK type, ListBox Version, CheckBox SelectActivate, out string outState, out CheckBox outSelectActivate)
+        {
+            string verid;
+            try
+            {
+                verid = Version.Tag.ToString().Split('|')[Version.SelectedIndex];
+            }
+            catch
+            {
+                throw;
+            }
+            string data = BSN_BSL.LoadVersionDetail(type, verid);
+            BSN_BSL.STATE state = (BSN_BSL.STATE)Convert.ToInt32(Common.getElement(data, "state"));
+
+            outState = BSN_BSL.GetStateName(state);
+
+            outSelectActivate = SelectActivate;
+            outSelectActivate.IsEnabled = false;
+            outSelectActivate.IsChecked = false;
+            if (state == BSN_BSL.STATE.HIDDEN)
+            {
+                outSelectActivate.IsEnabled = true;
+                outSelectActivate.IsChecked = false;
+            }
+            else if (state == BSN_BSL.STATE.ACTIVATE)
+            {
+                outSelectActivate.IsEnabled = true;
+                outSelectActivate.IsChecked = true;
+            }
+        }
+
+        private void lstModVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string state;
+                LoadVersion(BSN_BSL.PACK.modpack, lstModVersion, cbModSelActivate, out state, out cbModSelActivate);
+                lbModVerState.Content = state;
+            }
+            catch { }
+        }
+
+        private void lstBaseVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string state;
+                LoadVersion(BSN_BSL.PACK.basepack, lstBaseVersion, cbBaseSelActivate, out state, out cbBaseSelActivate);
+                lbBaseVerState.Content = state;
+            }
+            catch { }
+        }
+
+        private void lstResVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string state;
+                LoadVersion(BSN_BSL.PACK.resource, lstResVersion, cbResSelActivate, out state, out cbResSelActivate);
+                lbResVerState.Content = state;
+            }
+            catch { }
         }
     }
 }

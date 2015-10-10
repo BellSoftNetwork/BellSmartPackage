@@ -145,7 +145,20 @@ namespace BellLib.Class.BSN
             }
         }
 
-        public static bool RegisterServer(string UID, string type, string upload, string download, string name, string address, string port, string require_plan)
+        /// <summary>
+        /// 서버 정보를 등록합니다.
+        /// </summary>
+        /// <param name="UID">UID 값</param>
+        /// <param name="type">서버 형태</param>
+        /// <param name="upload">업로드 방식</param>
+        /// <param name="download">다운로드 방식</param>
+        /// <param name="name">서버 이름</param>
+        /// <param name="address">서버 주소</param>
+        /// <param name="port">서버 포트</param>
+        /// <param name="require_plan">업로드시 최소 요금제</param>
+        /// <param name="member_srl">BSN 홈페이지 member_srl</param>
+        /// <returns>등록 성공여부</returns>
+        public static bool RegisterServer(string UID, string type, string upload, string download, string name, string address, string port, string require_plan, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
@@ -158,11 +171,23 @@ namespace BellLib.Class.BSN
             formData["address"] = address;
             formData["port"] = port;
             formData["require_plan"] = require_plan;
+            formData["member_srl"] = member_srl;
 
             string result = BSN_Info.SendPOST(BASEURL + "servers.php", formData);
-            if (result != "서버 등록 성공")
-                return false;
-            return true;
+            switch (result)
+            {
+                case "서버 정보가 정상적으로 등록되었습니다.":
+                    return true;
+
+                case "서버 관리자 정보 등록에 실패하였습니다.":
+                    return false;
+
+                case "서버 정보 등록에 실패하였습니다.":
+                    return false;
+
+                default:
+                    return false;
+            }
         }
         #endregion
 
@@ -186,15 +211,36 @@ namespace BellLib.Class.BSN
             return Common.getElementArray(result, "pack");
         }
 
-        public static string[] loadReviewList(BSN_BSL.PACK kind)
+        /// <summary>
+        /// 검토가 필요한 팩 리스트를 로드합니다.
+        /// </summary>
+        /// <param name="kind">팩 종류</param>
+        /// <returns>팩 UID 배열</returns>
+        public static string[] LoadReviewList(BSN_BSL.PACK kind)
         {
             NameValueCollection formData = new NameValueCollection();
             
-            formData["list"] = "review";
+            formData["list"] = "pack_review";
             formData["type"] = kind.ToString();
 
             string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
             return Common.getElementArray(result, "UID");
+        }
+
+        /// <summary>
+        /// 검토가 필요한 버전 리스트를 로드합니다.
+        /// </summary>
+        /// <param name="kind">팩 종류</param>
+        /// <returns>ver 배열</returns>
+        public static string[] LoadVersionReviewList(BSN_BSL.PACK kind)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["list"] = "version_review";
+            formData["type"] = kind.ToString();
+
+            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            return Common.getElementArray(result, "ver");
         }
 
         #endregion
@@ -244,6 +290,33 @@ namespace BellLib.Class.BSN
 
             string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
             if (result == "정보 수정 성공")
+                return true;
+            else
+                return false;
+        }
+
+        #endregion
+
+        #region *** 버전 수정 ***
+
+        /// <summary>
+        /// 검토 대기중인 버전을 검토합니다.
+        /// </summary>
+        /// <param name="kind"></param>
+        /// <param name="verid"></param>
+        /// <param name="approval"></param>
+        /// <returns></returns>
+        public static bool ApprovalVersion(BSN_BSL.PACK kind, string verid, bool approval)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["review"] = "version";
+            formData["id"] = verid;
+            formData["type"] = kind.ToString();
+            formData["approval"] = approval.ToString();
+
+            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            if (result == "검토사항 변경 성공")
                 return true;
             else
                 return false;
@@ -305,7 +378,19 @@ namespace BellLib.Class.BSN
 
         #endregion
 
-
+        /// <summary>
+        /// 버전등록 후 클라이언트 파일을 업로드합니다.
+        /// </summary>
+        /// <param name="kind">팩 종류</param>
+        /// <param name="id">BSN ID</param>
+        /// <param name="pw">BSN PW</param>
+        /// <param name="UID">UID 값</param>
+        /// <param name="version">버전 정보</param>
+        /// <param name="server">업로드할 서버 리스트</param>
+        /// <param name="file">업로드할 파일 리스트</param>
+        /// <param name="basePath">업로드 폴더 기본 경로</param>
+        /// <param name="basevid">(모드팩 전용) 베이스팩 버전ID</param>
+        /// <returns>버전등록 성공여부</returns>
         public static bool UploadVersion(BSN_BSL.PACK kind, string id, string pw, string UID, string version, string[] server, string[] file, string basePath, string basevid = null)
         {
             // 버전정보 등록

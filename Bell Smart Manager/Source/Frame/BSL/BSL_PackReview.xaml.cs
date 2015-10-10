@@ -35,6 +35,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             lbInfoProNick.Content = null;
             lbInfoType.Content = null;
             lbInfoUID.Content = null;
+            lbInfoStart.Content = null;
             txtInfoDetail.Text = null;
             txtInfoProEmail.Text = null;
             lbInfoDetail.Visibility = Visibility.Visible;
@@ -57,7 +58,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             btnInfoRefresh_Click(null, null);
 
             // 버전 검토
-
+            btnVerRefresh_Click(null, null);
         }
 
         private void btnInfoRefresh_Click(object sender, RoutedEventArgs e)
@@ -68,19 +69,19 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             int TYPE = cbInfoType.SelectedIndex;
             if (TYPE == 0 || TYPE == 1)
-                foreach (string tmp in BSN_BSM.loadReviewList(BSN_BSL.PACK.modpack))
+                foreach (string tmp in BSN_BSM.LoadReviewList(BSN_BSL.PACK.modpack))
                 {
                     lstInfoList.Items.Add(tmp);
                     lstInfoList.Tag += BSN_BSL.PACK.modpack + "|";
                 }
             if (TYPE == 0 || TYPE == 2)
-                foreach (string tmp in BSN_BSM.loadReviewList(BSN_BSL.PACK.basepack))
+                foreach (string tmp in BSN_BSM.LoadReviewList(BSN_BSL.PACK.basepack))
                 {
                     lstInfoList.Items.Add(tmp);
                     lstInfoList.Tag += BSN_BSL.PACK.basepack + "|";
                 }
             if (TYPE == 0 || TYPE == 3)
-                foreach (string tmp in BSN_BSM.loadReviewList(BSN_BSL.PACK.resource))
+                foreach (string tmp in BSN_BSM.LoadReviewList(BSN_BSL.PACK.resource))
                 {
                     lstInfoList.Items.Add(tmp);
                     lstInfoList.Tag += BSN_BSL.PACK.resource + "|";
@@ -283,6 +284,204 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
             else
                 WPFCom.Message("팩 비활성화에 실패하였습니다.");
+        }
+
+        private void btnVerRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            lstVerList.Items.Clear();
+            lstVerList.SelectedIndex = -1;
+            lstVerList.Tag = null;
+
+            int TYPE = cbVerType.SelectedIndex;
+            if (TYPE == 0 || TYPE == 1)
+                foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.modpack))
+                {
+                    lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
+                    lstVerList.Tag += BSN_BSL.PACK.modpack + "-" + Common.getElement(tmp, "UID") + "-" + Common.getElement(tmp, "id") + "|";
+                }
+            if (TYPE == 0 || TYPE == 2)
+                foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.basepack))
+                {
+                    lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
+                    lstVerList.Tag += BSN_BSL.PACK.basepack + "-" + Common.getElement(tmp, "UID") + "-" + Common.getElement(tmp, "id") + "|";
+                }
+            if (TYPE == 0 || TYPE == 3)
+                foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.resource))
+                {
+                    lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
+                    lstVerList.Tag += BSN_BSL.PACK.resource + "-" + Common.getElement(tmp, "UID") + "-" + Common.getElement(tmp, "id") + "|";
+                }
+
+            lstVerList.SelectedIndex = 0;
+        }
+
+        private void btnVerApproval_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstVerList.SelectedIndex == -1)
+                return;
+            BSN_BSL.PACK kind = BSN_BSL.PACK.modpack;
+            switch (lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-')[0])
+            {
+                case "modpack":
+                    kind = BSN_BSL.PACK.modpack;
+                    break;
+
+                case "basepack":
+                    kind = BSN_BSL.PACK.basepack;
+                    break;
+
+                case "resource":
+                    kind = BSN_BSL.PACK.resource;
+                    break;
+
+                default:
+                    WPFCom.Message("비정상적인 접근입니다.");
+                    return;
+            }
+
+            if (BSN_BSM.ApprovalVersion(kind, lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-')[2], true))
+            {
+                Initialize();
+                WPFCom.Message("성공적으로 활성화 하였습니다.");
+            }
+            else
+                WPFCom.Message("버전 활성화에 실패하였습니다.");
+        }
+
+        private void btnVerRefusal_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstVerList.SelectedIndex == -1)
+                return;
+            BSN_BSL.PACK kind = BSN_BSL.PACK.modpack;
+            switch (lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-')[0])
+            {
+                case "modpack":
+                    kind = BSN_BSL.PACK.modpack;
+                    break;
+
+                case "basepack":
+                    kind = BSN_BSL.PACK.basepack;
+                    break;
+
+                case "resource":
+                    kind = BSN_BSL.PACK.resource;
+                    break;
+
+                default:
+                    WPFCom.Message("비정상적인 접근입니다.");
+                    return;
+            }
+
+            if (BSN_BSM.ApprovalVersion(kind, lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-')[2], false))
+            {
+                Initialize();
+                WPFCom.Message("성공적으로 비활성화 하였습니다.");
+            }
+            else
+                WPFCom.Message("버전 비활성화에 실패하였습니다.");
+        }
+
+        private void cbVerType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbVerType.IsInitialized)
+                Initialize();
+        }
+
+        private void lstVerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btnVerApproval.IsEnabled = false;
+            btnVerRefusal.IsEnabled = false;
+
+            // 검사
+            if (lstVerList.Tag == null || lstVerList.SelectedIndex == -1)
+                return;
+            
+            string[] tagData;
+            try
+            {
+                tagData = lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-');
+            }
+            catch
+            {
+                return;
+            }
+            BSN_BSL.PACK kind = new BSN_BSL.PACK();
+
+            // 초기화
+            lbVerType.Content = null;
+            lbVerUID.Content = null;
+            lbVerName.Content = null;
+            lbVerBUID.Content = null;
+            lbVerBPVer.Content = null;
+            lstVerServers.Items.Clear();
+            lstVerFile.Items.Clear();
+
+            // 로드
+            string UID = tagData[1];
+            lbVerUID.Content = UID;
+            switch (tagData[0])
+            {
+                case "modpack":
+                    kind = BSN_BSL.PACK.modpack;
+                    break;
+
+                case "basepack":
+                    kind = BSN_BSL.PACK.basepack;
+                    break;
+
+                case "resource":
+                    kind = BSN_BSL.PACK.resource;
+                    break;
+            }
+
+            switch (kind)
+            {
+                case BSN_BSL.PACK.modpack:
+                    lbVerType.Content = "모드팩";
+                    lbVerType.Foreground = new SolidColorBrush(Colors.Blue);
+
+                    lbVerBasePack.Visibility = Visibility.Visible;
+                    lbVerBUID.Visibility = Visibility.Visible;
+                    lbVerBPVer.Visibility = Visibility.Visible;
+                    lbVerBaseVer.Visibility = Visibility.Visible;
+                    break;
+
+                case BSN_BSL.PACK.basepack:
+                    lbVerType.Content = "베이스팩";
+                    lbVerType.Foreground = new SolidColorBrush(Colors.Red);
+
+                    lbVerBasePack.Visibility = Visibility.Collapsed;
+                    lbVerBUID.Visibility = Visibility.Collapsed;
+                    lbVerBPVer.Visibility = Visibility.Collapsed;
+                    lbVerBaseVer.Visibility = Visibility.Collapsed;
+                    break;
+
+                case BSN_BSL.PACK.resource:
+                    lbVerType.Content = "리소스";
+                    lbVerType.Foreground = new SolidColorBrush(Colors.Green);
+
+                    // 리소스 타입 로드
+                    lbVerBasePack.Visibility = Visibility.Collapsed;
+                    lbVerBUID.Visibility = Visibility.Collapsed;
+                    lbVerBPVer.Visibility = Visibility.Collapsed;
+                    lbVerBaseVer.Visibility = Visibility.Collapsed;
+                    break;
+            }
+            // 업로드된 서버 리스트 로드
+            foreach (string server in BSN_BSL.LoadVersionServer(kind, tagData[2]))
+            {
+                BSN_BSL.Server sv = BSN_BSL.LoadServerDetail(server);
+                lstVerServers.Items.Add(sv.name);
+            }
+
+            // 업로드된 클라이언트 파일 로드
+            foreach (string data in BSN_BSL.LoadVersionFiles(kind, tagData[2]))
+                lstVerFile.Items.Add(Common.getElement(data, "file"));
+
+            lbVerName.Content = lstVerList.SelectedItem.ToString().Split('-')[0];
+            lbVerVersion.Content = lstVerList.SelectedItem.ToString().Split('-')[1];
+            btnVerApproval.IsEnabled = true;
+            btnVerRefusal.IsEnabled = true;
         }
     }
 }

@@ -108,7 +108,11 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             switch (GetSelectType())
             {
                 case BSN_BSL.PACK.modpack:
-
+                    cbBaseVer.Items.Clear();
+                    BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)cbUID.SelectedItem);
+                    foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, mp.BUID))
+                        cbBaseVer.Items.Add(value);
+                    cbBaseVer.SelectedIndex = 0;
                     break;
 
                 case BSN_BSL.PACK.basepack:
@@ -154,7 +158,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     list.Add(sv.id);
 
             if (GetSelectType() == BSN_BSL.PACK.modpack)
-                basevid = "";
+                basevid = ""; // 베이스 버전 아이디
 
             if (BSN_BSM.UploadVersion(GetSelectType(), "id", "pw", (string)cbUID.SelectedItem, txtVersion.Text, list.ToArray(), File, (string)lbUploadURL.Content, basevid))
                 WPFCom.Message("성공적으로 업로드했습니다.");

@@ -136,6 +136,9 @@
     <Compile Include="Source\Frame\BSL\BSL_ServerMaker.xaml.cs">
       <DependentUpon>BSL_ServerMaker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Frame\BSL\BSL_ServerReview.xaml.cs">
+      <DependentUpon>BSL_ServerReview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Frame\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Frame\BSL\BSL_ServerMaker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\BSL\BSL_ServerReview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

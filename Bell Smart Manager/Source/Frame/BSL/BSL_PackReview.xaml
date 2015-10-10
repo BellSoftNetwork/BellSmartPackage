@@ -41,13 +41,31 @@
             </TabItem>
             <TabItem Header="버전 검토">
                 <Grid Background="White">
-                    <ComboBox x:Name="cbVerType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="182" SelectedIndex="0">
+                    <ComboBox x:Name="cbVerType" HorizontalAlignment="Left" VerticalAlignment="Top" Width="182" SelectedIndex="0" SelectionChanged="cbVerType_SelectionChanged">
                         <ListBoxItem Content="전체"/>
                         <ListBoxItem Content="모드팩"/>
                         <ListBoxItem Content="베이스팩"/>
                         <ListBoxItem Content="리소스"/>
                     </ComboBox>
-                    <ListBox x:Name="lstVerList" HorizontalAlignment="Left" Height="352" Margin="0,27,0,0" VerticalAlignment="Top" Width="182"/>
+                    <ListBox x:Name="lstVerList" HorizontalAlignment="Left" Height="327" Margin="0,27,0,0" VerticalAlignment="Top" Width="182" SelectionChanged="lstVerList_SelectionChanged"/>
+                    <Button x:Name="btnVerRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="0,359,0,0" VerticalAlignment="Top" Width="182" Click="btnVerRefresh_Click"/>
+                    <Button x:Name="btnVerApproval" Content="검토 승인" HorizontalAlignment="Left" Margin="509,359,0,0" VerticalAlignment="Top" Width="75" Background="LightBlue" FontWeight="Bold" Click="btnVerApproval_Click" IsEnabled="False"/>
+                    <Button x:Name="btnVerRefusal" Content="검토 거부" HorizontalAlignment="Left" Margin="589,359,0,0" VerticalAlignment="Top" Width="75" Background="Orange" FontWeight="Bold" Click="btnVerRefusal_Click" IsEnabled="False"/>
+                    <Label Content="팩 타입 :" HorizontalAlignment="Left" Margin="187,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbVerType" Content="모드팩" HorizontalAlignment="Left" Margin="244,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
+                    <Label Content="UID :" HorizontalAlignment="Left" Margin="387,0,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbVerUID" Content="Test" HorizontalAlignment="Left" Margin="424.123,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
+                    <Label Content="팩 이름 :" HorizontalAlignment="Left" Margin="187,26,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbVerName" Content="방울크래프트" HorizontalAlignment="Left" Margin="244,26,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
+                    <Label x:Name="lbVerBasePack" Content="베이스팩 :" HorizontalAlignment="Left" Margin="187,52,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbVerBUID" Content="Forge" HorizontalAlignment="Left" Margin="251.846,52.04,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label x:Name="lbVerBaseVer" Content="베이스팩 버전 :" HorizontalAlignment="Left" Margin="387,52,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbVerBPVer" Content="1.0.0" HorizontalAlignment="Left" Margin="480.066,52.04,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Label Content="버전 :" HorizontalAlignment="Right" Margin="0,25.96,236.153,0" VerticalAlignment="Top"/>
+                    <Label x:Name="lbVerVersion" Content="1.0.0" HorizontalAlignment="Right" Margin="0,25.96,201.069,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
+                    <ListBox x:Name="lstVerServers" Height="54.985" Margin="244,77.96,0,0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                    <Label x:Name="label" Content="업로드 :" HorizontalAlignment="Left" Margin="187,77.96,0,0" VerticalAlignment="Top"/>
+                    <ListBox x:Name="lstVerFile" Margin="187,137.945,0,25.04"/>
                 </Grid>
             </TabItem>
         </TabControl>

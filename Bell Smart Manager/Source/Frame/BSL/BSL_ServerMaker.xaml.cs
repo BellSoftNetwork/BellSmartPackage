@@ -1,5 +1,6 @@
 ﻿using BellLib.Class;
 using BellLib.Class.BSN;
+using BellLib.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     require_plan = "10";
                     break;
             }
-            if (BSN_BSM.RegisterServer(txtUID.Text, cbType.SelectedIndex.ToString(), cbUpload.SelectedIndex.ToString(), cbDownload.SelectedIndex.ToString(), txtName.Text, txtAddress.Text, txtPort.Text, require_plan))
+            if (BSN_BSM.RegisterServer(txtUID.Text, cbType.SelectedIndex.ToString(), cbUpload.SelectedIndex.ToString(), cbDownload.SelectedIndex.ToString(), txtName.Text, txtAddress.Text, txtPort.Text, require_plan, User.BSN_member_srl))
                 WPFCom.Message("서버정보가 정상적으로 등록되었습니다.");
             else
                 WPFCom.Message("서버정보 등록에 실패했습니다.");

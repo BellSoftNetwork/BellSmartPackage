@@ -31,10 +31,14 @@ namespace BellLib.Class.BSN
             public bool select { get; set; }
             public string id { get; set; }
             public string UID { get; set; }
-            public string name { get; set; }
+            public string type { get; set; }
             public string upload { get; set; }
             public string download { get; set; }
-            public string plan { get; set; }
+            public string name { get; set; }
+            public string address { get; set; }
+            public string port { get; set; }
+            public string require_plan { get; set; }
+            public string state { get; set; }
         }
 
         /// <summary>
@@ -113,6 +117,58 @@ namespace BellLib.Class.BSN
 
         private const string BASEURL = "BSL/";
 
+        /// <summary>
+        /// 상태 코드에 따른 메시지를 출력합니다.
+        /// </summary>
+        /// <param name="state">상태값</param>
+        /// <returns>상태 내용 텍스트</returns>
+        public static string GetStateName(STATE state)
+        {
+            switch (state)
+            {
+                case STATE.BANNED:
+                    return "사용 정지";
+
+                case STATE.PENDING:
+                    return "검토 대기중";
+
+                case STATE.HIDDEN:
+                    return "비활성화";
+
+                case STATE.ACTIVATE:
+                    return "활성화";
+
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// 요금제 코드에 따른 메시지를 출력합니다.
+        /// </summary>
+        /// <param name="plan">요금제 값</param>
+        /// <returns>요금제 내용 텍스트</returns>
+        public static string GetPlanName(PLAN plan)
+        {
+            switch (plan)
+            {
+                case PLAN.Basic:
+                    return "Basic";
+
+                case PLAN.Premium:
+                    return "Premium";
+
+                case PLAN.Partner:
+                    return "Partner";
+
+                case PLAN.BSN_Special:
+                    return "BSN Special";
+
+                default:
+                    return null;
+            }
+        }
+
         #region *** 리스트 로드 ***
 
         /// <summary>
@@ -139,7 +195,7 @@ namespace BellLib.Class.BSN
         /// <param name="UID">팩 고유ID</param>
         /// <param name="allState">모든 상태 로드여부</param>
         /// <returns>버전 배열</returns>
-        public static string[] LoadPackVersion(PACK type, string UID, bool allState = false)
+        public static string[] LoadPackVersionList(PACK type, string UID, bool allState = false)
         {
             NameValueCollection formData = new NameValueCollection();
             
@@ -150,7 +206,7 @@ namespace BellLib.Class.BSN
                 formData["state"] = "all";
 
             string data = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            return Common.getElementArray(data, "version");
+            return Common.getElementArray(data, "ver");
         }
 
         /// <summary>
@@ -236,19 +292,19 @@ namespace BellLib.Class.BSN
                 switch (Common.getElement(tmp, "require_plan"))
                 {
                     case "0":
-                        sv.plan = "Basic";
+                        sv.require_plan = "Basic";
                         break;
 
                     case "1":
-                        sv.plan = "Premium";
+                        sv.require_plan = "Premium";
                         break;
 
                     case "2":
-                        sv.plan = "Partner";
+                        sv.require_plan = "Partner";
                         break;
 
                     case "10":
-                        sv.plan = "BSN Special";
+                        sv.require_plan = "BSN Special";
                         break;
                 }
                 list.Add(sv);
@@ -275,59 +331,33 @@ namespace BellLib.Class.BSN
         /// <param name="start">생성일</param>
         /// <param name="endtime">요금제 종료시간</param>
         /// <returns>로드 성공 여부</returns>
-        public static ModPack LoadModPackDetail(string UID) //, out string id, out string name, out string latest, out string recommended, out string BUID, out string state, out string plan, out string detail, out string start, out string endtime)
+        public static ModPack LoadModPackDetail(string UID)
         {
             NameValueCollection formData = new NameValueCollection();
+            List<string> list = new List<string>();
 
             formData["detail"] = "modpack";
             formData["UID"] = UID;
 
             string data = BSN_Info.SendPOST(BASEURL + "modpack.php", formData);
             ModPack mp = new ModPack();
-            mp.state = "사용불가";
-            switch (Common.getElement(data, "state"))
-            {
-                case "-1":
-                    mp.state = "사용불가";
-                    break;
-
-                case "0":
-                    mp.state = "검토 요청";
-                    break;
-
-                case "1":
-                    mp.state = "비활성화";
-                    break;
-
-                case "10":
-                    mp.state = "활성화";
-                    break;
-            }
-
-            mp.numState = (STATE)Convert.ToInt32(Common.getElement(data, "plan"));
-            mp.plan = "Basic";
-            switch (Common.getElement(data, "plan"))
-            {
-                case "0":
-                    mp.plan = "Basic";
-                    break;
-
-                case "1":
-                    mp.plan = "Premium";
-                    break;
-
-                case "2":
-                    mp.plan = "Partner";
-                    break;
-
-                case "10":
-                    mp.plan = "BSN Special";
-                    break;
-            }
+            mp.state = GetStateName((STATE)Convert.ToInt32(Common.getElement(data, "state")));
+            mp.numState = (STATE)Convert.ToInt32(Common.getElement(data, "state"));
+            mp.plan = GetPlanName((PLAN)Convert.ToInt32(Common.getElement(data, "plan")));
 
             mp.id = Common.getElement(data, "id");
             mp.name = Common.getElement(data, "name");
-            mp.latest = "0.0.0"; // 활성화된 버전리스트를 로드해서 최신버전을 구한다.
+            foreach (string value in LoadPackVersionList(PACK.modpack, UID))
+                list.Add(Common.getElement(value, "version"));
+            mp.version = list.ToArray();
+            try
+            {
+                mp.latest = mp.version[mp.version.Length - 1];
+            }
+            catch
+            {
+                mp.latest = "0.0.0";
+            }
             mp.recommended = Common.getElement(data, "recommended");
             mp.detail = Common.getElement(data, "detail");
             mp.start = Common.getElement(data, "start");
@@ -337,7 +367,7 @@ namespace BellLib.Class.BSN
             formData = new NameValueCollection();
 
             formData["detail"] = "basepack";
-            formData["baseid"] = mp.baseid;
+            formData["id"] = mp.baseid;
             formData["state"] = "all";
 
             data = BSN_Info.SendPOST(BASEURL + "basepack.php", formData);
@@ -358,58 +388,33 @@ namespace BellLib.Class.BSN
         /// <param name="start">생성일</param>
         /// <param name="endtime">요금제 종료시간</param>
         /// <returns></returns>
-        public static BasePack LoadBasePackDetail(string UID) //, out string id, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string start, out string endtime)
+        public static BasePack LoadBasePackDetail(string UID)
         {
             NameValueCollection formData = new NameValueCollection();
+            List<string> list = new List<string>();
 
             formData["detail"] = "basepack";
             formData["UID"] = UID;
 
             string data = BSN_Info.SendPOST(BASEURL + "basepack.php", formData);
             BasePack bp = new BasePack();
-            bp.state = "사용불가";
-            switch (Common.getElement(data, "state"))
-            {
-                case "-1":
-                    bp.state = "사용불가";
-                    break;
-
-                case "0":
-                    bp.state = "검토 요청";
-                    break;
-
-                case "1":
-                    bp.state = "비활성화";
-                    break;
-
-                case "10":
-                    bp.state = "활성화";
-                    break;
-            }
-
-            bp.plan = "Basic";
-            switch (Common.getElement(data, "plan"))
-            {
-                case "0":
-                    bp.plan = "Basic";
-                    break;
-
-                case "1":
-                    bp.plan = "Premium";
-                    break;
-
-                case "2":
-                    bp.plan = "Partner";
-                    break;
-
-                case "10":
-                    bp.plan = "BSN Special";
-                    break;
-            }
-
+            bp.state = GetStateName((STATE)Convert.ToInt32(Common.getElement(data, "state")));
+            bp.numState = (STATE)Convert.ToInt32(Common.getElement(data, "state"));
+            bp.plan = GetPlanName((PLAN)Convert.ToInt32(Common.getElement(data, "plan")));
             bp.id = Common.getElement(data, "id");
+            bp.name = Common.getElement(data, "name");
             bp.mcversion = Common.getElement(data, "mcversion");
-            bp.latest = "0.0.0"; // 활성화된 버전리스트를 로드해서 최신버전을 구한다.
+            foreach (string value in LoadPackVersionList(PACK.basepack, UID))
+                list.Add(Common.getElement(value, "version"));
+            bp.version = list.ToArray();
+            try
+            {
+                bp.latest = bp.version[bp.version.Length - 1];
+            }
+            catch
+            {
+                bp.latest = "0.0.0";
+            }
             bp.recommended = Common.getElement(data, "recommended");
             bp.start = Common.getElement(data, "start");
             bp.endtime = Common.getElement(data, "endtime");
@@ -433,55 +438,19 @@ namespace BellLib.Class.BSN
         /// <param name="start">생성일</param>
         /// <param name="endtime">요금제 종료일</param>
         /// <returns>성공 여부</returns>
-        public static Resource LoadResPackDetail(string UID) //, out string id, out string type, out string name, out string latest, out string recommended, out string state, out string mcversion, out string plan, out string detail, out string start, out string endtime)
+        public static Resource LoadResPackDetail(string UID)
         {
             NameValueCollection formData = new NameValueCollection();
+            List<string> list = new List<string>();
 
             formData["detail"] = "resource";
             formData["UID"] = UID;
 
             string data = BSN_Info.SendPOST(BASEURL + "resource.php", formData);
             Resource res = new Resource();
-            res.state = "사용불가";
-            switch (Common.getElement(data, "state"))
-            {
-                case "-1":
-                    res.state = "사용불가";
-                    break;
-
-                case "0":
-                    res.state = "검토 요청";
-                    break;
-
-                case "1":
-                    res.state = "비활성화";
-                    break;
-
-                case "10":
-                    res.state = "활성화";
-                    break;
-            }
-
-            res.plan = "Basic";
-            switch (Common.getElement(data, "plan"))
-            {
-                case "0":
-                    res.plan = "Basic";
-                    break;
-
-                case "1":
-                    res.plan = "Premium";
-                    break;
-
-                case "2":
-                    res.plan = "Partner";
-                    break;
-
-                case "10":
-                    res.plan = "BSN Special";
-                    break;
-            }
-
+            res.state = GetStateName((STATE)Convert.ToInt32(Common.getElement(data, "state")));
+            res.numState = (STATE)Convert.ToInt32(Common.getElement(data, "state"));
+            res.plan = GetPlanName((PLAN)Convert.ToInt32(Common.getElement(data, "plan")));
             res.type = "리소스팩";
             switch (Common.getElement(data, "type"))
             {
@@ -496,7 +465,17 @@ namespace BellLib.Class.BSN
 
             res.id = Common.getElement(data, "id");
             res.mcversion = Common.getElement(data, "mcversion");
-            res.latest = "0.0.0"; // 활성화된 버전리스트를 로드해서 최신버전을 구한다.
+            foreach (string value in LoadPackVersionList(PACK.resource, UID))
+                list.Add(Common.getElement(value, "version"));
+            res.version = list.ToArray();
+            try
+            {
+                res.latest = res.version[res.version.Length - 1];
+            }
+            catch
+            {
+                res.latest = "0.0.0";
+            }
             res.recommended = Common.getElement(data, "recommended");
             res.start = Common.getElement(data, "start");
             res.endtime = Common.getElement(data, "endtime");
@@ -506,7 +485,91 @@ namespace BellLib.Class.BSN
             return res;
         }
 
+        /// <summary>
+        /// 서버 id에 맞는 서버 상세정보를 로드합니다.
+        /// </summary>
+        /// <param name="serverid">서버 id</param>
+        /// <returns>서버 상세정보</returns>
+        public static Server LoadServerDetail(string serverid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["detail"] = "server";
+            formData["id"] = serverid;
+
+            string data = BSN_Info.SendPOST(BASEURL + "servers.php", formData);
+            Server sv = new Server();
+            sv.id = Common.getElement(data, "id");
+            sv.UID = Common.getElement(data, "UID");
+            sv.type = Common.getElement(data, "type");
+            sv.upload = Common.getElement(data, "upload");
+            sv.download = Common.getElement(data, "download");
+            sv.name = Common.getElement(data, "name");
+            sv.address = Common.getElement(data, "address");
+            sv.port = Common.getElement(data, "port");
+            sv.require_plan = Common.getElement(data, "require_plan");
+            sv.state = Common.getElement(data, "state");
+
+            return sv;
+        }
+
+        /// <summary>
+        /// 버전 상세정보를 로드합니다.
+        /// </summary>
+        /// <param name="kind">팩 종류</param>
+        /// <param name="verid">버전 id</param>
+        /// <returns>버전 상세정보</returns>
+        public static string LoadVersionDetail(PACK kind, string verid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = kind.ToString();
+            formData["detail"] = "version";
+            formData["id"] = verid;
+            
+            return BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+        }
+
         #endregion
 
+        #region *** 설치 정보 로드 ***
+
+        /// <summary>
+        /// 선택한 팩 버전의 파일들이 업로드되어있는 서버리스트를 반환합니다.
+        /// </summary>
+        /// <param name="kind">팩 종류</param>
+        /// <param name="verid">버전 id</param>
+        /// <returns>서버id 배열</returns>
+        public static string[] LoadVersionServer(PACK kind, string verid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = kind.ToString();
+            formData["install"] = "server";
+            formData["verid"] = verid;
+
+            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            return Common.getElementArray(result, "serverid");
+        }
+
+        /// <summary>
+        /// 선택한 팩 버전의 설치 요구 파일리스트를 반환합니다.
+        /// </summary>
+        /// <param name="kind">팩 종류</param>
+        /// <param name="verid">버전 id</param>
+        /// <returns>설치데이터 배열 (file, hash)</returns>
+        public static string[] LoadVersionFiles(PACK kind, string verid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = kind.ToString();
+            formData["install"] = "client";
+            formData["verid"] = verid;
+
+            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            return Common.getElementArray(result, "install");
+        }
+
+        #endregion
     }
 }

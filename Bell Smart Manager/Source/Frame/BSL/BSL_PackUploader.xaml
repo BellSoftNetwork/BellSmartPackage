@@ -34,7 +34,7 @@
                             <GridViewColumn DisplayMemberBinding="{Binding name}" Header="서버 이름"/>
                             <GridViewColumn DisplayMemberBinding="{Binding upload}" Header="업로드 방식"/>
                             <GridViewColumn DisplayMemberBinding="{Binding download}" Header="다운로드 방식"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding plan}" Header="필요 요금제"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding require_plan}" Header="필요 요금제"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
