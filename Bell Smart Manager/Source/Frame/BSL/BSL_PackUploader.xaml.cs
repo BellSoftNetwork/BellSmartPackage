@@ -109,9 +109,13 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             {
                 case BSN_BSL.PACK.modpack:
                     cbBaseVer.Items.Clear();
+                    cbBaseVer.Tag = null;
                     BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)cbUID.SelectedItem);
                     foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, mp.BUID))
-                        cbBaseVer.Items.Add(value);
+                    {
+                        cbBaseVer.Items.Add(Common.getElement(value, "version"));
+                        cbBaseVer.Tag += Common.getElement(value, "id") + "|";
+                    }
                     cbBaseVer.SelectedIndex = 0;
                     break;
 
@@ -148,6 +152,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
+            // 검사
+            if (txtVersion.Text == string.Empty)
+            {
+                WPFCom.Message("모든 필드에 값을 입력 해 주세요.");
+                return;
+            }
+
+            // 업로드
             string[] File = lstFile.Items.Cast<string>().ToArray();
             string basevid = null;
 
@@ -156,9 +168,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             foreach (BSN_BSL.Server sv in lstServer.Items)
                 if (sv.select)
                     list.Add(sv.id);
+            if (list.Count == 0)
+            {
+                WPFCom.Message("1개 이상의 서버에 클라이언트 파일을 업로드 해야합니다.");
+                return;
+            }
 
             if (GetSelectType() == BSN_BSL.PACK.modpack)
-                basevid = ""; // 베이스 버전 아이디
+                basevid = cbBaseVer.Tag.ToString().Split('|')[cbBaseVer.SelectedIndex];
 
             if (BSN_BSM.UploadVersion(GetSelectType(), "id", "pw", (string)cbUID.SelectedItem, txtVersion.Text, list.ToArray(), File, (string)lbUploadURL.Content, basevid))
                 WPFCom.Message("성공적으로 업로드했습니다.");

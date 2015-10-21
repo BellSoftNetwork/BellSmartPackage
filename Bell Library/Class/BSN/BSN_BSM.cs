@@ -295,6 +295,25 @@ namespace BellLib.Class.BSN
                 return false;
         }
 
+
+        public static bool ModifyPackVersion(BSN_BSL.PACK kind, string verid, bool activate, string basevid = null)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["modify"] = "version";
+            formData["type"] = kind.ToString();
+            formData["verid"] = verid;
+            formData["activate"] = activate.ToString();
+            if (basevid != null)
+                formData["basevid"] = basevid;
+
+            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            if (result == "정보 수정 성공")
+                return true;
+            else
+                return false;
+        }
+
         #endregion
 
         #region *** 버전 수정 ***

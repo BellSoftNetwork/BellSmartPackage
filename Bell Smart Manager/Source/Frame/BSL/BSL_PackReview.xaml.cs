@@ -48,8 +48,15 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 버전 검토
             lstVerList.Items.Clear();
-
-
+            lstVerServers.Items.Clear();
+            lstVerFile.Items.Clear();
+            lbVerType.Content = null;
+            lbVerUID.Content = null;
+            lbVerName.Content = null;
+            lbVerVersion.Content = null;
+            lbVerBUID.Content = null;
+            lbVerBPVer.Content = null;
+            
             /// 데이터 로드
             // 검토 요약
 
@@ -168,6 +175,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                                                           // 로드 성공시
                     lbInfoType.Content = "베이스팩";
                     lbInfoType.Foreground = new SolidColorBrush(Colors.Red);
+                    lbInfoName.Content = bp.name;
                     lbInfoStart.Content = bp.start;
                     lbInfoMCVer.Content = bp.mcversion;
                     foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.basepack, UID))

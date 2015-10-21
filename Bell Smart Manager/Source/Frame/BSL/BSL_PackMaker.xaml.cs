@@ -45,6 +45,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             //기본값 선택
             cbBasePack.SelectedIndex = 0;
+
+            if (cbBasePack.Items.IsEmpty) // 활성화된 베이스팩이 없다면,
+            {
+                tiModPack.Visibility = Visibility.Collapsed; // 모드팩 탭을 지움.
+                tiBasePack.IsSelected = true; // 베이스팩 탭을 선택.
+            }
         }
 
         private void btnModRegister_Click(object sender, RoutedEventArgs e)
@@ -74,7 +80,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnBaseRegister_Click(object sender, RoutedEventArgs e)
         {
             //필드 검사
-            if (txtBaseUID.Text == "" || txtBaseName.Text == "" || txtBaseMCVer.Text == "")
+            if (txtBaseUID.Text == "" || txtBaseName.Text == "" || cbBaseMCVer.SelectedIndex == -1)
             {
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
@@ -87,7 +93,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             //등록 시작
             btnBaseRegister.IsEnabled = false;
-            if (BSN_BSM.RegisterBasePack(txtBaseUID.Text, txtBaseName.Text, txtBaseMCVer.Text, User.BSN_member_srl))
+            if (BSN_BSM.RegisterBasePack(txtBaseUID.Text, txtBaseName.Text, (string)((ComboBoxItem)cbBaseMCVer.SelectedItem).Content, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");
@@ -97,7 +103,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnResRegister_Click(object sender, RoutedEventArgs e)
         {
             // 필드검사
-            if (txtResUID.Text == "" || txtResName.Text == "" || txtResMCVer.Text == "" || txtResDetail.Text == "")
+            if (txtResUID.Text == "" || txtResName.Text == "" || cbResMCVer.SelectedIndex == -1 || txtResDetail.Text == "")
             {
                 WPFCom.Message("항목을 전부 입력해주세요.");
                 return;
@@ -113,7 +119,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string type = "resourcepack";
             if (rbMapPack.IsChecked == true)
                 type = "mappack";
-            if (BSN_BSM.RegisterResourcePack(txtResUID.Text, type, txtResName.Text, txtResMCVer.Text, txtResDetail.Text, User.BSN_member_srl))
+            if (BSN_BSM.RegisterResourcePack(txtResUID.Text, type, txtResName.Text, (string)((ComboBoxItem)cbResMCVer.SelectedItem).Content, txtResDetail.Text, User.BSN_member_srl))
                 WPFCom.Message("정상적으로 신청되었습니다.");
             else
                 WPFCom.Message("등록에 실패하였습니다.");

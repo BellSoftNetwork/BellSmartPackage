@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BellLib.Class.BSN;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -37,11 +38,12 @@ namespace Bell_Smart_Launcher.Source.Frame
 
 
             //MODPACKS
-            mod_lst_PackList.Items.Clear(); // 팩 리스트 초기화!
-            mod_lst_DetailList.Items.Clear(); // 팩 상세정보 초기화
-            mod_cb_Profile.Items.Clear(); // 프로필 리스트 초기화
-            mod_cb_Version.Items.Clear(); // 팩 버전 리스트 초기화
-            mod_expander_Detail.IsExpanded = false;
+            mod_lstPackList.Items.Clear(); // 팩 리스트 초기화!
+            mod_lstPackList.Tag = null; // 팩 태그 초기화!
+            mod_lstDetailList.Items.Clear(); // 팩 상세정보 초기화
+            mod_cbProfile.Items.Clear(); // 프로필 리스트 초기화
+            mod_cbVersion.Items.Clear(); // 팩 버전 리스트 초기화
+            mod_expanderDetail.IsExpanded = false;
 
             //MAPS
 
@@ -65,17 +67,19 @@ namespace Bell_Smart_Launcher.Source.Frame
 
 
             //MODPACKS
-            mod_lst_PackList.Items.Add("BellCraft9"); // 테스트용 추후 삭제
-            mod_lst_PackList.Items.Add("TestPack");
-            mod_lst_PackList.Items.Add("FTB Pack");
-            mod_lst_PackList.SelectedIndex = 0; // 마지막에 선택했던 팩 자동선택
-            Mod_Expand(mod_expander_Detail.IsExpanded); // 모드탭 익스펜더 설정
-            mod_cb_Profile.Items.Add("Select Profile");
-            mod_cb_Profile.Items.Add("Create Profile");
-            mod_cb_Profile.SelectedIndex = 0;
-            mod_cb_Version.Items.Add("Recommended");
-            mod_cb_Version.Items.Add("Latest");
-            mod_cb_Version.SelectedIndex = 0;
+            foreach (string value in BSN_BSL.LoadPackList(BSN_BSL.PACK.modpack))
+            {
+                mod_lstPackList.Items.Add(Common.getElement(value, "name"));
+                mod_lstPackList.Tag += Common.getElement(value, "UID") + "|";
+            }
+            mod_lstPackList.SelectedIndex = 0; // 마지막에 선택했던 팩 자동선택
+            Mod_Expand(mod_expanderDetail.IsExpanded); // 모드탭 익스펜더 설정
+            mod_cbProfile.Items.Add("Select Profile");
+            mod_cbProfile.Items.Add("Create Profile");
+            mod_cbProfile.SelectedIndex = 0;
+            /*mod_cbVersion.Items.Add("Recommended");
+            mod_cbVersion.Items.Add("Latest");
+            mod_cbVersion.SelectedIndex = 0;*/
             
             //MAPS
 
@@ -91,13 +95,13 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             if (expand)
             { // 활성화
-                mod_lst_DetailList.Visibility = Visibility.Visible;
-                mod_wb_Notice.Height = 284;
+                mod_lstDetailList.Visibility = Visibility.Visible;
+                mod_wbNotice.Height = 284;
             }
             else
             { // 비활성화
-                mod_lst_DetailList.Visibility = Visibility.Hidden;
-                mod_wb_Notice.Height = 347;
+                mod_lstDetailList.Visibility = Visibility.Hidden;
+                mod_wbNotice.Height = 347;
             }
         }
 
@@ -105,30 +109,44 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             Initialize();
         }
-        private void mod_expander_Detail_Expanded(object sender, RoutedEventArgs e)
+        private void mod_expanderDetail_Expanded(object sender, RoutedEventArgs e)
         { // 익스펜더 열음
             Mod_Expand(true);
         }
 
-        private void mod_expander_Detail_Collapsed(object sender, RoutedEventArgs e)
+        private void mod_expanderDetail_Collapsed(object sender, RoutedEventArgs e)
         { // 익스펜더 접음
             Mod_Expand(false);
         }
 
-        private void mod_cb_Profile_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void mod_cbProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (mod_cb_Profile.SelectedIndex == 1)
+            if (mod_cbProfile.SelectedIndex == 1)
             {
-                mod_cb_Profile.SelectedIndex = 0;
+                mod_cbProfile.SelectedIndex = 0;
                 Profile Pro = new Profile();
                 Pro.ShowDialog();
             }
         }
 
-        private void mod_btn_Edit_Click(object sender, RoutedEventArgs e)
+        private void mod_btnEdit_Click(object sender, RoutedEventArgs e)
         {
             Profile pro = new Profile();
             pro.ShowDialog();
+        }
+
+        private void mod_lstPackList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (mod_lstPackList.SelectedIndex < 0)
+                return;
+            string UID = mod_lstPackList.Tag.ToString().Split('|')[mod_lstPackList.SelectedIndex];
+            mod_cbVersion.Items.Clear();
+            mod_cbVersion.Items.Add("Latest");
+            mod_cbVersion.Items.Add("Recommended");
+            foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, UID))
+                mod_cbVersion.Items.Add(Common.getElement(value, "version"));
+
+            mod_cbVersion.SelectedIndex = 1;
         }
     }
 }

@@ -48,10 +48,39 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbModUID.SelectedIndex = 0;
             cbBaseUID.SelectedIndex = 0;
             cbResUID.SelectedIndex = 0;
+
+            // 검사
+            if (cbModUID.Items.IsEmpty && cbBaseUID.Items.IsEmpty && cbResUID.Items.IsEmpty)
+            {
+                Hide();
+                WPFCom.Message("수정 가능한 데이터가 없습니다.");
+            }
+            if (cbModUID.Items.IsEmpty)
+            {
+                tiModPack.Visibility = Visibility.Collapsed;
+                tiBasePack.IsSelected = true;
+            }
+            if (cbBaseUID.Items.IsEmpty)
+            {
+                tiBasePack.Visibility = Visibility.Collapsed;
+                tiResource.IsSelected = true;
+            }
+            if (cbResUID.Items.IsEmpty)
+            {
+                tiResource.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (cbModUID.Items.IsEmpty && cbBaseUID.Items.IsEmpty && cbResUID.Items.IsEmpty)
+                this.Close();
         }
 
         private void btnModLoad_Click(object sender, RoutedEventArgs e)
         {
+            // 검사
+
             // 필드
             string UID = (string)cbModUID.SelectedItem;
             BSN_BSL.ModPack mp = new BSN_BSL.ModPack();
@@ -80,14 +109,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, UID, true))
             {
                 lstModVersion.Items.Add(Common.getElement(data, "version"));
-                lstModPermission.Tag += Common.getElement(data, "id") + "|";
+                lstModVersion.Tag += Common.getElement(data, "id") + "|";
             }
             lstModVersion.SelectedIndex = 0;
 
             // 관리자 정보 로드
             btnModAuthRefresh_Click(sender, e);
 
-            if (mp.state == "사용불가" || mp.state == "검토 요청")
+            if (mp.numState == BSN_BSL.STATE.BANNED || mp.numState == BSN_BSL.STATE.PENDING)
                 return;
             //gbMod.IsEnabled = false;
             tcMod.IsEnabled = true;
@@ -130,7 +159,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 관리자 정보 로드
             btnBaseAuthRefresh_Click(sender, e);
 
-            if (bp.state == "사용불가" || bp.state == "검토 요청")
+            if (bp.numState == BSN_BSL.STATE.BANNED || bp.numState == BSN_BSL.STATE.PENDING)
                 return;
             //gbBase.IsEnabled = false;
             tcBase.IsEnabled = true;
@@ -174,7 +203,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 관리자 정보 로드
             btnResAuthRefresh_Click(sender, e);
 
-            if (res.state == "사용불가" || res.state == "검토 요청")
+            if (res.numState == BSN_BSL.STATE.BANNED || res.numState == BSN_BSL.STATE.PENDING)
                 return;
             //gbResource.IsEnabled = false;
             tcResource.IsEnabled = true;
@@ -198,7 +227,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnModSelSave_Click(object sender, RoutedEventArgs e)
         {
-
+            if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.modpack, lstModVersion.Tag.ToString().Split('|')[lstModVersion.SelectedIndex], (bool)cbModSelActivate.IsChecked, cbBaseVer.Tag.ToString().Split('|')[cbBaseVer.SelectedIndex]))
+            {
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+            }
+            else
+                WPFCom.Message("버전정보 수정에 실패하였습니다.");
         }
 
         private void btnModAuthAdd_Click(object sender, RoutedEventArgs e)
@@ -294,7 +328,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnBaseSelSave_Click(object sender, RoutedEventArgs e)
         {
-
+            if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.basepack, lstBaseVersion.Tag.ToString().Split('|')[lstBaseVersion.SelectedIndex], (bool)cbBaseSelActivate.IsChecked))
+            {
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+            }
+            else
+                WPFCom.Message("버전정보 수정에 실패하였습니다.");
         }
 
         private void btnBaseSelDel_Click(object sender, RoutedEventArgs e)
@@ -380,7 +419,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnResSelSave_Click(object sender, RoutedEventArgs e)
         {
-
+            if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.resource, lstResVersion.Tag.ToString().Split('|')[lstResVersion.SelectedIndex], (bool)cbResSelActivate.IsChecked))
+            {
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+            }
+            else
+                WPFCom.Message("버전정보 수정에 실패하였습니다.");
         }
 
         private void btnResSelDel_Click(object sender, RoutedEventArgs e)
@@ -486,6 +530,31 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             {
                 outSelectActivate.IsEnabled = true;
                 outSelectActivate.IsChecked = true;
+            }
+            else if (state == BSN_BSL.STATE.BANNED)
+            {
+                outSelectActivate.IsEnabled = false;
+                outSelectActivate.IsChecked = false;
+            }
+
+            if (type == BSN_BSL.PACK.modpack)
+            {
+                cbBaseVer.IsEnabled = false;
+                if (state == BSN_BSL.STATE.ACTIVATE || state == BSN_BSL.STATE.HIDDEN)
+                    cbBaseVer.IsEnabled = true;
+                cbBaseVer.Tag = null;
+                cbBaseVer.Items.Clear();
+                string basevid = Common.getElement(BSN_BSL.LoadVersionDetail(BSN_BSL.PACK.modpack, verid), "basevid");
+                foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, (string)lbModBUID.Content))
+                {
+                    string version = Common.getElement(value, "version");
+                    string id = Common.getElement(value, "id");
+
+                    cbBaseVer.Items.Add(version);
+                    cbBaseVer.Tag += id + "|";
+                    if (id == basevid)
+                        cbBaseVer.SelectedItem = version;
+                }
             }
         }
 

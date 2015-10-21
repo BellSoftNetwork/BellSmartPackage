@@ -18,7 +18,7 @@
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>ftp://softbell.net/HDD1/Cloud/publish/BSS/</PublishUrl>
+    <PublishUrl>ftp://softbell.net/HDD1/Publish/BSS/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,7 +28,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
-    <InstallUrl>http://cloud.softbell.net/publish/BSS/</InstallUrl>
+    <InstallUrl>http://publish.softbell.net/BSS/</InstallUrl>
     <SupportUrl>http://www.softbell.net/</SupportUrl>
     <ErrorReportUrl>http://www.softbell.net/</ErrorReportUrl>
     <TargetCulture>ko-KR</TargetCulture>
@@ -39,7 +39,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

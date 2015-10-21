@@ -48,7 +48,7 @@ namespace BellLib.Class.BSN
 
             formData["member_srl"] = member_srl;
 
-            string data = SendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_srl.php", formData, false);
+            string data = SendPOST(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSN/member_srl.php", formData, false);
             return Common.getElement(data, "email_address");
         }
 
@@ -63,7 +63,7 @@ namespace BellLib.Class.BSN
 
             formData["member_srl"] = member_srl;
 
-            string data = SendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_srl.php", formData, false);
+            string data = SendPOST(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSN/member_srl.php", formData, false);
             return Common.getElement(data, "nick_name");
         }
 
@@ -78,7 +78,7 @@ namespace BellLib.Class.BSN
 
             formData["email_address"] = email_address;
 
-            string data = SendPOST(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "info/member_email.php", formData, false);
+            string data = SendPOST(Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSN/member_email.php", formData, false);
             return Common.getElement(data, "member_srl");
         }
     }
