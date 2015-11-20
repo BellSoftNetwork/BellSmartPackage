@@ -30,42 +30,42 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void Initialize()
         {
             // 필드 초기화
-            cbModUID.Items.Clear();
-            cbBaseUID.Items.Clear();
-            cbResUID.Items.Clear();
+            cbModName.Items.Clear();
+            cbBaseName.Items.Clear();
+            cbResName.Items.Clear();
 
             // 모드팩 데이터 로드
             foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.modpack, User.BSN_member_srl))
-                cbModUID.Items.Add(Common.getElement(tmp, "UID"));
+                cbModName.Items.Add(Common.getElement(tmp, "name"));
             // 베이스팩 데이터 로드
             foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.basepack, User.BSN_member_srl))
-                cbBaseUID.Items.Add(Common.getElement(tmp, "UID"));
+                cbBaseName.Items.Add(Common.getElement(tmp, "name"));
             // 리소스 데이터 로드
             foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.resource, User.BSN_member_srl))
-                cbResUID.Items.Add(Common.getElement(tmp, "UID"));
+                cbResName.Items.Add(Common.getElement(tmp, "name"));
 
             // 기본값 선택
-            cbModUID.SelectedIndex = 0;
-            cbBaseUID.SelectedIndex = 0;
-            cbResUID.SelectedIndex = 0;
+            cbModName.SelectedIndex = 0;
+            cbBaseName.SelectedIndex = 0;
+            cbResName.SelectedIndex = 0;
 
             // 검사
-            if (cbModUID.Items.IsEmpty && cbBaseUID.Items.IsEmpty && cbResUID.Items.IsEmpty)
+            if (cbModName.Items.IsEmpty && cbBaseName.Items.IsEmpty && cbResName.Items.IsEmpty)
             {
                 Hide();
                 WPFCom.Message("수정 가능한 데이터가 없습니다.");
             }
-            if (cbModUID.Items.IsEmpty)
+            if (cbModName.Items.IsEmpty)
             {
                 tiModPack.Visibility = Visibility.Collapsed;
                 tiBasePack.IsSelected = true;
             }
-            if (cbBaseUID.Items.IsEmpty)
+            if (cbBaseName.Items.IsEmpty)
             {
                 tiBasePack.Visibility = Visibility.Collapsed;
                 tiResource.IsSelected = true;
             }
-            if (cbResUID.Items.IsEmpty)
+            if (cbResName.Items.IsEmpty)
             {
                 tiResource.Visibility = Visibility.Collapsed;
             }
@@ -73,7 +73,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (cbModUID.Items.IsEmpty && cbBaseUID.Items.IsEmpty && cbResUID.Items.IsEmpty)
+            if (cbModName.Items.IsEmpty && cbBaseName.Items.IsEmpty && cbResName.Items.IsEmpty)
                 this.Close();
         }
 
@@ -82,7 +82,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 검사
 
             // 필드
-            string UID = (string)cbModUID.SelectedItem;
+            string name = (string)cbModName.SelectedItem;
             BSN_BSL.ModPack mp = new BSN_BSL.ModPack();
 
             // 초기화
@@ -93,20 +93,20 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbModRecommended.Items.Clear();
 
             // 기본정보 로드
-            mp = BSN_BSL.LoadModPackDetail(UID);
+            mp = BSN_BSL.LoadModPackDetail(name);
             lbModName.Content = mp.name;
             lbModLatest.Content = mp.latest;
-            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, UID))
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, name))
                 cbModRecommended.Items.Add(Common.getElement(tmp, "version"));
             cbModRecommended.SelectedItem = mp.recommended; // 권장버전 선택
-            lbModBUID.Content = mp.BUID;
+            lbModBaseName.Content = mp.BaseName;
             lbModState.Content = mp.state;
             lbModPlan.Content = mp.plan;
             if (mp.state == "활성화")
                 cbModActivate.IsChecked = true;
 
             // 버전정보 로드
-            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, UID, true))
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, name, true))
             {
                 lstModVersion.Items.Add(Common.getElement(data, "version"));
                 lstModVersion.Tag += Common.getElement(data, "id") + "|";
@@ -125,7 +125,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnBaseLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string UID = (string)cbBaseUID.SelectedItem;
+            string name = (string)cbBaseName.SelectedItem;
             BSN_BSL.BasePack bp = new BSN_BSL.BasePack();
 
             // 초기화
@@ -136,10 +136,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbBaseRecommended.Items.Clear();
 
             // 기본정보 로드
-            bp = BSN_BSL.LoadBasePackDetail(UID);
+            bp = BSN_BSL.LoadBasePackDetail(name);
             lbBaseName.Content = bp.name;
             lbBaseLatest.Content = bp.latest;
-            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, UID))
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, name))
                 cbBaseRecommended.Items.Add(Common.getElement(tmp, "version"));
             cbBaseRecommended.SelectedItem = bp.recommended; // 권장버전 선택
             lbBaseState.Content = bp.state;
@@ -149,7 +149,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 cbBaseActivate.IsChecked = true;
 
             // 버전정보 로드
-            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, UID, true))
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, name, true))
             {
                 lstBaseVersion.Items.Add(Common.getElement(data, "version"));
                 lstBaseVersion.Tag += Common.getElement(data, "id") + "|";
@@ -168,7 +168,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnResLoad_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            string UID = (string)cbResUID.SelectedItem;
+            string name = (string)cbResName.SelectedItem;
             BSN_BSL.Resource res = new BSN_BSL.Resource();
 
             // 초기화
@@ -179,10 +179,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbResRecommended.Items.Clear();
 
             // 기본정보 로드
-            res = BSN_BSL.LoadResPackDetail(UID);
+            res = BSN_BSL.LoadResPackDetail(name);
             lbResName.Content = res.name;
             lbResLatest.Content = res.latest;
-            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.resource, UID))
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.resource, name))
                 cbResRecommended.Items.Add(Common.getElement(tmp, "version"));
             cbResRecommended.SelectedItem = res.recommended; // 권장버전 선택
             lbResState.Content = res.state;
@@ -193,7 +193,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 cbResActivate.IsChecked = true;
 
             // 버전정보 로드
-            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.resource, UID, true))
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.resource, name, true))
             {
                 lstResVersion.Items.Add(Common.getElement(data, "version"));
                 lstResVersion.Tag += Common.getElement(data, "id") + "|";
@@ -211,7 +211,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnModSave_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.modpack, (string)cbModUID.SelectedItem, (string)cbModRecommended.SelectedItem, (bool)cbModActivate.IsChecked))
+            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem, (string)cbModRecommended.SelectedItem, (bool)cbModActivate.IsChecked))
             {
                 btnModLoad_Click(sender, e);
                 WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
@@ -244,7 +244,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.modpack, (string)cbModUID.SelectedItem, member_srl, cbModPermission.SelectedIndex.ToString()))
+            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem, member_srl, cbModPermission.SelectedIndex.ToString()))
             {
                 btnModAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 등록되었습니다.");
@@ -270,7 +270,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.modpack, (string)cbModUID.SelectedItem, member_srl, permission))
+            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem, member_srl, permission))
             {
                 btnModAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 삭제되었습니다.");
@@ -283,7 +283,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             lstModPermission.Items.Clear();
             lstModPermission.Tag = null;
-            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, (string)cbModUID.SelectedItem))
+            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem))
             {
                 lstModPermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
                 if (auth.permission != "4")
@@ -312,7 +312,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnBaseSave_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.basepack, (string)cbBaseUID.SelectedItem, (string)cbBaseRecommended.SelectedItem, (bool)cbBaseActivate.IsChecked))
+            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, (string)cbBaseRecommended.SelectedItem, (bool)cbBaseActivate.IsChecked))
             {
                 btnBaseLoad_Click(sender, e);
                 WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
@@ -350,7 +350,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.basepack, (string)cbBaseUID.SelectedItem, member_srl, cbBasePermission.SelectedIndex.ToString()))
+            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, member_srl, cbBasePermission.SelectedIndex.ToString()))
             {
                 btnBaseAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 등록되었습니다.");
@@ -371,7 +371,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.basepack, (string)cbBaseUID.SelectedItem, member_srl, permission))
+            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, member_srl, permission))
             {
                 btnBaseAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 삭제되었습니다.");
@@ -384,7 +384,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             lstBasePermission.Items.Clear();
             lstBasePermission.Tag = null;
-            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.basepack, (string)cbBaseUID.SelectedItem))
+            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem))
             {
                 lstBasePermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
                 if (auth.permission != "4")
@@ -403,7 +403,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnResSave_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.resource, (string)cbResUID.SelectedItem, (string)cbResRecommended.SelectedItem, (bool)cbResActivate.IsChecked))
+            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem, (string)cbResRecommended.SelectedItem, (bool)cbResActivate.IsChecked))
             {
                 btnResLoad_Click(sender, e);
                 WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
@@ -441,7 +441,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.resource, (string)cbResUID.SelectedItem, member_srl, cbResPermission.SelectedIndex.ToString()))
+            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem, member_srl, cbResPermission.SelectedIndex.ToString()))
             {
                 btnResAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 등록되었습니다.");
@@ -462,7 +462,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             }
 
-            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.resource, (string)cbResUID.SelectedItem, member_srl, permission))
+            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem, member_srl, permission))
             {
                 btnResAuthRefresh_Click(sender, e);
                 WPFCom.Message("정상적으로 삭제되었습니다.");
@@ -475,7 +475,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             lstResPermission.Items.Clear();
             lstResPermission.Tag = null;
-            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.resource, (string)cbResUID.SelectedItem))
+            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem))
             {
                 lstResPermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
                 if (auth.permission != "4")
@@ -545,7 +545,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 cbBaseVer.Tag = null;
                 cbBaseVer.Items.Clear();
                 string basevid = Common.getElement(BSN_BSL.LoadVersionDetail(BSN_BSL.PACK.modpack, verid), "basevid");
-                foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, (string)lbModBUID.Content))
+                foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, (string)lbModBaseName.Content))
                 {
                     string version = Common.getElement(value, "version");
                     string id = Common.getElement(value, "id");

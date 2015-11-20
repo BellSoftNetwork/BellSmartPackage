@@ -34,8 +34,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             lbInfoName.Content = null;
             lbInfoProNick.Content = null;
             lbInfoType.Content = null;
-            lbInfoUID.Content = null;
-            lbInfoStart.Content = null;
+            lbInfoMade.Content = null;
             txtInfoDetail.Text = null;
             txtInfoProEmail.Text = null;
             lbInfoDetail.Visibility = Visibility.Visible;
@@ -124,17 +123,16 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 초기화
             lbInfoType.Content = null;
-            lbInfoUID.Content = null;
             lbInfoName.Content = null;
             lbInfoBUID.Content = null;
             lbInfoMCVer.Content = null;
             lbInfoProNick.Content = null;
-            lbInfoStart.Content = null;
+            lbInfoMade.Content = null;
             txtInfoDetail.Text = null;
             txtInfoProEmail.Text = null;
 
             // 로드
-            lbInfoUID.Content = (string)lstInfoList.SelectedItem;
+            lbInfoName.Content = (string)lstInfoList.SelectedItem;
             string UID; //, id, name, latest, recommended, state, plan, detail, start, endtime;
             switch (kind)
             {
@@ -147,8 +145,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbInfoType.Content = "모드팩";
                     lbInfoType.Foreground = new SolidColorBrush(Colors.Blue);
                     lbInfoName.Content = mp.name;
-                    lbInfoBUID.Content = mp.BUID;
-                    lbInfoStart.Content = mp.start;
+                    lbInfoBUID.Content = mp.BaseName;
+                    lbInfoMade.Content = mp.made;
                     txtInfoDetail.Text = mp.detail;
                     foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, UID))
                     {
@@ -176,7 +174,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbInfoType.Content = "베이스팩";
                     lbInfoType.Foreground = new SolidColorBrush(Colors.Red);
                     lbInfoName.Content = bp.name;
-                    lbInfoStart.Content = bp.start;
+                    lbInfoMade.Content = bp.made;
                     lbInfoMCVer.Content = bp.mcversion;
                     foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.basepack, UID))
                     {
@@ -204,7 +202,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbInfoType.Content = res.type;
                     lbInfoName.Content = res.name;
                     lbInfoMCVer.Content = res.mcversion;
-                    lbInfoStart.Content = res.start;
+                    lbInfoMade.Content = res.made;
                     txtInfoDetail.Text = res.detail;
                     foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.resource, UID))
                     {
@@ -250,7 +248,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     return;
             }
 
-            if (BSN_BSM.ApprovalPack(kind, (string)lbInfoUID.Content, true))
+            if (BSN_BSM.ApprovalPack(kind, (string)lbInfoName.Content, true))
             {
                 //btnInfoRefresh_Click(sender, e);
                 Initialize();
@@ -284,7 +282,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     return;
             }
 
-            if (BSN_BSM.ApprovalPack(kind, (string)lbInfoUID.Content, false))
+            if (BSN_BSM.ApprovalPack(kind, (string)lbInfoName.Content, false))
             {
                 //btnInfoRefresh_Click(sender, e);
                 Initialize();

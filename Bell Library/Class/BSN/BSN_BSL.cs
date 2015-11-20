@@ -46,8 +46,8 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct ModPack
         {
-            public string id, UID, name, recommended, baseid, state, plan, detail, start, endtime; // modpack 테이블
-            public string latest, BUID;
+            public string id, name, recommended, baseid, state, plan, detail, made, endtime; // modpack 테이블
+            public string latest, BaseName;
             public STATE numState;
             public string[] version;
         }
@@ -57,7 +57,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct BasePack
         {
-            public string id, UID, name, recommended, state, mcversion, plan, start, endtime; // basepack 테이블
+            public string id, name, recommended, state, mcversion, plan, made, endtime; // basepack 테이블
             public string latest;
             public STATE numState;
             public string[] version;
@@ -68,7 +68,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct Resource
         {
-            public string id, UID, type, name, recommended, state, mcversion, plan, detail, start, endtime; // resource 테이블
+            public string id, type, name, recommended, state, mcversion, plan, detail, made, endtime; // resource 테이블
             public string latest;
             public STATE numState;
             public string[] version;
@@ -192,15 +192,15 @@ namespace BellLib.Class.BSN
         /// 팩 버전 리스트를 로드합니다.
         /// </summary>
         /// <param name="type">팩 타입</param>
-        /// <param name="UID">팩 고유ID</param>
+        /// <param name="name">이름</param>
         /// <param name="allState">모든 상태 로드여부</param>
         /// <returns>버전 배열</returns>
-        public static string[] LoadPackVersionList(PACK type, string UID, bool allState = false)
+        public static string[] LoadPackVersionList(PACK type, string name, bool allState = false)
         {
             NameValueCollection formData = new NameValueCollection();
             
             formData["list"] = "version";
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["type"] = type.ToString();
             if (allState)
                 formData["state"] = "all";
@@ -213,15 +213,15 @@ namespace BellLib.Class.BSN
         /// 팩 관리자 리스트를 로드합니다.
         /// </summary>
         /// <param name="type">팩 타입</param>
-        /// <param name="UID">팩 고유ID</param>
+        /// <param name="name">이름</param>
         /// <returns>매니저 배열</returns>
-        public static Manager[] LoadPackManager(PACK type, string UID)
+        public static Manager[] LoadPackManager(PACK type, string name)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["list"] = "manager";
             formData["type"] = type.ToString();
-            formData["UID"] = UID;
+            formData["name"] = name;
 
             string data = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
             List<Manager> list = new List<Manager>();
@@ -318,26 +318,17 @@ namespace BellLib.Class.BSN
         #region *** 팩 상세정보 로드 ***
 
         /// <summary>
-        /// MUID에 맞는 모드팩의 상세정보를 로드합니다.
+        /// 이름에 맞는 모드팩의 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="UID">UID 값</param>
-        /// <param name="id">id 값</param>
-        /// <param name="name">모드팩 이름</param>
-        /// <param name="recommended">모드팩 권장버전</param>
-        /// <param name="BUID">선택된 BUID</param>
-        /// <param name="state">상태</param>
-        /// <param name="plan">플랜</param>
-        /// <param name="detail">상세정보</param>
-        /// <param name="start">생성일</param>
-        /// <param name="endtime">요금제 종료시간</param>
-        /// <returns>로드 성공 여부</returns>
-        public static ModPack LoadModPackDetail(string UID)
+        /// <param name="name">이름</param>
+        /// <returns>모드팩 상세정보</returns>
+        public static ModPack LoadModPackDetail(string name)
         {
             NameValueCollection formData = new NameValueCollection();
             List<string> list = new List<string>();
 
             formData["detail"] = "modpack";
-            formData["UID"] = UID;
+            formData["name"] = name;
 
             string data = BSN_Info.SendPOST(BASEURL + "modpack.php", formData);
             ModPack mp = new ModPack();
@@ -347,7 +338,7 @@ namespace BellLib.Class.BSN
 
             mp.id = Common.getElement(data, "id");
             mp.name = Common.getElement(data, "name");
-            foreach (string value in LoadPackVersionList(PACK.modpack, UID))
+            foreach (string value in LoadPackVersionList(PACK.modpack, name))
                 list.Add(Common.getElement(value, "version"));
             mp.version = list.ToArray();
             try
@@ -360,7 +351,7 @@ namespace BellLib.Class.BSN
             }
             mp.recommended = Common.getElement(data, "recommended");
             mp.detail = Common.getElement(data, "detail");
-            mp.start = Common.getElement(data, "start");
+            mp.made = Common.getElement(data, "made");
             mp.endtime = Common.getElement(data, "endtime");
             mp.baseid = Common.getElement(data, "baseid");
 
@@ -371,30 +362,23 @@ namespace BellLib.Class.BSN
             formData["state"] = "all";
 
             data = BSN_Info.SendPOST(BASEURL + "basepack.php", formData);
-            mp.BUID = Common.getElement(data, "UID");
+            mp.BaseName = Common.getElement(data, "name");
             
             return mp;
         }
 
         /// <summary>
-        /// BUID에 맞는 베이스팩 상세정보를 로드합니다.
+        /// 이름에 맞는 베이스팩 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="UID">UID 값</param>
-        /// <param name="id">id 값</param>
-        /// <param name="recommended">권장버전</param>
-        /// <param name="state">팩 상태</param>
-        /// <param name="mcversion">마크 버전</param>
-        /// <param name="plan">요금제</param>
-        /// <param name="start">생성일</param>
-        /// <param name="endtime">요금제 종료시간</param>
-        /// <returns></returns>
-        public static BasePack LoadBasePackDetail(string UID)
+        /// <param name="name">이름</param>
+        /// <returns>베이스팩 상세정보</returns>
+        public static BasePack LoadBasePackDetail(string name)
         {
             NameValueCollection formData = new NameValueCollection();
             List<string> list = new List<string>();
 
             formData["detail"] = "basepack";
-            formData["UID"] = UID;
+            formData["name"] = name;
 
             string data = BSN_Info.SendPOST(BASEURL + "basepack.php", formData);
             BasePack bp = new BasePack();
@@ -404,7 +388,7 @@ namespace BellLib.Class.BSN
             bp.id = Common.getElement(data, "id");
             bp.name = Common.getElement(data, "name");
             bp.mcversion = Common.getElement(data, "mcversion");
-            foreach (string value in LoadPackVersionList(PACK.basepack, UID))
+            foreach (string value in LoadPackVersionList(PACK.basepack, name))
                 list.Add(Common.getElement(value, "version"));
             bp.version = list.ToArray();
             try
@@ -416,35 +400,24 @@ namespace BellLib.Class.BSN
                 bp.latest = "0.0.0";
             }
             bp.recommended = Common.getElement(data, "recommended");
-            bp.start = Common.getElement(data, "start");
+            bp.made = Common.getElement(data, "made");
             bp.endtime = Common.getElement(data, "endtime");
 
             return bp;
         }
 
         /// <summary>
-        /// RUID에 맞는 리소스 상세정보를 로드합니다.
+        /// 이름에 맞는 리소스 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="UID">UID 값</param>
-        /// <param name="id">id</param>
-        /// <param name="type">타입</param>
         /// <param name="name">이름</param>
-        /// <param name="latest">최신버전</param>
-        /// <param name="recommended">권장버전</param>
-        /// <param name="state">팩 상태</param>
-        /// <param name="mcversion">마크 버전</param>
-        /// <param name="plan">요금제</param>
-        /// <param name="detail">상세 정보</param>
-        /// <param name="start">생성일</param>
-        /// <param name="endtime">요금제 종료일</param>
-        /// <returns>성공 여부</returns>
-        public static Resource LoadResPackDetail(string UID)
+        /// <returns>리소스 상세정보</returns>
+        public static Resource LoadResPackDetail(string name)
         {
             NameValueCollection formData = new NameValueCollection();
             List<string> list = new List<string>();
 
             formData["detail"] = "resource";
-            formData["UID"] = UID;
+            formData["name"] = name;
 
             string data = BSN_Info.SendPOST(BASEURL + "resource.php", formData);
             Resource res = new Resource();
@@ -465,7 +438,7 @@ namespace BellLib.Class.BSN
 
             res.id = Common.getElement(data, "id");
             res.mcversion = Common.getElement(data, "mcversion");
-            foreach (string value in LoadPackVersionList(PACK.resource, UID))
+            foreach (string value in LoadPackVersionList(PACK.resource, name))
                 list.Add(Common.getElement(value, "version"));
             res.version = list.ToArray();
             try
@@ -477,7 +450,7 @@ namespace BellLib.Class.BSN
                 res.latest = "0.0.0";
             }
             res.recommended = Common.getElement(data, "recommended");
-            res.start = Common.getElement(data, "start");
+            res.made = Common.getElement(data, "made");
             res.endtime = Common.getElement(data, "endtime");
             res.name = Common.getElement(data, "name");
             res.detail = Common.getElement(data, "detail");

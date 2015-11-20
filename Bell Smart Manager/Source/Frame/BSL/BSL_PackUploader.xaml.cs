@@ -23,22 +23,22 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void Initialize()
         {
             // 데이터 초기화
-            cbUID.Items.Clear();
+            cbName.Items.Clear();
             lstServer.Items.Clear();
 
             // 데이터 기본값
-            if (cbUID.Tag == null)
-                cbUID.Tag = "modpack";
+            if (cbName.Tag == null)
+                cbName.Tag = "modpack";
 
             // 데이터 로드
             foreach (BSN_BSL.Server server in BSN_BSL.LoadServerList(BSN_BSL.SERVER.cloud))
                 lstServer.Items.Add(server);
 
-            switch (cbUID.Tag.ToString())
+            switch (cbName.Tag.ToString())
             {
                 case "modpack":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.modpack, User.BSN_member_srl))
-                        cbUID.Items.Add(Common.getElement(tmp, "UID"));
+                        cbName.Items.Add(Common.getElement(tmp, "name"));
                     lbBaseVer.Visibility = Visibility.Visible;
                     cbBaseVer.Visibility = Visibility.Visible;
                     lbUploadURL.Content = User.BSN_Path + "Upload\\ModPack\\";
@@ -46,7 +46,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 case "basepack":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.basepack, User.BSN_member_srl))
-                        cbUID.Items.Add(Common.getElement(tmp, "UID"));
+                        cbName.Items.Add(Common.getElement(tmp, "name"));
                     lbBaseVer.Visibility = Visibility.Collapsed;
                     cbBaseVer.Visibility = Visibility.Collapsed;
                     lbUploadURL.Content = User.BSN_Path + "Upload\\BasePack\\";
@@ -54,13 +54,13 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 case "resource":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.resource, User.BSN_member_srl))
-                        cbUID.Items.Add(Common.getElement(tmp, "UID"));
+                        cbName.Items.Add(Common.getElement(tmp, "name"));
                     lbBaseVer.Visibility = Visibility.Collapsed;
                     cbBaseVer.Visibility = Visibility.Collapsed;
                     lbUploadURL.Content = User.BSN_Path + "Upload\\Resource\\";
                     break;
             }
-            cbUID.SelectedIndex = 0;
+            cbName.SelectedIndex = 0;
             btnRefresh_Click(null, null);
         }
 
@@ -83,7 +83,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (!rbModPack.IsInitialized)
                 return;
-            cbUID.Tag = "modpack";
+            cbName.Tag = "modpack";
             Initialize();
         }
 
@@ -91,7 +91,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (!rbBasePack.IsInitialized)
                 return;
-            cbUID.Tag = "basepack";
+            cbName.Tag = "basepack";
             Initialize();
         }
 
@@ -99,7 +99,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (!rbResource.IsInitialized)
                 return;
-            cbUID.Tag = "resource";
+            cbName.Tag = "resource";
             Initialize();
         }
 
@@ -110,8 +110,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 case BSN_BSL.PACK.modpack:
                     cbBaseVer.Items.Clear();
                     cbBaseVer.Tag = null;
-                    BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)cbUID.SelectedItem);
-                    foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, mp.BUID))
+                    BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)cbName.SelectedItem);
+                    foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, mp.BaseName))
                     {
                         cbBaseVer.Items.Add(Common.getElement(value, "version"));
                         cbBaseVer.Tag += Common.getElement(value, "id") + "|";
@@ -177,7 +177,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (GetSelectType() == BSN_BSL.PACK.modpack)
                 basevid = cbBaseVer.Tag.ToString().Split('|')[cbBaseVer.SelectedIndex];
 
-            if (BSN_BSM.UploadVersion(GetSelectType(), "id", "pw", (string)cbUID.SelectedItem, txtVersion.Text, list.ToArray(), File, (string)lbUploadURL.Content, basevid))
+            if (BSN_BSM.UploadVersion(GetSelectType(), "id", "pw", (string)cbName.SelectedItem, txtVersion.Text, list.ToArray(), File, (string)lbUploadURL.Content, basevid))
                 WPFCom.Message("성공적으로 업로드했습니다.");
             else
                 WPFCom.Message("업로드에 실패하였습니다.");

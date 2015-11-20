@@ -7,11 +7,11 @@
         <TabControl HorizontalAlignment="Left" Height="271" VerticalAlignment="Top" Width="417">
             <TabItem x:Name="tiModPack" Header="모드팩">
                 <Grid Background="White">
-                    <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Label Content="이름 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
+                    <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content="공지사항 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
                     <Label Content="베이스팩 :" HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtModUID" HorizontalAlignment="Left" Height="23" Margin="70,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
-                    <TextBox x:Name="txtModName" HorizontalAlignment="Left" Height="23" Margin="70,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
+                    <TextBox x:Name="txtModName" HorizontalAlignment="Left" Height="23" Margin="70,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
+                    <TextBox x:Name="txtModNotice" HorizontalAlignment="Left" Height="23" Margin="70,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
                     <ComboBox x:Name="cbBasePack" HorizontalAlignment="Left" Margin="70,56,0,0" VerticalAlignment="Top" Width="331"/>
                     <TextBox x:Name="txtModDetail" HorizontalAlignment="Left" Height="125" Margin="70,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331" VerticalScrollBarVisibility="Visible" AcceptsReturn="True"/>
                     <Button x:Name="btnModRegister" Content="등록 신청" HorizontalAlignment="Left" Margin="326,213,0,0" VerticalAlignment="Top" Width="75" Click="btnModRegister_Click"/>
@@ -20,24 +20,22 @@
             </TabItem>
             <TabItem x:Name="tiBasePack" Header="베이스팩">
                 <Grid Background="White">
-                    <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    <Label Content="MC 버전 :" HorizontalAlignment="Left" Margin="0,51.92,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBaseUID" HorizontalAlignment="Left" Height="23" Margin="69,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
-                    <TextBox x:Name="txtBaseName" Height="23" Margin="69,28.92,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <Label Content="MC 버전 :" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtBaseName" Height="23" Margin="69,2.96,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <Button x:Name="btnBaseRegister" Content="등록 신청" HorizontalAlignment="Left" Margin="326,213,0,0" VerticalAlignment="Top" Width="75" Click="btnBaseRegister_Click"/>
-                    <Label x:Name="label" Content="이름 :" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="cbBaseMCVer" Margin="69,55.92,10,0" VerticalAlignment="Top" SelectedIndex="0">
+                    <Label x:Name="label" Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <ComboBox x:Name="cbBaseMCVer" Margin="69,29.96,10,0" VerticalAlignment="Top" SelectedIndex="0">
                         <ComboBoxItem Content="1.7.10"/>
                     </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tiRes" Header="리소스">
                 <Grid Background="White">
-                    <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Label Content="MC 버전 :" HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtResUID" HorizontalAlignment="Left" Height="23" Margin="69,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
-                    <Label Content="이름 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtResName" HorizontalAlignment="Left" Height="23" Margin="70,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
+                    <TextBox x:Name="txtResName" HorizontalAlignment="Left" Height="23" Margin="69,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
+                    <Label Content="공지사항 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtResNotice" HorizontalAlignment="Left" Height="23" Margin="70,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="331"/>
                     <Label Content="리소스 타입 :" HorizontalAlignment="Left" Margin="0,78,0,0" VerticalAlignment="Top"/>
                     <RadioButton x:Name="rbResPack" Content="리소스팩" HorizontalAlignment="Left" Margin="86,84,0,0" VerticalAlignment="Top" IsChecked="True"/>
                     <RadioButton x:Name="rbMapPack" Content="맵팩" HorizontalAlignment="Left" Margin="158,84,0,0" VerticalAlignment="Top"/>

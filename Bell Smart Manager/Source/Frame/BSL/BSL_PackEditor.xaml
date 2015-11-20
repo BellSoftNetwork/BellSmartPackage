@@ -9,8 +9,8 @@
                 <Grid Background="White">
                     <GroupBox x:Name="gbMod" Header="정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49" Width="621">
                         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <ComboBox x:Name="cbModUID" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
+                            <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="cbModName" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
                             <Button x:Name="btnModLoad" Content="불러오기" HorizontalAlignment="Left" Margin="534,4,0,0" Width="75" Click="btnModLoad_Click"/>
                         </Grid>
                     </GroupBox>
@@ -38,7 +38,7 @@
                                 <Label Content="요금제 :" HorizontalAlignment="Left" Margin="0,26,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="lbModPlan" Content="Basic" HorizontalAlignment="Left" Margin="53,26,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="lbModLatest" Content="" HorizontalAlignment="Left" Margin="65,74,0,0" VerticalAlignment="Top"/>
-                                <Label x:Name="lbModBUID" Content="" HorizontalAlignment="Left" Margin="65,126,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbModBaseName" Content="" HorizontalAlignment="Left" Margin="65,126,0,0" VerticalAlignment="Top"/>
                                 <Label x:Name="lbModName" Content="" HorizontalAlignment="Left" Margin="41,48,0,0" VerticalAlignment="Top"/>
                             </Grid>
                         </TabItem>
@@ -79,8 +79,8 @@
                 <Grid Background="White">
                     <GroupBox x:Name="gbBase" Header="정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49" Width="621">
                         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <ComboBox x:Name="cbBaseUID" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
+                            <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="cbBaseName" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
                             <Button x:Name="btnBaseLoad" Content="불러오기" HorizontalAlignment="Left" Margin="534,4,0,0" Width="75" Click="btnBaseLoad_Click"/>
                         </Grid>
                     </GroupBox>
@@ -145,8 +145,8 @@
                 <Grid Background="White">
                     <GroupBox x:Name="gbResource" Header="정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49" Width="621">
                         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Label Content="UID :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <ComboBox x:Name="cbResUID" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
+                            <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="cbResName" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
                             <Button x:Name="btnResLoad" Content="불러오기" HorizontalAlignment="Left" Margin="534,4,0,0" Width="75" Height="22" VerticalAlignment="Top" Click="btnResLoad_Click"/>
                         </Grid>
                     </GroupBox>

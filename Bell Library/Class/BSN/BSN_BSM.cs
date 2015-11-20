@@ -33,21 +33,20 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 신규 모드팩을 등록합니다.
         /// </summary>
-        /// <param name="UID">UID값</param>
         /// <param name="name">모드팩 이름</param>
         /// <param name="baseid">베이스팩 id</param>
         /// <param name="detail">모드팩 상세사항</param>
         /// <returns>등록 성공여부</returns>
-        public static bool RegisterModPack(string UID, string name, string baseid, string detail, string member_srl)
+        public static bool RegisterModPack(string name, string baseid, string detail, string notice, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = "modpack";
-            formData["UID"] = UID;
             formData["name"] = name;
             formData["baseid"] = baseid;
             formData["detail"] = detail;
             formData["member_srl"] = member_srl;
+            formData["notice"] = notice;
 
             string result = BSN_Info.SendPOST(BASEURL + "modpack.php", formData);
             switch (result)
@@ -72,15 +71,14 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 베이스팩 정보를 등록합니다.
         /// </summary>
-        /// <param name="UID">UID값</param>
+        /// <param name="name">이름</param>
         /// <param name="MCVer">마인크래프트 버전정보</param>
         /// <returns>등록 성공여부</returns>
-        public static bool RegisterBasePack(string UID, string name, string MCVer, string member_srl)
+        public static bool RegisterBasePack(string name, string MCVer, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = "basepack";
-            formData["UID"] = UID;
             formData["mcversion"] = MCVer;
             formData["name"] = name;
             formData["member_srl"] = member_srl;
@@ -108,21 +106,20 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 리소스팩 정보를 등록합니다.
         /// </summary>
-        /// <param name="UID">UID값</param>
         /// <param name="type">팩 타입</param>
         /// <param name="name">팩 이름</param>
         /// <param name="mcversion">MC 버전</param>
         /// <param name="detail">팩 상세정보</param>
         /// <returns>등록 성공여부</returns>
-        public static bool RegisterResourcePack(string UID, string type, string name, string mcversion, string detail, string member_srl)
+        public static bool RegisterResourcePack(string type, string name, string mcversion, string detail, string notice, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = type;
-            formData["UID"] = UID;
             formData["name"] = name;
             formData["mcversion"] = mcversion;
             formData["detail"] = detail;
+            formData["notice"] = notice;
             formData["member_srl"] = member_srl;
 
             string result = BSN_Info.SendPOST(BASEURL + "resource.php", formData);
@@ -215,7 +212,7 @@ namespace BellLib.Class.BSN
         /// 검토가 필요한 팩 리스트를 로드합니다.
         /// </summary>
         /// <param name="kind">팩 종류</param>
-        /// <returns>팩 UID 배열</returns>
+        /// <returns>팩 이름 배열</returns>
         public static string[] LoadReviewList(BSN_BSL.PACK kind)
         {
             NameValueCollection formData = new NameValueCollection();
@@ -224,7 +221,7 @@ namespace BellLib.Class.BSN
             formData["type"] = kind.ToString();
 
             string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            return Common.getElementArray(result, "UID");
+            return Common.getElementArray(result, "name");
         }
 
         /// <summary>
@@ -251,15 +248,15 @@ namespace BellLib.Class.BSN
         /// 검토 대기중인 팩을 검토합니다.
         /// </summary>
         /// <param name="kind">팩 종류</param>
-        /// <param name="UID">UID 값</param>
+        /// <param name="name">이름</param>
         /// <param name="approval">승인 여부</param>
         /// <returns>작업 성공여부</returns>
-        public static bool ApprovalPack(BSN_BSL.PACK kind, string UID, bool approval)
+        public static bool ApprovalPack(BSN_BSL.PACK kind, string name, bool approval)
         {
             NameValueCollection formData = new NameValueCollection();
             
             formData["review"] = "pack";
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["type"] = kind.ToString();
             formData["approval"] = approval.ToString();
 
@@ -274,17 +271,17 @@ namespace BellLib.Class.BSN
         /// 팩 기본정보를 수정합니다.
         /// </summary>
         /// <param name="kind">팩 종류</param>
-        /// <param name="UID">UID 값</param>
+        /// <param name="name">이름</param>
         /// <param name="recommended">권장버전</param>
         /// <param name="activate">활성화 여부</param>
         /// <returns>작업 성공여부</returns>
-        public static bool ModifyPackBasic(BSN_BSL.PACK kind, string UID, string recommended, bool activate)
+        public static bool ModifyPackBasic(BSN_BSL.PACK kind, string name, string recommended, bool activate)
         {
             NameValueCollection formData = new NameValueCollection();
             
             formData["modify"] = "base";
             formData["type"] = kind.ToString();
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["recommended"] = recommended;
             formData["activate"] = activate.ToString();
 
@@ -349,17 +346,17 @@ namespace BellLib.Class.BSN
         /// 관리자를 추가합니다.
         /// </summary>
         /// <param name="kind">팩 타입</param>
-        /// <param name="UID">UID 값</param>
+        /// <param name="name">이름</param>
         /// <param name="email_address">이메일 주소</param>
         /// <param name="permission">권한</param>
         /// <returns>성공 여부</returns>
-        public static bool AddPackManager(BSN_BSL.PACK kind, string UID, string member_srl, string permission)
+        public static bool AddPackManager(BSN_BSL.PACK kind, string name, string member_srl, string permission)
         {
             NameValueCollection formData = new NameValueCollection();
             
             formData["insert"] = "manager";
             formData["type"] = kind.ToString();
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["member_srl"] = member_srl;
             formData["permission"] = permission;
 
@@ -374,17 +371,17 @@ namespace BellLib.Class.BSN
         /// 관리자를 삭제합니다.
         /// </summary>
         /// <param name="kind">팩 타입</param>
-        /// <param name="UID">UID 값</param>
+        /// <param name="name">이름</param>
         /// <param name="member_srl">member_srl 값</param>
         /// <param name="permission">권한</param>
         /// <returns>성공 여부</returns>
-        public static bool DelPackManager(BSN_BSL.PACK kind, string UID, string member_srl, string permission)
+        public static bool DelPackManager(BSN_BSL.PACK kind, string name, string member_srl, string permission)
         {
             NameValueCollection formData = new NameValueCollection();
             
             formData["delete"] = "manager";
             formData["type"] = kind.ToString();
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["member_srl"] = member_srl;
             formData["permission"] = permission;
 
@@ -403,14 +400,14 @@ namespace BellLib.Class.BSN
         /// <param name="kind">팩 종류</param>
         /// <param name="id">BSN ID</param>
         /// <param name="pw">BSN PW</param>
-        /// <param name="UID">UID 값</param>
+        /// <param name="name">이름</param>
         /// <param name="version">버전 정보</param>
         /// <param name="server">업로드할 서버 리스트</param>
         /// <param name="file">업로드할 파일 리스트</param>
         /// <param name="basePath">업로드 폴더 기본 경로</param>
         /// <param name="basevid">(모드팩 전용) 베이스팩 버전ID</param>
         /// <returns>버전등록 성공여부</returns>
-        public static bool UploadVersion(BSN_BSL.PACK kind, string id, string pw, string UID, string version, string[] server, string[] file, string basePath, string basevid = null)
+        public static bool UploadVersion(BSN_BSL.PACK kind, string id, string pw, string name, string version, string[] server, string[] file, string basePath, string basevid = null)
         {
             // 버전정보 등록
             NameValueCollection formData = new NameValueCollection();
@@ -420,7 +417,7 @@ namespace BellLib.Class.BSN
 
             formData["type"] = kind.ToString();
             formData["insert"] = "version";
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["version"] = version;
             formData["server"] = serverList;
 
