@@ -1,27 +1,20 @@
-﻿using BellLib.Class;
+﻿using System.Windows;
 using BellLib.Class.BSN;
 using BellLib.Data;
-using System;
-using System.Collections.Generic;
+using BellLib.Class;
+using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Collections.Generic;
+using System;
 
 namespace Bell_Smart_Manager.Source.Frame.BSL
 {
     /// <summary>
-    /// BSL_PackUploader.xaml에 대한 상호 작용 논리
+    /// BSL_PackVerRegister.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class BSL_PackUploader : Window
+    public partial class BSL_PackVerRegister : Window
     {
-        public BSL_PackUploader()
+        public BSL_PackVerRegister()
         {
             InitializeComponent();
             Initialize();
@@ -46,18 +39,24 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 case "modpack":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.modpack, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
+                    lbBaseVer.Visibility = Visibility.Visible;
+                    cbBaseVer.Visibility = Visibility.Visible;
                     lbUploadURL.Content = User.BSN_Path + "Upload\\ModPack\\";
                     break;
 
                 case "basepack":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.basepack, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
+                    lbBaseVer.Visibility = Visibility.Collapsed;
+                    cbBaseVer.Visibility = Visibility.Collapsed;
                     lbUploadURL.Content = User.BSN_Path + "Upload\\BasePack\\";
                     break;
 
                 case "resource":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.resource, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
+                    lbBaseVer.Visibility = Visibility.Collapsed;
+                    cbBaseVer.Visibility = Visibility.Collapsed;
                     lbUploadURL.Content = User.BSN_Path + "Upload\\Resource\\";
                     break;
             }
@@ -109,7 +108,15 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             switch (GetSelectType())
             {
                 case BSN_BSL.PACK.modpack:
-                    
+                    cbBaseVer.Items.Clear();
+                    cbBaseVer.Tag = null;
+                    BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)cbName.SelectedItem);
+                    foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, mp.BaseName))
+                    {
+                        cbBaseVer.Items.Add(Common.getElement(value, "version"));
+                        cbBaseVer.Tag += Common.getElement(value, "id") + "|";
+                    }
+                    cbBaseVer.SelectedIndex = 0;
                     break;
 
                 case BSN_BSL.PACK.basepack:
@@ -143,9 +150,37 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
         }
 
-        private void btnUpload_Click(object sender, RoutedEventArgs e)
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            // 검사
+            if (txtVersion.Text == string.Empty)
+            {
+                WPFCom.Message("모든 필드에 값을 입력 해 주세요.");
+                return;
+            }
 
+            // 업로드
+            string[] File = lstFile.Items.Cast<string>().ToArray();
+            string basevid = null;
+
+            // 선택한 서버리스트 배열로 올리기
+            List<string> list = new List<string>();
+            foreach (BSN_BSL.Server sv in lstServer.Items)
+                if (sv.select)
+                    list.Add(sv.id);
+            if (list.Count == 0)
+            {
+                WPFCom.Message("1개 이상의 서버에 클라이언트 파일을 업로드 해야합니다.");
+                return;
+            }
+
+            if (GetSelectType() == BSN_BSL.PACK.modpack)
+                basevid = cbBaseVer.Tag.ToString().Split('|')[cbBaseVer.SelectedIndex];
+
+            if (BSN_BSM.UploadVersion(GetSelectType(), "id", "pw", (string)cbName.SelectedItem, txtVersion.Text, list.ToArray(), File, (string)lbUploadURL.Content, basevid))
+                WPFCom.Message("성공적으로 업로드했습니다.");
+            else
+                WPFCom.Message("업로드에 실패하였습니다.");
         }
     }
 }

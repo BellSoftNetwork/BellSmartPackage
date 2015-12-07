@@ -361,23 +361,30 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnBaseAuthDel_Click(object sender, RoutedEventArgs e)
         {
-            string[] data = lstBasePermission.Tag.ToString().Split('\n')[lstBasePermission.SelectedIndex].Split('|');
-            string member_srl = data[0];
-            string permission = data[1];
-
-            if (permission == "4")
+            try
             {
-                WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
-                return;
-            }
+                string[] data = lstBasePermission.Tag.ToString().Split('\n')[lstBasePermission.SelectedIndex].Split('|');
+                string member_srl = data[0];
+                string permission = data[1];
 
-            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, member_srl, permission))
-            {
-                btnBaseAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 삭제되었습니다.");
+                if (permission == "4")
+                {
+                    WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
+                    return;
+                }
+
+                if (BSN_BSM.DelPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, member_srl, permission))
+                {
+                    btnBaseAuthRefresh_Click(sender, e);
+                    WPFCom.Message("정상적으로 삭제되었습니다.");
+                }
+                else
+                    WPFCom.Message("관리자 삭제에 실패하였습니다.");
             }
-            else
-                WPFCom.Message("관리자 삭제에 실패하였습니다.");
+            catch
+            {
+                WPFCom.Message("권한을 삭제할 회원을 선택 해 주세요.");
+            }
         }
 
         private void btnBaseAuthRefresh_Click(object sender, RoutedEventArgs e)

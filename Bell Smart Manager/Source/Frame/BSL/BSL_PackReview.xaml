@@ -51,8 +51,6 @@
                     <Button x:Name="btnVerRefusal" Content="검토 거부" HorizontalAlignment="Left" Margin="589,359,0,0" VerticalAlignment="Top" Width="75" Background="Orange" FontWeight="Bold" Click="btnVerRefusal_Click" IsEnabled="False"/>
                     <Label Content="팩 타입 :" HorizontalAlignment="Left" Margin="187,0,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="lbVerType" Content="모드팩" HorizontalAlignment="Left" Margin="244,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Black"/>
-                    <Label Content="UID :" HorizontalAlignment="Left" Margin="387,0,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="lbVerUID" Content="Test" HorizontalAlignment="Left" Margin="424.123,0,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
                     <Label Content="팩 이름 :" HorizontalAlignment="Left" Margin="187,26,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="lbVerName" Content="방울크래프트" HorizontalAlignment="Left" Margin="244,26,0,0" VerticalAlignment="Top" FontWeight="Bold" Foreground="Red"/>
                     <Label x:Name="lbVerBasePack" Content="베이스팩 :" HorizontalAlignment="Left" Margin="187,52,0,0" VerticalAlignment="Top"/>

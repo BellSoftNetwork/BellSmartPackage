@@ -10,6 +10,7 @@
         <Button x:Name="btnPackControl" Content="팩 관리기" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="75" Click="btnPackControl_Click"/>
         <Button x:Name="button" Content="Ticks" HorizontalAlignment="Left" Height="19.96" Margin="90,35,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <Button x:Name="btnServerMaker" Content="서버 제작기" HorizontalAlignment="Left" Margin="10,59.96,0,0" VerticalAlignment="Top" Width="75" Click="btnServerMaker_Click"/>
+        <Button x:Name="btnPackVerRegister" Content="팩 버전 등록" HorizontalAlignment="Right" Margin="0,35,73.676,0" VerticalAlignment="Top" Width="75" Click="btnPackVerRegister_Click"/>
 
     </Grid>
 </Window>

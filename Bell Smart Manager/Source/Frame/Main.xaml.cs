@@ -22,10 +22,10 @@ namespace Bell_Smart_Manager.Source.Frame
         
         private void btnPackMaker_Click(object sender, RoutedEventArgs e)
         {
-            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackMaker"))
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackRegister"))
             {
-                BSL_PackMaker PM = new BSL_PackMaker();
-                PM.Show();
+                BSL_PackRegister PR = new BSL_PackRegister();
+                PR.Show();
             }
         }
 
@@ -75,10 +75,19 @@ namespace Bell_Smart_Manager.Source.Frame
 
         private void btnServerMaker_Click(object sender, RoutedEventArgs e)
         {
-            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_ServerMaker"))
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_ServerRegister"))
             {
-                BSL_ServerMaker SM = new BSL_ServerMaker();
-                SM.Show();
+                BSL_ServerRegister SR = new BSL_ServerRegister();
+                SR.Show();
+            }
+        }
+
+        private void btnPackVerRegister_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackVerRegister"))
+            {
+                BSL_PackVerRegister PVR = new BSL_PackVerRegister();
+                PVR.Show();
             }
         }
     }

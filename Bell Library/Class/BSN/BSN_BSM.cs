@@ -145,32 +145,30 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 서버 정보를 등록합니다.
         /// </summary>
-        /// <param name="UID">UID 값</param>
+        /// <param name="name">서버 이름</param>
         /// <param name="type">서버 형태</param>
         /// <param name="upload">업로드 방식</param>
         /// <param name="download">다운로드 방식</param>
-        /// <param name="name">서버 이름</param>
         /// <param name="address">서버 주소</param>
         /// <param name="port">서버 포트</param>
         /// <param name="require_plan">업로드시 최소 요금제</param>
         /// <param name="member_srl">BSN 홈페이지 member_srl</param>
         /// <returns>등록 성공여부</returns>
-        public static bool RegisterServer(string UID, string type, string upload, string download, string name, string address, string port, string require_plan, string member_srl)
+        public static bool RegisterServer(string name, string type, string upload, string download, string address, string port, string require_plan, string member_srl)
         {
             NameValueCollection formData = new NameValueCollection();
 
             formData["insert"] = "server";
-            formData["UID"] = UID;
+            formData["name"] = name;
             formData["type"] = type;
             formData["upload"] = upload;
             formData["download"] = download;
-            formData["name"] = name;
             formData["address"] = address;
             formData["port"] = port;
             formData["require_plan"] = require_plan;
             formData["member_srl"] = member_srl;
 
-            string result = BSN_Info.SendPOST(BASEURL + "servers.php", formData);
+            string result = BSN_Info.SendPOST(BASEURL + "server.php", formData);
             switch (result)
             {
                 case "서버 정보가 정상적으로 등록되었습니다.":
@@ -393,6 +391,29 @@ namespace BellLib.Class.BSN
         }
 
         #endregion
+
+        public static bool RegisterVersion(BSN_BSL.PACK kind, string id, string pw, string name, string version, string[] server, string[] file, string basePath, string basevid = null)
+        {
+            // 버전정보 등록
+            NameValueCollection formData = new NameValueCollection();
+            string serverList = null;
+            foreach (string value in server)
+                serverList += value + "|";
+
+            formData["type"] = kind.ToString();
+            formData["insert"] = "version";
+            formData["name"] = name;
+            formData["version"] = version;
+            formData["server"] = serverList;
+
+            if (kind == BSN_BSL.PACK.modpack)
+                formData["basevid"] = basevid;
+
+            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            if (result.Contains("버전정보 등록실패") || result.Contains("서버정보 등록실패"))
+                return false;
+            return true;
+        }
 
         /// <summary>
         /// 버전등록 후 클라이언트 파일을 업로드합니다.

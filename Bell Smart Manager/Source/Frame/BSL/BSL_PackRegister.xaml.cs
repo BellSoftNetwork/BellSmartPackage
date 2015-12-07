@@ -19,9 +19,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
     /// <summary>
     /// BSL_PackMaker.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class BSL_PackMaker : Window
+    public partial class BSL_PackRegister : Window
     {
-        public BSL_PackMaker()
+        public BSL_PackRegister()
         {
             InitializeComponent();
             Initialize();

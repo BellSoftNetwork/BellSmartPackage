@@ -50,7 +50,6 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             lstVerServers.Items.Clear();
             lstVerFile.Items.Clear();
             lbVerType.Content = null;
-            lbVerUID.Content = null;
             lbVerName.Content = null;
             lbVerVersion.Content = null;
             lbVerBUID.Content = null;
@@ -133,14 +132,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 로드
             lbInfoName.Content = (string)lstInfoList.SelectedItem;
-            string UID; //, id, name, latest, recommended, state, plan, detail, start, endtime;
+            string name; //, id, name, latest, recommended, state, plan, detail, start, endtime;
             switch (kind)
             {
                 case "modpack":
-                    UID = (string)lstInfoList.SelectedItem;
+                    name = (string)lstInfoList.SelectedItem;
                     //string SelBUID;
                     BSN_BSL.ModPack mp = new BSN_BSL.ModPack();
-                    mp = BSN_BSL.LoadModPackDetail(UID); //, out id, out name, out latest, out recommended, out SelBUID, out state, out plan, out detail, out start, out endtime))
+                    mp = BSN_BSL.LoadModPackDetail(name); //, out id, out name, out latest, out recommended, out SelBUID, out state, out plan, out detail, out start, out endtime))
                                                          // 로드 성공시
                     lbInfoType.Content = "모드팩";
                     lbInfoType.Foreground = new SolidColorBrush(Colors.Blue);
@@ -148,7 +147,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbInfoBUID.Content = mp.BaseName;
                     lbInfoMade.Content = mp.made;
                     txtInfoDetail.Text = mp.detail;
-                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, UID))
+                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, name))
                     {
                         if (member.permission == "4")
                         {
@@ -165,18 +164,18 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 case "basepack":
-                    UID = (string)lstInfoList.SelectedItem;
+                    name = (string)lstInfoList.SelectedItem;
                     //string mcversion;
                     BSN_BSL.BasePack bp = new BSN_BSL.BasePack();
 
-                    bp = BSN_BSL.LoadBasePackDetail(UID); //, out id, out latest, out recommended, out state, out mcversion, out plan, out start, out endtime))
+                    bp = BSN_BSL.LoadBasePackDetail(name); //, out id, out latest, out recommended, out state, out mcversion, out plan, out start, out endtime))
                                                           // 로드 성공시
                     lbInfoType.Content = "베이스팩";
                     lbInfoType.Foreground = new SolidColorBrush(Colors.Red);
                     lbInfoName.Content = bp.name;
                     lbInfoMade.Content = bp.made;
                     lbInfoMCVer.Content = bp.mcversion;
-                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.basepack, UID))
+                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.basepack, name))
                     {
                         if (member.permission == "4")
                         {
@@ -193,18 +192,18 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 case "resource":
-                    UID = (string)lstInfoList.SelectedItem;
+                    name = (string)lstInfoList.SelectedItem;
                     //string type;
                     BSN_BSL.Resource res = new BSN_BSL.Resource();
 
-                    res = BSN_BSL.LoadResPackDetail(UID); //, out id, out type, out name, out latest, out recommended, out state, out mcversion, out plan, out detail, out start, out endtime))
+                    res = BSN_BSL.LoadResPackDetail(name); //, out id, out type, out name, out latest, out recommended, out state, out mcversion, out plan, out detail, out start, out endtime))
                     lbInfoType.Foreground = new SolidColorBrush(Colors.Green);
                     lbInfoType.Content = res.type;
                     lbInfoName.Content = res.name;
                     lbInfoMCVer.Content = res.mcversion;
                     lbInfoMade.Content = res.made;
                     txtInfoDetail.Text = res.detail;
-                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.resource, UID))
+                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.resource, name))
                     {
                         if (member.permission == "4")
                         {
@@ -303,19 +302,19 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.modpack))
                 {
                     lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
-                    lstVerList.Tag += BSN_BSL.PACK.modpack + "-" + Common.getElement(tmp, "UID") + "-" + Common.getElement(tmp, "id") + "|";
+                    lstVerList.Tag += BSN_BSL.PACK.modpack + "-" + Common.getElement(tmp, "name") + "-" + Common.getElement(tmp, "id") + "|";
                 }
             if (TYPE == 0 || TYPE == 2)
                 foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.basepack))
                 {
                     lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
-                    lstVerList.Tag += BSN_BSL.PACK.basepack + "-" + Common.getElement(tmp, "UID") + "-" + Common.getElement(tmp, "id") + "|";
+                    lstVerList.Tag += BSN_BSL.PACK.basepack + "-" + Common.getElement(tmp, "name") + "-" + Common.getElement(tmp, "id") + "|";
                 }
             if (TYPE == 0 || TYPE == 3)
                 foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.resource))
                 {
                     lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
-                    lstVerList.Tag += BSN_BSL.PACK.resource + "-" + Common.getElement(tmp, "UID") + "-" + Common.getElement(tmp, "id") + "|";
+                    lstVerList.Tag += BSN_BSL.PACK.resource + "-" + Common.getElement(tmp, "name") + "-" + Common.getElement(tmp, "id") + "|";
                 }
 
             lstVerList.SelectedIndex = 0;
@@ -415,7 +414,6 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 초기화
             lbVerType.Content = null;
-            lbVerUID.Content = null;
             lbVerName.Content = null;
             lbVerBUID.Content = null;
             lbVerBPVer.Content = null;
@@ -423,8 +421,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             lstVerFile.Items.Clear();
 
             // 로드
-            string UID = tagData[1];
-            lbVerUID.Content = UID;
+            string name = tagData[1];
             switch (tagData[0])
             {
                 case "modpack":
@@ -482,7 +479,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 업로드된 클라이언트 파일 로드
             foreach (string data in BSN_BSL.LoadVersionFiles(kind, tagData[2]))
-                lstVerFile.Items.Add(Common.getElement(data, "file"));
+                lstVerFile.Items.Add(Common.getElement(data, "url"));
 
             lbVerName.Content = lstVerList.SelectedItem.ToString().Split('-')[0];
             lbVerVersion.Content = lstVerList.SelectedItem.ToString().Split('-')[1];

@@ -124,8 +124,8 @@
     <Compile Include="Source\Frame\BSL\BSL_PackEditor.xaml.cs">
       <DependentUpon>BSL_PackEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Frame\BSL\BSL_PackMaker.xaml.cs">
-      <DependentUpon>BSL_PackMaker.xaml</DependentUpon>
+    <Compile Include="Source\Frame\BSL\BSL_PackRegister.xaml.cs">
+      <DependentUpon>BSL_PackRegister.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\BSL\BSL_PackReview.xaml.cs">
       <DependentUpon>BSL_PackReview.xaml</DependentUpon>
@@ -133,8 +133,11 @@
     <Compile Include="Source\Frame\BSL\BSL_PackUploader.xaml.cs">
       <DependentUpon>BSL_PackUploader.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Frame\BSL\BSL_ServerMaker.xaml.cs">
-      <DependentUpon>BSL_ServerMaker.xaml</DependentUpon>
+    <Compile Include="Source\Frame\BSL\BSL_PackVerRegister.xaml.cs">
+      <DependentUpon>BSL_PackVerRegister.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\BSL\BSL_ServerRegister.xaml.cs">
+      <DependentUpon>BSL_ServerRegister.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\BSL\BSL_ServerReview.xaml.cs">
       <DependentUpon>BSL_ServerReview.xaml</DependentUpon>
@@ -157,7 +160,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Frame\BSL\BSL_PackMaker.xaml">
+    <Page Include="Source\Frame\BSL\BSL_PackRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,7 +172,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Source\Frame\BSL\BSL_ServerMaker.xaml">
+    <Page Include="Source\Frame\BSL\BSL_PackVerRegister.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\BSL\BSL_ServerRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

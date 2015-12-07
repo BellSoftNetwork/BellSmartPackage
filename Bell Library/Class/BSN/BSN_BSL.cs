@@ -30,11 +30,10 @@ namespace BellLib.Class.BSN
         {
             public bool select { get; set; }
             public string id { get; set; }
-            public string UID { get; set; }
+            public string name { get; set; }
             public string type { get; set; }
             public string upload { get; set; }
             public string download { get; set; }
-            public string name { get; set; }
             public string address { get; set; }
             public string port { get; set; }
             public string require_plan { get; set; }
@@ -250,13 +249,12 @@ namespace BellLib.Class.BSN
             formData["list"] = "server";
             formData["type"] = server.ToString();
 
-            string result = BSN_Info.SendPOST(BASEURL + "servers.php", formData);
+            string result = BSN_Info.SendPOST(BASEURL + "server.php", formData);
             List<Server> list = new List<Server>();
             foreach (string tmp in Common.getElementArray(result, "server"))
             {
                 Server sv = new Server();
                 sv.id = Common.getElement(tmp, "id");
-                sv.UID = Common.getElement(tmp, "UID");
                 sv.name = Common.getElement(tmp, "name");
                 //sv.upload = Common.getElement(tmp, "upload");
                 switch (Common.getElement(tmp, "upload"))
@@ -470,14 +468,13 @@ namespace BellLib.Class.BSN
             formData["detail"] = "server";
             formData["id"] = serverid;
 
-            string data = BSN_Info.SendPOST(BASEURL + "servers.php", formData);
+            string data = BSN_Info.SendPOST(BASEURL + "server.php", formData);
             Server sv = new Server();
             sv.id = Common.getElement(data, "id");
-            sv.UID = Common.getElement(data, "UID");
+            sv.name = Common.getElement(data, "name");
             sv.type = Common.getElement(data, "type");
             sv.upload = Common.getElement(data, "upload");
             sv.download = Common.getElement(data, "download");
-            sv.name = Common.getElement(data, "name");
             sv.address = Common.getElement(data, "address");
             sv.port = Common.getElement(data, "port");
             sv.require_plan = Common.getElement(data, "require_plan");
