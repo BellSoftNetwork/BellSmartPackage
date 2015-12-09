@@ -392,27 +392,24 @@ namespace BellLib.Class.BSN
 
         #endregion
 
-        public static bool RegisterVersion(BSN_BSL.PACK kind, string id, string pw, string name, string version, string[] server, string[] file, string basePath, string basevid = null)
+
+        public static bool RegisterVersion(BSN_BSL.PACK type, string id, string pw, string name, string version, string basevid = null)
         {
             // 버전정보 등록
             NameValueCollection formData = new NameValueCollection();
-            string serverList = null;
-            foreach (string value in server)
-                serverList += value + "|";
-
-            formData["type"] = kind.ToString();
+            
+            formData["type"] = type.ToString();
             formData["insert"] = "version";
             formData["name"] = name;
             formData["version"] = version;
-            formData["server"] = serverList;
 
-            if (kind == BSN_BSL.PACK.modpack)
+            if (type == BSN_BSL.PACK.modpack)
                 formData["basevid"] = basevid;
 
-            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            if (result.Contains("버전정보 등록실패") || result.Contains("서버정보 등록실패"))
-                return false;
-            return true;
+            string result = BSN_Info.SendPOST(BASEURL + "install.php", formData);
+            if (result.Contains("등록 성공"))
+                return true;
+            return false;
         }
 
         /// <summary>

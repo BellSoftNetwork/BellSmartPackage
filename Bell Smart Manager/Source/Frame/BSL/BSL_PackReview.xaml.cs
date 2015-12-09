@@ -410,7 +410,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             {
                 return;
             }
-            BSN_BSL.PACK kind = new BSN_BSL.PACK();
+            BSN_BSL.PACK type = new BSN_BSL.PACK();
 
             // 초기화
             lbVerType.Content = null;
@@ -425,19 +425,19 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             switch (tagData[0])
             {
                 case "modpack":
-                    kind = BSN_BSL.PACK.modpack;
+                    type = BSN_BSL.PACK.modpack;
                     break;
 
                 case "basepack":
-                    kind = BSN_BSL.PACK.basepack;
+                    type = BSN_BSL.PACK.basepack;
                     break;
 
                 case "resource":
-                    kind = BSN_BSL.PACK.resource;
+                    type = BSN_BSL.PACK.resource;
                     break;
             }
 
-            switch (kind)
+            switch (type)
             {
                 case BSN_BSL.PACK.modpack:
                     lbVerType.Content = "모드팩";
@@ -471,15 +471,15 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
             }
             // 업로드된 서버 리스트 로드
-            foreach (string server in BSN_BSL.LoadVersionServer(kind, tagData[2]))
+            foreach (string server in BSN_BSL.LoadVersionServer(type, BSN_BSL.KIND.client, tagData[2]))
             {
                 BSN_BSL.Server sv = BSN_BSL.LoadServerDetail(server);
                 lstVerServers.Items.Add(sv.name);
             }
 
             // 업로드된 클라이언트 파일 로드
-            foreach (string data in BSN_BSL.LoadVersionFiles(kind, tagData[2]))
-                lstVerFile.Items.Add(Common.getElement(data, "url"));
+            foreach (BSN_BSL.Install data in BSN_BSL.LoadVersionFiles(type, BSN_BSL.KIND.client, tagData[2]))
+                lstVerFile.Items.Add(data);
 
             lbVerName.Content = lstVerList.SelectedItem.ToString().Split('-')[0];
             lbVerVersion.Content = lstVerList.SelectedItem.ToString().Split('-')[1];

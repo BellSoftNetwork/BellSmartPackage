@@ -90,5 +90,23 @@ namespace Bell_Smart_Manager.Source.Frame
                 PVR.Show();
             }
         }
+
+        private void btnPackFileRegister_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_PackFileRegister"))
+            {
+                BSL_PackFileRegister PFR = new BSL_PackFileRegister();
+                PFR.Show();
+            }
+        }
+
+        private void btnServerReview_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.BSL.BSL_ServerReview"))
+            {
+                BSL_ServerReview SR = new BSL_ServerReview();
+                SR.Show();
+            }
+        }
     }
 }

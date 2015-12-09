@@ -124,6 +124,9 @@
     <Compile Include="Source\Frame\BSL\BSL_PackEditor.xaml.cs">
       <DependentUpon>BSL_PackEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Frame\BSL\BSL_PackFileRegister.xaml.cs">
+      <DependentUpon>BSL_PackFileRegister.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Frame\BSL\BSL_PackRegister.xaml.cs">
       <DependentUpon>BSL_PackRegister.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Frame\BSL\BSL_PackEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\BSL\BSL_PackFileRegister.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

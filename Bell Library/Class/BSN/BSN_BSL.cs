@@ -41,6 +41,17 @@ namespace BellLib.Class.BSN
         }
 
         /// <summary>
+        /// 설치 데이터
+        /// </summary>
+        public class Install
+        {
+            public string verid { get; set; }
+            public string url { get; set; }
+            public string hash { get; set; }
+            public string size { get; set; }
+        }
+
+        /// <summary>
         /// 모드팩 상세 데이터
         /// </summary>
         public struct ModPack
@@ -84,6 +95,15 @@ namespace BellLib.Class.BSN
         }
 
         /// <summary>
+        /// 팩 서버/클라이언트 열거형
+        /// </summary>
+        public enum KIND
+        {
+            server,
+            client
+        }
+
+        /// <summary>
         /// 서버 종류 열거형
         /// </summary>
         public enum SERVER
@@ -98,8 +118,9 @@ namespace BellLib.Class.BSN
         public enum STATE
         {
             BANNED = -1,
-            PENDING = 0,
-            HIDDEN = 1,
+            PREPARE = 0,
+            PENDING = 1,
+            HIDDEN = 2,
             ACTIVATE = 10
         }
 
@@ -130,6 +151,9 @@ namespace BellLib.Class.BSN
 
                 case STATE.PENDING:
                     return "검토 대기중";
+
+                case STATE.PREPARE:
+                    return "준비중";
 
                 case STATE.HIDDEN:
                     return "비활성화";
@@ -507,15 +531,16 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 선택한 팩 버전의 파일들이 업로드되어있는 서버리스트를 반환합니다.
         /// </summary>
-        /// <param name="kind">팩 종류</param>
+        /// <param name="type">팩 종류</param>
         /// <param name="verid">버전 id</param>
         /// <returns>서버id 배열</returns>
-        public static string[] LoadVersionServer(PACK kind, string verid)
+        public static string[] LoadVersionServer(PACK type, KIND kind, string verid)
         {
             NameValueCollection formData = new NameValueCollection();
 
-            formData["type"] = kind.ToString();
-            formData["install"] = "server";
+            formData["type"] = type.ToString();
+            formData["kind"] = kind.ToString();
+            formData["install"] = "upload";
             formData["verid"] = verid;
 
             string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
@@ -528,16 +553,29 @@ namespace BellLib.Class.BSN
         /// <param name="kind">팩 종류</param>
         /// <param name="verid">버전 id</param>
         /// <returns>설치데이터 배열 (file, hash)</returns>
-        public static string[] LoadVersionFiles(PACK kind, string verid)
+        public static Install[] LoadVersionFiles(PACK type, KIND kind, string verid)
         {
             NameValueCollection formData = new NameValueCollection();
 
-            formData["type"] = kind.ToString();
-            formData["install"] = "client";
+            formData["type"] = type.ToString();
+            formData["kind"] = kind.ToString();
+            formData["install"] = "files";
             formData["verid"] = verid;
-
+            
+            List<Install> insList = new List<Install>();
             string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            return Common.getElementArray(result, "install");
+            string[] data = Common.getElementArray(result, "install");
+            foreach (string @value in data)
+            {
+                string temp = @value;
+                Install ins = new Install();
+                ins.verid = verid;
+                ins.url = @Common.getElement(value, "url");
+                ins.hash = Common.getElement(value, "hash");
+                ins.size = Common.getElement(value, "size");
+                insList.Add(ins);
+            }
+            return insList.ToArray();
         }
 
         #endregion

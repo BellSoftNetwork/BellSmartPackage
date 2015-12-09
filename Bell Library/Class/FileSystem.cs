@@ -46,7 +46,7 @@ namespace BellLib.Class
         /// 기본적으로 존재해야하는 디렉토리를 생성합니다.
         /// </summary>
         [Obsolete]
-        public static void CreateDefaultForder()
+        public static void CreateDefaultFolder()
         {
             CreateFolder(Data.User.BSN_Path);
             CreateFolder(Data.User.BSN_Path + "logs");

@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace Bell_Smart_Manager.Source.Frame.BSL
 {
     /// <summary>
-    /// BSL_PackUploader.xaml에 대한 상호 작용 논리
+    /// BSL_PackFileRegister.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class BSL_PackUploader : Window
+    public partial class BSL_PackFileRegister : Window
     {
-        public BSL_PackUploader()
+        public BSL_PackFileRegister()
         {
             InitializeComponent();
             Initialize();
@@ -30,39 +30,37 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void Initialize()
         {
             // 데이터 초기화
+            btnLoad.IsEnabled = false;
+            cbName.IsEnabled = false;
             cbName.Items.Clear();
-            lstServer.Items.Clear();
 
             // 데이터 기본값
             if (cbName.Tag == null)
                 cbName.Tag = "modpack";
-
-            // 데이터 로드
-            /*foreach (BSN_BSL.Server server in BSN_BSL.LoadServerList(BSN_BSL.SERVER.cloud))
-                lstServer.Items.Add(server);*/
 
             switch (cbName.Tag.ToString())
             {
                 case "modpack":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.modpack, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
-                    lbUploadURL.Content = User.BSN_Path + "Upload\\ModPack\\";
                     break;
 
                 case "basepack":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.basepack, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
-                    lbUploadURL.Content = User.BSN_Path + "Upload\\BasePack\\";
                     break;
 
                 case "resource":
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.resource, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
-                    lbUploadURL.Content = User.BSN_Path + "Upload\\Resource\\";
                     break;
             }
+            if (cbName.Items.Count != 0)
+            {
+                cbName.IsEnabled = true;
+                btnLoad.IsEnabled = true;
+            }
             cbName.SelectedIndex = 0;
-            btnRefresh_Click(null, null);
         }
 
         /// <summary>
@@ -106,27 +104,26 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            BSN_BSL.PACK type = GetSelectType();
-            foreach (string ver in BSN_BSL.LoadPackVersionList(type, (string)cbName.SelectedItem, true))
+            // 검사
+            if (cbName.SelectedItem == null)
             {
-                cbVersion.Items.Add(Common.getElement(ver, "version"));
-                cbVersion.Tag += Common.getElement(ver, "id") + "|";
+                WPFCom.Message("수정할 팩을 선택해주세요.");
+                return;
             }
+
+            // 초기화
+            cbVersion.Items.Clear();
+            cbVersion.Tag = null;
+
+            // 선택한 팩 버전리스트 로드 (등록되지 않은 버전만 로드하게 구현필요)
+            foreach (string value in BSN_BSL.LoadPackVersionList(GetSelectType(), (string)cbName.SelectedItem, true))
+            {
+                cbVersion.Items.Add(Common.getElement(value,"version"));
+                cbVersion.Tag += Common.getElement(value, "id") + "|";
+            }
+
+            // 마무으리
             cbVersion.SelectedIndex = 0;
-            switch (type)
-            {
-                case BSN_BSL.PACK.modpack:
-                    
-                    break;
-
-                case BSN_BSL.PACK.basepack:
-
-                    break;
-
-                case BSN_BSL.PACK.resource:
-
-                    break;
-            }
             gbPack.IsEnabled = false;
             gbUpload.IsEnabled = true;
         }
@@ -150,7 +147,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
         }
 
-        private void btnUpload_Click(object sender, RoutedEventArgs e)
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
 
         }

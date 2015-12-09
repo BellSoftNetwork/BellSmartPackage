@@ -58,7 +58,7 @@ namespace BellLib.Class
                 }
                 catch
                 {
-                    FileSystem.CreateDefaultForder();
+                    FileSystem.CreateDefaultFolder();
                 }
             }
         }

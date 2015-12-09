@@ -61,7 +61,15 @@
                     <Label x:Name="lbVerVersion" Content="1.0.0" HorizontalAlignment="Right" Margin="0,25.96,201.069,0" VerticalAlignment="Top" Foreground="Red" FontWeight="Bold"/>
                     <ListBox x:Name="lstVerServers" Height="54.985" Margin="244,77.96,0,0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                     <Label x:Name="label" Content="업로드 :" HorizontalAlignment="Left" Margin="187,77.96,0,0" VerticalAlignment="Top"/>
-                    <ListBox x:Name="lstVerFile" Margin="187,137.945,0,25.04"/>
+                    <ListView x:Name="lstVerFile" Margin="187,137.945,0,25.04">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding url}" Header="경로"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding hash}" Header="해시"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding size}" Header="용량"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Grid>
             </TabItem>
         </TabControl>
