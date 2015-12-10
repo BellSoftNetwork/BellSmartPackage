@@ -65,8 +65,8 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding url}" Header="경로"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding hash}" Header="해시"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding size}" Header="용량"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding hash}" Header="해시"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

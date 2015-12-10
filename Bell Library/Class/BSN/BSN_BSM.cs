@@ -392,13 +392,24 @@ namespace BellLib.Class.BSN
 
         #endregion
 
-
+        /// <summary>
+        /// 버전정보를 등록합니다.
+        /// </summary>
+        /// <param name="type">팩 타입</param>
+        /// <param name="id">관리자 아이디</param>
+        /// <param name="pw">관리자 비밀번호</param>
+        /// <param name="name">팩 이름</param>
+        /// <param name="version">추가할 버전</param>
+        /// <param name="basevid">(옵션) 베이스팩 id</param>
+        /// <returns>버전 추가 성공여부</returns>
         public static bool RegisterVersion(BSN_BSL.PACK type, string id, string pw, string name, string version, string basevid = null)
         {
             // 버전정보 등록
             NameValueCollection formData = new NameValueCollection();
             
             formData["type"] = type.ToString();
+            formData["id"] = id;
+            formData["pw"] = pw;
             formData["insert"] = "version";
             formData["name"] = name;
             formData["version"] = version;
@@ -412,50 +423,101 @@ namespace BellLib.Class.BSN
             return false;
         }
 
-        /// <summary>
-        /// 버전등록 후 클라이언트 파일을 업로드합니다.
-        /// </summary>
-        /// <param name="kind">팩 종류</param>
-        /// <param name="id">BSN ID</param>
-        /// <param name="pw">BSN PW</param>
-        /// <param name="name">이름</param>
-        /// <param name="version">버전 정보</param>
-        /// <param name="server">업로드할 서버 리스트</param>
-        /// <param name="file">업로드할 파일 리스트</param>
-        /// <param name="basePath">업로드 폴더 기본 경로</param>
-        /// <param name="basevid">(모드팩 전용) 베이스팩 버전ID</param>
-        /// <returns>버전등록 성공여부</returns>
-        public static bool UploadVersion(BSN_BSL.PACK kind, string id, string pw, string name, string version, string[] server, string[] file, string basePath, string basevid = null)
+
+        public static bool RegisterFile(BSN_BSL.PACK type, BSN_BSL.KIND kind, string id, string pw, string verid, string basePath, string[] files, string[] server)
         {
-            // 버전정보 등록
             NameValueCollection formData = new NameValueCollection();
+            Protection pro = new Protection();
             string serverList = null;
+            string fileList = null;
+
             foreach (string value in server)
                 serverList += value + "|";
+            foreach (string value in files)
+            {
+                FileInfo fi = new FileInfo(basePath + value);
+                fileList += value + "|" + pro.MD5Hash(basePath + value) + "|" + fi.Length + "||";
+            }
 
-            formData["type"] = kind.ToString();
-            formData["insert"] = "version";
-            formData["name"] = name;
-            formData["version"] = version;
+            formData["type"] = type.ToString();
+            formData["kind"] = kind.ToString();
+            formData["id"] = id;
+            formData["pw"] = pw;
+            formData["insert"] = "file";
+            formData["verid"] = verid;
             formData["server"] = serverList;
+            formData["files"] = fileList;
+            
 
-            if (kind == BSN_BSL.PACK.modpack)
-                formData["basevid"] = basevid;
+            string result = BSN_Info.SendPOST(BASEURL + "install.php", formData);
+            if (result.Contains("등록 성공"))
+                return true;
+            return false;
+        }
 
-            string result = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            if (result.Contains("버전정보 등록실패") || result.Contains("서버정보 등록실패"))
-                return false;
+        /// <summary>
+        /// 버전정보를 초기화 합니다.
+        /// </summary>
+        /// <param name="type">팩 타입</param>
+        /// <param name="kind">파일 종류</param>
+        /// <param name="id">관리자 id</param>
+        /// <param name="pw">관리자 pw</param>
+        /// <param name="verid">버전 id</param>
+        /// <returns>초기화 성공여부</returns>
+        public static bool ResetVersion(BSN_BSL.PACK type, BSN_BSL.KIND kind, string id, string pw, string verid)
+        {
+            NameValueCollection formData = new NameValueCollection();
 
-            string verid = Common.getElement(result, "verid");
+            formData["type"] = type.ToString();
+            formData["kind"] = kind.ToString();
+            formData["id"] = id;
+            formData["pw"] = pw;
+            formData["reset"] = "version";
+            formData["verid"] = verid;
 
-            // 클라이언트 업로드
+
+            string result = BSN_Info.SendPOST(BASEURL + "install.php", formData);
+            if (result.Contains("초기화 성공"))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// 버전 정보를 검토요청합니다.
+        /// </summary>
+        /// <param name="type">팩 타입</param>
+        /// <param name="id">관리자 id</param>
+        /// <param name="pw">관리자 pw</param>
+        /// <param name="verid">버전 id</param>
+        /// <returns>검토요청 성공여부</returns>
+        public static bool SubmitVersion(BSN_BSL.PACK type, string id, string pw, string verid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = type.ToString();
+            formData["id"] = id;
+            formData["pw"] = pw;
+            formData["submit"] = "version";
+            formData["verid"] = verid;
+
+
+            string result = BSN_Info.SendPOST(BASEURL + "install.php", formData);
+            if (result.Contains("등록 성공"))
+                return true;
+            return false;
+        }
+
+
+        public static bool UploadVersion(BSN_BSL.PACK type, BSN_BSL.KIND kind, string id, string pw, string verid, string serverid, string[] file, string basePath)
+        {
+            // 서버id를 이용해 서버 세부정보 로드
+            // 서버 세부정보를 이용하여 업로드 방식 판단
+
+            // 파일 업로드
             string address = Servers.Bell_Soft_Network.WEB_INFO_ROOT + "BSL/management/upload.php";
 
             foreach (string dumpPath in file)
             {
-                Protection Pro = new Protection();
-                string hash = Pro.MD5Hash(basePath + dumpPath);
-
                 using (var stream = File.Open(basePath + dumpPath, FileMode.Open))
                 {
                     var files = new[]
@@ -471,10 +533,10 @@ namespace BellLib.Class.BSN
 
                     var values = new NameValueCollection
                     {
-                        { "type", kind.ToString() },
+                        { "type", type.ToString() },
+                        { "kind", kind.ToString() },
+                        { "url", dumpPath },
                         { "verid", verid },
-                        { "file", dumpPath },
-                        { "hash", hash },
                         { "id", id },
                         { "pw", pw },
                     };
@@ -482,6 +544,8 @@ namespace BellLib.Class.BSN
                     byte[] uploadResult = UploadFiles(address, files, values);
                     string responsefromserver = Encoding.UTF8.GetString(uploadResult);
                     //WinCom.Message(responsefromserver);
+                    if (!responsefromserver.Contains("파일 업로드 성공"))
+                        return false;
                 }
             }
             return true;

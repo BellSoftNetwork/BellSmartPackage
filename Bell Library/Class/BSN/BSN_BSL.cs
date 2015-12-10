@@ -233,6 +233,26 @@ namespace BellLib.Class.BSN
         }
 
         /// <summary>
+        /// 팩 버전 리스트를 로드합니다.
+        /// </summary>
+        /// <param name="type">팩 타입</param>
+        /// <param name="name">이름</param>
+        /// <param name="state">로드할 상태값</param>
+        /// <returns>버전 배열</returns>
+        public static string[] LoadPackVersionList(PACK type, string name, STATE state)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["list"] = "version";
+            formData["name"] = name;
+            formData["type"] = type.ToString();
+            formData["state"] = Convert.ToInt32(state).ToString();
+
+            string data = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            return Common.getElementArray(data, "ver");
+        }
+
+        /// <summary>
         /// 팩 관리자 리스트를 로드합니다.
         /// </summary>
         /// <param name="type">팩 타입</param>

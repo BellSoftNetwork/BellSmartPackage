@@ -62,7 +62,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
             }
             cbName.SelectedIndex = 0;
-            btnRefresh_Click(null, null);
+            LoadUploadPath(null, null);
         }
 
         /// <summary>
@@ -78,6 +78,84 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 pack = BSN_BSL.PACK.resource;
 
             return pack;
+        }
+
+        /// <summary>
+        /// 현재 선택되어있는 범주를 반환합니다.
+        /// </summary>
+        /// <returns>선택된 파일 종류</returns>
+        private BSN_BSL.KIND GetSelectKind()
+        {
+            BSN_BSL.KIND kind = BSN_BSL.KIND.client;
+            if ((bool)rbClient.IsChecked)
+                kind = BSN_BSL.KIND.client;
+            if ((bool)rbServer.IsChecked)
+                kind = BSN_BSL.KIND.server;
+
+            return kind;
+        }
+
+        /// <summary>
+        /// 현재 선택되어있는 버전 id를 반환합니다.
+        /// </summary>
+        /// <returns>선택된 버전의 id</returns>
+        private string GetSelectVerid()
+        {
+            try
+            {
+                return cbVersion.Tag.ToString().Split('|')[cbVersion.SelectedIndex];
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 업로드 폴더 경로를 로드합니다.
+        /// </summary>
+        private void LoadUploadPath(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (!lbUploadURL.IsInitialized)
+                    return;
+
+
+                lbUploadURL.Content = User.BSN_Path + "Upload\\";
+
+                switch (GetSelectType())
+                {
+                    case BSN_BSL.PACK.modpack:
+                        lbUploadURL.Content += "ModPack\\";
+                        break;
+
+                    case BSN_BSL.PACK.basepack:
+                        lbUploadURL.Content += "BasePack\\";
+                        break;
+
+                    case BSN_BSL.PACK.resource:
+                        lbUploadURL.Content += "Resource\\";
+                        break;
+                }
+
+                switch (GetSelectKind())
+                {
+                    case BSN_BSL.KIND.client:
+                        lbUploadURL.Content += "Client\\";
+                        break;
+
+                    case BSN_BSL.KIND.server:
+                        lbUploadURL.Content += "Server\\";
+                        break;
+                }
+
+                btnRefresh_Click(sender, e);
+            }
+            catch
+            {
+                return;
+            }
         }
 
         private void rbModPack_Checked(object sender, RoutedEventArgs e)
@@ -107,32 +185,19 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             BSN_BSL.PACK type = GetSelectType();
-            foreach (string ver in BSN_BSL.LoadPackVersionList(type, (string)cbName.SelectedItem, true))
+            foreach (string ver in BSN_BSL.LoadPackVersionList(type, (string)cbName.SelectedItem, BSN_BSL.STATE.HIDDEN))
             {
                 cbVersion.Items.Add(Common.getElement(ver, "version"));
                 cbVersion.Tag += Common.getElement(ver, "id") + "|";
             }
             cbVersion.SelectedIndex = 0;
-            switch (type)
-            {
-                case BSN_BSL.PACK.modpack:
-                    
-                    break;
-
-                case BSN_BSL.PACK.basepack:
-
-                    break;
-
-                case BSN_BSL.PACK.resource:
-
-                    break;
-            }
             gbPack.IsEnabled = false;
             gbUpload.IsEnabled = true;
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
+            // 로컬 정보 로드
             lstFile.Items.Clear();
             try
             {
@@ -148,16 +213,40 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             {
                 WPFCom.Message("업로드 폴더 로드중 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
             }
+
+            // 서버정보 로드
+            lstServer.Items.Clear();
+            foreach (string value in BSN_BSL.LoadVersionServer(GetSelectType(), GetSelectKind(), GetSelectVerid()))
+            {
+                BSN_BSL.Server server = BSN_BSL.LoadServerDetail(value);
+                server.select = true;
+                server.require_plan = BSN_BSL.GetPlanName((BSN_BSL.PLAN)Convert.ToInt32(server.require_plan));
+
+                lstServer.Items.Add(server);
+            }
         }
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
+            string[] file = lstFile.Items.Cast<string>().ToArray();
+            List<string> list = new List<string>();
+            foreach (BSN_BSL.Server sv in lstServer.Items)
+                if (sv.select)
+                    if (BSN_BSM.UploadVersion(GetSelectType(), GetSelectKind(), "id", "pw", GetSelectVerid(), sv.id, file, (string)lbUploadURL.Content))
+                    {
+                        //sv.select = false;
+                    }
+                    else
+                    {
+                        WPFCom.Message(sv.name + "에 업로드를 실패하였습니다.");
+                    }
 
+            WPFCom.Message("업로드를 마쳤습니다.");
         }
 
         private void cbVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            btnRefresh_Click(sender, e);
         }
     }
 }

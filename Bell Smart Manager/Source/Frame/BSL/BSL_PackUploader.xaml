@@ -45,8 +45,8 @@
                 <ListBox x:Name="lstFile" Height="76.105" VerticalAlignment="Top" Margin="0,186.72,0,0"/>
                 <ProgressBar x:Name="pbUpload" Height="10.934" VerticalAlignment="Bottom"/>
                 <Button x:Name="btnUpload" Content="업로드" HorizontalAlignment="Right" Margin="0,0,0,15.934" VerticalAlignment="Bottom" Width="75" Click="btnUpload_Click"/>
-                <RadioButton x:Name="rbClient" Content="클라이언트" HorizontalAlignment="Left" Margin="74.066,31.96,0,0" VerticalAlignment="Top" IsChecked="True"/>
-                <RadioButton x:Name="rbServer" Content="서버" HorizontalAlignment="Left" Margin="158.066,31.96,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="rbClient" Content="클라이언트" HorizontalAlignment="Left" Margin="74.066,31.96,0,0" VerticalAlignment="Top" IsChecked="True" Checked="LoadUploadPath"/>
+                <RadioButton x:Name="rbServer" Content="서버" HorizontalAlignment="Left" Margin="158.066,31.96,0,0" VerticalAlignment="Top" Checked="LoadUploadPath"/>
                 <Label x:Name="label" Content="파일 범주 :" HorizontalAlignment="Left" Margin="0,25.96,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
