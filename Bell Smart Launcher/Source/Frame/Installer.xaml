@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Installer" Height="125.18" Width="399.281" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico">
     <Grid>
+        <ProgressBar x:Name="pbTotal" Height="32" Margin="10,10,10,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbLog" Content="진행상황 : " Margin="10,0,10,10" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>

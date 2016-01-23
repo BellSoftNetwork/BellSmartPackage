@@ -530,7 +530,6 @@ namespace BellLib.Class.BSN
                             Stream = stream
                         }
                     };
-
                     var values = new NameValueCollection
                     {
                         { "type", type.ToString() },
@@ -540,7 +539,6 @@ namespace BellLib.Class.BSN
                         { "id", id },
                         { "pw", pw },
                     };
-
                     byte[] uploadResult = UploadFiles(address, files, values);
                     string responsefromserver = Encoding.UTF8.GetString(uploadResult);
                     //WinCom.Message(responsefromserver);

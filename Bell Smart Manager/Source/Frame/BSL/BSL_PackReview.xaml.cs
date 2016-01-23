@@ -66,6 +66,21 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             btnVerRefresh_Click(null, null);
         }
 
+        /// <summary>
+        /// 현재 선택되어있는 범주를 반환합니다.
+        /// </summary>
+        /// <returns>선택된 파일 종류</returns>
+        private BSN_BSL.KIND GetSelectKind()
+        {
+            BSN_BSL.KIND kind = BSN_BSL.KIND.client;
+            if ((bool)rbClient.IsChecked)
+                kind = BSN_BSL.KIND.client;
+            if ((bool)rbServer.IsChecked)
+                kind = BSN_BSL.KIND.server;
+
+            return kind;
+        }
+
         private void btnInfoRefresh_Click(object sender, RoutedEventArgs e)
         {
             lstInfoList.Items.Clear();
@@ -471,20 +486,25 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
             }
             // 업로드된 서버 리스트 로드
-            foreach (string server in BSN_BSL.LoadVersionServer(type, BSN_BSL.KIND.client, tagData[2]))
+            foreach (string server in BSN_BSL.LoadVersionServer(type, GetSelectKind(), tagData[2]))
             {
                 BSN_BSL.Server sv = BSN_BSL.LoadServerDetail(server);
                 lstVerServers.Items.Add(sv.name);
             }
 
             // 업로드된 클라이언트 파일 로드
-            foreach (BSN_BSL.Install data in BSN_BSL.LoadVersionFiles(type, BSN_BSL.KIND.client, tagData[2]))
+            foreach (BSN_BSL.Install data in BSN_BSL.LoadVersionFiles(type, GetSelectKind(), tagData[2]))
                 lstVerFile.Items.Add(data);
 
             lbVerName.Content = lstVerList.SelectedItem.ToString().Split('-')[0];
             lbVerVersion.Content = lstVerList.SelectedItem.ToString().Split('-')[1];
             btnVerApproval.IsEnabled = true;
             btnVerRefusal.IsEnabled = true;
+        }
+
+        private void rbKind_Checked(object sender, RoutedEventArgs e)
+        {
+            lstVerList_SelectionChanged(sender, null);
         }
     }
 }
