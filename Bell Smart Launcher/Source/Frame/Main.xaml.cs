@@ -104,9 +104,16 @@ namespace Bell_Smart_Launcher.Source.Frame
                 mod_cbProfile.Items.Add(value); // 기본값 추가
             mod_cbProfile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠 (기본값)
             string DefaultPath = User.BSL_Root + "Data\\BSL\\Profile\\"; // 프로필파일 기본 경로
-            string[] ProfileList = Directory.GetFiles(DefaultPath, "*.bdx"); // .bd 파일 리스트를 불러옴.
-            foreach (string tmp in ProfileList)
-                mod_cbProfile.Items.Add(tmp.Replace(DefaultPath, string.Empty).Replace(".bdx", string.Empty)); // 프로필 파일을 전부 로드함.
+            try
+            {
+                string[] ProfileList = Directory.GetFiles(DefaultPath, "*.bdx"); // .bd 파일 리스트를 불러옴.
+                foreach (string tmp in ProfileList)
+                    mod_cbProfile.Items.Add(tmp.Replace(DefaultPath, string.Empty).Replace(".bdx", string.Empty)); // 프로필 파일을 전부 로드함.
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Directory.CreateDirectory(DefaultPath);
+            }
         }
 
         /// <summary>
