@@ -420,5 +420,11 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             WPFCom.End();
         }
+
+        // News 버튼 위로 커서가 올라갔을 시id NewsButton_MouseEnteTabItemeMouseEntereEventArgs e)
+        {
+            var uriSUri(@"/WpfApplication1;component/changeimage.png", UriKind.Relative);
+            ImageName.Source = new BitmapImage(uriSource);
+        }
     }
 }
