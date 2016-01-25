@@ -367,7 +367,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 installMod = true;
 
             // 미설치시 설치시작
-            if (installBase && installMod)
+            if (installBase || installMod)
             {
                 Installer install = new Installer(modName, modVer, modVerid, baseVerid); // 설치기 초기화
                 install.Show(); // 설치기 실행

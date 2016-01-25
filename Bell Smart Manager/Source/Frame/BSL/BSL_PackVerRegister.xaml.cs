@@ -120,7 +120,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                         cbBaseVer.Items.Add(Common.getElement(value, "version"));
                         cbBaseVer.Tag += Common.getElement(value, "id") + "|";
                     }
-                    cbBaseVer.SelectedIndex = 0;
+                    cbBaseVer.SelectedIndex = cbBaseVer.Items.Count - 1;
                     break;
 
                 case BSN_BSL.PACK.basepack:
