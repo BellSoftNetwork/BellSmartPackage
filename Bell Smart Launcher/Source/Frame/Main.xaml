@@ -41,7 +41,34 @@
                 <Grid/>
             </TabItem>
             <TabItem Header="SETTING" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
-                <Grid/>
+                <Grid Margin="0,0,0,-10">
+                    <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="408" Margin="10,0,0,0" VerticalAlignment="Top" Width="820">
+                        <TabItem Header="Start Options">
+                            <Grid Background="#FFE5E5E5">
+                                <CheckBox x:Name="checkBox" Content="Open with Console Window" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="JVM Settings">
+                            <Grid Background="#FFE5E5E5">
+                                <GroupBox x:Name="groupBox" Header="OneClick JVM Settings" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Height="264" Width="790" BorderBrush="Black">
+                                    <Grid HorizontalAlignment="Left" Height="244" Margin="10,10,-2,-12" VerticalAlignment="Top" Width="770">
+                                        <CheckBox x:Name="checkBox2" Content="Minimum Ram Size" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="149,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.749,-0.891" Width="219"/>
+                                        <CheckBox x:Name="checkBox2_Copy" Content="Maximum Ram Size" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                                        <Slider x:Name="slider_Copy" HorizontalAlignment="Left" Margin="149,31,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.749,-0.891" Width="219"/>
+                                    </Grid>
+                                </GroupBox>
+                                <CheckBox x:Name="checkBox1" Content="Using Manual JVM Argument" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="137,316,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="663"/>
+                                <Label x:Name="label" Content="Comfirm Argument :" HorizontalAlignment="Left" Margin="10,314,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label1" Content="Total System Memory :" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="label2" Content="Using System Memory :" HorizontalAlignment="Left" Margin="227,0,0,0" VerticalAlignment="Top"/>
+                                <Button x:Name="button" Content="Reset" HorizontalAlignment="Left" Margin="645,344,0,0" VerticalAlignment="Top" Width="75"/>
+                                <Button x:Name="button1" Content="Apply" HorizontalAlignment="Left" Margin="725,344,0,0" VerticalAlignment="Top" Width="75"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
