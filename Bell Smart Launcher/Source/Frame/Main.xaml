@@ -1,30 +1,30 @@
 ﻿<Window x:Class="Bell_Smart_Launcher.Source.Frame.Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Bell Smart Launcher" Height="501" Width="858" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="CanMinimize" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="Bell Smart Launcher" Height="514" Width="874" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="CanMinimize" Loaded="Window_Loaded" Closed="Window_Closed">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
             <GradientStop Color="#FF34CBC4"/>
             <GradientStop Color="#FF3E64CD" Offset="1"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid x:Name="gd_Main">
-        <TabControl x:Name="tc_Main" HorizontalAlignment="Left" Height="470" VerticalAlignment="Top" Width="850" Background="{x:Null}" BorderBrush="{x:Null}">
+    <Grid x:Name="gd_Main" Margin="0,0,0,0">
+        <TabControl x:Name="tc_Main" Background="{x:Null}" BorderBrush="{x:Null}" Height="475" VerticalAlignment="Top" HorizontalAlignment="Left" Width="858" >
             <TabItem Header="NEWS" Background="{x:Null}" Height="50" Margin="-2,-1,-2,1" Width="150" BorderBrush="{x:Null}">
                 <Grid/>
             </TabItem>
             <TabItem Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid>
-                    <ListBox x:Name="mod_lstPackList" HorizontalAlignment="Left" Height="320" VerticalAlignment="Top" Width="298" Background="{x:Null}" FontWeight="Bold" FontSize="20" Margin="546,27,-4,0" SelectionChanged="mod_lstPackList_SelectionChanged">
+                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="{x:Null}" FontWeight="Bold" FontSize="20" Margin="546,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
                         <ListBoxItem Content="테스트1"/>
                         <ListBoxItem Content="테스트2"/>
                     </ListBox>
                     <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="541" Margin="0,27,0,0"/>
-                    <ComboBox x:Name="mod_cbProfile" HorizontalAlignment="Left" Margin="587,352,0,0" VerticalAlignment="Top" Width="247" SelectedIndex="0" SelectionChanged="mod_cbProfile_SelectionChanged">
+                    <ComboBox x:Name="mod_cbProfile" Margin="587,352,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="mod_cbProfile_SelectionChanged">
                         <ComboBoxItem Content="Select Profile"/>
                         <ComboBoxItem Content="Create Profile"/>
                     </ComboBox>
-                    <Button x:Name="mod_btnEnjoy" Content="Enjoy" HorizontalAlignment="Left" Margin="755,379,0,0" VerticalAlignment="Top" Width="75" Click="mod_btnEnjoy_Click"/>
+                    <Button x:Name="mod_btnEnjoy" Content="Enjoy" Margin="755,379,14,0" VerticalAlignment="Top" Click="mod_btnEnjoy_Click"/>
                     <Button x:Name="mod_btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="546,352,0,0" VerticalAlignment="Top" Width="38" Height="22" Click="mod_btnEdit_Click"/>
                     <ComboBox x:Name="mod_cbVersion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" SelectedIndex="0">
                         <ComboBoxItem Content="Recommended"/>
@@ -34,7 +34,7 @@
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <ListBox x:Name="mod_lstDetailList" HorizontalAlignment="Left" Height="58" Margin="0,316,0,0" VerticalAlignment="Top" Width="541"/>
-                    <Button x:Name="mod_btnPackSetting" Content="Pack Setting" HorizontalAlignment="Left" Margin="749,0,0,0" VerticalAlignment="Top" Width="85" Height="22" Click="mod_btnPackSetting_Click"/>
+                    <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="749,0,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">
