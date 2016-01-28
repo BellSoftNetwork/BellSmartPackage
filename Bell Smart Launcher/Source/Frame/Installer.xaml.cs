@@ -36,6 +36,13 @@ namespace Bell_Smart_Launcher.Source.Frame
         string[] modServerList; // 모드팩이 업로드되어있는 서버리스트
 
 
+        /// <summary>
+        /// 마인크래프트 모드팩 설치를 준비합니다.
+        /// </summary>
+        /// <param name="modName">설치할 모드팩 이름</param>
+        /// <param name="modVer">설치할 모드팩 버전</param>
+        /// <param name="modVerid">설치할 모드팩 버전id</param>
+        /// <param name="baseVerid">설치할 베이스팩 버전id</param>
         public Installer(string modName, string modVer, string modVerid, string baseVerid)
         {
             InitializeComponent();
@@ -46,43 +53,25 @@ namespace Bell_Smart_Launcher.Source.Frame
             Initialize();
         }
 
+
+        public Installer(string Runtime)
+        {
+
+        }
+
         /// <summary>
         /// 데이터 초기화
         /// </summary>
         private void Initialize()
         {
-            /*/// 선택한 모드팩 상세정보 로드
-
-            // 상세 정보 로드
-            string[] verList = BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, modName, BSN_BSL.STATE.ACTIVATE); // 모드팩 버전 리스트
-            BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail(modName); // 모드팩 정보 로드
-
-            // 버전정보 검증
-            if (modVer == "Recommended") // 권장버전을 선택했을경우,
-                modVer = mp.recommended; // 공식 권장버전을 대입
-            foreach (string verData in verList)
-            {
-                if (modVer == "Lastest") // 선택한 버전이 최신버전일경우,
-                    if (modVerid == null) // 버전id 설정이 안되어있을경우 (foreach 처음 진입일경우)
-                        modVer = Common.getElement(verData, "version"); // 최신버전값을 넣어준다.
-                if (modVer == Common.getElement(verData, "version")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
-                    modVerid = Common.getElement(verData, ("id")); // 해당 버전 id를 로드한다.
-            }
-
-            // 데이터 유효성 검증
-            if (modVerid == null) // 예상치 못한 오류로 모드 버전 id를 받지 못하였을경우 실행 중단
-            {
-                WPFCom.Message("버전정보를 가져오는데 실패하였습니다.");
-                return;
-            }
-
-            // 선행 로드가 끝난 후 추가정보 로드
-            string modVerData = BSN_BSL.LoadVersionDetail(BSN_BSL.PACK.modpack, modVerid); // 모드팩 버전 상세정보 로드
-            baseVerid = Common.getElement(modVerData, "basevid"); // 베이스팩 버전id*/
             baseServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.basepack, BSN_BSL.KIND.client, baseVerid); // 베이스팩이 업로드되어있는 서버리스트
             modServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.modpack, BSN_BSL.KIND.client, modVerid); // 모드팩이 업로드되어있는 서버리스트
         }
 
+        /// <summary>
+        /// 진행상황 설명을 설정합니다.
+        /// </summary>
+        /// <param name="Log">로그</param>
         private void SetState(string Log)
         {
             lbLog.Content = Log;

@@ -24,6 +24,10 @@ namespace Bell_Smart_Launcher.Source.Frame
     /// </summary>
     public partial class Main : Window
     {
+        // 필드
+        private int LastSelectedTab;
+
+
         public Main()
         {
             InitializeComponent();
@@ -319,7 +323,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             string baseVerid = null;
             bool installBase = false;
             bool installMod = false;
-            
+
             // 필드 유효성 검증
             if (mod_cbProfile.SelectedIndex < 2)
             {
@@ -419,6 +423,24 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Window_Closed(object sender, EventArgs e)
         {
             WPFCom.End();
+        }
+
+        private void set_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!set_sdJAVA.IsInitialized)
+                return;
+            set_lbRAM.Content = set_sdJAVA.Value + " GB";
+        }
+
+        private void tc_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tc_Main.SelectedIndex == 3)
+            {
+                tc_Main.SelectedIndex = LastSelectedTab;
+                Setting set = new Setting();
+                set.ShowDialog();
+            }
+            LastSelectedTab = tc_Main.SelectedIndex; // 마지막으로 선택된 탭 인덱스
         }
     }
 }
