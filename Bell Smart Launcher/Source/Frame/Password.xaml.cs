@@ -21,6 +21,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         public Password()
         {
             InitializeComponent();
+            txtPassword.Focus();
         }
 
         public string getPassword()

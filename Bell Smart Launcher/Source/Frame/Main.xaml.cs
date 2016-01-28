@@ -1,4 +1,5 @@
 ﻿using BellLib.Class;
+using BD = BellLib.Class.Analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ using BellLib.Data;
 using System.IO;
 using System.Net;
 using System.Diagnostics;
+using Bell_Smart_Launcher.Source.Data;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -26,7 +28,8 @@ namespace Bell_Smart_Launcher.Source.Frame
     {
         // 필드
         private int LastSelectedTab;
-
+        private string ModpacksDataPath = User.BSN_Path + "DATA\\BSL\\Modpacks.bdx";
+        private string ResourcesDataPath = User.BSN_Path + "DATA\\BSL\\Resources.bdx";
 
         public Main()
         {
@@ -76,16 +79,15 @@ namespace Bell_Smart_Launcher.Source.Frame
             //MODPACKS
             foreach (string value in BSN_BSL.LoadPackList(BSN_BSL.PACK.modpack))
                 mod_lstPackList.Items.Add(Common.getElement(value, "name"));
-            mod_lstPackList.SelectedIndex = 0; // 마지막에 선택했던 팩 자동선택
+            mod_lstPackList.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Modpack"); // 마지막에 선택했던 팩 자동선택
             Mod_Expand(mod_expanderDetail.IsExpanded); // 모드탭 익스펜더 설정
             mod_cbProfile.Items.Add("Select Profile");
             mod_cbProfile.Items.Add("Create Profile");
-            mod_cbProfile.SelectedIndex = 0;
+            //mod_cbProfile.SelectedIndex = 0;
             /*mod_cbVersion.Items.Add("Recommended");
             mod_cbVersion.Items.Add("Latest");
             mod_cbVersion.SelectedIndex = 0;*/
             ProfileLoad(); // 프로필 리스트 로드
-            SettingLoad(); // 셋팅값 로드!
 
             //MAPS
 
@@ -106,68 +108,21 @@ namespace Bell_Smart_Launcher.Source.Frame
             string[] Default = { "프로필 선택", "프로필 생성" };
             foreach (string value in Default)
                 mod_cbProfile.Items.Add(value); // 기본값 추가
-            mod_cbProfile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠 (기본값)
-            string DefaultPath = User.BSL_Root + "Data\\BSL\\Profile\\"; // 프로필파일 기본 경로
+            //mod_cbProfile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠 (기본값)
+            string DefaultPath = User.BSN_Path + "Data\\BSL\\Profile\\"; // 프로필파일 기본 경로
             try
             {
                 string[] ProfileList = Directory.GetFiles(DefaultPath, "*.bdx"); // .bd 파일 리스트를 불러옴.
                 foreach (string tmp in ProfileList)
                     mod_cbProfile.Items.Add(tmp.Replace(DefaultPath, string.Empty).Replace(".bdx", string.Empty)); // 프로필 파일을 전부 로드함.
+                mod_cbProfile.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Profile");
             }
             catch (DirectoryNotFoundException)
             {
                 Directory.CreateDirectory(DefaultPath);
             }
-        }
-
-        /// <summary>
-        /// 클라이언트 설정값을 전부 로드 후, BSL을 초기화합니다.
-        /// </summary>
-        private void SettingLoad()
-        {
-            string[] DataList;
-            try
-            {
-                DataList = Protection.ReadBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx");
-            }
-            catch
-            {
-                return; // 로드실패. 셋팅 로드 중단
-            }
-            foreach (string Data in DataList)
-            {
-                string[] Value = Data.Split('|');
-                switch (Value[0])
-                {
-                    case "PROFILE":
-                        if (Value[1] != string.Empty)
-                            mod_cbProfile.SelectedItem = Value[1];
-                        break;
-
-                    case "MODPACK":
-                        mod_lstPackList.SelectedItem = Value[1];
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 클라이언트 설정값을 저장합니다.
-        /// </summary>
-        private void SaveSetting()
-        {
-            List<string> list = new List<string>();
-            if (mod_cbProfile.SelectedIndex == 0)
-            {
-                list.Add("PROFILE|" + string.Empty);
-            }
-            else
-            {
-                list.Add("PROFILE|" + (string)mod_cbProfile.SelectedItem);
-            }
-            list.Add("MODPACK|" + (string)mod_lstPackList.SelectedItem);
-
-            Protection.WriteBDXFile(User.BSL_Root + "DATA\\BSL\\Client.bdx", list.ToArray()); // 모든 값 저장
+            if (mod_cbProfile.SelectedIndex == -1)
+                mod_cbProfile.SelectedIndex = 0;
         }
 
         private void Mod_Expand(bool expand)
@@ -198,7 +153,6 @@ namespace Bell_Smart_Launcher.Source.Frame
             }
             string strTemp;
             StringBuilder sb = new StringBuilder(1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
-            //PackAnalysisRead MAR = new PackAnalysisRead(PackAnalysisRead.PackType.Mod, MUID); // 선택된 팩정보로 인스턴스 생성
 
             sb.Append(Parameter);
 
@@ -283,11 +237,11 @@ namespace Bell_Smart_Launcher.Source.Frame
                 Profile Pro = new Profile();
                 Pro.ShowDialog();
                 ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
-                SettingLoad(); // 셋팅값 로드!
                 if (Pro.getData(Profile.Data.Name) != null) // 프로필 이름이 null이 아니라면, (프로필을 정상적으로 생성했다면,
                     mod_cbProfile.SelectedItem = Pro.getData(Profile.Data.Name); // 방금 생성한 따끈따끈한 프로필파일을 선택
-                SaveSetting(); // 선택 프로필이 바뀌었으므로 설정값 저장!
             }
+            if (mod_cbProfile.IsInitialized && mod_cbProfile.SelectedIndex > -1)
+                BD.Data.DataSave(ModpacksDataPath, "Profile", (string)mod_cbProfile.SelectedItem); // 선택 프로필이 바뀌었으므로 설정값 저장!
         }
 
         private void mod_btnEdit_Click(object sender, RoutedEventArgs e)
@@ -297,8 +251,6 @@ namespace Bell_Smart_Launcher.Source.Frame
             Profile pro = new Profile((string)mod_cbProfile.SelectedItem);
             pro.ShowDialog();
             ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
-            SettingLoad(); // 셋팅값 로드!
-            SaveSetting(); // 선택 프로필이 바뀌었으므로 설정값 저장!
         }
 
         private void mod_lstPackList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -312,6 +264,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 mod_cbVersion.Items.Add(Common.getElement(value, "version"));
 
             mod_cbVersion.SelectedIndex = 1;
+            BD.Data.DataSave(ModpacksDataPath, "Modpack", (string)mod_lstPackList.SelectedItem); // 선택 모드팩이 바뀌었으므로 설정값 저장!
         }
 
         private void mod_btnEnjoy_Click(object sender, RoutedEventArgs e)
@@ -358,8 +311,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 선행 로드가 끝난 후 추가정보 로드
             string modVerData = BSN_BSL.LoadVersionDetail(BSN_BSL.PACK.modpack, modVerid); // 모드팩 버전 상세정보 로드
             baseVerid = Common.getElement(modVerData, "basevid"); // 베이스팩 버전id
-            string basePath = User.BSL_Root + "Base\\" + baseVerid + "\\";
-            string modPath = User.BSL_Root + "ModPack\\" + modVerid + "\\";
+            string basePath = Game.BSL_Root + "Base\\" + baseVerid + "\\";
+            string modPath = Game.BSL_Root + "ModPack\\" + modVerid + "\\";
 
             /// 클라이언트 유효성 검증
             // 베이스팩 설치유무확인
@@ -381,30 +334,34 @@ namespace Bell_Smart_Launcher.Source.Frame
             /// 게임 실행
             // 계정 로그인
             Profile profile = new Profile((string)mod_cbProfile.SelectedItem); // 선택한 프로필로 데이터를 초기화함.
-            User.MC_ID = profile.getData(Profile.Data.ID);
-            User.MC_PW = profile.getData(Profile.Data.PW);
-            string Password = User.MC_PW;
+            string MC_ID = profile.getData(Profile.Data.ID);
+            string MC_PW = profile.getData(Profile.Data.PW);
 
-            if (User.MC_ID != string.Empty) // && User.MC_PW != null) // 레지스트리에 MC 계정정보가 저장되어있으면 로그인 실행
+            if (MC_ID != string.Empty) // && User.MC_PW != null) // 레지스트리에 MC 계정정보가 저장되어있으면 로그인 실행
             {
-                if (Password == string.Empty)
+                if (MC_PW == string.Empty)
                 {
                     Password pass = new Password();
                     pass.ShowDialog();
-                    Password = pass.getPassword();
+                    MC_PW = pass.getPassword();
                 }
 
                 //SetState("마인크래프트 계정 로그인 시도중");
-                if (MCLogin.Login(User.MC_ID, Password, MCLogin.LoginType.Authenticate))
+                MCLogin MCL = new MCLogin();
+                if (MCL.Login(MC_ID, MC_PW, MCLogin.LoginType.Authenticate))
                 {
                     //SetState("마인크래프트 계정 로그인 성공");
                 }
                 else
                 {
+                    WPFCom.Message("마인크래프트 계정 로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.");
                     //SetState("마인크래프트 계정 로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.");
                     //btn_Launch.Enabled = true;
                     return;
                 }
+                MCLogin.MC_Account MCA = MCL.GetLoginData();
+                string MemoryParameter = "-Xmx" + (Game.Memory_Allocate * 1024) + "M ";
+                Launch(modVer, basePath, modPath, Game.JAVA_Path + @"\bin\java.exe", MemoryParameter + Game.JAVA_Parameter, MCA.MC_NickName, MCA.MC_UUID, MCA.MC_AccessToken); // 게임 실행
             }
             else
             {
@@ -412,7 +369,6 @@ namespace Bell_Smart_Launcher.Source.Frame
                 //btn_Launch.Enabled = true;
                 return;
             }
-            Launch(modVer, basePath, modPath, @"C:\BSN\Runtime\JAVA\x64\bin\java.exe", "", User.MC_NickName, User.MC_UUID, User.MC_AccessToken); // 게임 실행
         }
 
         private void mod_btnPackSetting_Click(object sender, RoutedEventArgs e)
@@ -423,13 +379,6 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Window_Closed(object sender, EventArgs e)
         {
             WPFCom.End();
-        }
-
-        private void set_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (!set_sdJAVA.IsInitialized)
-                return;
-            set_lbRAM.Content = set_sdJAVA.Value + " GB";
         }
 
         private void tc_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)

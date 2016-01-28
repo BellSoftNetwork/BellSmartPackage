@@ -25,7 +25,7 @@
                         <ComboBoxItem Content="Select Profile"/>
                         <ComboBoxItem Content="Create Profile"/>
                     </ComboBox>
-                    <Button x:Name="mod_btnEnjoy" Content="Enjoy" Margin="755,379,14,0" VerticalAlignment="Top" Click="mod_btnEnjoy_Click"/>
+                    <Button x:Name="mod_btnEnjoy" Content="Enjoy" Margin="769,379,0,0" VerticalAlignment="Top" Click="mod_btnEnjoy_Click"/>
                     <Button x:Name="mod_btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="546,352,0,0" VerticalAlignment="Top" Width="38" Height="22" Click="mod_btnEdit_Click"/>
                     <ComboBox x:Name="mod_cbVersion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" SelectedIndex="0">
                         <ComboBoxItem Content="Recommended"/>
@@ -42,23 +42,7 @@
                 <Grid/>
             </TabItem>
             <TabItem Header="SETTING" Background="{x:Null}" Margin="1,0,-1,0" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
-                <Grid>
-                    <Grid HorizontalAlignment="Left" Height="398" Margin="10,10,0,0" VerticalAlignment="Top" Width="820" Background="White">
-                        <GroupBox x:Name="set_gbOptions" Header="Options" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="214" Width="800" FontSize="16">
-                            <Grid>
-                                <CheckBox x:Name="set_cbConsole" Content="Open with Console window" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-                                <CheckBox x:Name="set_cbKeep" Content="Keep the BSL open" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox x:Name="set_gbJAVA" Header="Perfomance Option (JVM Argument)" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top" Height="159" Width="800" FontSize="16">
-                            <Grid>
-                                <Label Content="Maximum Ram Size" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.231,1.115" FontSize="14.667"/>
-                                <Slider x:Name="set_sdJAVA" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Maximum="16" Minimum="1" SmallChange="0.25" Value="1" IsSnapToTickEnabled="True" Margin="156.783,15.729,0,0" d:LayoutOverrides="HorizontalAlignment" ValueChanged="set_sdJAVA_ValueChanged" TickFrequency="0.25"/>
-                                <Label x:Name="set_lbRAM" Content="1 GB" Margin="372.783,10,311.679,0" VerticalAlignment="Top" Height="29.507"/>
-                            </Grid>
-                        </GroupBox>
-                    </Grid>
-                </Grid>
+                <Grid/>
             </TabItem>
         </TabControl>
     </Grid>

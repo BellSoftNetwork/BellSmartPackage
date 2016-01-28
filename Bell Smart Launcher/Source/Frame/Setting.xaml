@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
         mc:Ignorable="d"
-        Title="설정" Height="400" Width="600" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="설정" Height="400" Width="600" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontSize="14.667">
     <Grid>
         <TabControl x:Name="tabControl">
             <TabItem Header="일반">
@@ -16,11 +16,23 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
-                    <CheckBox x:Name="set_cbConsole" Content="Open with Console window" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-                    <CheckBox x:Name="set_cbKeep" Content="Keep the BSL open" HorizontalAlignment="Left" Margin="10,33.506,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="171*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="설치 폴더 :" Margin="10,10,-17.244,0" VerticalAlignment="Top" d:LayoutOverrides="Width"/>
+                    <TextBox x:Name="gen_txtInstall" Height="23" Margin="22.244,12.96,90,0" TextWrapping="Wrap" Text="C:\BSN" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Button x:Name="gen_btnSearch" Content="찾기" HorizontalAlignment="Right" Margin="0,13,10,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Label Content="언어 :" Margin="10,35.96,17.246,0" VerticalAlignment="Top" d:LayoutOverrides="Width"/>
+                    <ComboBox x:Name="gen_cbLanguage" Margin="22.244,39.96,0,0" VerticalAlignment="Top" SelectedIndex="0" Grid.Column="1" HorizontalAlignment="Left" Width="222.497">
+                        <ListBoxItem Content="한국어"/>
+                    </ComboBox>
+                    <CheckBox x:Name="gen_cbConsole" Content="콘솔 실행" HorizontalAlignment="Left" Margin="22.244,70.466,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1"/>
+                    <CheckBox x:Name="gen_cbKeep" Content="런처 실행 유지" HorizontalAlignment="Left" Margin="22.244,93.972,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1"/>
+                    <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.998" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click" Grid.Column="1"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="자바">
+            <TabItem Header="게임">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -28,9 +40,14 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
-                    <Label Content="Maximum Ram Size" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.231,1.115" FontSize="14.667"/>
-                    <Slider x:Name="set_sdJAVA" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Maximum="16" Minimum="1" SmallChange="0.25" Value="1" IsSnapToTickEnabled="True" Margin="156.783,15.729,0,0" ValueChanged="set_sdJAVA_ValueChanged" TickFrequency="0.25"/>
-                    <Label x:Name="set_lbRAM" Content="1 GB" Margin="0,10,111.679,0" VerticalAlignment="Top" Height="29.507" HorizontalAlignment="Right" Width="103.538"/>
+                    <Label Content="메모리 할당량 :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.231,1.115" FontSize="14.667"/>
+                    <Slider x:Name="game_sdJAVA" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Maximum="16" Minimum="1" SmallChange="0.25" Value="1" IsSnapToTickEnabled="True" Margin="156.783,15.729,0,0" ValueChanged="game_sdJAVA_ValueChanged" TickFrequency="0.25"/>
+                    <Label x:Name="game_lbRAM" Content="1 GB" Margin="0,10,111.679,0" VerticalAlignment="Top" Height="29.507" HorizontalAlignment="Right" Width="103.538"/>
+                    <Label Content="자바 경로 :" HorizontalAlignment="Left" Margin="10,39.506,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="game_txtJAVAPath" Height="23" Margin="156.783,43.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="C:\BSN\Runtime\JAVA\x64"/>
+                    <Label Content="매개변수 :" HorizontalAlignment="Left" Margin="10,69.012,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="game_txtParameter" Height="23" Margin="156.783,71.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <Button x:Name="game_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.999" VerticalAlignment="Bottom" Width="75" Click="game_btnSave_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

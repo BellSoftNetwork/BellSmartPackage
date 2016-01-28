@@ -12,8 +12,38 @@ namespace BellLib.Class
     /// <summary>
     /// 마인크래프트 로그인 관련 메서드와 필드, 열거형 목록을 가지고 있는 클래스입니다.
     /// </summary>
-    public static class MCLogin
+    public class MCLogin
     {
+        private MC_Account loginAccount = new MC_Account();
+        private bool AccountAvailable = false;
+
+        /// <summary>
+        /// 마인크래프트 계정정보
+        /// </summary>
+        public class MC_Account
+        {
+            public string MC_NickName { get; set; }
+            public string MC_UUID { get; set; }
+            public string MC_AccessToken { get; set; }
+        }
+        
+        /// <summary>
+        /// 로그인에 성공시 계정정보를 반환합니다.
+        /// </summary>
+        /// <returns>계정정보</returns>
+        public MC_Account GetLoginData()
+        {
+            if (AccountAvailable)
+                return loginAccount;
+            else
+                return null;
+        }
+
+        public MCLogin()
+        {
+
+        }
+
         /// <summary>
         /// Minecraft에 로그인할 수 있는 타입이 열거되어 있습니다.
         /// </summary>
@@ -29,7 +59,7 @@ namespace BellLib.Class
         /// <summary>
         /// LoginType을 Key로 사용하여 Value인 Endpoint를 제공합니다.
         /// </summary>
-        private static Dictionary<LoginType, string> EndPoint = new Dictionary<LoginType, string>()
+        private Dictionary<LoginType, string> EndPoint = new Dictionary<LoginType, string>()
         {
             {LoginType.Authenticate, "/authenticate"},
             {LoginType.Refresh, "/refresh"},
@@ -55,8 +85,9 @@ namespace BellLib.Class
         /// <param name="pw">Minecraft 비밀번호</param>
         /// <param name="type">로그인 할 LoginType</param>
         /// <returns>성공 여부를 반환합니다.</returns>
-        public static bool Login(string id, string pw, LoginType type)
+        public bool Login(string id, string pw, LoginType type)
         {
+            AccountAvailable = false;
             //setting json file for sending.
             JsonLoginData loginInfo = new JsonLoginData();
             loginInfo.agent.name = "Minecraft";
@@ -127,7 +158,7 @@ namespace BellLib.Class
                 {
                     if (jReader.TokenType == JsonToken.String)
                     {
-                        User.MC_NickName = jReader.Value.ToString();
+                        loginAccount.MC_NickName = jReader.Value.ToString();
                     }
                     jArray[4] = false;
                 }
@@ -145,7 +176,7 @@ namespace BellLib.Class
                 {
                     if (jReader.TokenType == JsonToken.String)
                     {
-                        User.MC_UUID = jReader.Value.ToString();
+                        loginAccount.MC_UUID = jReader.Value.ToString();
                         jArray[3] = true;
                     }
                     jArray[2] = false;
@@ -163,7 +194,7 @@ namespace BellLib.Class
                 if (jArray[0])
                 {
                     if (jReader.TokenType == JsonToken.String)
-                        User.MC_AccessToken = jReader.Value.ToString();
+                        loginAccount.MC_AccessToken = jReader.Value.ToString();
                     // 이게 뭡니까? 어디있는겨
                     jArray[0] = false;
                 }
@@ -200,7 +231,8 @@ namespace BellLib.Class
                 //User.MC_ID = null;
                 //User.MC_PW = null;
             }*/
-
+            
+            AccountAvailable = true;
             return value;
         }
     }
