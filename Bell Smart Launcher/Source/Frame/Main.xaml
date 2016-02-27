@@ -16,7 +16,7 @@
             </TabItem>
             <TabItem Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid>
-                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="{x:Null}" FontWeight="Bold" FontSize="20" Margin="546,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
+                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="#FFA6E3F9" FontWeight="Bold" FontSize="20" Margin="546,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
                         <ListBoxItem Content="테스트1"/>
                         <ListBoxItem Content="테스트2"/>
                     </ListBox>
@@ -41,8 +41,10 @@
             <TabItem Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid/>
             </TabItem>
-            <TabItem Header="SETTING" Background="{x:Null}" Margin="1,0,-1,0" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
-                <Grid/>
+            <TabItem Header="SETTING" Background="{x:Null}" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
+                <Grid>
+                    <Button x:Name="set_detailSetting" Content="상세설정" Click="set_detailSetting_Click"/>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

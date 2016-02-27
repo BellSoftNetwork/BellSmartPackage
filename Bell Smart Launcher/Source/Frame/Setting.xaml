@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="설정" Height="400" Width="600" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontSize="14.667">
     <Grid>
-        <TabControl x:Name="tabControl">
+        <TabControl x:Name="tc_Setting">
             <TabItem Header="일반">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">

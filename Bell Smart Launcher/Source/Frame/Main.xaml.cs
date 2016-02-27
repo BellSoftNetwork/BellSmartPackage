@@ -27,7 +27,7 @@ namespace Bell_Smart_Launcher.Source.Frame
     public partial class Main : Window
     {
         // 필드
-        private int LastSelectedTab;
+        //private int LastSelectedTab;
         private string ModpacksDataPath = User.BSN_Path + "DATA\\BSL\\Modpacks.bdx";
         private string ResourcesDataPath = User.BSN_Path + "DATA\\BSL\\Resources.bdx";
 
@@ -80,6 +80,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             foreach (string value in BSN_BSL.LoadPackList(BSN_BSL.PACK.modpack))
                 mod_lstPackList.Items.Add(Common.getElement(value, "name"));
             mod_lstPackList.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Modpack"); // 마지막에 선택했던 팩 자동선택
+            if (mod_lstPackList.SelectedIndex == -1)
+                mod_lstPackList.SelectedIndex = 0;
             Mod_Expand(mod_expanderDetail.IsExpanded); // 모드탭 익스펜더 설정
             mod_cbProfile.Items.Add("Select Profile");
             mod_cbProfile.Items.Add("Create Profile");
@@ -146,6 +148,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <param name="PathPack">모드팩 경로</param>
         private void Launch(string Version, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken)
         {
+            bool javaNotFound = false;
             if (Version == string.Empty || PathBase == string.Empty || PathPack == string.Empty || UUID == string.Empty || AccessToken == string.Empty)
             {
                 WinCom.Message("게임 실행 중 매개변수값이 정상적으로 전달되지 않아 실행을 중단합니다.");
@@ -200,11 +203,12 @@ namespace Bell_Smart_Launcher.Source.Frame
             catch (FileNotFoundException fnf)
             {
                 BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.High, fnf.Message);
-                /*BC_PID = -1;
-                if (BST_Manager.Message("자바 경로가 비 정상적으로 설정되었습니다." + Constants.vbCrLf + "자바 경로 설정 화면으로 이동하시겠습니까?", , MessageBoxButtons.YesNo) == Windows.Forms.DialogResult.Yes) {
-                    BC_Preferences.ShowDialog();
-                }
-                BC_Button(false);*/
+                javaNotFound = true;
+            }
+            catch (System.ComponentModel.Win32Exception we)
+            {
+                BellLib.Class.Debug.Message(BellLib.Class.Debug.Level.High, we.Message);
+                javaNotFound = true;
             }
             catch (Exception ex)
             {
@@ -213,6 +217,15 @@ namespace Bell_Smart_Launcher.Source.Frame
                 BST_Manager.Message("방울크래프트 실행 중 문제가 발생하였습니다." + Constants.vbCrLf + "자바 경로가 정상적으로 설정되어있는지 확인하시기 바랍니다." + Constants.vbCrLf + Constants.vbCrLf + ex.Message);
                 BC_Button(false);*/
             }
+
+            if (javaNotFound)
+                if (WPFCom.Message("자바 경로가 비 정상적으로 설정되었습니다." + Environment.NewLine + "자바 경로 설정화면으로 이동하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
+                    {
+                        Setting set = new Setting();
+                        set.tc_Setting.SelectedIndex = 1;
+                        set.Show(); // 세팅탭 오픈
+                    }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -281,6 +294,11 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (mod_cbProfile.SelectedIndex < 2)
             {
                 WPFCom.Message("실행할 프로필을 선택해주세요.");
+                return;
+            }
+            if (mod_lstPackList.SelectedIndex < 0)
+            {
+                WPFCom.Message("실행할 모드팩을 선택해주세요.");
                 return;
             }
 
@@ -383,13 +401,38 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         private void tc_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            /*if (LastSelectedTab == -1)
+                return;
+            if (LastSelectedTab == 3)
+            {
+                // 예외 에러발생
+                LastSelectedTab = 1; // 일단 강제로 설정 변경
+                WPFCom.Message("예상치못한 탭 컨트롤 에러가 발생하여 자동으로 수정하었습니다.");
+            }
+
             if (tc_Main.SelectedIndex == 3)
             {
-                tc_Main.SelectedIndex = LastSelectedTab;
-                Setting set = new Setting();
-                set.ShowDialog();
+                int tempTab = LastSelectedTab;
+                LastSelectedTab = -1;
+                tc_Main.SelectedIndex = tempTab;
+                if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
+                {
+                    Setting set = new Setting();
+                    set.Show(); // 세팅탭 오픈
+                }
             }
-            LastSelectedTab = tc_Main.SelectedIndex; // 마지막으로 선택된 탭 인덱스
+
+            if (tc_Main.SelectedIndex != 3 && tc_Main.SelectedIndex != -1) // 탭컨트롤 인덱스가 3이 아닐경우
+                LastSelectedTab = tc_Main.SelectedIndex; // 마지막으로 선택된 탭 인덱스*/
+        }
+
+        private void set_detailSetting_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
+            {
+                Setting set = new Setting();
+                set.Show(); // 세팅탭 오픈
+            }
         }
     }
 }
