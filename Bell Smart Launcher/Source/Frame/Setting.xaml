@@ -28,8 +28,9 @@
                         <ListBoxItem Content="한국어"/>
                     </ComboBox>
                     <CheckBox x:Name="gen_cbConsole" Content="콘솔 실행" HorizontalAlignment="Left" Margin="22.244,70.466,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1"/>
-                    <CheckBox x:Name="gen_cbKeep" Content="런처 실행 유지" HorizontalAlignment="Left" Margin="22.244,93.972,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1"/>
+                    <CheckBox x:Name="gen_cbKeep" Content="런처 실행 유지" HorizontalAlignment="Left" Margin="22.244,93.972,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1" IsChecked="True"/>
                     <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.998" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click" Grid.Column="1"/>
+                    <CheckBox x:Name="gen_cbAutoControl" Content="런처 자동제어" Grid.Column="1" HorizontalAlignment="Left" Margin="22.244,117.478,0,0" VerticalAlignment="Top" IsChecked="True"/>
                 </Grid>
             </TabItem>
             <TabItem Header="게임">
@@ -48,6 +49,7 @@
                     <Label Content="매개변수 :" HorizontalAlignment="Left" Margin="10,69.012,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="game_txtParameter" Height="23" Margin="156.783,71.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <Button x:Name="game_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.999" VerticalAlignment="Bottom" Width="75" Click="game_btnSave_Click"/>
+                    <CheckBox x:Name="game_cbMultipleExe" Content="게임 다중실행 허용" Margin="156.783,99.506,160.624,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -32,7 +32,11 @@ namespace BellLib.Class
                 {
                     Debug.Message(Debug.Level.High, "WriteTextFile" + Environment.NewLine + ex.Message);
                     Debug.Message(Debug.Level.High, "Trying to create folder.");
-                    Directory.CreateDirectory(localFilePath);
+                    string[] temp = localFilePath.Split('\\');
+                    string Dir = null;
+                    for (int i = 0; i < temp.Length - 1; i++)
+                        Dir += temp[i] + "\\";
+                    Directory.CreateDirectory(Dir);
                 }
             }
         }

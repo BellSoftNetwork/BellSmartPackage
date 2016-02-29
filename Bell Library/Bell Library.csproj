@@ -56,6 +56,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -83,6 +84,7 @@
     <Compile Include="Class\RegistryManager.cs" />
     <Compile Include="Class\RuntimeAnalysis.cs" />
     <Compile Include="Class\Socket.cs" />
+    <Compile Include="Class\SystemInfo.cs" />
     <Compile Include="Class\WinCom.cs" />
     <Compile Include="Class\WPFCom.cs" />
     <Compile Include="Data\Base.cs" />

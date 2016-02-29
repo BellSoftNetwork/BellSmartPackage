@@ -106,6 +106,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lstInfoList.Items.Add(tmp);
                     lstInfoList.Tag += BSN_BSL.PACK.resource + "|";
                 }
+            if (TYPE == 0 || TYPE == 4)
+                foreach (string tmp in BSN_BSM.LoadReviewList(BSN_BSL.PACK.runtime))
+                {
+                    lstInfoList.Items.Add(tmp);
+                    lstInfoList.Tag += BSN_BSL.PACK.runtime + "|";
+                }
 
             lstInfoList.SelectedIndex = 0;
         }
@@ -233,6 +239,33 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbInfoMC.Visibility = Visibility.Visible;
                     lbInfoMCVer.Visibility = Visibility.Visible;
                     break;
+
+                case "runtime":
+                    name = (string)lstInfoList.SelectedItem;
+                    //string mcversion;
+                    BSN_BSL.Runtime run = new BSN_BSL.Runtime();
+
+                    run = BSN_BSL.LoadRuntimeDetail(name);
+                                                           // 로드 성공시
+                    lbInfoType.Content = "런타임";
+                    lbInfoType.Foreground = new SolidColorBrush(Colors.Purple);
+                    lbInfoName.Content = run.name;
+                    lbInfoMade.Content = run.made;
+                    foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.runtime, name))
+                    {
+                        if (member.permission == "4")
+                        {
+                            txtInfoProEmail.Text = member.email;
+                            lbInfoProNick.Content = BSN_Info.GetNickName(member.member_srl);
+                        }
+                    }
+                    lbInfoDetail.Visibility = Visibility.Collapsed;
+                    txtInfoDetail.Visibility = Visibility.Collapsed;
+                    lbInfoBasePack.Visibility = Visibility.Collapsed;
+                    lbInfoBUID.Visibility = Visibility.Collapsed;
+                    lbInfoMC.Visibility = Visibility.Collapsed;
+                    lbInfoMCVer.Visibility = Visibility.Collapsed;
+                    break;
             }
             btnInfoApproval.IsEnabled = true;
             btnInfoRefusal.IsEnabled = true;
@@ -255,6 +288,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 case "resource":
                     kind = BSN_BSL.PACK.resource;
+                    break;
+
+                case "runtime":
+                    kind = BSN_BSL.PACK.runtime;
                     break;
 
                 default:
@@ -289,6 +326,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 case "resource":
                     kind = BSN_BSL.PACK.resource;
+                    break;
+
+                case "runtime":
+                    kind = BSN_BSL.PACK.runtime;
                     break;
 
                 default:
@@ -331,6 +372,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
                     lstVerList.Tag += BSN_BSL.PACK.resource + "-" + Common.getElement(tmp, "name") + "-" + Common.getElement(tmp, "id") + "|";
                 }
+            if (TYPE == 0 || TYPE == 4)
+                foreach (string tmp in BSN_BSM.LoadVersionReviewList(BSN_BSL.PACK.runtime))
+                {
+                    lstVerList.Items.Add(Common.getElement(tmp, "name") + " - " + Common.getElement(tmp, "version"));
+                    lstVerList.Tag += BSN_BSL.PACK.runtime + "-" + Common.getElement(tmp, "name") + "-" + Common.getElement(tmp, "id") + "|";
+                }
 
             lstVerList.SelectedIndex = 0;
         }
@@ -352,6 +399,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 case "resource":
                     kind = BSN_BSL.PACK.resource;
+                    break;
+
+                case "runtime":
+                    kind = BSN_BSL.PACK.runtime;
                     break;
 
                 default:
@@ -385,6 +436,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 case "resource":
                     kind = BSN_BSL.PACK.resource;
+                    break;
+
+                case "runtime":
+                    kind = BSN_BSL.PACK.runtime;
                     break;
 
                 default:
@@ -435,6 +490,11 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             lstVerServers.Items.Clear();
             lstVerFile.Items.Clear();
 
+            rbClient.IsChecked = true;
+            rbClient.IsEnabled = true;
+            rbServer.IsChecked = false;
+            rbServer.IsEnabled = true;
+
             // 로드
             string name = tagData[1];
             switch (tagData[0])
@@ -450,8 +510,12 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 case "resource":
                     type = BSN_BSL.PACK.resource;
                     break;
-            }
 
+                case "runtime":
+                    type = BSN_BSL.PACK.runtime;
+                    break;
+            }
+            
             switch (type)
             {
                 case BSN_BSL.PACK.modpack:
@@ -483,6 +547,21 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbVerBUID.Visibility = Visibility.Collapsed;
                     lbVerBPVer.Visibility = Visibility.Collapsed;
                     lbVerBaseVer.Visibility = Visibility.Collapsed;
+                    break;
+
+                case BSN_BSL.PACK.runtime:
+                    lbVerType.Content = "런타임";
+                    lbVerType.Foreground = new SolidColorBrush(Colors.Purple);
+
+                    lbVerBasePack.Visibility = Visibility.Collapsed;
+                    lbVerBUID.Visibility = Visibility.Collapsed;
+                    lbVerBPVer.Visibility = Visibility.Collapsed;
+                    lbVerBaseVer.Visibility = Visibility.Collapsed;
+
+                    rbClient.IsChecked = false;
+                    rbClient.IsEnabled = false;
+                    rbServer.IsChecked = false;
+                    rbServer.IsEnabled = false;
                     break;
             }
             // 업로드된 서버 리스트 로드

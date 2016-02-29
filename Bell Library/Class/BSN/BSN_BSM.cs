@@ -143,6 +143,40 @@ namespace BellLib.Class.BSN
         }
 
         /// <summary>
+        /// 런타임 정보를 등록합니다.
+        /// </summary>
+        /// <param name="name">이름</param>
+        /// <param name="member_srl">제작자 member_srl</param>
+        /// <returns>등록 성공여부</returns>
+        public static bool RegisterRuntime(string name, string member_srl)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["insert"] = "runtime";
+            formData["name"] = name;
+            formData["member_srl"] = member_srl;
+
+            string result = BSN_Info.SendPOST(BASEURL + "runtime.php", formData);
+            switch (result)
+            {
+                case "런타임 정보가 정상적으로 등록되었습니다.":
+                    return true;
+
+                case "런타임 등록에 실패하였습니다.":
+                    return false;
+
+                case "런타임 관리자 정보 등록에 실패하였습니다.":
+                    return false;
+
+                case "런타임 등록정보를 로드하는데 실패하였습니다.":
+                    return false;
+
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// 서버 정보를 등록합니다.
         /// </summary>
         /// <param name="name">서버 이름</param>
@@ -518,7 +552,7 @@ namespace BellLib.Class.BSN
 
             foreach (string dumpPath in file)
             {
-                using (var stream = File.Open(basePath + dumpPath, FileMode.Open))
+                using (var stream = File.Open(basePath + dumpPath, FileMode.Open, FileAccess.Read))
                 {
                     var files = new[]
                     {

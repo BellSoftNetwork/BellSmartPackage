@@ -14,6 +14,7 @@
                         <ListBoxItem Content="모드팩"/>
                         <ListBoxItem Content="베이스팩"/>
                         <ListBoxItem Content="리소스"/>
+                        <ListBoxItem Content="런타임"/>
                     </ComboBox>
                     <ListBox x:Name="lstInfoList" HorizontalAlignment="Left" Height="327" Margin="0,27,0,0" VerticalAlignment="Top" Width="182" SelectionChanged="lstInfoList_SelectionChanged"/>
                     <Label Content="팩 타입 :" HorizontalAlignment="Left" Margin="187,0,0,0" VerticalAlignment="Top"/>

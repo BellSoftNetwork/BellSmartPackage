@@ -211,6 +211,68 @@
                     </TabControl>
                 </Grid>
             </TabItem>
+            <TabItem x:Name="tiRuntime" Header="런타임">
+                <Grid Background="White">
+                    <GroupBox x:Name="gbRuntime" Header="정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49" Width="621">
+                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="cbRunName" HorizontalAlignment="Left" Margin="42,4,0,0" VerticalAlignment="Top" Width="487"/>
+                            <Button x:Name="btnRunLoad" Content="불러오기" HorizontalAlignment="Left" Margin="534,4,0,0" Width="75" Click="btnRunLoad_Click"/>
+                        </Grid>
+                    </GroupBox>
+                    <TabControl x:Name="tcRuntime" HorizontalAlignment="Left" Height="247" Margin="0,54,0,0" VerticalAlignment="Top" Width="621" IsEnabled="False">
+                        <TabItem Header="일반">
+                            <Grid Background="White">
+                                <Label Content="팩 상태 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <Label Content="최신버전 :" HorizontalAlignment="Left" Margin="0,51.92,0,0" VerticalAlignment="Top"/>
+                                <Label Content="권장버전 :" HorizontalAlignment="Left" Margin="0.153,77.88,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="cbRunRecommended" HorizontalAlignment="Left" Margin="64.847,81.88,0,0" Width="246" VerticalAlignment="Top"/>
+                                <CheckBox x:Name="cbRunActivate" Content="런타임 활성화" HorizontalAlignment="Left" Margin="64.847,108.84,0,0" VerticalAlignment="Top"/>
+                                <Button x:Name="btnRunSave" Content="기본정보 저장" HorizontalAlignment="Left" Margin="224,199,0,0" VerticalAlignment="Top" Width="92" Click="btnRunSave_Click"/>
+                                <Button x:Name="btnRunDel" Content="런타임 삭제" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Width="86" Click="btnRunDel_Click"/>
+                                <ListBox x:Name="lstRunVersion" HorizontalAlignment="Left" Height="163" Margin="321,0,0,0" VerticalAlignment="Top" Width="294" SelectionChanged="lstRunVersion_SelectionChanged"/>
+                                <CheckBox x:Name="cbRunSelActivate" Content="선택버전 활성화" HorizontalAlignment="Left" Margin="321,199,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+                                <Button x:Name="btnRunSelSave" Content="선택버전 저장" HorizontalAlignment="Left" Margin="523,199,0,0" Width="92" Click="btnRunSelSave_Click"/>
+                                <Button x:Name="btnRunSelDel" Content="선택버전 삭제" HorizontalAlignment="Left" Margin="434,199,0,0" VerticalAlignment="Top" Width="84" Click="btnRunSelDel_Click"/>
+                                <Label x:Name="lbRunState" Content="검토 요청" HorizontalAlignment="Left" Margin="57,0,0,0" VerticalAlignment="Top"/>
+                                <Label Content="버전 상태 :" HorizontalAlignment="Left" Margin="321,168,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbRunVerState" Content="검토 요청" HorizontalAlignment="Left" Margin="434,168,0,0" VerticalAlignment="Top"/>
+                                <Label x:Name="lbRunLatest" Content="" HorizontalAlignment="Left" Margin="64.847,51.92,0,0" VerticalAlignment="Top"/>
+                                <Label Content="이름 :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.153,25.96,0,0"/>
+                                <Label x:Name="lbRunName" Content="" HorizontalAlignment="Left" Margin="40.999,25.96,0,0" VerticalAlignment="Top"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="고급">
+                            <Grid Background="White">
+                                <ListView x:Name="lstRunPermission" HorizontalAlignment="Left" Height="219" VerticalAlignment="Top" Width="357">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridView.ColumnHeaderContextMenu>
+                                                <ContextMenu/>
+                                            </GridView.ColumnHeaderContextMenu>
+                                            <GridViewColumn Header="이메일" DisplayMemberBinding="{Binding email}"/>
+                                            <GridViewColumn Header="권한" DisplayMemberBinding="{Binding permission}"/>
+                                            <GridViewColumn DisplayMemberBinding="{Binding start}" Header="시작일"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Label Content="이메일 :" HorizontalAlignment="Left" Margin="362,0,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txtRunEmail" HorizontalAlignment="Left" Height="23" Margin="415,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"/>
+                                <Label Content="권한 :" HorizontalAlignment="Left" Margin="362,26,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="cbRunPermission" HorizontalAlignment="Left" Margin="415,30,0,0" VerticalAlignment="Top" Width="200" SelectedIndex="0">
+                                    <ComboBoxItem Content="기본정보 관리"/>
+                                    <ComboBoxItem Content="버전정보 관리"/>
+                                    <ComboBoxItem Content="버전 업로더"/>
+                                    <ComboBoxItem Content="부관리자"/>
+                                </ComboBox>
+                                <Button x:Name="btnRunAuthAdd" Content="추가" HorizontalAlignment="Left" Margin="516,57,0,0" VerticalAlignment="Top" Width="47" Click="btnRunAuthAdd_Click"/>
+                                <Button x:Name="btnRunAuthDel" Content="삭제" HorizontalAlignment="Left" Margin="568,57,0,0" VerticalAlignment="Top" Width="47" Click="btnRunAuthDel_Click"/>
+                                <Button x:Name="btnRunAuthRefresh" Content="새로고침" HorizontalAlignment="Left" Margin="415,57,0,0" VerticalAlignment="Top" Width="75" Click="btnRunAuthRefresh_Click"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
         </TabControl>
 
     </Grid>

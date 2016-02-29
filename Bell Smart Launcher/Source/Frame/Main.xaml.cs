@@ -30,6 +30,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         //private int LastSelectedTab;
         private string ModpacksDataPath = User.BSN_Path + "DATA\\BSL\\Modpacks.bdx";
         private string ResourcesDataPath = User.BSN_Path + "DATA\\BSL\\Resources.bdx";
+        private Process GameProcess = null;
 
         public Main()
         {
@@ -98,7 +99,81 @@ namespace Bell_Smart_Launcher.Source.Frame
 
 
             //SETTING
+            AutoControl(); // 첫 실행시 자동 세팅
+        }
 
+        /// <summary>
+        /// 런처 처음실행시 사용자 환경에 맞게 세팅 진행
+        /// </summary>
+        private void AutoControl()
+        {
+            /*if (File.Exists(User.BSN_Path + "DATA\\BSL\\General.bdx"))
+                return;*/
+            string newbie = BD.Data.DataLoad(User.BSN_Path + "DATA\\BSL\\General.bdx", "AutoControl");
+            if (newbie != null)
+                return;
+
+            string runtimePath = Game.BSL_Root + "Runtime\\Java\\";
+
+            if (WPFCom.Message("자동제어기능을 이용하면 복잡한 설정 없이 간편하게 이용할 수 있습니다." + Environment.NewLine + "런처 자동제어기능을 이용하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            { // 자동제어 사용
+                // 기본값 자동설정을 위해
+                SystemInfo.MemoryInfo mi = SystemInfo.GetMemoryInfo();
+                int Allocate = 1; // 메모리 기본 할당량 1기가
+                if (mi.Total_Physical_GB >= 2) // 전체 메모리가 2기가 이상일경우,
+                    Allocate = 2; // 일단 메모리 2기가 할당
+                if (mi.Total_Physical_GB > 4) // 전체 메모리가 4기가 초과일경우,
+                    if (mi.Free_Physical_GB > mi.Total_Physical_GB / 2) // 사용가능한 메모리가 전체 메모리의 절반보다 크다면,
+                        Allocate = mi.Free_Physical_GB; // 사용가능한 메모리만큼 할당
+                    else
+                        Allocate = mi.Total_Physical_GB / 2; // 아니면 전체메모리의 절반만 할당
+                if (mi.Free_Physical_GB >= 6) // 사용가능 메모리가 8기가 이상일경우,
+                    Allocate = 4;
+                if (mi.Free_Physical_GB >= 14) // 사용가능 메모리가 14기가 이상일경우,
+                    Allocate = 8;
+
+                Game.AutoControl = true;
+                Game.Memory_Allocate = Allocate;
+                                
+                Setting set = new Setting();
+                set.SaveGeneral(); // 일반설정 저장
+                set.SaveGame(); // 게임설정 저장
+                set.Close(); // 끝났으면 닫아야지.
+
+                if (!Directory.Exists(runtimePath))
+                    InstallJava(runtimePath);
+            }
+            else
+            { // 수동제어 사용
+                Game.AutoControl = false;
+                if (!Directory.Exists(runtimePath))
+                    if (WPFCom.Message("자바 런타임팩을 설치하면 간편하게 게임제어가 가능합니다." + Environment.NewLine + "설치하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        InstallJava(runtimePath);
+                    else
+                    {
+                        if (WPFCom.Message("런타임자바 미 설치시 자바경로를 수동으로 설정해야합니다." + Environment.NewLine + "자바 경로설정창으로 이동하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
+                            {
+                                Setting set = new Setting();
+                                set.tc_Setting.SelectedIndex = 1;
+                                set.Show(); // 세팅탭 오픈
+                            }
+                    }
+            }
+
+            BD.Data.DataSave(User.BSN_Path + "DATA\\BSL\\General.bdx", "AutoControl", Game.AutoControl.ToString());
+        }
+
+        private void InstallJava(string runtimePath)
+        {
+            Installer install = new Installer("Java"); // 설치기 초기화
+            install.Show(); // 설치기 실행
+            install.Install(runtimePath); // 설치 시작
+
+            if (Environment.Is64BitOperatingSystem)
+                Game.JAVA_Path = runtimePath + "x64";
+            else
+                Game.JAVA_Path = runtimePath + "x86";
         }
 
         /// <summary>
@@ -197,7 +272,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             try
             {
                 Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
-                Process.Start(PathJAVA, strTemp);
+                GameProcess = Process.Start(PathJAVA, strTemp);
                 //BC_PID = Shell(strTemp, AppWinStyle.NormalFocus);
             }
             catch (FileNotFoundException fnf)
@@ -350,6 +425,17 @@ namespace Bell_Smart_Launcher.Source.Frame
             }
 
             /// 게임 실행
+            // 다중실행 허용여부 검사
+            if (!Game.MultipleExe)
+            { // 다중실행 비허용
+                if (GameProcess != null)
+                    if (!GameProcess.HasExited)
+                    { // 게임이 실행중이라면,
+                        WPFCom.Message("이미 게임이 실행중입니다.");
+                        return;
+                    }
+            }
+
             // 계정 로그인
             Profile profile = new Profile((string)mod_cbProfile.SelectedItem); // 선택한 프로필로 데이터를 초기화함.
             string MC_ID = profile.getData(Profile.Data.ID);
@@ -391,7 +477,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         private void mod_btnPackSetting_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void Window_Closed(object sender, EventArgs e)

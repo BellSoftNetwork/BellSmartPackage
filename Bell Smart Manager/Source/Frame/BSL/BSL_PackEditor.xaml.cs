@@ -43,14 +43,18 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 리소스 데이터 로드
             foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.resource, User.BSN_member_srl))
                 cbResName.Items.Add(Common.getElement(tmp, "name"));
+            // 런타임 데이터 로드
+            foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.runtime, User.BSN_member_srl))
+                cbRunName.Items.Add(Common.getElement(tmp, "name"));
 
             // 기본값 선택
             cbModName.SelectedIndex = 0;
             cbBaseName.SelectedIndex = 0;
             cbResName.SelectedIndex = 0;
+            cbRunName.SelectedIndex = 0;
 
             // 검사
-            if (cbModName.Items.IsEmpty && cbBaseName.Items.IsEmpty && cbResName.Items.IsEmpty)
+            if (cbModName.Items.IsEmpty && cbBaseName.Items.IsEmpty && cbResName.Items.IsEmpty && cbRunName.Items.IsEmpty)
             {
                 Hide();
                 WPFCom.Message("수정 가능한 데이터가 없습니다.");
@@ -68,6 +72,11 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (cbResName.Items.IsEmpty)
             {
                 tiResource.Visibility = Visibility.Collapsed;
+                tiRuntime.IsSelected = true;
+            }
+            if (cbRunName.Items.IsEmpty)
+            {
+                tiRuntime.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -207,6 +216,47 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 return;
             //gbResource.IsEnabled = false;
             tcResource.IsEnabled = true;
+        }
+
+        private void btnRunLoad_Click(object sender, RoutedEventArgs e)
+        {
+            // 필드
+            string name = (string)cbRunName.SelectedItem;
+            BSN_BSL.Runtime run = new BSN_BSL.Runtime();
+
+            // 초기화
+            tcRuntime.IsEnabled = false;
+            cbRunActivate.IsChecked = false;
+            lstRunVersion.Items.Clear();
+            lstRunVersion.Tag = null;
+            cbRunRecommended.Items.Clear();
+
+            // 기본정보 로드
+            run = BSN_BSL.LoadRuntimeDetail(name);
+            lbRunName.Content = run.name;
+            lbRunLatest.Content = run.latest;
+            foreach (string tmp in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.runtime, name))
+                cbRunRecommended.Items.Add(Common.getElement(tmp, "version"));
+            cbRunRecommended.SelectedItem = run.recommended; // 권장버전 선택
+            lbRunState.Content = run.state;
+            if (run.state == "활성화")
+                cbRunActivate.IsChecked = true;
+
+            // 버전정보 로드
+            foreach (string data in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.runtime, name, true))
+            {
+                lstRunVersion.Items.Add(Common.getElement(data, "version"));
+                lstRunVersion.Tag += Common.getElement(data, "id") + "|";
+            }
+            lstRunVersion.SelectedIndex = 0;
+
+            // 관리자 정보 로드
+            btnRunAuthRefresh_Click(sender, e);
+
+            if (run.numState == BSN_BSL.STATE.BANNED || run.numState == BSN_BSL.STATE.PENDING)
+                return;
+            //gbBase.IsEnabled = false;
+            tcRuntime.IsEnabled = true;
         }
 
         private void btnModSave_Click(object sender, RoutedEventArgs e)
@@ -596,6 +646,108 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 lbResVerState.Content = state;
             }
             catch { }
+        }
+
+        private void lstRunVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string state;
+                LoadVersion(BSN_BSL.PACK.runtime, lstRunVersion, cbRunSelActivate, out state, out cbRunSelActivate);
+                lbRunVerState.Content = state;
+            }
+            catch { }
+        }
+
+        private void btnRunDel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRunSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem, (string)cbRunRecommended.SelectedItem, (bool)cbRunActivate.IsChecked))
+            {
+                btnRunLoad_Click(sender, e);
+                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
+            }
+            else
+                WPFCom.Message("기본정보 수정에 실패하였습니다.");
+        }
+
+        private void btnRunSelDel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRunSelSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.runtime, lstRunVersion.Tag.ToString().Split('|')[lstRunVersion.SelectedIndex], (bool)cbRunSelActivate.IsChecked))
+            {
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+            }
+            else
+                WPFCom.Message("버전정보 수정에 실패하였습니다.");
+        }
+
+        private void btnRunAuthRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            lstRunPermission.Items.Clear();
+            lstRunPermission.Tag = null;
+            foreach (BSN_BSL.Manager auth in BSN_BSL.LoadPackManager(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem))
+            {
+                lstRunPermission.Tag += auth.member_srl + "|" + auth.permission + "\n";
+                if (auth.permission != "4")
+                {
+                    ComboBoxItem cbi = (ComboBoxItem)cbRunPermission.Items.GetItemAt(Convert.ToInt32(auth.permission));
+                    auth.permission = (string)cbi.Content;
+                    lstRunPermission.Items.Add(auth);
+                }
+                else
+                {
+                    auth.permission = "제작자";
+                    lstRunPermission.Items.Add(auth);
+                }
+            }
+        }
+
+        private void btnRunAuthAdd_Click(object sender, RoutedEventArgs e)
+        {
+            string member_srl = BSN_Info.GetMember_srl(txtRunEmail.Text);
+            if (member_srl == null)
+            {
+                WPFCom.Message("존재하지 않는 회원입니다.");
+                return;
+            }
+
+            if (BSN_BSM.AddPackManager(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem, member_srl, cbRunPermission.SelectedIndex.ToString()))
+            {
+                btnRunAuthRefresh_Click(sender, e);
+                WPFCom.Message("정상적으로 등록되었습니다.");
+            }
+            else
+                WPFCom.Message("관리자 정보등록에 실패하였습니다.");
+        }
+
+        private void btnRunAuthDel_Click(object sender, RoutedEventArgs e)
+        {
+            string[] data = lstRunPermission.Tag.ToString().Split('\n')[lstRunPermission.SelectedIndex].Split('|');
+            string member_srl = data[0];
+            string permission = data[1];
+
+            if (permission == "4")
+            {
+                WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
+                return;
+            }
+
+            if (BSN_BSM.DelPackManager(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem, member_srl, permission))
+            {
+                btnRunAuthRefresh_Click(sender, e);
+                WPFCom.Message("정상적으로 삭제되었습니다.");
+            }
+            else
+                WPFCom.Message("관리자 삭제에 실패하였습니다.");
         }
     }
 }

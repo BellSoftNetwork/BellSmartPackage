@@ -83,6 +83,17 @@ namespace BellLib.Class.BSN
             public STATE numState;
             public string[] version;
         }
+        
+        /// <summary>
+        /// 런타임 상세 데이터
+        /// </summary>
+        public struct Runtime
+        {
+            public string id, name, recommended, made, state;
+            public string latest;
+            public STATE numState;
+            public string[] version;
+        }
 
         /// <summary>
         /// 팩 종류 열거형
@@ -91,7 +102,8 @@ namespace BellLib.Class.BSN
         {
             modpack,
             basepack,
-            resource
+            resource,
+            runtime
         }
 
         /// <summary>
@@ -498,6 +510,42 @@ namespace BellLib.Class.BSN
             res.detail = Common.getElement(data, "detail");
 
             return res;
+        }
+
+        /// <summary>
+        /// 이름에 맞는 런타임 상세정보를 로드합니다.
+        /// </summary>
+        /// <param name="name">이름</param>
+        /// <returns>런타임 상세정보</returns>
+        public static Runtime LoadRuntimeDetail(string name)
+        {
+            NameValueCollection formData = new NameValueCollection();
+            List<string> list = new List<string>();
+
+            formData["detail"] = "runtime";
+            formData["name"] = name;
+
+            string data = BSN_Info.SendPOST(BASEURL + "runtime.php", formData);
+            Runtime run = new Runtime();
+            run.state = GetStateName((STATE)Convert.ToInt32(Common.getElement(data, "state")));
+            run.numState = (STATE)Convert.ToInt32(Common.getElement(data, "state"));
+            run.id = Common.getElement(data, "id");
+            run.name = Common.getElement(data, "name");
+            foreach (string value in LoadPackVersionList(PACK.runtime, name))
+                list.Add(Common.getElement(value, "version"));
+            run.version = list.ToArray();
+            try
+            {
+                run.latest = run.version[run.version.Length - 1];
+            }
+            catch
+            {
+                run.latest = "0.0.0";
+            }
+            run.recommended = Common.getElement(data, "recommended");
+            run.made = Common.getElement(data, "made");
+
+            return run;
         }
 
         /// <summary>

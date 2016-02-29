@@ -16,6 +16,7 @@
                 <ComboBox x:Name="cbName" HorizontalAlignment="Left" Margin="62,30,0,0" VerticalAlignment="Top" Width="521"/>
                 <Button x:Name="btnLoad" Content="불러오기" HorizontalAlignment="Left" Margin="588,30,0,0" VerticalAlignment="Top" Width="70" Height="22" Click="btnLoad_Click"/>
                 <Label Content="팩 타입 :" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <RadioButton x:Name="rbRuntime" Content="런타임" Margin="254,6,0,0" VerticalAlignment="Top" Checked="rbRuntime_Checked" HorizontalAlignment="Left"/>
             </Grid>
         </GroupBox>
         <GroupBox x:Name="gbUpload" Header="등록 정보" Margin="0,80,10,10" IsEnabled="False">

@@ -79,6 +79,18 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 Game.KeepOpen = true;
             }
+
+            try
+            {
+                if (BD.Data.DataLoad(SettingFilePath, "AutoControl").ToUpper() == "TRUE")
+                    Game.AutoControl = true;
+                else
+                    Game.AutoControl = false;
+            }
+            catch
+            {
+                Game.AutoControl = true;
+            }
         }
 
         /// <summary>
@@ -90,6 +102,17 @@ namespace Bell_Smart_Launcher.Source.Frame
             Game.Memory_Allocate = Convert.ToDouble(BD.Data.DataLoad(SettingFilePath, "Memory_Allocate"));
             Game.JAVA_Path = BD.Data.DataLoad(SettingFilePath, "JAVA_Path");
             Game.JAVA_Parameter = BD.Data.DataLoad(SettingFilePath, "JAVA_Parameter");
+            try
+            {
+                if (BD.Data.DataLoad(SettingFilePath, "MultipleExe").ToUpper() == "TRUE")
+                    Game.MultipleExe = true;
+                else
+                    Game.MultipleExe = false;
+            }
+            catch
+            {
+                Game.MultipleExe = false;
+            }
         }
     }
 }

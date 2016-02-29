@@ -55,6 +55,11 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.resource, User.BSN_member_srl))
                         cbName.Items.Add(Common.getElement(tmp, "name"));
                     break;
+
+                case "runtime":
+                    foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.runtime, User.BSN_member_srl))
+                        cbName.Items.Add(Common.getElement(tmp, "name"));
+                    break;
             }
             if (cbName.Items.Count != 0)
             {
@@ -81,6 +86,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 pack = BSN_BSL.PACK.basepack;
             if ((bool)rbResource.IsChecked)
                 pack = BSN_BSL.PACK.resource;
+            if ((bool)rbRuntime.IsChecked)
+                pack = BSN_BSL.PACK.runtime;
 
             return pack;
         }
@@ -142,18 +149,23 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     case BSN_BSL.PACK.resource:
                         lbUploadURL.Content += "Resource\\";
                         break;
-                }
 
-                switch (GetSelectKind())
-                {
-                    case BSN_BSL.KIND.client:
-                        lbUploadURL.Content += "Client\\";
-                        break;
-
-                    case BSN_BSL.KIND.server:
-                        lbUploadURL.Content += "Server\\";
+                    case BSN_BSL.PACK.runtime:
+                        lbUploadURL.Content += "Runtime\\";
                         break;
                 }
+
+                if (GetSelectType() != BSN_BSL.PACK.runtime)
+                    switch (GetSelectKind())
+                    {
+                        case BSN_BSL.KIND.client:
+                            lbUploadURL.Content += "Client\\";
+                            break;
+
+                        case BSN_BSL.KIND.server:
+                            lbUploadURL.Content += "Server\\";
+                            break;
+                    }
 
                 btnRefresh_Click(sender, e);
             }
@@ -187,6 +199,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             Initialize();
         }
 
+        private void rbRuntime_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!rbRuntime.IsInitialized)
+                return;
+            cbName.Tag = "runtime";
+            Initialize();
+        }
+
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             // 검사
@@ -208,6 +228,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
 
             // 마무으리
+            if (GetSelectType() == BSN_BSL.PACK.runtime)
+            {
+                rbClient.IsChecked = false;
+                rbClient.IsEnabled = false;
+                rbServer.IsChecked = false;
+                rbServer.IsEnabled = false;
+            }
+                
             cbVersion.SelectedIndex = 0;
             gbPack.IsEnabled = false;
             gbUpload.IsEnabled = true;

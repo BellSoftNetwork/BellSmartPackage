@@ -127,5 +127,23 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 WPFCom.Message("등록에 실패하였습니다.");
             btnResRegister.IsEnabled = true;
         }
+
+        private void btnRunRegister_Click(object sender, RoutedEventArgs e)
+        {
+            // 필드검사
+            if (txtRunName.Text == "")
+            {
+                WPFCom.Message("항목을 전부 입력해주세요.");
+                return;
+            }
+
+            // 등록 시작
+            btnRunRegister.IsEnabled = false;
+            if (BSN_BSM.RegisterRuntime(txtRunName.Text, User.BSN_member_srl))
+                WPFCom.Message("정상적으로 신청되었습니다.");
+            else
+                WPFCom.Message("등록에 실패하였습니다.");
+            btnRunRegister.IsEnabled = true;
+        }
     }
 }

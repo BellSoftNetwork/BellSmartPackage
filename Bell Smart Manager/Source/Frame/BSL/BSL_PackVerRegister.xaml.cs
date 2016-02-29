@@ -53,6 +53,13 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     lbBaseVer.Visibility = Visibility.Collapsed;
                     cbBaseVer.Visibility = Visibility.Collapsed;
                     break;
+
+                case "runtime":
+                    foreach (string tmp in BSN_BSM.LoadPackList(BSN_BSL.PACK.runtime, User.BSN_member_srl))
+                        cbName.Items.Add(Common.getElement(tmp, "name"));
+                    lbBaseVer.Visibility = Visibility.Collapsed;
+                    cbBaseVer.Visibility = Visibility.Collapsed;
+                    break;
             }
             if (cbName.Items.Count != 0)
             {
@@ -73,6 +80,8 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 pack = BSN_BSL.PACK.basepack;
             if ((bool)rbResource.IsChecked)
                 pack = BSN_BSL.PACK.resource;
+            if ((bool)rbRuntime.IsChecked)
+                pack = BSN_BSL.PACK.runtime;
 
             return pack;
         }
@@ -98,6 +107,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (!rbResource.IsInitialized)
                 return;
             cbName.Tag = "resource";
+            Initialize();
+        }
+
+        private void rbRuntime_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!rbRuntime.IsInitialized)
+                return;
+            cbName.Tag = "runtime";
             Initialize();
         }
 
@@ -128,6 +145,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 case BSN_BSL.PACK.resource:
+
+                    break;
+
+                case BSN_BSL.PACK.runtime:
 
                     break;
             }

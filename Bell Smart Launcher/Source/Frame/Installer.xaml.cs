@@ -26,7 +26,8 @@ namespace Bell_Smart_Launcher.Source.Frame
     /// </summary>
     public partial class Installer : Window
     {
-        // 설치시 필요한 공통 필드
+        /// 설치시 필요한 공통 필드
+        // 모드팩
         bool installing = false; // 설치 진행 상황
         string modName; // 현재 선택한 모드팩 이름
         string modVer; // 현재 선택한 모드팩 버전
@@ -34,6 +35,11 @@ namespace Bell_Smart_Launcher.Source.Frame
         string baseVerid; // 베이스팩 버전id
         string[] baseServerList; // 베이스팩이 업로드되어있는 서버리스트
         string[] modServerList; // 모드팩이 업로드되어있는 서버리스트
+
+        // 런타임
+        string runtimeName;
+        string runtimeVerid; // 설치할 런타임 버전 id
+        string[] runtimeServerList; // 런타임이 업로드되어있는 서버리스트
 
 
         /// <summary>
@@ -50,22 +56,33 @@ namespace Bell_Smart_Launcher.Source.Frame
             this.modVer = modVer;
             this.modVerid = modVerid;
             this.baseVerid = baseVerid;
-            Initialize();
-        }
 
+            baseServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.basepack, BSN_BSL.KIND.client, baseVerid); // 베이스팩이 업로드되어있는 서버리스트
+            modServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.modpack, BSN_BSL.KIND.client, modVerid); // 모드팩이 업로드되어있는 서버리스트
 
-        public Installer(string Runtime)
-        {
-
+            this.Title = modName + " 설치";
         }
 
         /// <summary>
-        /// 데이터 초기화
+        /// 이름에 맞는 런타임 설치를 준비합니다.
         /// </summary>
-        private void Initialize()
+        /// <param name="runtimeName">런타임 이름</param>
+        public Installer(string runtimeName)
         {
-            baseServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.basepack, BSN_BSL.KIND.client, baseVerid); // 베이스팩이 업로드되어있는 서버리스트
-            modServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.modpack, BSN_BSL.KIND.client, modVerid); // 모드팩이 업로드되어있는 서버리스트
+            InitializeComponent();
+            this.runtimeName = runtimeName;
+            this.runtimeVerid = null;
+
+            BSN_BSL.Runtime runtime = BSN_BSL.LoadRuntimeDetail(runtimeName); // 런타임 이름으로 상세정보 검색
+            foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.runtime, runtimeName))
+            { // 팩 버전리스트 검색
+                if (runtime.recommended == Common.getElement(value, "version")) // 루프를 돌다가 권장버전이 나오면
+                    runtimeVerid = Common.getElement(value, "id"); // 런타임 버전 id를 권장버전 id로 설정.
+            }
+
+            runtimeServerList = BSN_BSL.LoadVersionServer(BSN_BSL.PACK.runtime, BSN_BSL.KIND.client, runtimeVerid); // 런타임이 업로드되어있는 서버 탐색
+
+            this.Title = runtimeName + " 설치";
         }
 
         /// <summary>
@@ -199,6 +216,81 @@ namespace Bell_Smart_Launcher.Source.Frame
                 }
                 SetState("모드팩 설치완료");
             }
+            long endTime = DateTime.Now.Ticks; // 종료시간
+            long installTime = (endTime - startTime) / 10000000; // 1틱은 천만분의 1초
+
+            SetState("설치 소요시간 : " + (installTime / 60) + "분 " + (installTime % 60) + "초");
+        }
+
+        /// <summary>
+        /// 런타임 설치 진행
+        /// </summary>
+        public void Install(string basePath)
+        {
+            if (runtimeVerid == string.Empty)
+            {
+                WPFCom.Message(runtimeName + " 런타임이 존재하지 않습니다." + Environment.NewLine + "이 에러가 계속 발생한다면, 관리자에게 문의하시기 바랍니다.");
+                this.Close();
+                return;
+            }
+            if (installing)
+                return;
+            installing = true;
+
+            // 기본 필드
+            long startTime = DateTime.Now.Ticks; // 시작시간
+
+            BSN_BSL.Install[] runtimeInstall = BSN_BSL.LoadVersionFiles(BSN_BSL.PACK.runtime, BSN_BSL.KIND.client, runtimeVerid);
+
+            /// 진행바 초기화
+            pbTotal.Value = 0;
+            pbTotal.Maximum = 0;
+
+            /// 런타임 설치유무확인
+            foreach (BSN_BSL.Install value in runtimeInstall)
+                pbTotal.Maximum += Convert.ToDouble(value.size);
+            SetState("런타임 설치준비 완료");
+            
+            /// 베이스팩 설치
+            // 원활한 파일서버 탐색
+            BSN_BSL.Server runtimeServer = null; // 파일서버정보
+            foreach (string serverid in runtimeServerList)
+            { // 루프돌면서 최적의 서버 탐색 (추후 개발예정)
+                BSN_BSL.Server server = BSN_BSL.LoadServerDetail(serverid);
+                runtimeServer = server;
+            }
+            SetState("최적의 런타임 파일 서버 탐색완료");
+
+            // 파일 다운로드
+            SetState("런타임 설치 시작");
+            foreach (BSN_BSL.Install value in runtimeInstall)
+            {
+                WebClient WC = new WebClient();
+                try
+                {
+                    string serverURL = "http://" + "cloud." + runtimeServer.address + "/" + "BSL/runtime/" + runtimeVerid + "/" + value.url;
+                    string createPath = basePath;
+                    if (value.url.Contains("\\")) // 파일 경로에 폴더가 존재하면,
+                    {
+                        string[] temp = value.url.Split('\\');
+                        foreach (string dir in temp)
+                            if (dir != temp[temp.Length - 1]) // 맨 마지막 파일명이 아닐경우
+                                createPath += dir + "\\"; // 디렉토리 경로만 추가
+                    }
+                    if (!Directory.Exists(createPath)) // 파일명을 제외한 경로가 존재하지 않으면,
+                        Directory.CreateDirectory(createPath); // 디렉토리 생성
+                    WC.DownloadFile(serverURL, basePath + value.url); // 파일 다운로드
+                    pbTotal.Value += Convert.ToDouble(value.size); // 진행바 설정
+                    SetState("다운로드 : " + value.url);
+                }
+                catch
+                {
+                    SetState("다운로드 실패 : " + value.url);
+                    Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
+                }
+            }
+            SetState("런타임 설치완료");
+            
             long endTime = DateTime.Now.Ticks; // 종료시간
             long installTime = (endTime - startTime) / 10000000; // 1틱은 천만분의 1초
 
