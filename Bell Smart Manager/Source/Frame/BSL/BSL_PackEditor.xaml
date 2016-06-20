@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Bell_Smart_Manager.Source.Frame.BSL.BSL_PackEditor"
         Title="팩 편집기" Height="367.51" Width="643.165" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" Loaded="Window_Loaded">
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="329" VerticalAlignment="Top" Width="627">
+        <TabControl x:Name="tcGlobal" HorizontalAlignment="Left" Height="329" VerticalAlignment="Top" Width="627">
             <TabItem x:Name="tiModPack" Header="모드팩">
                 <Grid Background="White">
                     <GroupBox x:Name="gbMod" Header="정보" HorizontalAlignment="Left" VerticalAlignment="Top" Height="49" Width="621">

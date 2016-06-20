@@ -221,7 +221,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         /// <param name="PathBase">베이스팩 경로</param>
         /// <param name="PathPack">모드팩 경로</param>
-        private void Launch(string Version, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken)
+        private void Launch(string Version, string PathBase, string PathPack, string PathJAVA, string Parameter, string NickName, string UUID, string AccessToken, string UserParameter)
         {
             bool javaNotFound = false;
             if (Version == string.Empty || PathBase == string.Empty || PathPack == string.Empty || UUID == string.Empty || AccessToken == string.Empty)
@@ -232,7 +232,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             string strTemp;
             StringBuilder sb = new StringBuilder(1024); //기본 문자열을 JAVA 변수, 기본 캐피시터를 1024로 하여 StringBuilder 선언.
 
-            sb.Append(Parameter);
+            sb.Append(UserParameter);
 
             sb.Append(" -Djava.library.path=");
             sb.Append(PathBase);
@@ -242,9 +242,10 @@ namespace Bell_Smart_Launcher.Source.Frame
             sb.Append(PathBase);
             sb.Append("*");
 
-            sb.Append(" net.minecraft.launchwrapper.Launch");
+            sb.Append(" net.minecraft.launchwrapper.Launch ");
 
-            sb.Append(" --username ");
+            sb.Append(BSN_BSL.ReplaceParameter(Parameter, NickName, Version, PathPack, PathBase, UUID, AccessToken));
+            /*sb.Append(" --username ");
             sb.Append(NickName);
 
             sb.Append(" --version ");
@@ -266,7 +267,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             sb.Append(" --accessToken ");
             sb.Append(AccessToken);
 
-            sb.Append(" --userProperties {} --userType mojang --tweakClass cpw.mods.fml.common.launcher.FMLTweaker");
+            sb.Append(" --userProperties {} --userType mojang --tweakClass cpw.mods.fml.common.launcher.FMLTweaker");*/
 
             strTemp = sb.ToString();
             try
@@ -406,6 +407,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             baseVerid = Common.getElement(modVerData, "basevid"); // 베이스팩 버전id
             string basePath = Game.BSL_Root + "Base\\" + baseVerid + "\\";
             string modPath = Game.BSL_Root + "ModPack\\" + modVerid + "\\";
+            string baseVerData = BSN_BSL.LoadVersionDetail(BSN_BSL.PACK.basepack, baseVerid); // 베이스팩 버전 상세정보 로드
+            string parameter = Common.getElement(baseVerData, "parameter"); // 베이스팩 파라메터 로드
 
             /// 클라이언트 유효성 검증
             // 베이스팩 설치유무확인
@@ -465,7 +468,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 }
                 MCLogin.MC_Account MCA = MCL.GetLoginData();
                 string MemoryParameter = "-Xmx" + (Game.Memory_Allocate * 1024) + "M ";
-                Launch(modVer, basePath, modPath, Game.JAVA_Path + @"\bin\java.exe", MemoryParameter + Game.JAVA_Parameter, MCA.MC_NickName, MCA.MC_UUID, MCA.MC_AccessToken); // 게임 실행
+                Launch(modVer, basePath, modPath, Game.JAVA_Path + @"\bin\java.exe", parameter, MCA.MC_NickName, MCA.MC_UUID, MCA.MC_AccessToken, MemoryParameter + Game.JAVA_Parameter); // 게임 실행
             }
             else
             {

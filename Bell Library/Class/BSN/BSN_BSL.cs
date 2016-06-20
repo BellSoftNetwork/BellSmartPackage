@@ -647,5 +647,28 @@ namespace BellLib.Class.BSN
         }
 
         #endregion
+
+        public static string ReplaceParameter(string data, string username, string version, string gameDir, string assetsDir, string uuid, string accessToken)
+        {
+            /*
+             * 1.7, 1.9 Common : --username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userType ${user_type}
+             * 
+             * 1.9 : --tweakClass net.minecraftforge.fml.common.launcher.FMLTweaker --versionType Forge
+             * 1.7 : --userProperties ${user_properties} --tweakClass cpw.mods.fml.common.launcher.FMLTweaker
+             */
+            
+            string output = data;
+            string[,] conversion = new string[,]
+            { { "${auth_player_name}", "${version_name}","${game_directory}", "${assets_root}", "${assets_index_name}", "${auth_uuid}", "${auth_access_token}", "${user_type}", "${user_properties}" },
+                                                { username, version, gameDir, assetsDir + "assets", "BSN", uuid, accessToken, "mojang", "{}" } };
+
+            
+            for (int i = 0; i < conversion.Length / 2; i++)
+            {
+                output = output.Replace(conversion[0, i], conversion[1, i]);
+            }
+
+            return output;
+        }
     }
 }

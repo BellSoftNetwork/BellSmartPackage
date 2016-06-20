@@ -1,5 +1,6 @@
 ﻿using Bell_Smart_Manager.Source.Frame.BSL;
 using BellLib.Class;
+using BellLib.Data;
 using System;
 using System.Windows;
 
@@ -13,6 +14,16 @@ namespace Bell_Smart_Manager.Source.Frame
         public Main()
         {
             InitializeComponent();
+
+            // 관리자만 검토 가능
+            if (User.BSN_Email != "bell04204@gmail.com")
+            {
+                btnPackReview.Visibility = Visibility.Hidden;
+                btnPackControl.Visibility = Visibility.Hidden;
+                btnServerMaker.Visibility = Visibility.Hidden;
+                btnServerEditor.Visibility = Visibility.Hidden;
+                btnServerReview.Visibility = Visibility.Hidden;
+            }
         }
         
         private void Window_Closed(object sender, EventArgs e)
@@ -106,6 +117,15 @@ namespace Bell_Smart_Manager.Source.Frame
             {
                 BSL_ServerReview SR = new BSL_ServerReview();
                 SR.Show();
+            }
+        }
+
+        private void btnDebugHelper_Click(object sender, RoutedEventArgs e)
+        {
+            if(WPFCom.Feasibility("Bell_Smart_Manager.Source.Frame.DebugHelper"))
+            {
+                DebugHelper DH = new DebugHelper();
+                DH.Show();
             }
         }
     }

@@ -15,6 +15,7 @@
         <Button x:Name="btnPackFileRegister" Content="팩 파일 등록" Margin="170,10,153.676,0" VerticalAlignment="Top" Click="btnPackFileRegister_Click"/>
         <Button x:Name="btnServerReview" Content="서버 검토기" Margin="0,97.293,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="75" Click="btnServerReview_Click"/>
         <Button x:Name="btnServerEditor" Content="서버 편집기" HorizontalAlignment="Left" Margin="90,97.293,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnDebugHelper" Content="Debug Helper" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="88.893" Click="btnDebugHelper_Click"/>
 
     </Grid>
 </Window>

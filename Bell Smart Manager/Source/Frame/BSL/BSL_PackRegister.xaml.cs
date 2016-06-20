@@ -47,9 +47,15 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbBasePack.SelectedIndex = 0;
 
             if (cbBasePack.Items.IsEmpty) // 활성화된 베이스팩이 없다면,
-            {
                 tiModPack.Visibility = Visibility.Collapsed; // 모드팩 탭을 지움.
-                tiBasePack.IsSelected = true; // 베이스팩 탭을 선택.
+
+            foreach (TabItem ti in tcGlobal.Items)
+            {
+                if (ti.Visibility == Visibility.Visible)
+                {
+                    ti.IsSelected = true;
+                    return;
+                }
             }
         }
 

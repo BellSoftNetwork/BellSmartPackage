@@ -434,9 +434,9 @@ namespace BellLib.Class.BSN
         /// <param name="pw">관리자 비밀번호</param>
         /// <param name="name">팩 이름</param>
         /// <param name="version">추가할 버전</param>
-        /// <param name="basevid">(옵션) 베이스팩 id</param>
+        /// <param name="option">(옵션) 베이스팩 id 혹은 parameter</param>
         /// <returns>버전 추가 성공여부</returns>
-        public static bool RegisterVersion(BSN_BSL.PACK type, string id, string pw, string name, string version, string basevid = null)
+        public static bool RegisterVersion(BSN_BSL.PACK type, string id, string pw, string name, string version, string option = null)
         {
             // 버전정보 등록
             NameValueCollection formData = new NameValueCollection();
@@ -449,7 +449,9 @@ namespace BellLib.Class.BSN
             formData["version"] = version;
 
             if (type == BSN_BSL.PACK.modpack)
-                formData["basevid"] = basevid;
+                formData["basevid"] = option;
+            else if (type == BSN_BSL.PACK.basepack)
+                formData["parameter"] = option;
 
             string result = BSN_Info.SendPOST(BASEURL + "install.php", formData);
             if (result.Contains("등록 성공"))

@@ -1,0 +1,22 @@
+﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.DebugHelper"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Manager.Source.Frame"
+        mc:Ignorable="d"
+        Title="DebugHelper" Height="250.701" Width="364.93" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico">
+    <Grid>
+        <Button x:Name="btnReload" Content="Load" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="btnReload_Click"/>
+        <Label Content="BSN__Email: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBSN_Email" Height="23" Margin="111.56,12.96,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+        <Label Content="BSN__member__srl: " HorizontalAlignment="Left" Margin="10,35.96,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBSN_member_srl" Height="23" Margin="111.56,38.92,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label Content="BSN__nick__name: " HorizontalAlignment="Left" Margin="10,61.92,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBSN_nick_name" Height="23" Margin="111.56,64.88,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label Content="BSN__is__admin: " HorizontalAlignment="Left" Margin="10,87.88,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtBSN_is_admin" Margin="111.56,90.84,10,0" TextWrapping="Wrap" Height="23" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

@@ -60,23 +60,21 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 WPFCom.Message("수정 가능한 데이터가 없습니다.");
             }
             if (cbModName.Items.IsEmpty)
-            {
                 tiModPack.Visibility = Visibility.Collapsed;
-                tiBasePack.IsSelected = true;
-            }
             if (cbBaseName.Items.IsEmpty)
-            {
                 tiBasePack.Visibility = Visibility.Collapsed;
-                tiResource.IsSelected = true;
-            }
             if (cbResName.Items.IsEmpty)
-            {
                 tiResource.Visibility = Visibility.Collapsed;
-                tiRuntime.IsSelected = true;
-            }
             if (cbRunName.Items.IsEmpty)
-            {
                 tiRuntime.Visibility = Visibility.Collapsed;
+
+            foreach (TabItem ti in tcGlobal.Items)
+            {
+                if (ti.Visibility == Visibility.Visible)
+                {
+                    ti.IsSelected = true;
+                    return;
+                }
             }
         }
 
