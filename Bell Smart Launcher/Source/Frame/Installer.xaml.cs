@@ -108,6 +108,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 기본 필드
             long startTime = DateTime.Now.Ticks; // 시작시간
             int failSize = 0;
+            List<string> failListBase = new List<string>();
+            List<string> failListModpack = new List<string>();
             
             BSN_BSL.Install[] baseInstall = BSN_BSL.LoadVersionFiles(BSN_BSL.PACK.basepack, BSN_BSL.KIND.client, baseVerid);
             BSN_BSL.Install[] modInstall = BSN_BSL.LoadVersionFiles(BSN_BSL.PACK.modpack, BSN_BSL.KIND.client, modVerid);
@@ -169,6 +171,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                     catch
                     {
                         SetState("다운로드 실패 : " + value.url);
+                        failListBase.Add(value.url);
                         failSize += Convert.ToInt32(value.size);
                         Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
                     }
@@ -213,6 +216,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                     catch
                     {
                         SetState("다운로드 실패 : " + value.url);
+                        failListModpack.Add(value.url);
                         failSize += Convert.ToInt32(value.size);
                         Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
                     }
@@ -224,7 +228,28 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             SetState("설치 소요시간 : " + (installTime / 60) + "분 " + (installTime % 60) + "초");
             if (failSize > 0)
+            {
+                StringBuilder sb = new StringBuilder(1024);
+
                 WPFCom.Message("파일 다운로드 중 문제가 발생하여 " + failSize + "byte 만큼 설치하지 못했습니다." + Environment.NewLine + Environment.NewLine + modName + " 모드팩에서 지속적으로 설치문제가 발생할 시 해당 모드팩 관리자에게 문의 해 주시기 바랍니다.");
+                if (failListBase.Count > 0)
+                {
+                    sb.Clear();
+                    foreach (string file in failListBase)
+                        sb.Append(file + ", ");
+                    sb.Remove(sb.Length - 2, 2);
+                    WPFCom.Message("다운로드 실패한 베이스팩 파일 리스트 : " + sb.ToString());
+                }
+
+                if (failListModpack.Count > 0)
+                {
+                    sb.Clear();
+                    foreach (string file in failListModpack)
+                        sb.Append(file + ", ");
+                    sb.Remove(sb.Length - 2, 2);
+                    WPFCom.Message("다운로드 실패한 모드팩 파일 리스트 : " + sb.ToString());
+                }
+            }
         }
 
         /// <summary>
