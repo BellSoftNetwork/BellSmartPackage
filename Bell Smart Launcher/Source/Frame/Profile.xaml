@@ -10,7 +10,7 @@
         <TextBox x:Name="txtID" Height="23" Margin="96,38,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <Label Content="비밀번호 :" HorizontalAlignment="Left" Margin="26.22,63,0,0" VerticalAlignment="Top" Height="26" d:LayoutOverrides="VerticalAlignment"/>
-        <PasswordBox x:Name="txtPW" Margin="96,64.5,10,90.551" Height="23" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="txtPW" Margin="96,64.5,10,90.551" Height="23" VerticalAlignment="Top" PasswordChanged="txtPW_PasswordChanged"/>
         <CheckBox x:Name="cbSavePW" Content="비밀번호 저장" HorizontalAlignment="Left" Margin="96,92.5,0,0" Unchecked="cb_SavePW_CheckedChanged" Checked="cb_SavePW_CheckedChanged" IsChecked="True" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment"/>
         <Button x:Name="btnSave" Content="저장" HorizontalAlignment="Left" Width="75" Margin="115,0,0,11" Click="btnSave_Click" Height="20" VerticalAlignment="Bottom"/>
         <Button x:Name="btnRemove" Content="삭제" Margin="200,0,0,11" Click="btnRemove_Click" HorizontalAlignment="Left" Width="75" Height="20" VerticalAlignment="Bottom"/>

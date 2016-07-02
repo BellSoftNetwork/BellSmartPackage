@@ -24,6 +24,7 @@ namespace Bell_Smart_Launcher.Source.Frame
     {
         private string GameSettingPath = User.BSN_Path + "DATA\\BSL\\Game.bdx";
         private string GeneralSettingPath = User.BSN_Path + "DATA\\BSL\\General.bdx";
+        private string DebugSettingPath = User.BSN_Path + "DATA\\BSL\\Debug.bdx";
 
         public Setting()
         {
@@ -48,22 +49,40 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <summary>
         /// 세팅값을 로드합니다.
         /// </summary>
-        private void SettingLoad()
+        private void SettingLoad(int tab = 7) // 0111
         {
-            gen_txtInstall.Text = Game.BSL_Root;
-            if (Game.Language != null)
-                gen_cbLanguage.SelectedItem = Game.Language;
-            gen_cbConsole.IsChecked = Game.ConsoleRun;
-            gen_cbKeep.IsChecked = Game.KeepOpen;
-            gen_cbAutoControl.IsChecked = Game.AutoControl;
+            if ((tab & 1) == 1) // 0001
+            {
+                gen_txtInstall.Text = Game.BSL_Root;
+                if (Game.Language != null)
+                    gen_cbLanguage.SelectedItem = Game.Language;
+                gen_cbConsole.IsChecked = Game.ConsoleRun;
+                gen_cbKeep.IsChecked = Game.KeepOpen;
+                gen_cbAutoControl.IsChecked = Game.AutoControl;
+                gen_cbDebugMode.IsChecked = Game.DebugMode;
+            }
 
-            game_sdJAVA.Value = Game.Memory_Allocate;
-            game_txtJAVAPath.Text = Game.JAVA_Path;
-            game_txtParameter.Text = Game.JAVA_Parameter;
-            game_cbMultipleExe.IsChecked = Game.MultipleExe;
+            if ((tab & 2) == 2) // 0010
+            {
+                game_sdJAVA.Value = Game.Memory_Allocate;
+                game_txtJAVAPath.Text = Game.JAVA_Path;
+                game_txtParameter.Text = Game.JAVA_Parameter;
+                game_cbMultipleExe.IsChecked = Game.MultipleExe;
 
-            if (game_txtJAVAPath.Text == string.Empty)
-                game_txtJAVAPath.Text = User.BSN_Path + @"Runtime\Java\x64"; // 임시 기본값 설정
+                if (game_txtJAVAPath.Text == string.Empty)
+                    game_txtJAVAPath.Text = User.BSN_Path + @"Runtime\Java\x64"; // 임시 기본값 설정
+            }
+
+            if ((tab & 4) == 4) // 0100
+            {
+                deb_cbPWV.IsChecked = DebugCategory.PWV;
+            }
+
+            // Default
+            if (Game.DebugMode)
+                tiDebug.Visibility = Visibility.Visible;
+            else
+                tiDebug.Visibility = Visibility.Collapsed;
         }
         
         /// <summary>
@@ -77,12 +96,16 @@ namespace Bell_Smart_Launcher.Source.Frame
             Game.ConsoleRun = (bool)gen_cbConsole.IsChecked;
             Game.KeepOpen = (bool)gen_cbKeep.IsChecked;
             Game.AutoControl = (bool)gen_cbAutoControl.IsChecked;
+            Game.DebugMode = (bool)gen_cbDebugMode.IsChecked;
 
             BD.Data.DataSave(GeneralSettingPath, "BSL_Root", Game.BSL_Root);
             BD.Data.DataSave(GeneralSettingPath, "Laungage", Game.Language);
             BD.Data.DataSave(GeneralSettingPath, "ConsoleRun", Game.ConsoleRun.ToString());
             BD.Data.DataSave(GeneralSettingPath, "KeepOpen", Game.KeepOpen.ToString());
             BD.Data.DataSave(GeneralSettingPath, "AutoControl", Game.AutoControl.ToString());
+            BD.Data.DataSave(GeneralSettingPath, "DebugMode", Game.DebugMode.ToString());
+
+            SettingLoad(5);
 
             return true;
         }
@@ -117,6 +140,19 @@ namespace Bell_Smart_Launcher.Source.Frame
             BD.Data.DataSave(GameSettingPath, "JAVA_Parameter", Game.JAVA_Parameter);
             BD.Data.DataSave(GameSettingPath, "MultipleExe", Game.MultipleExe.ToString());
 
+            SettingLoad(2);
+
+            return true;
+        }
+
+        public bool SaveDebug()
+        {
+            DebugCategory.PWV = (bool)deb_cbPWV.IsChecked;
+
+            BD.Data.DataSave(DebugSettingPath, "PWV", DebugCategory.PWV.ToString());
+
+            SettingLoad(4);
+
             return true;
         }
 
@@ -137,6 +173,12 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             SaveGame();
             WPFCom.Message("게임설정 저장에 성공하였습니다.");
+        }
+
+        private void deb_btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveDebug();
+            WPFCom.Message("디버그설정 저장에 성공하였습니다.");
         }
     }
 }

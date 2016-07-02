@@ -17,6 +17,7 @@ namespace Bell_Smart_Launcher.Source.Data
         public static bool ConsoleRun { get; set; }
         public static bool KeepOpen { get; set; }
         public static bool AutoControl { get; set; }
+        public static bool DebugMode { get; set; }
 
         // 게임
         public static double Memory_Allocate { get; set; }

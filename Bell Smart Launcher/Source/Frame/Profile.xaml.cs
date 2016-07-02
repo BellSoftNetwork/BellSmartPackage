@@ -154,5 +154,13 @@ namespace Bell_Smart_Launcher.Source.Frame
             File.Delete(User.BSN_Path + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
             this.Close();
         }
+
+        private void txtPW_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (Game.DebugMode && DebugCategory.PWV)
+                txtPW.ToolTip = txtPW.Password;
+            else
+                txtPW.ToolTip = null;
+        }
     }
 }

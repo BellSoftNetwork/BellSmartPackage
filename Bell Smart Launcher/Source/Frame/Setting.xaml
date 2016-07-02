@@ -8,7 +8,7 @@
         Title="설정" Height="400" Width="600" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontSize="14.667">
     <Grid>
         <TabControl x:Name="tc_Setting">
-            <TabItem Header="일반">
+            <TabItem x:Name="tiGeneral" Header="일반">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -17,23 +17,23 @@
                 </TabItem.Background>
                 <Grid Background="White">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="171*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="설치 폴더 :" Margin="10,10,-17.244,0" VerticalAlignment="Top" d:LayoutOverrides="Width"/>
-                    <TextBox x:Name="gen_txtInstall" Height="23" Margin="22.244,12.96,90,0" TextWrapping="Wrap" Text="C:\BSN" VerticalAlignment="Top" Grid.Column="1"/>
-                    <Button x:Name="gen_btnSearch" Content="찾기" HorizontalAlignment="Right" Margin="0,13,10,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
-                    <Label Content="언어 :" Margin="10,35.96,17.246,0" VerticalAlignment="Top" d:LayoutOverrides="Width"/>
-                    <ComboBox x:Name="gen_cbLanguage" Margin="22.244,39.96,0,0" VerticalAlignment="Top" SelectedIndex="0" Grid.Column="1" HorizontalAlignment="Left" Width="222.497">
+                    <Label Content="설치 폴더 :" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <TextBox x:Name="gen_txtInstall" Height="23" Margin="97.244,12.96,90,0" TextWrapping="Wrap" Text="C:\BSN" VerticalAlignment="Top"/>
+                    <Button x:Name="gen_btnSearch" Content="찾기" HorizontalAlignment="Right" Margin="0,13,10,0" VerticalAlignment="Top" Width="75"/>
+                    <Label Content="언어 :" Margin="10,35.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <ComboBox x:Name="gen_cbLanguage" Margin="97.244,39.96,268.259,0" VerticalAlignment="Top" SelectedIndex="0">
                         <ListBoxItem Content="한국어"/>
                     </ComboBox>
-                    <CheckBox x:Name="gen_cbConsole" Content="콘솔 실행" HorizontalAlignment="Left" Margin="22.244,70.466,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1"/>
-                    <CheckBox x:Name="gen_cbKeep" Content="런처 실행 유지" HorizontalAlignment="Left" Margin="22.244,93.972,0,0" VerticalAlignment="Top" FontSize="14.667" Grid.Column="1" IsChecked="True"/>
-                    <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.998" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click" Grid.Column="1"/>
-                    <CheckBox x:Name="gen_cbAutoControl" Content="런처 자동제어" Grid.Column="1" HorizontalAlignment="Left" Margin="22.244,117.478,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <CheckBox x:Name="gen_cbConsole" Content="콘솔 실행" HorizontalAlignment="Left" Margin="97.244,70.466,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+                    <CheckBox x:Name="gen_cbKeep" Content="런처 실행 유지" HorizontalAlignment="Left" Margin="97.244,93.972,0,0" VerticalAlignment="Top" FontSize="14.667" IsChecked="True"/>
+                    <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.997" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click"/>
+                    <CheckBox x:Name="gen_cbAutoControl" Content="런처 자동제어" HorizontalAlignment="Left" Margin="97.244,117.478,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <CheckBox x:Name="gen_cbDebugMode" Content="Debug mode" HorizontalAlignment="Left" Margin="97.244,140.984,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="게임">
+            <TabItem x:Name="tiGame" Header="게임">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
@@ -50,6 +50,18 @@
                     <TextBox x:Name="game_txtParameter" Height="23" Margin="156.783,71.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <Button x:Name="game_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.999" VerticalAlignment="Bottom" Width="75" Click="game_btnSave_Click"/>
                     <CheckBox x:Name="game_cbMultipleExe" Content="게임 다중실행 허용" Margin="156.783,99.506,160.624,0" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tiDebug" Header="Debug">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="White">
+                    <Button x:Name="deb_btnSave" Content="Save" HorizontalAlignment="Right" Margin="0,0,10,9.999" VerticalAlignment="Bottom" Width="75" Click="deb_btnSave_Click"/>
+                    <CheckBox x:Name="deb_cbPWV" Content="비밀번호 툴팁 표시" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>
