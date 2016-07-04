@@ -38,6 +38,7 @@
                     <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="749,0,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click"/>
                     <Button x:Name="mod_btnForceKill" Content="Force Kill" HorizontalAlignment="Left" Margin="698.186,378.96,0,0" VerticalAlignment="Top" Width="65.814" Click="mod_btnForceKill_Click"/>
                     <Button x:Name="mod_btnLike" Content="♡" HorizontalAlignment="Left" Margin="605,378.96,0,0" VerticalAlignment="Top" Width="38" Click="mod_btnLike_Click"/>
+                    <Button x:Name="mod_btnRefresh" Content="Refresh" HorizontalAlignment="Right" Margin="0,2.04,208,0" VerticalAlignment="Top" Width="75" Click="mod_btnRefresh_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">

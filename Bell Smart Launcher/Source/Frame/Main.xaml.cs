@@ -74,10 +74,10 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Initialize()
         {
             //Common
-            List<string> BasicPlan = new List<string>();
-            List<string> PremiumPlan = new List<string>();
-            List<string> PartnerPlan = new List<string>();
-            List<string> BSN_SpecialPlan = new List<string>();
+            Dictionary<string, int> BasicPlan = new Dictionary<string, int>();
+            Dictionary<string, int> PremiumPlan = new Dictionary<string, int>();
+            Dictionary<string, int> PartnerPlan = new Dictionary<string, int>();
+            Dictionary<string, int> BSN_SpecialPlan = new Dictionary<string, int>();
 
 
             //NEWS
@@ -96,34 +96,35 @@ namespace Bell_Smart_Launcher.Source.Frame
                 switch (Common.getElement(value, "plan"))
                 {
                     case "0":
-                        BasicPlan.Add(value);
+                        BasicPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
                         break;
 
                     case "1":
-                        PremiumPlan.Add(value);
+                        PremiumPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
                         break;
 
                     case "2":
-                        PartnerPlan.Add(value);
+                        PartnerPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
                         break;
 
                     case "10":
-                        BSN_SpecialPlan.Add(value);
+                        BSN_SpecialPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
                         break;
 
                     default:
-                        BasicPlan.Add(value);
+                        BasicPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
                         break;
                 }
             }
-
-            // like별 분류
-
+            
             // 최종 리스트 출력
             object[] plans = { BSN_SpecialPlan, PartnerPlan, PremiumPlan, BasicPlan };
-            foreach (List<string> plan in plans)
-                foreach (string value in plan)
-                    mod_lstPackList.Items.Add(Common.getElement(value, "name"));
+            foreach (Dictionary<string, int> plan in plans)
+            {
+                var plan_desc = from pack in plan orderby pack.Value descending select pack;
+                foreach (var plan_value in plan_desc)
+                    mod_lstPackList.Items.Add(Common.getElement(plan_value.Key, "name"));
+            }
 
             mod_lstPackList.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Modpack"); // 마지막에 선택했던 팩 자동선택
             if (mod_lstPackList.SelectedIndex == -1)
@@ -290,29 +291,6 @@ namespace Bell_Smart_Launcher.Source.Frame
             sb.Append(" net.minecraft.launchwrapper.Launch ");
 
             sb.Append(BSN_BSL.ReplaceParameter(Parameter, NickName, Version, PathPack, PathBase, UUID, AccessToken));
-            /*sb.Append(" --username ");
-            sb.Append(NickName);
-
-            sb.Append(" --version ");
-            sb.Append(Version);
-
-            sb.Append(" --gameDir ");
-            sb.Append(PathPack);
-
-            sb.Append(" --assetsDir ");
-            sb.Append(PathBase);
-            sb.Append("assets");
-
-            sb.Append(" --assetIndex ");
-            sb.Append("BSN");
-
-            sb.Append(" --uuid ");
-            sb.Append(UUID);
-
-            sb.Append(" --accessToken ");
-            sb.Append(AccessToken);
-
-            sb.Append(" --userProperties {} --userType mojang --tweakClass cpw.mods.fml.common.launcher.FMLTweaker");*/
 
             strTemp = sb.ToString();
             try
@@ -320,10 +298,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 Directory.SetCurrentDirectory(PathPack); //런처 실행경로를 방울크래프트 클라이언트 경로로 수정.
                 GameProcess = new Process();
                 if (!Game.ConsoleRun)
-                    GameProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                else
-                    GameProcess.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
-                //GameProcess = Process.Start(PathJAVA, strTemp);
+                    PathJAVA = PathJAVA.Replace("java.exe", "javaw.exe");
                 GameProcess.StartInfo.FileName = PathJAVA;
                 GameProcess.StartInfo.Arguments = strTemp;
                 GameProcess.StartInfo.WorkingDirectory = PathPack;
@@ -342,9 +317,6 @@ namespace Bell_Smart_Launcher.Source.Frame
             catch (Exception ex)
             {
                 WPFCom.Message(ex.Message);
-                /*BC_PID = -1;
-                BST_Manager.Message("방울크래프트 실행 중 문제가 발생하였습니다." + Constants.vbCrLf + "자바 경로가 정상적으로 설정되어있는지 확인하시기 바랍니다." + Constants.vbCrLf + Constants.vbCrLf + ex.Message);
-                BC_Button(false);*/
             }
 
             if (javaNotFound)
@@ -677,6 +649,13 @@ namespace Bell_Smart_Launcher.Source.Frame
             // Silent: Sets or gets a value that indicates whether the object can display dialog boxes.
             // HRESULT IWebBrowser2::get_Silent(VARIANT_BOOL *pbSilent);HRESULT IWebBrowser2::put_Silent(VARIANT_BOOL bSilent);
             obj.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, obj, new object[] { true });
+        }
+
+        private void mod_btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            PreInitialize();
+            Initialize();
+            WPFCom.Message("런처 초기화에 성공하였습니다.");
         }
     }
 }
