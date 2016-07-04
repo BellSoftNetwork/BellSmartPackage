@@ -56,7 +56,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct ModPack
         {
-            public string id, name, recommended, baseid, state, plan, detail, made, endtime; // modpack 테이블
+            public string id, name, recommended, baseid, state, plan, detail, made, notice; // modpack 테이블
             public string latest, BaseName;
             public STATE numState;
             public string[] version;
@@ -67,7 +67,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct BasePack
         {
-            public string id, name, recommended, state, mcversion, plan, made, endtime; // basepack 테이블
+            public string id, name, recommended, state, mcversion, plan, made; // basepack 테이블
             public string latest;
             public STATE numState;
             public string[] version;
@@ -78,7 +78,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct Resource
         {
-            public string id, type, name, recommended, state, mcversion, plan, detail, made, endtime; // resource 테이블
+            public string id, type, name, recommended, state, mcversion, plan, detail, made, notice; // resource 테이블
             public string latest;
             public STATE numState;
             public string[] version;
@@ -406,7 +406,7 @@ namespace BellLib.Class.BSN
             mp.recommended = Common.getElement(data, "recommended");
             mp.detail = Common.getElement(data, "detail");
             mp.made = Common.getElement(data, "made");
-            mp.endtime = Common.getElement(data, "endtime");
+            mp.notice = Common.getElement(data, "notice");
             mp.baseid = Common.getElement(data, "baseid");
 
             formData = new NameValueCollection();
@@ -455,7 +455,6 @@ namespace BellLib.Class.BSN
             }
             bp.recommended = Common.getElement(data, "recommended");
             bp.made = Common.getElement(data, "made");
-            bp.endtime = Common.getElement(data, "endtime");
 
             return bp;
         }
@@ -505,7 +504,7 @@ namespace BellLib.Class.BSN
             }
             res.recommended = Common.getElement(data, "recommended");
             res.made = Common.getElement(data, "made");
-            res.endtime = Common.getElement(data, "endtime");
+            res.notice = Common.getElement(data, "notice");
             res.name = Common.getElement(data, "name");
             res.detail = Common.getElement(data, "detail");
 
@@ -644,6 +643,55 @@ namespace BellLib.Class.BSN
                 insList.Add(ins);
             }
             return insList.ToArray();
+        }
+
+        #endregion
+
+        #region *** 좋아요 ***
+
+        public static bool isLikedPack(PACK type, string packid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = type.ToString();
+            formData["like"] = "load";
+            formData["packid"] = packid;
+
+            string strReturn = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            if (Common.getElement(strReturn, "packid") == packid)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool setLikePack(PACK type, string packid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = type.ToString();
+            formData["like"] = "set";
+            formData["packid"] = packid;
+
+            string strReturn = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            if (strReturn.Contains("좋아합니다."))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool delLikePack(PACK type, string packid)
+        {
+            NameValueCollection formData = new NameValueCollection();
+
+            formData["type"] = type.ToString();
+            formData["like"] = "delete";
+            formData["packid"] = packid;
+
+            string strReturn = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
+            if (strReturn.Contains("좋아요 취소 성공."))
+                return true;
+            else
+                return false;
         }
 
         #endregion

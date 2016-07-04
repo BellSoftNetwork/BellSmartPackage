@@ -16,17 +16,17 @@
             </TabItem>
             <TabItem Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid>
-                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="#FFA6E3F9" FontWeight="Bold" FontSize="20" Margin="546,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
+                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="#FFA6E3F9" FontWeight="Bold" FontSize="20" Margin="605,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
                         <ListBoxItem Content="테스트1"/>
                         <ListBoxItem Content="테스트2"/>
                     </ListBox>
-                    <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="541" Margin="0,27,0,0"/>
-                    <ComboBox x:Name="mod_cbProfile" Margin="587,352,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="mod_cbProfile_SelectionChanged">
+                    <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="280" VerticalAlignment="Top" Width="600" Margin="0,27,0,0" Navigating="mod_wbNotice_Navigating" Navigated="mod_wbNotice_Navigated"/>
+                    <ComboBox x:Name="mod_cbProfile" Margin="648,352,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="mod_cbProfile_SelectionChanged">
                         <ComboBoxItem Content="Select Profile"/>
                         <ComboBoxItem Content="Create Profile"/>
                     </ComboBox>
                     <Button x:Name="mod_btnEnjoy" Content="Enjoy" Margin="769,379,0,0" VerticalAlignment="Top" Click="mod_btnEnjoy_Click"/>
-                    <Button x:Name="mod_btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="546,352,0,0" VerticalAlignment="Top" Width="38" Height="22" Click="mod_btnEdit_Click"/>
+                    <Button x:Name="mod_btnEdit" Content="Edit" HorizontalAlignment="Left" Margin="605,352,0,0" VerticalAlignment="Top" Width="38" Height="22" Click="mod_btnEdit_Click"/>
                     <ComboBox x:Name="mod_cbVersion" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" SelectedIndex="0">
                         <ComboBoxItem Content="Recommended"/>
                         <ComboBoxItem Content="Latest"/>
@@ -34,8 +34,10 @@
                     <Expander x:Name="mod_expanderDetail" Header="Detail" HorizontalAlignment="Left" Margin="0,379,0,0" VerticalAlignment="Top" Collapsed="mod_expanderDetail_Collapsed" Expanded="mod_expanderDetail_Expanded">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
-                    <ListBox x:Name="mod_lstDetailList" HorizontalAlignment="Left" Height="58" Margin="0,316,0,0" VerticalAlignment="Top" Width="541"/>
+                    <ListBox x:Name="mod_lstDetailList" HorizontalAlignment="Left" Height="62" Margin="0,312,0,0" VerticalAlignment="Top" Width="600"/>
                     <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="749,0,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click"/>
+                    <Button x:Name="mod_btnForceKill" Content="Force Kill" HorizontalAlignment="Left" Margin="698.186,378.96,0,0" VerticalAlignment="Top" Width="65.814" Click="mod_btnForceKill_Click"/>
+                    <Button x:Name="mod_btnLike" Content="♡" HorizontalAlignment="Left" Margin="605,378.96,0,0" VerticalAlignment="Top" Width="38" Click="mod_btnLike_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">

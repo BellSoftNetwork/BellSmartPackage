@@ -48,10 +48,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                 cbRunName.Items.Add(Common.getElement(tmp, "name"));
 
             // 기본값 선택
-            cbModName.SelectedIndex = 0;
-            cbBaseName.SelectedIndex = 0;
-            cbResName.SelectedIndex = 0;
-            cbRunName.SelectedIndex = 0;
+            cbModName.SelectedIndex = cbModName.Items.Count - 1; // 마지막에 생성한 모드팩 선택 (추후 마지막에 '선택'한 모드팩을 선택하도록 수정)
+            cbBaseName.SelectedIndex = cbBaseName.Items.Count - 1;
+            cbResName.SelectedIndex = cbResName.Items.Count - 1;
+            cbRunName.SelectedIndex = cbRunName.Items.Count - 1;
 
             // 검사
             if (cbModName.Items.IsEmpty && cbBaseName.Items.IsEmpty && cbResName.Items.IsEmpty && cbRunName.Items.IsEmpty)

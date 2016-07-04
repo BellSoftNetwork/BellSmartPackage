@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BellLib.Class;
+using BellLib.Class.BSN;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -156,6 +157,18 @@ namespace Bell_Smart_Launcher.Source.Frame
             return true;
         }
 
+        private void InstallJava(string runtimePath)
+        {
+            Installer install = new Installer("Java"); // 설치기 초기화
+            install.Show(); // 설치기 실행
+            install.Install(runtimePath); // 설치 시작
+
+            if (Environment.Is64BitOperatingSystem)
+                Game.JAVA_Path = runtimePath + "x64";
+            else
+                Game.JAVA_Path = runtimePath + "x86";
+        }
+
         private void game_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!game_sdJAVA.IsInitialized)
@@ -179,6 +192,52 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             SaveDebug();
             WPFCom.Message("디버그설정 저장에 성공하였습니다.");
+        }
+
+        private void game_btnJAVAIntegrity_Click(object sender, RoutedEventArgs e)
+        {
+            if (game_txtJAVAPath.Text.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
+            {
+                string runtimeVerid = null;
+                string runtimeName = "Java";
+                Protection pro = new Protection();
+                List<string> failFile = new List<string>();
+                BSN_BSL.Runtime runtime = BSN_BSL.LoadRuntimeDetail(runtimeName); // 런타임 이름으로 상세정보 검색
+
+                foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.runtime, runtimeName))
+                { // 팩 버전리스트 검색
+                    if (runtime.recommended == Common.getElement(value, "version")) // 루프를 돌다가 권장버전이 나오면
+                        runtimeVerid = Common.getElement(value, "id"); // 런타임 버전 id를 권장버전 id로 설정.
+                }
+                BSN_BSL.Install[] runtimeInstall = BSN_BSL.LoadVersionFiles(BSN_BSL.PACK.runtime, BSN_BSL.KIND.client, runtimeVerid);
+
+
+                foreach (BSN_BSL.Install value in runtimeInstall)
+                {
+                    string localURL = game_txtJAVAPath.Text.Remove(game_txtJAVAPath.Text.Length - 3) + value.url;
+                    if (value.hash != pro.MD5Hash(localURL))
+                        failFile.Add(value.url);
+                }
+
+                if (failFile.Count > 0)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (string value in failFile)
+                    {
+                        if (value == failFile[failFile.Count - 1])
+                            sb.Append(value);
+                        else
+                            sb.Append(value + ", ");
+                    }
+                    WPFCom.Message("런타임팩에 문제가 발생하였습니다." + Environment.NewLine + "설치되지 않았거나 변경된 파일 : " + Environment.NewLine + sb);
+                    if (WPFCom.Message("런타임 자바를 재설치 하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        InstallJava(game_txtJAVAPath.Text);
+                }
+                else
+                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.");
+            }
+            else
+                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.");
         }
     }
 }

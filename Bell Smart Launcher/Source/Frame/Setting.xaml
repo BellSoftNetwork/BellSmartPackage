@@ -45,11 +45,12 @@
                     <Slider x:Name="game_sdJAVA" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Maximum="16" Minimum="1" SmallChange="0.25" Value="1" IsSnapToTickEnabled="True" Margin="156.783,15.729,0,0" ValueChanged="game_sdJAVA_ValueChanged" TickFrequency="0.25"/>
                     <Label x:Name="game_lbRAM" Content="1 GB" Margin="0,10,111.679,0" VerticalAlignment="Top" Height="29.507" HorizontalAlignment="Right" Width="103.538"/>
                     <Label Content="자바 경로 :" HorizontalAlignment="Left" Margin="10,39.506,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="game_txtJAVAPath" Height="23" Margin="156.783,43.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="C:\BSN\Runtime\JAVA\x64"/>
+                    <TextBox x:Name="game_txtJAVAPath" Height="23" Margin="156.783,43.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="C:\BSN\Runtime\Java\x64"/>
                     <Label Content="매개변수 :" HorizontalAlignment="Left" Margin="10,69.012,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="game_txtParameter" Height="23" Margin="156.783,71.506,160.624,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <Button x:Name="game_btnSave" Content="저장" HorizontalAlignment="Right" Margin="0,0,10,9.999" VerticalAlignment="Bottom" Width="75" Click="game_btnSave_Click"/>
                     <CheckBox x:Name="game_cbMultipleExe" Content="게임 다중실행 허용" Margin="156.783,99.506,160.624,0" VerticalAlignment="Top"/>
+                    <Button x:Name="game_btnJAVAIntegrity" Content="자바 무결성 확인" HorizontalAlignment="Right" Margin="0,42.506,10,0" VerticalAlignment="Top" Width="145.624" Click="game_btnJAVAIntegrity_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tiDebug" Header="Debug">

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
         mc:Ignorable="d"
-        Title="PackSetting" Height="300" Width="300">
+        Title="모드팩 상세설정" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico">
     <Grid>
         
     </Grid>

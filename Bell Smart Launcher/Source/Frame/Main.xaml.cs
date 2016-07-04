@@ -18,6 +18,7 @@ using System.IO;
 using System.Net;
 using System.Diagnostics;
 using Bell_Smart_Launcher.Source.Data;
+using System.Reflection;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -31,6 +32,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private string ModpacksDataPath = User.BSN_Path + "DATA\\BSL\\Modpacks.bdx";
         private string ResourcesDataPath = User.BSN_Path + "DATA\\BSL\\Resources.bdx";
         private Process GameProcess = null;
+        private bool noticeLock = true;
 
         public Main()
         {
@@ -72,14 +74,57 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Initialize()
         {
             //Common
+            List<string> BasicPlan = new List<string>();
+            List<string> PremiumPlan = new List<string>();
+            List<string> PartnerPlan = new List<string>();
+            List<string> BSN_SpecialPlan = new List<string>();
 
 
             //NEWS
 
 
             //MODPACKS
+            //초기화
+            BasicPlan.Clear();
+            PremiumPlan.Clear();
+            PartnerPlan.Clear();
+            BSN_SpecialPlan.Clear();
+
+            // 요금제별 분류
             foreach (string value in BSN_BSL.LoadPackList(BSN_BSL.PACK.modpack))
-                mod_lstPackList.Items.Add(Common.getElement(value, "name"));
+            {
+                switch (Common.getElement(value, "plan"))
+                {
+                    case "0":
+                        BasicPlan.Add(value);
+                        break;
+
+                    case "1":
+                        PremiumPlan.Add(value);
+                        break;
+
+                    case "2":
+                        PartnerPlan.Add(value);
+                        break;
+
+                    case "10":
+                        BSN_SpecialPlan.Add(value);
+                        break;
+
+                    default:
+                        BasicPlan.Add(value);
+                        break;
+                }
+            }
+
+            // like별 분류
+
+            // 최종 리스트 출력
+            object[] plans = { BSN_SpecialPlan, PartnerPlan, PremiumPlan, BasicPlan };
+            foreach (List<string> plan in plans)
+                foreach (string value in plan)
+                    mod_lstPackList.Items.Add(Common.getElement(value, "name"));
+
             mod_lstPackList.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Modpack"); // 마지막에 선택했던 팩 자동선택
             if (mod_lstPackList.SelectedIndex == -1)
                 mod_lstPackList.SelectedIndex = 0;
@@ -207,12 +252,12 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (expand)
             { // 활성화
                 mod_lstDetailList.Visibility = Visibility.Visible;
-                mod_wbNotice.Height = 284;
+                mod_wbNotice.Height = 280;
             }
             else
             { // 비활성화
                 mod_lstDetailList.Visibility = Visibility.Hidden;
-                mod_wbNotice.Height = 347;
+                mod_wbNotice.Height = 350;
             }
         }
 
@@ -272,9 +317,17 @@ namespace Bell_Smart_Launcher.Source.Frame
             strTemp = sb.ToString();
             try
             {
-                Directory.SetCurrentDirectory(PathPack); //BST 실행경로를 방울크래프트 클라이언트 경로로 수정.
-                GameProcess = Process.Start(PathJAVA, strTemp);
-                //BC_PID = Shell(strTemp, AppWinStyle.NormalFocus);
+                Directory.SetCurrentDirectory(PathPack); //런처 실행경로를 방울크래프트 클라이언트 경로로 수정.
+                GameProcess = new Process();
+                if (!Game.ConsoleRun)
+                    GameProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                else
+                    GameProcess.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                //GameProcess = Process.Start(PathJAVA, strTemp);
+                GameProcess.StartInfo.FileName = PathJAVA;
+                GameProcess.StartInfo.Arguments = strTemp;
+                GameProcess.StartInfo.WorkingDirectory = PathPack;
+                GameProcess.Start();
             }
             catch (FileNotFoundException fnf)
             {
@@ -344,16 +397,56 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         private void mod_lstPackList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // 예외처리
             if (mod_lstPackList.SelectedIndex < 0)
                 return;
+
+            // 초기화
             mod_cbVersion.Items.Clear();
             mod_cbVersion.Items.Add("Latest");
             mod_cbVersion.Items.Add("Recommended");
+
+            // 데이터 로드
             foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, (string)mod_lstPackList.SelectedItem))
                 mod_cbVersion.Items.Add(Common.getElement(value, "version"));
 
+            // 데이터 설정
             mod_cbVersion.SelectedIndex = 1;
             BD.Data.DataSave(ModpacksDataPath, "Modpack", (string)mod_lstPackList.SelectedItem); // 선택 모드팩이 바뀌었으므로 설정값 저장!
+
+            // 공지사항 출력
+            BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)mod_lstPackList.SelectedItem);
+            noticeLock = false;
+            try
+            {
+                string strNotice = Common.getStringFromWeb(mp.notice, Encoding.UTF8);
+                string[] strTemp = Common.stringSplit(strNotice, "<article");
+                strNotice = strTemp[1];
+                strTemp = Common.stringSplit(strNotice, "article>");
+                strNotice = "<meta charset=\"utf-8\"><article" + strTemp[0] + "article>";
+                
+                mod_wbNotice.NavigateToString(strNotice);
+            }
+            catch
+            {
+                // 공지사항 로드 에러
+                mod_wbNotice.NavigateToString("<meta charset=\"utf-8\"><strong abp=\"4668\"><span style=\"font-family: 돋움; \"abp=\"4670\"><font color=\"#ff0000\">공지사항이 존재하지 않거나 불러오는 중 문제가 발생하였습니다.</font></span></strong>");
+            }
+
+            // 좋아요 정보 로드
+            mod_lstPackList.Tag = mp.id; // 태그에 팩 id 저장
+            mod_LoadLike();
+        }
+
+        /// <summary>
+        /// 좋아요 정보를 로드합니다.
+        /// </summary>
+        private void mod_LoadLike()
+        {
+            if (BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
+                mod_btnLike.Content = "♥";
+            else
+                mod_btnLike.Content = "♡";
         }
 
         private void mod_btnEnjoy_Click(object sender, RoutedEventArgs e)
@@ -480,7 +573,11 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         private void mod_btnPackSetting_Click(object sender, RoutedEventArgs e)
         {
-            
+            /*if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.PackSetting"))
+            {
+                PackSetting packSet = new PackSetting();
+                packSet.Show(); // 세팅탭 오픈
+            }*/
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -522,6 +619,64 @@ namespace Bell_Smart_Launcher.Source.Frame
                 Setting set = new Setting();
                 set.Show(); // 세팅탭 오픈
             }
+        }
+
+        private void mod_btnForceKill_Click(object sender, RoutedEventArgs e)
+        {
+            if (GameProcess != null && !GameProcess.HasExited)
+            {
+                GameProcess.Kill();
+                WPFCom.Message("성공적으로 강제종료되었습니다.");
+            }
+            else
+                WPFCom.Message("실행중인 게임이 없습니다.");
+        }
+
+        private void mod_btnLike_Click(object sender, RoutedEventArgs e)
+        {
+            if (BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
+            {
+                // unlike
+                if (!BSN_BSL.delLikePack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
+                    WPFCom.Message("좋아요 취소에 실패했습니다.");
+            }
+            else
+            {
+                // like
+                if (!BSN_BSL.setLikePack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
+                    WPFCom.Message("좋아요 등록에 실패했습니다.");
+            }
+
+            mod_LoadLike(); // 새로고침
+        }
+
+        private void mod_wbNotice_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            if (noticeLock)
+                e.Cancel = true;
+        }
+
+        private void mod_wbNotice_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            HideJsScriptErrors((WebBrowser)sender);
+            noticeLock = true;
+        }
+
+        public void HideJsScriptErrors(WebBrowser wb)
+        {
+            // IWebBrowser2 interface
+            // Exposes methods that are implemented by the WebBrowser control  
+            // Searches for the specified field, using the specified binding constraints.
+
+            FieldInfo fld = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (fld == null)
+                return;
+            object obj = fld.GetValue(wb);
+            if (obj == null)
+                return;
+            // Silent: Sets or gets a value that indicates whether the object can display dialog boxes.
+            // HRESULT IWebBrowser2::get_Silent(VARIANT_BOOL *pbSilent);HRESULT IWebBrowser2::put_Silent(VARIANT_BOOL bSilent);
+            obj.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, obj, new object[] { true });
         }
     }
 }
