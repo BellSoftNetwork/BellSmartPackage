@@ -60,6 +60,7 @@ namespace BellLib.Class.BSN
             public string latest, BaseName;
             public STATE numState;
             public string[] version;
+            public int like;
         }
 
         /// <summary>
@@ -71,6 +72,7 @@ namespace BellLib.Class.BSN
             public string latest;
             public STATE numState;
             public string[] version;
+            public int like;
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace BellLib.Class.BSN
             public string latest;
             public STATE numState;
             public string[] version;
+            public int like;
         }
         
         /// <summary>
@@ -408,6 +411,15 @@ namespace BellLib.Class.BSN
             mp.made = Common.getElement(data, "made");
             mp.notice = Common.getElement(data, "notice");
             mp.baseid = Common.getElement(data, "baseid");
+            mp.plan = Common.getElement(data, "plan");
+            try
+            {
+                mp.like = Convert.ToInt32(Common.getElement(data, "like"));
+            }
+            catch
+            {
+                mp.like = 0;
+            }
 
             formData = new NameValueCollection();
 
@@ -455,6 +467,15 @@ namespace BellLib.Class.BSN
             }
             bp.recommended = Common.getElement(data, "recommended");
             bp.made = Common.getElement(data, "made");
+            bp.plan = Common.getElement(data, "plan");
+            try
+            {
+                bp.like = Convert.ToInt32(Common.getElement(data, "like"));
+            }
+            catch
+            {
+                bp.like = 0;
+            }
 
             return bp;
         }
@@ -507,6 +528,15 @@ namespace BellLib.Class.BSN
             res.notice = Common.getElement(data, "notice");
             res.name = Common.getElement(data, "name");
             res.detail = Common.getElement(data, "detail");
+            res.plan = Common.getElement(data, "plan");
+            try
+            {
+                res.like = Convert.ToInt32(Common.getElement(data, "like"));
+            }
+            catch
+            {
+                res.like = 0;
+            }
 
             return res;
         }
