@@ -67,7 +67,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             mod_lstDetailList.Items.Clear(); // 팩 상세정보 초기화
             mod_cbProfile.Items.Clear(); // 프로필 리스트 초기화
             mod_cbVersion.Items.Clear(); // 팩 버전 리스트 초기화
-            //mod_expanderDetail.IsExpanded = false;
+            mod_cbFilter.Items.Clear(); // 필터 리스트 초기화
 
             //MAPS
 
@@ -175,17 +175,17 @@ namespace Bell_Smart_Launcher.Source.Frame
         }
 
         /// <summary>
-        /// 모드팩탭 관련 기능을 초기화합니다.
+        /// 모드팩 리스트를 초기화합니다.
         /// </summary>
-        private void InitModpacks()
+        private void InitListModpack()
         {
-            //MODPACKS
             Dictionary<string, int> BasicPlan = new Dictionary<string, int>();
             Dictionary<string, int> PremiumPlan = new Dictionary<string, int>();
             Dictionary<string, int> PartnerPlan = new Dictionary<string, int>();
             Dictionary<string, int> BSN_SpecialPlan = new Dictionary<string, int>();
 
             //초기화
+            mod_lstPackList.Items.Clear(); // 팩 리스트 초기화!
             BasicPlan.Clear();
             PremiumPlan.Clear();
             PartnerPlan.Clear();
@@ -219,7 +219,39 @@ namespace Bell_Smart_Launcher.Source.Frame
             }
 
             // 최종 리스트 출력
-            object[] plans = { BSN_SpecialPlan, PartnerPlan, PremiumPlan, BasicPlan };
+            object[] plans;
+
+            switch ((string)mod_cbFilter.SelectedItem)
+            {
+                case "All":
+                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan, BasicPlan };
+                    break;
+
+                case "Standard":
+                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan };
+                    break;
+
+                case "BSN_Special":
+                    plans = new object[] { BSN_SpecialPlan };
+                    break;
+
+                case "Partner":
+                    plans = new object[] { PartnerPlan };
+                    break;
+
+                case "Premium":
+                    plans = new object[] { PremiumPlan };
+                    break;
+
+                case "Basic":
+                    plans = new object[] { BasicPlan };
+                    break;
+
+                default:
+                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan };
+                    break;
+            }
+            
             foreach (Dictionary<string, int> plan in plans)
             {
                 var plan_desc = from pack in plan orderby pack.Value descending select pack;
@@ -230,7 +262,14 @@ namespace Bell_Smart_Launcher.Source.Frame
             mod_lstPackList.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Modpack"); // 마지막에 선택했던 팩 자동선택
             if (mod_lstPackList.SelectedIndex == -1)
                 mod_lstPackList.SelectedIndex = 0;
+        }
 
+        /// <summary>
+        /// 모드팩탭 관련 기능을 초기화합니다.
+        /// </summary>
+        private void InitModpacks()
+        {
+            //MODPACKS
             // 프로필 로드
             mod_cbProfile.Items.Add("Select Profile");
             mod_cbProfile.Items.Add("Create Profile");
@@ -242,6 +281,21 @@ namespace Bell_Smart_Launcher.Source.Frame
                 mod_expanderDetail.IsExpanded = true;
             else
                 mod_expanderDetail.IsExpanded = false;
+
+            // 필터 추가
+            mod_cbFilter.Items.Add("All");
+            mod_cbFilter.Items.Add("Standard");
+            /*mod_cbFilter.Items.Add("BSN_Special");
+            mod_cbFilter.Items.Add("Partner");
+            mod_cbFilter.Items.Add("Premium");
+            mod_cbFilter.Items.Add("Basic");*/
+
+            mod_cbFilter.SelectedItem = BD.Data.DataLoad(ModpacksDataPath, "Filter"); // 마지막에 선택한 필터 자동선택
+            if (mod_cbFilter.SelectedIndex == -1)
+                mod_cbFilter.SelectedIndex = 1; // 기본값 Standard로 설정
+
+            // 모드팩 리스트 로드
+            InitListModpack();
         }
 
         /// <summary>
@@ -626,6 +680,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 if (member.permission == "4")
                     InputDetail("Producer", member.email); // 팩 제작자
             InputDetail("Made", mp.made); // 생성일
+            InputDetail("Modification", mp.modification); // 마지막 수정일
             try
             {
                 InputDetail("Plan", BSN_BSL.GetPlanName((BSN_BSL.PLAN)Convert.ToInt32(mp.plan))); // 요금제
@@ -746,13 +801,20 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 버전정보 검증
             if (modVer == "Recommended") // 권장버전을 선택했을경우,
                 modVer = mp.recommended; // 공식 권장버전을 대입
-            foreach (string verData in verList)
+            try
             {
-                if (modVer == "Latest") // 선택한 버전이 최신버전일경우,
-                    if (modVerid == null) // 버전id 설정이 안되어있을경우 (foreach 처음 진입일경우)
-                        modVer = Common.getElement(verData, "version"); // 최신버전값을 넣어준다.
-                if (modVer == Common.getElement(verData, "version")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
-                    modVerid = Common.getElement(verData, ("id")); // 해당 버전 id를 로드한다.
+                foreach (string verData in verList)
+                {
+                    if (modVer == "Latest") // 선택한 버전이 최신버전일경우,
+                        if (modVerid == null) // 버전id 설정이 안되어있을경우 (foreach 처음 진입일경우)
+                            modVer = Common.getElement(verData, "version"); // 최신버전값을 넣어준다.
+                    if (modVer == Common.getElement(verData, "version")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
+                        modVerid = Common.getElement(verData, ("id")); // 해당 버전 id를 로드한다.
+                }
+            }
+            catch
+            {
+                return;
             }
 
             // 데이터 유효성 검증
@@ -776,6 +838,14 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                     break;
                 }
+        }
+
+        private void mod_cbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!mod_cbFilter.IsInitialized || mod_cbFilter.SelectedIndex == -1)
+                return;
+            BD.Data.DataSave(ModpacksDataPath, "Filter", (string)mod_cbFilter.SelectedItem); // 필터 설정값 저장
+            InitListModpack(); // 모드팩 리스트 다시 로드
         }
 
         #endregion
@@ -926,7 +996,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (GameProcess != null && !GameProcess.HasExited)
-                if (WPFCom.Message("현재 게임이 실행중입니다." + Environment.NewLine + "런처에 종속성을 가진 게임은 런처종료 후 문제가 발생할 수 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (WPFCom.Message("현재 게임이 실행중입니다." + Environment.NewLine + "런처에 종속성을 가진 게임은 런처종료 후 문제가 발생할 수 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                     e.Cancel = true;
         }
 

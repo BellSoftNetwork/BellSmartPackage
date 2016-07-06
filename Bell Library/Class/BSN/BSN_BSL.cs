@@ -56,7 +56,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct ModPack
         {
-            public string id, name, recommended, baseid, state, plan, detail, made, notice; // modpack 테이블
+            public string id, name, recommended, baseid, state, plan, detail, made, modification, notice; // modpack 테이블
             public string latest, BaseName;
             public STATE numState;
             public string[] version;
@@ -68,7 +68,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct BasePack
         {
-            public string id, name, recommended, state, mcversion, plan, made; // basepack 테이블
+            public string id, name, recommended, state, mcversion, plan, made, modification; // basepack 테이블
             public string latest;
             public STATE numState;
             public string[] version;
@@ -80,7 +80,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct Resource
         {
-            public string id, type, name, recommended, state, mcversion, plan, detail, made, notice; // resource 테이블
+            public string id, type, name, recommended, state, mcversion, plan, detail, made, modification, notice; // resource 테이블
             public string latest;
             public STATE numState;
             public string[] version;
@@ -92,7 +92,7 @@ namespace BellLib.Class.BSN
         /// </summary>
         public struct Runtime
         {
-            public string id, name, recommended, made, state;
+            public string id, name, recommended, made, modification, state;
             public string latest;
             public STATE numState;
             public string[] version;
@@ -264,7 +264,10 @@ namespace BellLib.Class.BSN
             formData["state"] = Convert.ToInt32(state).ToString();
 
             string data = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            return Common.getElementArray(data, "ver");
+            if (data != string.Empty)
+                return Common.getElementArray(data, "ver");
+            else
+                return null;
         }
 
         /// <summary>
@@ -409,6 +412,7 @@ namespace BellLib.Class.BSN
             mp.recommended = Common.getElement(data, "recommended");
             mp.detail = Common.getElement(data, "detail");
             mp.made = Common.getElement(data, "made");
+            mp.modification = Common.getElement(data, "modification");
             mp.notice = Common.getElement(data, "notice");
             mp.baseid = Common.getElement(data, "baseid");
             mp.plan = Common.getElement(data, "plan");
@@ -467,6 +471,7 @@ namespace BellLib.Class.BSN
             }
             bp.recommended = Common.getElement(data, "recommended");
             bp.made = Common.getElement(data, "made");
+            bp.modification = Common.getElement(data, "modification");
             bp.plan = Common.getElement(data, "plan");
             try
             {
@@ -525,6 +530,7 @@ namespace BellLib.Class.BSN
             }
             res.recommended = Common.getElement(data, "recommended");
             res.made = Common.getElement(data, "made");
+            res.modification = Common.getElement(data, "modification");
             res.notice = Common.getElement(data, "notice");
             res.name = Common.getElement(data, "name");
             res.detail = Common.getElement(data, "detail");
@@ -573,6 +579,7 @@ namespace BellLib.Class.BSN
             }
             run.recommended = Common.getElement(data, "recommended");
             run.made = Common.getElement(data, "made");
+            run.modification = Common.getElement(data, "modification");
 
             return run;
         }

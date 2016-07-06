@@ -37,10 +37,11 @@
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <ListBox x:Name="mod_lstDetailList" HorizontalAlignment="Left" Height="92" Margin="0,282,0,0" VerticalAlignment="Top" Width="600"/>
-                    <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="749,0,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click"/>
+                    <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="461,-0.04,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click" HorizontalAlignment="Left" Width="139"/>
                     <Button x:Name="mod_btnForceKill" Content="Force Kill" HorizontalAlignment="Left" Margin="698.186,378.96,0,0" VerticalAlignment="Top" Width="65.814" Click="mod_btnForceKill_Click"/>
                     <Button x:Name="mod_btnLike" Content="♡" HorizontalAlignment="Left" Margin="605,378.96,0,0" VerticalAlignment="Top" Width="38" Click="mod_btnLike_Click"/>
-                    <Button x:Name="mod_btnRefresh" Content="Refresh" HorizontalAlignment="Right" Margin="0,2.04,208,0" VerticalAlignment="Top" Width="75" Click="mod_btnRefresh_Click"/>
+                    <Button x:Name="mod_btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="155,0,0,0" VerticalAlignment="Top" Width="75" Click="mod_btnRefresh_Click" Height="21.96"/>
+                    <ComboBox x:Name="mod_cbFilter" Margin="605,0.04,0,0" VerticalAlignment="Top" SelectionChanged="mod_cbFilter_SelectionChanged"/>
                 </Grid>
             </TabItem>
             <TabItem Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">
