@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
         mc:Ignorable="d"
-        Title="모드팩 상세설정" Height="265.731" Width="488.176" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico">
+        Title="모드팩 상세설정" Height="323.731" Width="700" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize">
     <Grid>
-
+        <GroupBox x:Name="gbGeneral" Header="일반설정" Margin="0,0.365,0,0" HorizontalAlignment="Left" Width="453.51">
+            <Grid>
+                <ListBox x:Name="lstModPack" Background="{x:Null}" FontWeight="Bold" SelectionChanged="lstModPack_SelectionChanged" Width="250" HorizontalAlignment="Left" d:LayoutOverrides="Width">
+                    <ListBoxItem Content="테스트1"/>
+                    <ListBoxItem Content="테스트2"/>
+                </ListBox>
+                <CheckBox x:Name="cbAutoUpdate" Content="자동 업데이트" Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="176.51" d:LayoutOverrides="HorizontalAlignment"/>
+                <CheckBox x:Name="cbScreenShot" Content="스크린샷 자동백업" Margin="0,30.098,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="176.51" IsChecked="True"/>
+                <CheckBox x:Name="cbConfig" Content="업데이트시 게임 설정유지" HorizontalAlignment="Right" Margin="0,50.196,10,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment" Width="176.51" IsChecked="True"/>
+                <CheckBox x:Name="cbPreVerRemove" Content="업데이트시 이전버전 제거" HorizontalAlignment="Right" Margin="0,70.294,10,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment" Width="176.51"/>
+                <CheckBox x:Name="cbCrashReport" Content="크래시리포트 자동전송" HorizontalAlignment="Right" Margin="0,90.392,10,0" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment" Width="176.51" IsChecked="True"/>
+                <Button x:Name="btnAllVerRemove" Content="모든 버전 제거" Margin="0,0,86.51,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Click="btnAllVerRemove_Click"/>
+                <Button x:Name="btnSave" Content="저장" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Click="btnSave_Click"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="gbVersion" Header="버전설정" Margin="0,0.365,0,0" d:LayoutOverrides="Height" HorizontalAlignment="Right" Width="220.887">
+            <Grid>
+                <ListBox x:Name="lstVersion" Margin="3.843,0,0,49.92" HorizontalAlignment="Left" Width="205"/>
+                <Button x:Name="btnModPackEditor" Content="모드팩 편집기" HorizontalAlignment="Left" Margin="3.843,0,0,24.96" VerticalAlignment="Bottom" Width="100" Click="btnModPackEditor_Click"/>
+                <Button x:Name="btnIntegrityCheck" Content="무결성 검사" Margin="108.843,0,0,24.96" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Click="btnIntegrityCheck_Click"/>
+                <Button x:Name="btnReinstall" Content="재설치" Margin="3.843,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Click="btnReinstall_Click"/>
+                <Button x:Name="btnVerRemove" Content="제거" VerticalAlignment="Bottom" Margin="108.843,0,0,0" HorizontalAlignment="Left" Width="100" Click="btnVerRemove_Click"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

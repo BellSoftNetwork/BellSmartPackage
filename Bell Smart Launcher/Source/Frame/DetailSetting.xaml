@@ -1,10 +1,10 @@
-﻿<Window x:Class="Bell_Smart_Launcher.Source.Frame.Setting"
+﻿<Window x:Class="Bell_Smart_Launcher.Source.Frame.DetailSetting"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
         mc:Ignorable="d"
-        Title="설정" Height="400" Width="600" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontSize="14.667">
+        Title="상세 설정" Height="336.072" Width="500.801" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid/>
 </Window>

@@ -40,7 +40,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>29</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -132,6 +132,12 @@
     <Compile Include="Source\Frame\Console.xaml.cs">
       <DependentUpon>Console.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Frame\Debugger.xaml.cs">
+      <DependentUpon>Debugger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\DetailSetting.xaml.cs">
+      <DependentUpon>DetailSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Frame\Installer.xaml.cs">
       <DependentUpon>Installer.xaml</DependentUpon>
     </Compile>
@@ -140,6 +146,9 @@
     </Compile>
     <Compile Include="Source\Frame\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\ModPackEditor.xaml.cs">
+      <DependentUpon>ModPackEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\PackSetting.xaml.cs">
       <DependentUpon>PackSetting.xaml</DependentUpon>
@@ -227,6 +236,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Source\Frame\Debugger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\DetailSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Frame\Installer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -236,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Source\Frame\Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\ModPackEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

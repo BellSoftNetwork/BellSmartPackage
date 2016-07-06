@@ -29,10 +29,14 @@ namespace Bell_Smart_Launcher.Source.Frame
     {
         #region *** FIELD ***
 
+        // 설정 파일 경로
+        private string GameSettingPath = User.BSN_Path + "DATA\\BSL\\Game.bdx";
         private string GeneralDataPath = User.BSN_Path + "DATA\\BSL\\General.bdx";
+        
         private string ModpacksDataPath = User.BSN_Path + "DATA\\BSL\\Modpacks.bdx";
         private string ResourcesDataPath = User.BSN_Path + "DATA\\BSL\\Resources.bdx";
         private string ProfileDataPath = User.BSN_Path + "Data\\BSL\\Profile\\";
+
         private Process GameProcess = null;
         private bool noticeLock = true;
         
@@ -52,12 +56,14 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void PreInitialize()
         {
             //Common
+            // 마지막에 열었던 탭 활성화
             try
             {
-                // 마지막에 열었던 탭 활성화
                 tc_Main.SelectedIndex = Convert.ToInt32(BD.Data.DataLoad(GeneralDataPath, "LastSelectedTab"));
             }
             catch { }
+            ti_Resources.Visibility = Visibility.Collapsed; // 아직 개발되지 않은 영역이므로 임시로 가려둠
+            ti_Maps.Visibility = Visibility.Collapsed; // 아직 개발되지 않은 영역이므로 임시로 가려둠
 
             //NEWS
 
@@ -285,6 +291,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 필터 추가
             mod_cbFilter.Items.Add("All");
             mod_cbFilter.Items.Add("Standard");
+            /*mod_cbFilter.Items.Add("Installed");
+            mod_cbFilter.Items.Add("Not Install");*/
             /*mod_cbFilter.Items.Add("BSN_Special");
             mod_cbFilter.Items.Add("Partner");
             mod_cbFilter.Items.Add("Premium");
@@ -319,6 +327,17 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private void InitSetting()
         {
+            SystemInfo.MemoryInfo mi = SystemInfo.GetMemoryInfo();
+
+            gen_cbLanguage.Items.Clear();
+            gen_cbLanguage.Items.Add("한국어");
+            gen_cbLanguage.Items.Add("English");
+            gen_cbLanguage.SelectedIndex = 0;
+
+            game_sdJAVA.Maximum = mi.Total_Physical_GB;
+
+            SettingLoad();
+
             AutoControl(); // 첫 실행시 자동 세팅
         }
 
@@ -545,11 +564,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (javaNotFound)
                 if (WPFCom.Message("자바 경로가 비 정상적으로 설정되었습니다." + Environment.NewLine + "자바 경로 설정화면으로 이동하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
-                    {
-                        Setting set = new Setting();
-                        set.tc_Setting.SelectedIndex = 1;
-                        set.Show(); // 세팅탭 오픈
-                    }
+                        tc_Main.SelectedIndex = 4;
         }
 
         private void mod_btnForceKill_Click(object sender, RoutedEventArgs e)
@@ -765,11 +780,8 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         private void mod_btnPackSetting_Click(object sender, RoutedEventArgs e)
         {
-            /*if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.PackSetting"))
-            {
-                PackSetting packSet = new PackSetting();
-                packSet.Show(); // 세팅탭 오픈
-            }*/
+            PackSetting packSet = new PackSetting();
+            packSet.ShowDialog(); // 세팅탭 오픈
         }
 
         private void mod_btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -895,10 +907,8 @@ namespace Bell_Smart_Launcher.Source.Frame
                 Game.AutoControl = true;
                 Game.Memory_Allocate = Allocate;
 
-                Setting set = new Setting();
-                set.SaveGeneral(); // 일반설정 저장
-                set.SaveGame(); // 게임설정 저장
-                set.Close(); // 끝났으면 닫아야지.
+                SaveGeneral(); // 일반설정 저장
+                SaveGame(); // 게임설정 저장
 
                 if (!Directory.Exists(runtimePath))
                     InstallJava(runtimePath);
@@ -913,11 +923,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                     {
                         if (WPFCom.Message("런타임자바 미 설치시 자바경로를 수동으로 설정해야합니다." + Environment.NewLine + "자바 경로설정창으로 이동하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
-                            {
-                                Setting set = new Setting();
-                                set.tc_Setting.SelectedIndex = 1;
-                                set.Show(); // 세팅탭 오픈
-                            }
+                                tc_Main.SelectedIndex = 4;
                     }
             }
 
@@ -940,12 +946,171 @@ namespace Bell_Smart_Launcher.Source.Frame
                 Game.JAVA_Path = runtimePath + "x86";
         }
 
-        private void set_detailSetting_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 세팅값을 로드합니다.
+        /// </summary>
+        private void SettingLoad(int tab = 7) // 0111
         {
-            if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
+            if ((tab & 1) == 1) // 0001
             {
-                Setting set = new Setting();
-                set.Show(); // 세팅탭 오픈
+                gen_txtInstall.Text = Game.BSL_Root;
+                if (Game.Language != null)
+                    gen_cbLanguage.SelectedItem = Game.Language;
+                gen_cbConsole.IsChecked = Game.ConsoleRun;
+                gen_cbKeep.IsChecked = Game.KeepOpen;
+                gen_cbAutoControl.IsChecked = Game.AutoControl;
+                gen_cbDebugMode.IsChecked = Game.DebugMode;
+            }
+
+            if ((tab & 2) == 2) // 0010
+            {
+                game_sdJAVA.Value = Game.Memory_Allocate;
+                game_txtJAVAPath.Text = Game.JAVA_Path;
+                game_txtParameter.Text = Game.JAVA_Parameter;
+                game_cbMultipleExe.IsChecked = Game.MultipleExe;
+
+                if (game_txtJAVAPath.Text == string.Empty)
+                    game_txtJAVAPath.Text = User.BSN_Path + @"Runtime\Java\x64"; // 임시 기본값 설정
+            }
+
+            // Default
+            if (Game.DebugMode)
+                gen_btnDebugger.Visibility = Visibility.Visible;
+            else
+                gen_btnDebugger.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// 일반설정을 저장합니다.
+        /// </summary>
+        /// <returns>저장 성공여부</returns>
+        public bool SaveGeneral()
+        {
+            Game.BSL_Root = gen_txtInstall.Text;
+            Game.Language = (string)gen_cbLanguage.SelectedItem;
+            Game.ConsoleRun = (bool)gen_cbConsole.IsChecked;
+            Game.KeepOpen = (bool)gen_cbKeep.IsChecked;
+            Game.AutoControl = (bool)gen_cbAutoControl.IsChecked;
+            Game.DebugMode = (bool)gen_cbDebugMode.IsChecked;
+
+            BD.Data.DataSave(GeneralDataPath, "BSL_Root", Game.BSL_Root);
+            BD.Data.DataSave(GeneralDataPath, "Laungage", Game.Language);
+            BD.Data.DataSave(GeneralDataPath, "ConsoleRun", Game.ConsoleRun.ToString());
+            BD.Data.DataSave(GeneralDataPath, "KeepOpen", Game.KeepOpen.ToString());
+            BD.Data.DataSave(GeneralDataPath, "AutoControl", Game.AutoControl.ToString());
+            BD.Data.DataSave(GeneralDataPath, "DebugMode", Game.DebugMode.ToString());
+
+            SettingLoad(5);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 게임설정을 저장합니다.
+        /// </summary>
+        /// <returns>저장 성공여부</returns>
+        public bool SaveGame()
+        {
+            bool Java32bit = false;
+            if (Environment.Is64BitOperatingSystem)
+            { // 64비트 운영체제일경우,
+                if (game_txtJAVAPath.Text.Contains("x86")) // 자바경로에 32비트 문구가 있을경우
+                    Java32bit = true; // 32비트 자바로 판정
+            }
+            else // 32비트 운영체제일경우,
+                Java32bit = true; // 필요없고 그냥 32비트
+
+            if (Java32bit)
+                if (game_sdJAVA.Value > 1)
+                    if (WPFCom.Message("32비트 자바에서는 메모리 할당량 1GB 초과시 에러가 발생하며 실행되지 않습니다." + Environment.NewLine + "그래도 저장하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                        return false;
+
+            Game.Memory_Allocate = game_sdJAVA.Value;
+            Game.JAVA_Path = game_txtJAVAPath.Text;
+            Game.JAVA_Parameter = game_txtParameter.Text;
+            Game.MultipleExe = (bool)game_cbMultipleExe.IsChecked;
+
+            BD.Data.DataSave(GameSettingPath, "Memory_Allocate", Game.Memory_Allocate.ToString());
+            BD.Data.DataSave(GameSettingPath, "JAVA_Path", Game.JAVA_Path);
+            BD.Data.DataSave(GameSettingPath, "JAVA_Parameter", Game.JAVA_Parameter);
+            BD.Data.DataSave(GameSettingPath, "MultipleExe", Game.MultipleExe.ToString());
+
+            SettingLoad(2);
+
+            return true;
+        }
+        
+        private void game_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!game_sdJAVA.IsInitialized)
+                return;
+            game_lbRAM.Content = game_sdJAVA.Value + " GB";
+        }
+
+        private void gen_btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveGeneral();
+            WPFCom.Message("일반설정 저장에 성공하였습니다.");
+        }
+
+        private void game_btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveGame();
+            WPFCom.Message("게임설정 저장에 성공하였습니다.");
+        }
+
+        private void game_btnJAVAIntegrity_Click(object sender, RoutedEventArgs e)
+        {
+            if (game_txtJAVAPath.Text.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
+            {
+                string runtimeVerid = null;
+                string runtimeName = "Java";
+                Protection pro = new Protection();
+                List<string> failFile = new List<string>();
+                BSN_BSL.Runtime runtime = BSN_BSL.LoadRuntimeDetail(runtimeName); // 런타임 이름으로 상세정보 검색
+
+                foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.runtime, runtimeName))
+                { // 팩 버전리스트 검색
+                    if (runtime.recommended == Common.getElement(value, "version")) // 루프를 돌다가 권장버전이 나오면
+                        runtimeVerid = Common.getElement(value, "id"); // 런타임 버전 id를 권장버전 id로 설정.
+                }
+                BSN_BSL.Install[] runtimeInstall = BSN_BSL.LoadVersionFiles(BSN_BSL.PACK.runtime, BSN_BSL.KIND.client, runtimeVerid);
+
+
+                foreach (BSN_BSL.Install value in runtimeInstall)
+                {
+                    string localURL = game_txtJAVAPath.Text.Remove(game_txtJAVAPath.Text.Length - 3) + value.url;
+                    if (value.hash != pro.MD5Hash(localURL))
+                        failFile.Add(value.url);
+                }
+
+                if (failFile.Count > 0)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (string value in failFile)
+                    {
+                        if (value == failFile[failFile.Count - 1])
+                            sb.Append(value);
+                        else
+                            sb.Append(value + ", ");
+                    }
+                    WPFCom.Message("런타임팩에 문제가 발생하였습니다." + Environment.NewLine + "설치되지 않았거나 변경된 파일 : " + Environment.NewLine + sb);
+                    if (WPFCom.Message("런타임 자바를 재설치 하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        InstallJava(game_txtJAVAPath.Text);
+                }
+                else
+                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.");
+            }
+            else
+                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.");
+        }
+
+        private void gen_btnDebugger_Click(object sender, RoutedEventArgs e)
+        {
+            if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Debugger"))
+            {
+                Debugger deb = new Debugger();
+                deb.Show(); // 세팅탭 오픈
             }
         }
 
@@ -968,29 +1133,6 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             if (tc_Main.SelectedIndex != -1)
                 BD.Data.DataSave(GeneralDataPath, "LastSelectedTab", tc_Main.SelectedIndex.ToString()); // 현재 선택한 탭 인덱스 저장
-            /*if (LastSelectedTab == -1)
-                return;
-            if (LastSelectedTab == 3)
-            {
-                // 예외 에러발생
-                LastSelectedTab = 1; // 일단 강제로 설정 변경
-                WPFCom.Message("예상치못한 탭 컨트롤 에러가 발생하여 자동으로 수정하었습니다.");
-            }
-
-            if (tc_Main.SelectedIndex == 3)
-            {
-                int tempTab = LastSelectedTab;
-                LastSelectedTab = -1;
-                tc_Main.SelectedIndex = tempTab;
-                if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
-                {
-                    Setting set = new Setting();
-                    set.Show(); // 세팅탭 오픈
-                }
-            }
-
-            if (tc_Main.SelectedIndex != 3 && tc_Main.SelectedIndex != -1) // 탭컨트롤 인덱스가 3이 아닐경우
-                LastSelectedTab = tc_Main.SelectedIndex; // 마지막으로 선택된 탭 인덱스*/
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

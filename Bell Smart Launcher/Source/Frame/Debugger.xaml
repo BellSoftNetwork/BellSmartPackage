@@ -1,0 +1,14 @@
+﻿<Window x:Class="Bell_Smart_Launcher.Source.Frame.Debugger"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
+        mc:Ignorable="d"
+        Title="Debugger" Height="184.569" Width="346.894" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico">
+    <Grid>
+        <Button x:Name="btnSave" Content="Save" Margin="0,0,10,10" VerticalAlignment="Bottom" Click="btnSave_Click" HorizontalAlignment="Right" Width="50.952"/>
+        <CheckBox x:Name="cbPWV" Content="비밀번호 툴팁 표시" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+    </Grid>
+</Window>

@@ -1,7 +1,4 @@
-﻿using Bell_Smart_Launcher.Source.Data;
-using BD = BellLib.Class.Analysis;
-using BellLib.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +10,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BellLib.Class;
-using BellLib.Class.BSN;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
     /// <summary>
-    /// Setting.xaml에 대한 상호 작용 논리
+    /// ModPackEditor.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Setting : Window
+    public partial class ModPackEditor : Window
     {
-        
+        public ModPackEditor()
+        {
+            InitializeComponent();
+        }
     }
 }

@@ -11,12 +11,12 @@
     </Window.Background>
     <Grid x:Name="gd_Main" Margin="0,0,0,0">
         <TabControl x:Name="tc_Main" Background="{x:Null}" BorderBrush="{x:Null}" SelectionChanged="tc_Main_SelectionChanged" >
-            <TabItem Header="NEWS" Background="{x:Null}" Height="50" Margin="-2,-1,-2,1" Width="150" BorderBrush="{x:Null}">
+            <TabItem x:Name="ti_NewsFeed" Header="NEWS FEED" Background="{x:Null}" Height="50" Margin="-2,-1,-2,1" Width="150" BorderBrush="{x:Null}">
                 <Grid>
                     <WebBrowser x:Name="news_wbNews"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
+            <TabItem x:Name="ti_Modpacks" Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid>
                     <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="#FFA6E3F9" FontWeight="Bold" FontSize="20" Margin="605,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
                         <ListBoxItem Content="테스트1"/>
@@ -41,18 +41,50 @@
                     <Button x:Name="mod_btnForceKill" Content="Force Kill" HorizontalAlignment="Left" Margin="698.186,378.96,0,0" VerticalAlignment="Top" Width="65.814" Click="mod_btnForceKill_Click"/>
                     <Button x:Name="mod_btnLike" Content="♡" HorizontalAlignment="Left" Margin="605,378.96,0,0" VerticalAlignment="Top" Width="38" Click="mod_btnLike_Click"/>
                     <Button x:Name="mod_btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="155,0,0,0" VerticalAlignment="Top" Width="75" Click="mod_btnRefresh_Click" Height="21.96"/>
-                    <ComboBox x:Name="mod_cbFilter" Margin="605,0.04,0,0" VerticalAlignment="Top" SelectionChanged="mod_cbFilter_SelectionChanged"/>
+                    <ComboBox x:Name="mod_cbFilter" Margin="605,0.04,0,0" VerticalAlignment="Top" SelectionChanged="mod_cbFilter_SelectionChanged" SelectedIndex="0">
+                        <ComboBoxItem Content="Standard"/>
+                    </ComboBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">
+            <TabItem x:Name="ti_Resources" Header="RESOURCES" Background="{x:Null}" Margin="0,-1,0,1" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid/>
             </TabItem>
-            <TabItem Header="MAPS" Background="{x:Null}" Margin="0,-1,0,1" Width="150" BorderBrush="{x:Null}">
+            <TabItem x:Name="ti_Maps" Header="MAPS" Background="{x:Null}" Margin="0,-1,0,1" Width="150" BorderBrush="{x:Null}">
                 <Grid/>
             </TabItem>
-            <TabItem Header="SETTING" Background="{x:Null}" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
+            <TabItem x:Name="ti_Setting" Header="SETTING" Background="{x:Null}" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
                 <Grid>
-                    <Button x:Name="set_detailSetting" Content="상세설정" Click="set_detailSetting_Click"/>
+                    <GroupBox x:Name="set_gbGeneral" Header="일반" Margin="0,0,0,202.447">
+                        <Grid>
+                            <Label Content="설치 폴더 :" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <TextBox x:Name="gen_txtInstall" Height="23" Margin="88.577,4,0,0" TextWrapping="Wrap" Text="C:\BSN" VerticalAlignment="Top" HorizontalAlignment="Left" Width="300"/>
+                            <Button x:Name="gen_btnSearch" Content="찾기" Margin="393.577,3,407.423,0" VerticalAlignment="Top"/>
+                            <Label Content="언어 :" Margin="0,27.733,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <ComboBox x:Name="gen_cbLanguage" Margin="88.577,29.733,0,0" VerticalAlignment="Top" SelectedIndex="0" HorizontalAlignment="Left" Width="300">
+                                <ListBoxItem Content="한국어"/>
+                            </ComboBox>
+                            <CheckBox x:Name="gen_cbConsole" Content="콘솔 실행" HorizontalAlignment="Left" Margin="88.577,58.466,0,0" FontSize="13.333" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="gen_cbKeep" Content="런처 실행 유지" HorizontalAlignment="Left" Margin="88.577,80.199,0,0" FontSize="13.333" IsChecked="True" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="gen_cbAutoControl" Content="런처 자동제어" HorizontalAlignment="Left" Margin="88.577,105.342,0,0" IsChecked="True" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="gen_cbDebugMode" Content="Debug mode" HorizontalAlignment="Left" Margin="88.577,127.076,0,0" VerticalAlignment="Top"/>
+                            <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click"/>
+                            <Button x:Name="gen_btnDebugger" Content="Debugger" HorizontalAlignment="Left" Margin="0,124.077,0,0" VerticalAlignment="Top" Width="83.577" Click="gen_btnDebugger_Click"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="set_gbGame" Header="게임" Height="197.447" VerticalAlignment="Bottom">
+                        <Grid>
+                            <Label Content="메모리 할당량 :" HorizontalAlignment="Left" Margin="0,2.093,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.231,1.115"/>
+                            <Slider x:Name="game_sdJAVA" HorizontalAlignment="Left" VerticalAlignment="Top" Width="211" Maximum="16" Minimum="1" SmallChange="0.25" Value="1" IsSnapToTickEnabled="True" Margin="147.58,10,0,0" ValueChanged="game_sdJAVA_ValueChanged" TickFrequency="0.25"/>
+                            <Label x:Name="game_lbRAM" Content="1 GB" Margin="363.58,0,283.241,0" VerticalAlignment="Top" Height="29.507"/>
+                            <Label Content="자바 경로 :" HorizontalAlignment="Left" Margin="0.797,31.599,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="game_txtJAVAPath" Height="23" Margin="147.58,35.599,428.42,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="C:\BSN\Runtime\Java\x64" Width="300"/>
+                            <Label Content="매개변수 :" HorizontalAlignment="Left" Margin="0.797,59.332,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="game_txtParameter" Height="23" Margin="147.58,64.065,277.796,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                            <CheckBox x:Name="game_cbMultipleExe" Content="게임 다중실행 허용" Margin="147.58,92.065,38.186,92.25" d:LayoutOverrides="Height"/>
+                            <Button x:Name="game_btnJAVAIntegrity" Content="자바 무결성 확인" HorizontalAlignment="Right" Margin="0,35.599,277.796,0" VerticalAlignment="Top" Width="145.624" Click="game_btnJAVAIntegrity_Click" Height="21.96"/>
+                            <Button x:Name="game_btnSave" Content="저장" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="game_btnSave_Click"/>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
             </TabItem>
         </TabControl>

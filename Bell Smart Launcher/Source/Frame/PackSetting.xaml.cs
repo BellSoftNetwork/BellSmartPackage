@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BellLib.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,55 @@ namespace Bell_Smart_Launcher.Source.Frame
     /// </summary>
     public partial class PackSetting : Window
     {
+
         public PackSetting()
         {
             InitializeComponent();
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            // 초기화
+            lstModPack.Items.Clear();
+            lstVersion.Items.Clear();
+
+        }
+        
+        private void lstModPack_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btnAllVerRemove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnModPackEditor_Click(object sender, RoutedEventArgs e)
+        {
+            ModPackEditor mpe = new ModPackEditor();
+            mpe.ShowDialog();
+        }
+
+        private void btnIntegrityCheck_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnReinstall_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnVerRemove_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
