@@ -1,5 +1,4 @@
 ﻿using Bell_Smart_Launcher.Source.Data;
-using BD = BellLib.Class.Analysis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BellLib.Data;
 using BellLib.Class;
+using BellLib.Class.Protection;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -22,8 +22,6 @@ namespace Bell_Smart_Launcher.Source.Frame
     /// </summary>
     public partial class Debugger : Window
     {
-        private string DebugDataPath = User.BSN_Path + "DATA\\BSL\\Debug.bdx";
-
         public Debugger()
         {
             InitializeComponent();
@@ -41,7 +39,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             DebugCategory.PWV = (bool)cbPWV.IsChecked;
 
-            BD.Data.DataSave(DebugDataPath, "PWV", DebugCategory.PWV.ToString());
+            DataProtect.DataSave(DataPath.BSL.Debug_Setting, "PWV", DebugCategory.PWV.ToString());
 
             SettingLoad();
 

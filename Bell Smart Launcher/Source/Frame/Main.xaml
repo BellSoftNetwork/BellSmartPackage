@@ -69,6 +69,7 @@
                             <CheckBox x:Name="gen_cbDebugMode" Content="Debug mode" HorizontalAlignment="Left" Margin="88.577,127.076,0,0" VerticalAlignment="Top"/>
                             <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click"/>
                             <Button x:Name="gen_btnDebugger" Content="Debugger" HorizontalAlignment="Left" Margin="0,124.077,0,0" VerticalAlignment="Top" Width="83.577" Click="gen_btnDebugger_Click"/>
+                            <Button x:Name="gen_btnCancel" Content="취소" HorizontalAlignment="Right" Margin="0,0,80,0" VerticalAlignment="Bottom" Width="75" Click="gen_btnCancel_Click"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="set_gbGame" Header="게임" Height="197.447" VerticalAlignment="Bottom">
@@ -83,6 +84,7 @@
                             <CheckBox x:Name="game_cbMultipleExe" Content="게임 다중실행 허용" Margin="147.58,92.065,38.186,92.25" d:LayoutOverrides="Height"/>
                             <Button x:Name="game_btnJAVAIntegrity" Content="자바 무결성 확인" HorizontalAlignment="Right" Margin="0,35.599,277.796,0" VerticalAlignment="Top" Width="145.624" Click="game_btnJAVAIntegrity_Click" Height="21.96"/>
                             <Button x:Name="game_btnSave" Content="저장" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="game_btnSave_Click"/>
+                            <Button x:Name="game_btnCancel" Content="취소" HorizontalAlignment="Right" Margin="0,0,80,0" VerticalAlignment="Bottom" Width="75" Click="game_btnCancel_Click"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

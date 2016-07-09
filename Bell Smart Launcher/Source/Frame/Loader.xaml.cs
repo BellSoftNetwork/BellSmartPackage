@@ -1,6 +1,6 @@
 ﻿using Bell_Smart_Launcher.Source.Data;
 using Bell_Smart_Launcher.Source.Management;
-using BD = BellLib.Class.Analysis;
+using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
 using System.Collections.Generic;
@@ -52,17 +52,15 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private static void GeneralSettingLoad()
         {
-            string SettingFilePath = User.BSN_Path + "DATA\\BSL\\General.bdx";
-
-            Game.BSL_Root = BD.Data.DataLoad(SettingFilePath, "BSL_Root"); // BSL 루트경로 로드
+            Game.BSL_Root = DataProtect.DataLoad(DataPath.BSL.General, "BSL_Root"); // BSL 루트경로 로드
             /*if (Game.BSL_Root == null)
                 Game.BSL_Root = User.BSN_Path;*/
             Game.BSL_Root = Game.BSL_Root == null ? User.BSN_Path : Game.BSL_Root;
-            Game.Language = BD.Data.DataLoad(SettingFilePath, "Language");
-            Game.ConsoleRun = boolDataLoad(SettingFilePath, "ConsoleRun", true);
-            Game.KeepOpen = boolDataLoad(SettingFilePath, "KeepOpen", true);
-            Game.AutoControl = boolDataLoad(SettingFilePath, "AutoControl", true);
-            Game.DebugMode = boolDataLoad(SettingFilePath, "DebugMode");
+            Game.Language = DataProtect.DataLoad(DataPath.BSL.General, "Language");
+            Game.ConsoleRun = boolDataLoad(DataPath.BSL.General, "ConsoleRun", true);
+            Game.KeepOpen = boolDataLoad(DataPath.BSL.General, "KeepOpen", true);
+            Game.AutoControl = boolDataLoad(DataPath.BSL.General, "AutoControl", true);
+            Game.DebugMode = boolDataLoad(DataPath.BSL.General, "DebugMode");
         }
 
         /// <summary>
@@ -70,12 +68,10 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private static void GameSettingLoad()
         {
-            string SettingFilePath = User.BSN_Path + "DATA\\BSL\\Game.bdx";
-
-            Game.Memory_Allocate = Convert.ToDouble(BD.Data.DataLoad(SettingFilePath, "Memory_Allocate"));
-            Game.JAVA_Path = BD.Data.DataLoad(SettingFilePath, "JAVA_Path");
-            Game.JAVA_Parameter = BD.Data.DataLoad(SettingFilePath, "JAVA_Parameter");
-            Game.MultipleExe = boolDataLoad(SettingFilePath, "MultipleExe");
+            Game.Memory_Allocate = Convert.ToDouble(DataProtect.DataLoad(DataPath.BSL.Game_Setting, "Memory_Allocate"));
+            Game.JAVA_Path = DataProtect.DataLoad(DataPath.BSL.Game_Setting, "JAVA_Path");
+            Game.JAVA_Parameter = DataProtect.DataLoad(DataPath.BSL.Game_Setting, "JAVA_Parameter");
+            Game.MultipleExe = boolDataLoad(DataPath.BSL.Game_Setting, "MultipleExe");
         }
 
         /// <summary>
@@ -83,9 +79,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private static void DebugSettingLoad()
         {
-            string SettingFilePath = User.BSN_Path + "DATA\\BSL\\Debug.bdx";
-
-            DebugCategory.PWV = boolDataLoad(SettingFilePath, "PWV");
+            DebugCategory.PWV = boolDataLoad(DataPath.BSL.Debug_Setting, "PWV");
         }
 
         /// <summary>
@@ -99,7 +93,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             try
             {
-                if (BD.Data.DataLoad(Path, Name).ToUpper() == "TRUE")
+                if (DataProtect.DataLoad(Path, Name).ToUpper() == "TRUE")
                     return true;
                 else
                     return false;

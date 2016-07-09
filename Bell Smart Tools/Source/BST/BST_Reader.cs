@@ -1,4 +1,5 @@
 ﻿using BellLib.Class;
+using BellLib.Class.Protection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,7 @@ namespace Bell_Smart_Tools.Source.BSS
             switch (Path[Path.Length - 1])
             {
                 case "bdx":
-                    string[] Data = Protection.ReadBDXFile(FilePath);
+                    string[] Data = Protect.ReadBDXFile(FilePath);
                     StringBuilder sb = new StringBuilder();
                     foreach (string tmp in Data)
                     {
@@ -36,7 +37,7 @@ namespace Bell_Smart_Tools.Source.BSS
                     break;
 
                 case "bd":
-                    txt_Content.Text = Protection.ReadBDFile(FilePath);
+                    txt_Content.Text = Protect.ReadBDFile(FilePath);
                     break;
 
                 default:

@@ -1,4 +1,5 @@
-﻿using BellLib.Data;
+﻿using BellLib.Class.Protection;
+using BellLib.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -463,7 +464,7 @@ namespace BellLib.Class.BSN
         public static bool RegisterFile(BSN_BSL.PACK type, BSN_BSL.KIND kind, string id, string pw, string verid, string basePath, string[] files, string[] server)
         {
             NameValueCollection formData = new NameValueCollection();
-            Protection pro = new Protection();
+            Protect pro = new Protect();
             string serverList = null;
             string fileList = null;
 

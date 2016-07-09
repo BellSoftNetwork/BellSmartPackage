@@ -6,12 +6,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 
-namespace BellLib.Class
+namespace BellLib.Class.Protection
 {
     /// <summary>
     /// 암호화 메서드들의 집합입니다.
     /// </summary>
-    public class Protection
+    public class Protect
     {
         public enum ProtectionType
         {
@@ -233,9 +233,9 @@ namespace BellLib.Class
         /// <returns>암호화된 텍스트</returns>
         public static string WriteBDText(string Text)
         {
-            Protection Pro = new Protection();
+            Protect Pro = new Protect();
             Text += "BELL" + Common.getRandomString(2) + "DATA"; // 원본 텍스트에 10자리의 쓰레기값을 추가함.
-            Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_ENCODE); // 암호화
+            Text = Pro.Base64(Text, Protect.ProtectionType.PROTECTION_ENCODE); // 암호화
             Text += Common.getRandomString(6) + "BELL"; // 암호화된 텍스트에 10자리의 쓰레기값을 추가함.
 
             return Text;
@@ -258,9 +258,9 @@ namespace BellLib.Class
         /// <returns>복호화된 텍스트</returns>
         public static string ReadBDText(string Text)
         {
-            Protection Pro = new Protection();
+            Protect Pro = new Protect();
             Text = Text.Substring(0, Text.Length - 10); // 암호화된 데이터의 끝 10자리 쓰레기값을 제거함.
-            Text = Pro.Base64(Text, Protection.ProtectionType.PROTECTION_DECODE); // 복호화
+            Text = Pro.Base64(Text, Protect.ProtectionType.PROTECTION_DECODE); // 복호화
             Text = Text.Substring(0, Text.Length - 10); // 복호화된 데이터의 끝 10자리 쓰레기값을 제거함.
 
             return Text;

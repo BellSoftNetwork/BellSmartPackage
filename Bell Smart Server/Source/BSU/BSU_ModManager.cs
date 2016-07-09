@@ -10,6 +10,7 @@ using System.IO;
 using BellLib.Class;
 using BellLib.Data;
 using System.Diagnostics;
+using BellLib.Class.Protection;
 
 namespace Bell_Smart_Server.Source.BSU
 {
@@ -598,7 +599,7 @@ namespace Bell_Smart_Server.Source.BSU
             ModUploading(true);
             btn_Mod_Load_Click(sender, e); // 혹시 모르니 리스트 새로고침
             List<string> list = new List<string>();
-            Protection Pro = new Protection();
+            Protect Pro = new Protect();
             string SetVer = txt_Mod_Version.Text; // 업로드시 설정 버전
             string MUID = (string)cb_MUID.SelectedItem; // MUID
             string LocalRoot = (string)llb_Mod_Upload.Tag; // 업로드 루트폴더
@@ -727,7 +728,7 @@ namespace Bell_Smart_Server.Source.BSU
             BaseUploading(true);
             btn_Base_Load_Click(sender, e); // 혹시 모르니 리스트 새로고침
             List<string> list = new List<string>();
-            Protection Pro = new Protection();
+            Protect Pro = new Protect();
             string[] FileArray = lst_Base_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
             string SetVer = txt_Base_Version.Text; // 업로드시 설정버전
             string BUID = (string)cb_BUID.SelectedItem; // BUID
@@ -857,7 +858,7 @@ namespace Bell_Smart_Server.Source.BSU
             List<string> Option = new List<string>();
             List<string> Hash = new List<string>();
             List<string> FileList = new List<string>();
-            Protection Pro = new Protection();
+            Protect Pro = new Protect();
             string SetVer = txt_Option_Version.Text;
             string[] FileArray; // = lst_Option_File.Items.Cast<string>().ToArray(); // 파일 리스트 배열
             string OUID = (string)cb_OUID.SelectedItem; // OUID

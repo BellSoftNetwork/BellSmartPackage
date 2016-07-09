@@ -440,15 +440,19 @@ namespace BellLib.Class.BSN
         /// <summary>
         /// 이름에 맞는 베이스팩 상세정보를 로드합니다.
         /// </summary>
-        /// <param name="name">이름</param>
+        /// <param name="input">이름 또는 id 값</param>
+        /// <param name="FindID">id로 검색할지 여부 (기본 이름검색)</param>
         /// <returns>베이스팩 상세정보</returns>
-        public static BasePack LoadBasePackDetail(string name)
+        public static BasePack LoadBasePackDetail(string input, bool FindID = false)
         {
             NameValueCollection formData = new NameValueCollection();
             List<string> list = new List<string>();
 
             formData["detail"] = "basepack";
-            formData["name"] = name;
+            if (!FindID)
+                formData["name"] = input;
+            else
+                formData["id"] = input;
 
             string data = BSN_Info.SendPOST(BASEURL + "basepack.php", formData);
             BasePack bp = new BasePack();
@@ -458,7 +462,7 @@ namespace BellLib.Class.BSN
             bp.id = Common.getElement(data, "id");
             bp.name = Common.getElement(data, "name");
             bp.mcversion = Common.getElement(data, "mcversion");
-            foreach (string value in LoadPackVersionList(PACK.basepack, name))
+            foreach (string value in LoadPackVersionList(PACK.basepack, bp.name))
                 list.Add(Common.getElement(value, "version"));
             bp.version = list.ToArray();
             try
@@ -732,28 +736,5 @@ namespace BellLib.Class.BSN
         }
 
         #endregion
-
-        public static string ReplaceParameter(string data, string username, string version, string gameDir, string assetsDir, string uuid, string accessToken)
-        {
-            /*
-             * 1.7, 1.9 Common : --username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userType ${user_type}
-             * 
-             * 1.9 : --tweakClass net.minecraftforge.fml.common.launcher.FMLTweaker --versionType Forge
-             * 1.7 : --userProperties ${user_properties} --tweakClass cpw.mods.fml.common.launcher.FMLTweaker
-             */
-            
-            string output = data;
-            string[,] conversion = new string[,]
-            { { "${auth_player_name}", "${version_name}","${game_directory}", "${assets_root}", "${assets_index_name}", "${auth_uuid}", "${auth_access_token}", "${user_type}", "${user_properties}" },
-                                                { username, version, gameDir, assetsDir + "assets", "BSN", uuid, accessToken, "mojang", "{}" } };
-
-            
-            for (int i = 0; i < conversion.Length / 2; i++)
-            {
-                output = output.Replace(conversion[0, i], conversion[1, i]);
-            }
-
-            return output;
-        }
     }
 }

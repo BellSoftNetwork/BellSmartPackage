@@ -1,4 +1,5 @@
 ﻿using BellLib.Class;
+using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
 using System.Collections.Generic;
@@ -121,7 +122,7 @@ namespace Bell_Smart_Tools.Source.BSS
                 }
 
                 string[] Data = { "Runtime|" + SelectType.ToString() };
-                Protection.WriteBDXFile(LocalPath + LocalPathTag + "data.bdx", Data); // 모드팩 버전 데이터 저장
+                Protect.WriteBDXFile(LocalPath + LocalPathTag + "data.bdx", Data); // 모드팩 버전 데이터 저장
 
                 lb_Name.Text = "Installation complete.";
                 Application.DoEvents();

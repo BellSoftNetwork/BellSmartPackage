@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BellLib.Class.Analysis
+namespace BellLib.Class.Protection
 {
-    public class Data
+    public class DataProtect
     {
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace BellLib.Class.Analysis
             string[] DataList;
             try
             {
-                DataList = Protection.ReadBDXFile(Path);
+                DataList = Protect.ReadBDXFile(Path);
             }
             catch
             {
@@ -49,7 +49,7 @@ namespace BellLib.Class.Analysis
             bool insert = false;
             try
             {
-                foreach (string Data in Protection.ReadBDXFile(Path))
+                foreach (string Data in Protect.ReadBDXFile(Path))
                 {
                     string[] temp = Data.Split('|');
                     if (temp[0] == Name)
@@ -66,7 +66,7 @@ namespace BellLib.Class.Analysis
                 list.Add(Name + "|" + Value);
             try
             {
-                Protection.WriteBDXFile(Path, list.ToArray()); // 모든 값 저장
+                Protect.WriteBDXFile(Path, list.ToArray()); // 모든 값 저장
                 return true;
             }
             catch

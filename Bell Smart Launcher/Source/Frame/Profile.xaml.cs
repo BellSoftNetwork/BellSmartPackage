@@ -1,5 +1,6 @@
 ﻿using Bell_Smart_Launcher.Source.Data;
 using BellLib.Class;
+using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (ProfileName == "프로필 선택")
                 return;
             this.ProfileName = ProfileName;
-            string[] Data = Protection.ReadBDXFile(User.BSN_Path + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
+            string[] Data = Protect.ReadBDXFile(DataPath.BSL.Profiles + ProfileName + ".bdx");
 
             txtName.Text = ProfileName;
             foreach (string Value in Data)
@@ -140,8 +141,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             list.Add("PW|" + txtPW.Password);
 
             if (ProfileName != string.Empty)
-                File.Delete(User.BSN_Path + "Data\\BSL\\Profile\\" + ProfileName + ".bdx"); // 열렸던 파일 삭제
-            Protection.WriteBDXFile(User.BSN_Path + "Data\\BSL\\Profile\\" + txtName.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
+                File.Delete(DataPath.BSL.Profiles + ProfileName + ".bdx"); // 열렸던 파일 삭제
+            Protect.WriteBDXFile(DataPath.BSL.Profiles + txtName.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
             ProfileName = txtName.Text;
 
             this.Close();
@@ -151,7 +152,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             if (ProfileName == string.Empty)
                 return;
-            File.Delete(User.BSN_Path + "Data\\BSL\\Profile\\" + ProfileName + ".bdx");
+            File.Delete(DataPath.BSL.Profiles + ProfileName + ".bdx");
             this.Close();
         }
 
