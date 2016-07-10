@@ -198,7 +198,7 @@ namespace BellLib.Class
             }
             catch
             {
-                return null;
+                return data;
             }
         }
     }

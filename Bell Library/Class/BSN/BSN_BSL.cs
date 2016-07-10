@@ -232,11 +232,13 @@ namespace BellLib.Class.BSN
         /// <param name="type">팩 타입</param>
         /// <param name="name">이름</param>
         /// <param name="allState">모든 상태 로드여부</param>
+        /// <param name="LatestOrder">최신버전 순서로 출력 여부</param>
         /// <returns>버전 배열</returns>
-        public static string[] LoadPackVersionList(PACK type, string name, bool allState = false)
+        public static string[] LoadPackVersionList(PACK type, string name, bool allState = false, bool LatestOrder = true)
         {
             NameValueCollection formData = new NameValueCollection();
-            
+            string[] output;
+
             formData["list"] = "version";
             formData["name"] = name;
             formData["type"] = type.ToString();
@@ -244,7 +246,16 @@ namespace BellLib.Class.BSN
                 formData["state"] = "all";
 
             string data = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
-            return Common.getElementArray(data, "ver");
+
+            if (data != string.Empty)
+                output = Common.getElementArray(data, "ver");
+            else
+                return null;
+
+            if (LatestOrder)
+                Array.Reverse(output);
+
+            return output;
         }
 
         /// <summary>
@@ -253,10 +264,12 @@ namespace BellLib.Class.BSN
         /// <param name="type">팩 타입</param>
         /// <param name="name">이름</param>
         /// <param name="state">로드할 상태값</param>
+        /// <param name="LatestOrder">최신버전 순서로 출력 여부</param>
         /// <returns>버전 배열</returns>
-        public static string[] LoadPackVersionList(PACK type, string name, STATE state)
+        public static string[] LoadPackVersionList(PACK type, string name, STATE state, bool LatestOrder = true)
         {
             NameValueCollection formData = new NameValueCollection();
+            string[] output;
 
             formData["list"] = "version";
             formData["name"] = name;
@@ -265,9 +278,14 @@ namespace BellLib.Class.BSN
 
             string data = BSN_Info.SendPOST(BASEURL + "compack.php", formData);
             if (data != string.Empty)
-                return Common.getElementArray(data, "ver");
+                output = Common.getElementArray(data, "ver");
             else
                 return null;
+
+            if (LatestOrder)
+                Array.Reverse(output);
+
+            return output;
         }
 
         /// <summary>
@@ -403,7 +421,7 @@ namespace BellLib.Class.BSN
             mp.version = list.ToArray();
             try
             {
-                mp.latest = mp.version[mp.version.Length - 1];
+                mp.latest = mp.version[0];
             }
             catch
             {
@@ -467,7 +485,7 @@ namespace BellLib.Class.BSN
             bp.version = list.ToArray();
             try
             {
-                bp.latest = bp.version[bp.version.Length - 1];
+                bp.latest = bp.version[0];
             }
             catch
             {
@@ -526,7 +544,7 @@ namespace BellLib.Class.BSN
             res.version = list.ToArray();
             try
             {
-                res.latest = res.version[res.version.Length - 1];
+                res.latest = res.version[0];
             }
             catch
             {
@@ -575,7 +593,7 @@ namespace BellLib.Class.BSN
             run.version = list.ToArray();
             try
             {
-                run.latest = run.version[run.version.Length - 1];
+                run.latest = run.version[0];
             }
             catch
             {

@@ -20,6 +20,7 @@ using System.Diagnostics;
 using Bell_Smart_Launcher.Source.Data;
 using System.Reflection;
 using BellLib.Class.Protection;
+using System.Windows.Threading;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -30,11 +31,12 @@ namespace Bell_Smart_Launcher.Source.Frame
     {
         #region *** FIELD ***
 
-        // 설정 파일 경로
-        //private Process GameProcess = null;
+        private DispatcherTimer tmr_GameCheck;
+        private bool GameNormal;
+
         private Modpack GameInfo;
         private bool noticeLock = true;
-        
+
         #endregion
 
         #region *** INITIALIZE ***
@@ -54,7 +56,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 마지막에 열었던 탭 활성화
             try
             {
-                tc_Main.SelectedIndex = Convert.ToInt32(DataProtect.DataLoad(DataPath.BSL.General , "LastSelectedTab"));
+                tc_Main.SelectedIndex = Convert.ToInt32(DataProtect.DataLoad(DataPath.BSL.General, "LastSelectedTab"));
             }
             catch { }
             ti_Resources.Visibility = Visibility.Collapsed; // 아직 개발되지 않은 영역이므로 임시로 가려둠
@@ -69,6 +71,9 @@ namespace Bell_Smart_Launcher.Source.Frame
             mod_cbProfile.Items.Clear(); // 프로필 리스트 초기화
             mod_cbVersion.Items.Clear(); // 팩 버전 리스트 초기화
             mod_cbFilter.Items.Clear(); // 필터 리스트 초기화
+            mod_btnForceKill.IsEnabled = false;
+
+            tmr_GameCheck = new DispatcherTimer(); // 게임 체크 타이머 초기화
 
             //MAPS
 
@@ -86,7 +91,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Initialize()
         {
             //Common
-            
+
 
             //Individual
             InitNews(); // 뉴스탭 초기화
@@ -102,12 +107,12 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void InitNews()
         {
             //NEWS
-            
-                // 필드
-                List<string> NewsList = new List<string>();
-                StringBuilder Newsfeed = new StringBuilder();
-                string strData;
-                string[] strUnprocessdList;
+
+            // 필드
+            List<string> NewsList = new List<string>();
+            StringBuilder Newsfeed = new StringBuilder();
+            string strData;
+            string[] strUnprocessdList;
 
 
             try
@@ -180,89 +185,28 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private void InitListModpack()
         {
-            Dictionary<string, int> BasicPlan = new Dictionary<string, int>();
-            Dictionary<string, int> PremiumPlan = new Dictionary<string, int>();
-            Dictionary<string, int> PartnerPlan = new Dictionary<string, int>();
-            Dictionary<string, int> BSN_SpecialPlan = new Dictionary<string, int>();
-
             //초기화
             mod_lstPackList.Items.Clear(); // 팩 리스트 초기화!
-            BasicPlan.Clear();
-            PremiumPlan.Clear();
-            PartnerPlan.Clear();
-            BSN_SpecialPlan.Clear();
+            GameInfo = new Modpack();
 
-            // 요금제별 분류
-            foreach (string value in BSN_BSL.LoadPackList(BSN_BSL.PACK.modpack))
-            {
-                switch (Common.getElement(value, "plan"))
-                {
-                    case "0":
-                        BasicPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
-                        break;
+            // 팩 리스트 로드
+            GameInfo.LoadModpackList();
 
-                    case "1":
-                        PremiumPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
-                        break;
+            // 필터 설정
+            GameInfo.SetFilter((Modpack.FILTER)mod_cbFilter.SelectedIndex);
 
-                    case "2":
-                        PartnerPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
-                        break;
+            // 모드팩 리스트 출력
+            foreach (string value in GameInfo.GetModpackList())
+                mod_lstPackList.Items.Add(value);
 
-                    case "10":
-                        BSN_SpecialPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
-                        break;
-
-                    default:
-                        BasicPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
-                        break;
-                }
-            }
-
-            // 최종 리스트 출력
-            object[] plans;
-
-            switch ((string)mod_cbFilter.SelectedItem)
-            {
-                case "All":
-                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan, BasicPlan };
-                    break;
-
-                case "Standard":
-                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan };
-                    break;
-
-                case "BSN_Special":
-                    plans = new object[] { BSN_SpecialPlan };
-                    break;
-
-                case "Partner":
-                    plans = new object[] { PartnerPlan };
-                    break;
-
-                case "Premium":
-                    plans = new object[] { PremiumPlan };
-                    break;
-
-                case "Basic":
-                    plans = new object[] { BasicPlan };
-                    break;
-
-                default:
-                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan };
-                    break;
-            }
-            
-            foreach (Dictionary<string, int> plan in plans)
-            {
-                var plan_desc = from pack in plan orderby pack.Value descending select pack;
-                foreach (var plan_value in plan_desc)
-                    mod_lstPackList.Items.Add(Common.getElement(plan_value.Key, "name"));
-            }
-
-            mod_lstPackList.SelectedItem = DataProtect.DataLoad(DataPath.BSL.Modpacks, "Modpack"); // 마지막에 선택했던 팩 자동선택
+            // 마지막 팩 선택
+            mod_lstPackList.SelectedItem = Modpack.GetLastModpack(); // 마지막에 선택했던 팩 자동선택
             if (mod_lstPackList.SelectedIndex == -1)
                 mod_lstPackList.SelectedIndex = 0;
+
+            // 게임 체크 타이머 설정
+            tmr_GameCheck.Interval = TimeSpan.FromSeconds(5); // 5초간격
+            tmr_GameCheck.Tick += new EventHandler(GameCheck_Tick); // 매 틱마다 GameCheck_Tick 메서드 실행
         }
 
         /// <summary>
@@ -274,7 +218,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 프로필 로드
             mod_cbProfile.Items.Add("Select Profile");
             mod_cbProfile.Items.Add("Create Profile");
-            
+
             ProfileLoad(); // 프로필 리스트 로드
 
             // 익스팬더 설정
@@ -284,21 +228,18 @@ namespace Bell_Smart_Launcher.Source.Frame
                 mod_expanderDetail.IsExpanded = false;
 
             // 필터 추가
-            mod_cbFilter.Items.Add("All");
-            mod_cbFilter.Items.Add("Standard");
+
+            mod_cbFilter.Items.Add(Modpack.FILTER.All.ToString());
+            mod_cbFilter.Items.Add(Modpack.FILTER.Standard.ToString());
             /*mod_cbFilter.Items.Add("Installed");
             mod_cbFilter.Items.Add("Not Install");*/
-            /*mod_cbFilter.Items.Add("BSN_Special");
-            mod_cbFilter.Items.Add("Partner");
-            mod_cbFilter.Items.Add("Premium");
-            mod_cbFilter.Items.Add("Basic");*/
 
-            mod_cbFilter.SelectedItem = DataProtect.DataLoad(DataPath.BSL.Modpacks, "Filter"); // 마지막에 선택한 필터 자동선택
+            mod_cbFilter.SelectedItem = Modpack.GetLastFilter(); // 마지막에 선택한 필터 자동선택
             if (mod_cbFilter.SelectedIndex == -1)
                 mod_cbFilter.SelectedIndex = 1; // 기본값 Standard로 설정
 
             // 모드팩 리스트 로드
-            InitListModpack();
+            //InitListModpack(); // 필터 초기화하면서 이미 모드팩리스트 로드됐음. 중복 로드
         }
 
         /// <summary>
@@ -330,6 +271,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             gen_cbLanguage.SelectedIndex = 0;
 
             game_sdJAVA.Maximum = mi.Total_Physical_GB;
+
+            gen_lbBSLVer.Content = Deploy.CurrentVersion.ToString();
 
             SettingLoad();
 
@@ -365,18 +308,115 @@ namespace Bell_Smart_Launcher.Source.Frame
 
 
         #region *** NEWS ***
-        
+
 
         #endregion
 
         #region *** MODPACKS ***
 
         #region ** GAME **
-        
+
+        /// <summary>
+        /// 게임 관리 시스템
+        /// </summary>
+        private void GameCheck_Tick(object sender, EventArgs e)
+        {
+            if (GameInfo.Feasibility())
+            {
+                // 게임 실행가능
+                // 게임 실행하자마자 첫 타이머틱에 자바 프로세스가 종료되어있으면 결점 확인 진행
+                tmr_GameCheck.Stop(); // 타이머 중단 안하면 계속 오류나니까 중단
+                mod_btnForceKill.IsEnabled = false; // 게임이 이미 종료됐으므로 강제종료 비활성화
+
+                if (!GameNormal)
+                {
+                    // 게임 실행 직후 종료됨. 자바 경로에 문제있는것으로 판단.
+                    // *** 결점 확인 진행 ***
+                    if (Game.AutoControl && Game.JAVA_Path.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
+                    {
+                        // 오토컨트롤 이용중, 런타임 자바팩을 이용중일경우
+                        if (!JavaIntegrityCheck(true)) // 자바 무결성 체크 자동진행
+                            WPFCom.Message("게임 실행중 예상치 못한 문제가 발생하여 종료된 것을 탐지하였습니다." + Environment.NewLine + "자바 경로 혹은 자바 파일에 문제가 있는지 확인하시기 바랍니다.");
+                        else
+                            WPFCom.Message("자바 무결성 체크결과 문제가 없는 것을 확인하였습니다." + Environment.NewLine + "이 에러메시지가 계속 발생한다면 해당 모드팩 관리자에게 문의하시기 바랍니다.");
+                    }
+                    else
+                    {
+                        if (WPFCom.Message("게임 실행중 예상치 못한 문제가 발생하여 종료된 것을 탐지하였습니다." + Environment.NewLine + "유력한 해결방안인 자바 무결성 체크를 진행하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            game_btnJAVAIntegrity_Click(sender, null); // 자바 무결성 체크 반자동 진행
+                    }
+                }
+                else
+                {
+                    // 게임 플레이 후 크래시발생 또는 사용자가 직접 종료한것으로 판단.
+                    // *** 크래시 리포트 폴더 검사 ***
+                    string[] CrashReports = Directory.GetFiles(GameInfo.GetPath() + "crash-reports\\", "crash-*-client.txt");
+                    string[] Screenshots = Directory.GetFiles(GameInfo.GetPath() + "screenshots\\", "*.png");
+
+                    if (CrashReports.Length > 0)
+                    {
+                        // 크래시 리포트 발견
+                        // 필드
+                        string ReportFile = null;
+
+                        // 크래시 리포트 서버에 전송
+
+
+                        // 크래시 리포트 전송 확인
+                        foreach(string value in CrashReports)
+                        {
+                            try
+                            {
+                                if (value == CrashReports[CrashReports.Length - 1])
+                                {
+                                    ReportFile = value.Replace("client.txt", "client-confirm.txt");
+                                    File.Move(value, ReportFile);
+                                }
+                                else
+                                    File.Move(value, value.Replace("client.txt", "client-ignore.txt"));
+                            }
+                            catch
+                            {
+                                // 파일 이동중 문제 발생
+                            }
+                        }
+
+                        // 크래시 알림
+                        if (WPFCom.Message("게임 실행중 충돌이 발생하였습니다." + Environment.NewLine + "충돌 보고서를 확인하시겠습니까?" + Environment.NewLine + "지속적으로 충돌이 일어날경우 해당 모드팩 관리자에게 문의하시기 바랍니다.", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            try
+                            {
+                                Process.Start(ReportFile);
+                            }
+                            catch
+                            {
+                                WPFCom.Message("충돌 보고서 파일을 실행하는 중 문제가 발생하였습니다." + Environment.NewLine + "보고서 파일 위치 : " + ReportFile);
+                            }
+                        }
+                    }
+
+                    if (Screenshots.Length > 0)
+                    {
+                        // 사용자 직접 종료
+                        // 스크린샷 파일 이동
+
+                        // 스크린샷 파일 이동 알림
+                        //WPFCom.Message("게임 플레이 스크린샷이 발견되었습니다.");
+                    }
+                }
+
+                mod_btnEnjoy.IsEnabled = true; // 에러 처리가 끝났으니 실행가능
+            }
+            else
+                GameNormal = true; // 게임 정상 실행중
+        }
+
+        /// <summary>
+        /// 게임 자동설치 후 실행합니다.
+        /// </summary>
         private void mod_btnEnjoy_Click(object sender, RoutedEventArgs e)
         {
             // 필드
-            Modpack.ERR_LOAD loadResult;
             Modpack.ERR_PATH pathResult;
             Modpack.ERR_LOGIN loginResult;
             Modpack.ERR_LAUNCH launchResult;
@@ -384,22 +424,13 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             string Name = (string)mod_lstPackList.SelectedItem;
             string Version = (string)mod_cbVersion.SelectedItem;
-            string MC_ID = profile.getData(Profile.Data.ID);
-            string MC_PW = profile.getData(Profile.Data.PW);
+            string MC_ID = profile.GetData(Profile.Data.ID);
+            string MC_PW = profile.GetData(Profile.Data.PW);
             bool installModpack;
             bool installBase;
 
-            GameInfo = new Modpack(Name, Version);
-            
-            // 상세정보 로드
-            loadResult = GameInfo.LoadModpackDetail();
-            switch (loadResult)
-            {
-                case Modpack.ERR_LOAD.Version_Load_Fail:
-                    WPFCom.Message("버전정보를 불러오는중 문제가 발생했습니다.");
-
-                    return;
-            }
+            // 중복실행 방지
+            mod_btnEnjoy.IsEnabled = false;
 
             // 경로 설정
             pathResult = GameInfo.SetPath(Game.BSL_Root, Game.JAVA_Path);
@@ -407,14 +438,15 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 case Modpack.ERR_PATH.Not_Load_Data:
                     WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
             }
-
+            
             // 설치여부 검사
             installBase = !GameInfo.GetInstalled(BSN_BSL.PACK.basepack);
             installModpack = !GameInfo.GetInstalled(BSN_BSL.PACK.modpack);
-            
+
             // 미설치시 설치시작
             if (installBase)
             {
@@ -438,6 +470,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!GameInfo.SetOption(Game.Memory_Allocate, Game.JAVA_Parameter, Game.ConsoleRun))
             {
                 WPFCom.Message("옵션 설정에 실패했습니다.");
+                mod_btnEnjoy.IsEnabled = true;
 
                 return;
             }
@@ -446,6 +479,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!GameInfo.SetAccount(MC_ID, MC_PW))
             {
                 WPFCom.Message("계정정보 설정에 실패했습니다.");
+                mod_btnEnjoy.IsEnabled = true;
 
                 return;
             }
@@ -463,17 +497,21 @@ namespace Bell_Smart_Launcher.Source.Frame
             switch (loginResult)
             {
                 case Modpack.ERR_LOGIN.No_Input_ID:
+                    WPFCom.Message("마인크래프트 계정 ID가 설정되지 않아 로그인할 수 없습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LOGIN.No_Input_PW:
+                    WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
             }
 
             // 실행
             launchResult = GameInfo.Launch();
-            switch(launchResult)
+            switch (launchResult)
             {
                 case Modpack.ERR_LAUNCH.Already_Running:
                     WPFCom.Message("게임이 이미 실행중 입니다.");
@@ -482,6 +520,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 case Modpack.ERR_LAUNCH.No_Input_Data:
                     WPFCom.Message("실행에 필요한 데이터가 정상적으로 수집되지 않아 실행할 수 없습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
@@ -491,30 +530,47 @@ namespace Bell_Smart_Launcher.Source.Frame
                         tc_Main.SelectedIndex = 4;
                         game_txtJAVAPath.Focus();
                     }
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LAUNCH.Not_Installed:
                     WPFCom.Message("모드팩이 정상적으로 설치되지 않아, 실행할 수 없습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LAUNCH.Error:
                     WPFCom.Message("예상하지 못한 문제가 발생하여 실행하지 못했습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
 
                     return;
             }
+
+            mod_btnForceKill.IsEnabled = true;
+
+            // 정보 저장
+            GameInfo.SetLastVersion();
+
+            // 게임 관리 프로세스 시작
+            GameNormal = false;
+            tmr_GameCheck.Start();
         }
 
+        /// <summary>
+        /// 실행중인 게임을 강제종료합니다.
+        /// </summary>
         private void mod_btnForceKill_Click(object sender, RoutedEventArgs e)
         {
             if (!GameInfo.Feasibility())
             {
-                GameInfo.Kill();
+                GameInfo.Kill(); // 게임 종료
+                tmr_GameCheck.Stop(); // 게임 관리 프로세스 중단
                 WPFCom.Message("성공적으로 강제종료되었습니다.");
             }
             else
                 WPFCom.Message("실행중인 게임이 없습니다.");
+            mod_btnForceKill.IsEnabled = false;
         }
 
         #endregion
@@ -526,46 +582,48 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private void ProfileLoad()
         {
-            mod_cbProfile.Items.Clear(); // 프로필 리스트 초기화
-            string[] Default = { "프로필 선택", "프로필 생성" };
-            foreach (string value in Default)
-                mod_cbProfile.Items.Add(value); // 기본값 추가
-            //mod_cbProfile.SelectedIndex = 0; // 일단 프로필 선택으로 맞춰둠 (기본값)
-            try
-            {
-                string[] ProfileList = Directory.GetFiles(DataPath.BSL.Profiles, "*.bdx"); // .bd 파일 리스트를 불러옴.
-                foreach (string tmp in ProfileList)
-                    mod_cbProfile.Items.Add(tmp.Replace(DataPath.BSL.Profiles, string.Empty).Replace(".bdx", string.Empty)); // 프로필 파일을 전부 로드함.
-                mod_cbProfile.SelectedItem = DataProtect.DataLoad(DataPath.BSL.Modpacks, "Profile");
-            }
-            catch (DirectoryNotFoundException)
-            {
-                Directory.CreateDirectory(DataPath.BSL.Profiles);
-            }
+            // 초기화
+            mod_cbProfile.Items.Clear();
+
+            // 로드
+            foreach (string value in Profile.GetProfileList(true))
+                mod_cbProfile.Items.Add(value);
+
+            // 프로필 선택
+            mod_cbProfile.SelectedItem = Profile.GetLastProfile();
+
             if (mod_cbProfile.SelectedIndex == -1)
                 mod_cbProfile.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// 프로필 리스트 변경을 검사 후 선택값을 저장합니다.
+        /// </summary>
         private void mod_cbProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (mod_cbProfile.SelectedIndex == 1)
             {
                 mod_cbProfile.SelectedIndex = 0;
-                Profile Pro = new Profile();
+                ProfileEditor Pro = new ProfileEditor();
                 Pro.ShowDialog();
                 ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
-                if (Pro.getData(Profile.Data.Name) != null) // 프로필 이름이 null이 아니라면, (프로필을 정상적으로 생성했다면,
-                    mod_cbProfile.SelectedItem = Pro.getData(Profile.Data.Name); // 방금 생성한 따끈따끈한 프로필파일을 선택
+
+                if (Pro.GetSaveName() != null) // 프로필 이름이 null이 아니라면, (프로필을 정상적으로 생성했다면,
+                    mod_cbProfile.SelectedItem = Pro.GetSaveName(); // 방금 생성한 따끈따끈한 프로필파일을 선택
             }
+
             if (mod_cbProfile.IsInitialized && mod_cbProfile.SelectedIndex > -1)
-                DataProtect.DataSave(DataPath.BSL.Modpacks, "Profile", (string)mod_cbProfile.SelectedItem); // 선택 프로필이 바뀌었으므로 설정값 저장!
+                Profile.SetLastProfile((string)mod_cbProfile.SelectedItem); // 선택 프로필이 바뀌었으므로 설정값 저장!
         }
 
+        /// <summary>
+        /// 프로필 수정모드로 엽니다.
+        /// </summary>
         private void mod_btnEdit_Click(object sender, RoutedEventArgs e)
         {
             if (mod_cbProfile.SelectedIndex < 2)
                 return;
-            Profile pro = new Profile((string)mod_cbProfile.SelectedItem);
+            ProfileEditor pro = new ProfileEditor((string)mod_cbProfile.SelectedItem);
             pro.ShowDialog();
             ProfileLoad(); // 값이 바뀌었을테니 프로필 다시 로드!
         }
@@ -573,18 +631,21 @@ namespace Bell_Smart_Launcher.Source.Frame
         #endregion
 
         /// <summary>
-        /// 상세정보에 값을 추가합니다.
+        /// 상세정보를 새로고칩니다.
         /// </summary>
-        /// <param name="key">정보 이름</param>
-        /// <param name="value">정보 값</param>
-        /// <param name="InputAfterClear">초기화 후 값 입력 여부</param>
-        private void InputDetail(string key, string value, bool InputAfterClear = false)
+        private void RefreshDetail()
         {
-            if (InputAfterClear)
-                mod_lstDetailList.Items.Clear();
-            mod_lstDetailList.Items.Add(key + " : " + value);
+            // 초기화
+            mod_lstDetailList.Items.Clear();
+
+            // 출력
+            foreach (string value in GameInfo.GetDetailInfo())
+                mod_lstDetailList.Items.Add(value);
         }
 
+        /// <summary>
+        /// 상세정보 리스트를 보여주거나 감춥니다.
+        /// </summary>
         private void Mod_Expand(object sender, RoutedEventArgs e)
         {
             if (!mod_expanderDetail.IsInitialized)
@@ -605,7 +666,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 DataProtect.DataSave(DataPath.BSL.Modpacks, "Expander", "DISABLE");
             }
         }
-        
+
         /// <summary>
         /// 팩 리스트 선택 항목이 변경되었을때
         /// </summary>
@@ -615,73 +676,58 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (mod_lstPackList.SelectedIndex < 0)
                 return;
 
+            // 필드
+            Modpack.ERR_PATH pathResult;
+
             // 초기화
             mod_cbVersion.Items.Clear();
             mod_cbVersion.Items.Add("Latest");
             mod_cbVersion.Items.Add("Recommended");
+            mod_lstDetailList.Items.Clear();
             noticeLock = false;
 
             // 데이터 로드
-            BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail((string)mod_lstPackList.SelectedItem);
+            GameInfo = new Modpack((string)mod_lstPackList.SelectedItem);
+            GameInfo.LoadModpackBase();
 
-            // 상세정보 출력
-            InputDetail("Detail", mp.detail, true); // 상세정보
-            InputDetail("Like", mp.like.ToString()); // 좋아요 개수 표시
-            InputDetail("Recommended", mp.recommended); // 권장버전
-            InputDetail("Latest", mp.latest); // 최신버전
-            InputDetail("Basepack", mp.BaseName); // 베이스팩 이름
-            foreach (BSN_BSL.Manager member in BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, (string)mod_lstPackList.SelectedItem))
-                if (member.permission == "4")
-                    InputDetail("Producer", member.email); // 팩 제작자
-            InputDetail("Made", mp.made); // 생성일
-            InputDetail("Modification", mp.modification); // 마지막 수정일
-            try
+            // 경로 설정
+            pathResult = GameInfo.SetPath(Game.BSL_Root);
+            switch (pathResult)
             {
-                InputDetail("Plan", BSN_BSL.GetPlanName((BSN_BSL.PLAN)Convert.ToInt32(mp.plan))); // 요금제
-            }
-            catch
-            {
-                InputDetail("Plan", BSN_BSL.GetPlanName(BSN_BSL.PLAN.Basic));
+                case Modpack.ERR_PATH.Not_Load_Data:
+                    WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.");
+
+                    return;
             }
 
             // 버전 리스트 로드
-            foreach (string value in BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, (string)mod_lstPackList.SelectedItem))
+            foreach (string value in GameInfo.GetVersionList())
                 mod_cbVersion.Items.Add(Common.getElement(value, "version"));
 
             // 버전 설정
-            if ((string)mod_lstPackList.SelectedItem == DataProtect.DataLoad(DataPath.BSL.Modpacks, "Modpack")) // 마지막에 선택했던 팩 자동선택)
-                mod_cbVersion.SelectedItem = DataProtect.DataLoad(DataPath.BSL.Modpacks, "Version"); // 마지막에 실행했던 버전 자동선택
+            mod_cbVersion.SelectedItem = GameInfo.GetLastVersion(); // 마지막에 실행했던 버전 자동선택
             if (mod_cbVersion.SelectedIndex == -1)
                 mod_cbVersion.SelectedIndex = 1;
 
             // 공지사항 출력
-            try
-            {
-                string strNotice = Common.getStringFromWeb(mp.notice, Encoding.UTF8);
-                string[] strTemp = Common.stringSplit(strNotice, "<article");
-                strNotice = strTemp[1];
-                strTemp = Common.stringSplit(strNotice, "article>");
-                strNotice = "<meta charset=\"utf-8\"><article" + strTemp[0].Replace("target=\"_blank\"", "") + "article >";
-
-                mod_wbNotice.NavigateToString(strNotice);
-            }
-            catch
-            {
-                // 공지사항 로드 에러
-                mod_wbNotice.NavigateToString("<meta charset=\"utf-8\"><strong abp=\"4668\"><span style=\"font-family: 돋움; \"abp=\"4670\"><font color=\"#ff0000\">공지사항이 존재하지 않거나 불러오는 중 문제가 발생하였습니다.</font></span></strong>");
-            }
+            mod_wbNotice.NavigateToString(GameInfo.GetNotice());
 
             // 좋아요 정보 로드
-            mod_lstPackList.Tag = mp.id; // 태그에 팩 id 저장
             mod_LoadLike();
         }
 
+        /// <summary>
+        /// 공지사항 컨트롤에서 페이지가 이동되는것을 막습니다.
+        /// </summary>
         private void mod_wbNotice_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
             if (noticeLock)
                 e.Cancel = true;
         }
 
+        /// <summary>
+        /// 공지사항 로드가 완료되면 페이지 이동을 방지합니다.
+        /// </summary>
         private void mod_wbNotice_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             HideJsScriptErrors((WebBrowser)sender);
@@ -693,43 +739,36 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         private void mod_LoadLike()
         {
-            if (BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
+            if (GameInfo.GetLike())
                 mod_btnLike.Content = "♥";
             else
                 mod_btnLike.Content = "♡";
         }
 
+        /// <summary>
+        /// 모드팩 좋아요 정보를 설정합니다.
+        /// </summary>
         private void mod_btnLike_Click(object sender, RoutedEventArgs e)
         {
-            if (BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
-            {
-                // unlike
-                if (!BSN_BSL.delLikePack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
-                    WPFCom.Message("좋아요 취소에 실패했습니다.");
-            }
-            else
-            {
-                // like
-                if (!BSN_BSL.setLikePack(BSN_BSL.PACK.modpack, (string)mod_lstPackList.Tag))
-                    WPFCom.Message("좋아요 등록에 실패했습니다.");
-            }
+            if (!GameInfo.SetLike(!GameInfo.GetLike())) // 좋아요 설정 반전
+                WPFCom.Message("좋아요 설정에 실패했습니다.");
 
             mod_LoadLike(); // 새로고침
+            RefreshDetail(); // 상세정보 로드
         }
 
+        /// <summary>
+        /// 모드팩 설정창을 엽니다.
+        /// </summary>
         private void mod_btnPackSetting_Click(object sender, RoutedEventArgs e)
         {
             PackSetting packSet = new PackSetting();
             packSet.ShowDialog(); // 세팅탭 오픈
         }
 
-        private void mod_btnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            PreInitialize();
-            Initialize();
-            WPFCom.Message("런처 초기화에 성공하였습니다.");
-        }
-
+        /// <summary>
+        /// 선택한 버전으로 나머지 상세정보를 로드합니다.
+        /// </summary>
         private void mod_cbVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!mod_cbVersion.IsInitialized) // 초기화 되지 않았으면 중단
@@ -737,65 +776,43 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             string modName = (string)mod_lstPackList.SelectedItem;
             string modVer = (string)mod_cbVersion.SelectedItem;
-            string modVerid = null;
-            string baseVerid = null;
-            string baseVer = null;
+            Modpack.ERR_LOAD loadResult;
 
             // 필드 검사
-            if (modName == string.Empty || modVer == string.Empty)
+            if (modName == null || modVer == null)
                 return;
 
-            // 상세 정보 로드
-            string[] verList = BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, modName, BSN_BSL.STATE.ACTIVATE); // 모드팩 버전 리스트
-            BSN_BSL.ModPack mp = BSN_BSL.LoadModPackDetail(modName); // 모드팩 정보 로드
+            // 초기화
+            mod_lstDetailList.Items.Clear();
 
-            // 버전정보 검증
-            if (modVer == "Recommended") // 권장버전을 선택했을경우,
-                modVer = mp.recommended; // 공식 권장버전을 대입
-            try
+            // 로드
+            GameInfo.SetVersion(modVer); // 선택한 버전 설정
+            loadResult = GameInfo.LoadModpackDetail(false); // 상세정보 로드
+
+            switch (loadResult)
             {
-                foreach (string verData in verList)
-                {
-                    if (modVer == "Latest") // 선택한 버전이 최신버전일경우,
-                        if (modVerid == null) // 버전id 설정이 안되어있을경우 (foreach 처음 진입일경우)
-                            modVer = Common.getElement(verData, "version"); // 최신버전값을 넣어준다.
-                    if (modVer == Common.getElement(verData, "version")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
-                        modVerid = Common.getElement(verData, ("id")); // 해당 버전 id를 로드한다.
-                }
-            }
-            catch
-            {
-                return;
+                case Modpack.ERR_LOAD.Version_Load_Fail:
+                    WPFCom.Message("버전정보를 불러오는중 문제가 발생했습니다.");
+
+                    return;
+
+                case Modpack.ERR_LOAD.Not_Input_Version:
+                    WPFCom.Message("버전정보가 설정되지 않았습니다.");
+
+                    return;
             }
 
-            // 데이터 유효성 검증
-            if (modVerid == null) // 예상치 못한 오류로 모드 버전 id를 받지 못하였을경우 실행 중단
-                return;
-
-            // 선행 로드가 끝난 후 추가정보 로드
-            string modVerData = BSN_BSL.LoadVersionDetail(BSN_BSL.PACK.modpack, modVerid); // 모드팩 버전 상세정보 로드
-            baseVerid = Common.getElement(modVerData, "basevid"); // 베이스팩 버전id
-            verList = BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.basepack, mp.BaseName, BSN_BSL.STATE.ACTIVATE);
-            foreach (string verData in verList)
-                if (baseVerid == Common.getElement(verData, "id")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
-                    baseVer = Common.getElement(verData, "version"); // 해당 버전 id를 로드한다.
-            
-            // 출력
-            foreach (string value in mod_lstDetailList.Items)
-                if (value.Contains("Basepack : "))
-                {
-                    int index = mod_lstDetailList.Items.IndexOf(value) + 1;
-                    mod_lstDetailList.Items.Insert(index, "Basepack Version : " + baseVer);
-
-                    break;
-                }
+            RefreshDetail(); // 상세정보 로드
         }
 
+        /// <summary>
+        /// 필터값을 적용합니다.
+        /// </summary>
         private void mod_cbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!mod_cbFilter.IsInitialized || mod_cbFilter.SelectedIndex == -1)
                 return;
-            DataProtect.DataSave(DataPath.BSL.Modpacks, "Filter", (string)mod_cbFilter.SelectedItem); // 필터 설정값 저장
+            Modpack.SetLastFilter((string)mod_cbFilter.SelectedItem); // 필터 설정값 저장
             InitListModpack(); // 모드팩 리스트 다시 로드
         }
 
@@ -976,7 +993,10 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             return true;
         }
-        
+
+        /// <summary>
+        /// 할당한 자바 용량이 몇GB인지 보여줍니다.
+        /// </summary>
         private void game_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!game_sdJAVA.IsInitialized)
@@ -984,21 +1004,46 @@ namespace Bell_Smart_Launcher.Source.Frame
             game_lbRAM.Content = game_sdJAVA.Value + " GB";
         }
 
+        /// <summary>
+        /// 일반 설정 저장
+        /// </summary>
         private void gen_btnSave_Click(object sender, RoutedEventArgs e)
         {
             SaveGeneral();
             WPFCom.Message("일반설정 저장에 성공하였습니다.");
         }
 
+        /// <summary>
+        /// 게임 설정 저장
+        /// </summary>
         private void game_btnSave_Click(object sender, RoutedEventArgs e)
         {
             SaveGame();
             WPFCom.Message("게임설정 저장에 성공하였습니다.");
         }
 
+        /// <summary>
+        /// 자바 유효성 검증을 시행합니다.
+        /// </summary>
         private void game_btnJAVAIntegrity_Click(object sender, RoutedEventArgs e)
         {
-            if (game_txtJAVAPath.Text.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
+            if (Game.JAVA_Path.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
+            {
+                if (!JavaIntegrityCheck())
+                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.");
+            }
+            else
+                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.");
+        }
+
+        /// <summary>
+        /// 런타임 자바팩 무결성검증을 시행합니다.
+        /// </summary>
+        /// <param name="AutoControl">자동제어 사용여부 (사용시 메시지박스 출력 안함)</param>
+        /// <returns>정상설치 여부</returns>
+        private bool JavaIntegrityCheck(bool AutoControl = false)
+        {
+            if (Game.JAVA_Path.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
             {
                 string runtimeVerid = null;
                 string runtimeName = "Java";
@@ -1016,7 +1061,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 foreach (BSN_BSL.Install value in runtimeInstall)
                 {
-                    string localURL = game_txtJAVAPath.Text.Remove(game_txtJAVAPath.Text.Length - 3) + value.url;
+                    string localURL = Game.JAVA_Path.Remove(Game.JAVA_Path.Length - 3) + value.url;
                     if (value.hash != pro.MD5Hash(localURL))
                         failFile.Add(value.url);
                 }
@@ -1031,15 +1076,22 @@ namespace Bell_Smart_Launcher.Source.Frame
                         else
                             sb.Append(value + ", ");
                     }
-                    WPFCom.Message("런타임팩에 문제가 발생하였습니다." + Environment.NewLine + "설치되지 않았거나 변경된 파일 : " + Environment.NewLine + sb);
-                    if (WPFCom.Message("런타임 자바를 재설치 하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        InstallJava(game_txtJAVAPath.Text);
+                    if (!AutoControl)
+                    {
+                        WPFCom.Message("런타임팩에 문제가 발생하였습니다." + Environment.NewLine + "설치되지 않았거나 변경된 파일 : " + Environment.NewLine + sb);
+                        if (WPFCom.Message("런타임 자바를 재설치 하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            InstallJava(Game.JAVA_Path);
+                    }
+                    else
+                        InstallJava(Game.JAVA_Path);
+
+                    return false; // 결점 확인 비정상 설치로 반환
                 }
-                else
-                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.");
+
+                return true; // 결점 없음 정상설치
             }
             else
-                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.");
+                return false; // 런타임팩 아님
         }
 
         private void gen_btnDebugger_Click(object sender, RoutedEventArgs e)

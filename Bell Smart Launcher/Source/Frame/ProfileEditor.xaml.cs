@@ -1,5 +1,6 @@
 ﻿using Bell_Smart_Launcher.Source.Data;
 using BellLib.Class;
+using BellLib.Class.Minecraft;
 using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
@@ -21,85 +22,50 @@ namespace Bell_Smart_Launcher.Source.Frame
     /// <summary>
     /// Profile.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Profile : Window
+    public partial class ProfileEditor : Window
     {
-        private string ProfileName;
+        // 필드
+        Profile profile;
+
 
         /// <summary>
         /// 새 프로필을 생성합니다.
         /// </summary>
-        public Profile()
+        public ProfileEditor()
         {
             InitializeComponent();
+
+            if (profile == null)
+                profile = new Profile(null);
         }
 
         /// <summary>
         /// 프로필 에디터를 선택한 프로필파일로 초기화합니다.
         /// </summary>
         /// <param name="ProfileName">프로필 이름</param>
-        public Profile(string ProfileName)
+        public ProfileEditor(string ProfileName) : this()
         {
-            InitializeComponent();
+            // 필드 검사
             if (ProfileName == "프로필 선택")
                 return;
-            this.ProfileName = ProfileName;
-            string[] Data = Protect.ReadBDXFile(DataPath.BSL.Profiles + ProfileName + ".bdx");
 
-            txtName.Text = ProfileName;
-            foreach (string Value in Data)
-            {
-                string[] tmp = Value.Split('|');
-                switch (tmp[0])
-                {
-                    case "ID":
-                        txtID.Text = tmp[1];
-                        break;
+            // 초기화
+            profile = new Profile(ProfileName);
 
-                    case "PW":
-                        txtPW.Password = tmp[1];
-                        cbSavePW.IsChecked = true;
-                        if (txtPW.Password == string.Empty)
-                            cbSavePW.IsChecked = false;
-                        break;
-                }
-            }
+            txtName.Text = profile.GetData(Profile.Data.Name);
+            txtID.Text = profile.GetData(Profile.Data.ID);
+            txtPW.Password = profile.GetData(Profile.Data.PW);
+            if (txtPW.Password == string.Empty)
+                cbSavePW.IsChecked = false;
         }
 
         /// <summary>
-        /// 프로필 데이터 종류 리스트
+        /// 방금 저장한 프로필 이름을 반환합니다.
         /// </summary>
-        public enum Data
+        /// <returns>프로필 이름</returns>
+        public string GetSaveName()
         {
-            Name,
-            ID,
-            PW
-        }
-
-        /// <summary>
-        /// 프로필 데이터를 가져옵니다.
-        /// </summary>
-        /// <param name="Value">반환할 프로필 데이터 값</param>
-        /// <returns>프로필 데이터</returns>
-        public string getData(Data Value)
-        {
-            string strTemp = string.Empty;
-
-            switch (Value)
-            {
-                case Data.Name:
-                    strTemp = ProfileName;
-                    break;
-
-                case Data.ID:
-                    strTemp = txtID.Text;
-                    break;
-
-                case Data.PW:
-                    strTemp = txtPW.Password;
-                    break;
-            }
-
-            return strTemp;
+            return profile.GetData(Profile.Data.Name);
         }
 
         private void cb_SavePW_CheckedChanged(object sender, RoutedEventArgs e)
@@ -135,24 +101,17 @@ namespace Bell_Smart_Launcher.Source.Frame
             }
 
             // 저장
-            list.Clear(); // 위에서 한번 썼으니 초기화!
-
-            list.Add("ID|" + txtID.Text);
-            list.Add("PW|" + txtPW.Password);
-
-            if (ProfileName != string.Empty)
-                File.Delete(DataPath.BSL.Profiles + ProfileName + ".bdx"); // 열렸던 파일 삭제
-            Protect.WriteBDXFile(DataPath.BSL.Profiles + txtName.Text + ".bdx", list.ToArray()); // 프로필 파일 저장
-            ProfileName = txtName.Text;
-
+            profile.RemoveData();
+            profile.SetData(txtName.Text, txtID.Text, txtPW.Password);
+            profile.Save();
+            
             this.Close();
         }
 
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
-            if (ProfileName == string.Empty)
-                return;
-            File.Delete(DataPath.BSL.Profiles + ProfileName + ".bdx");
+            profile.RemoveData();
+
             this.Close();
         }
 

@@ -40,7 +40,6 @@
                     <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="461,-0.04,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click" HorizontalAlignment="Left" Width="139"/>
                     <Button x:Name="mod_btnForceKill" Content="Force Kill" HorizontalAlignment="Left" Margin="698.186,378.96,0,0" VerticalAlignment="Top" Width="65.814" Click="mod_btnForceKill_Click"/>
                     <Button x:Name="mod_btnLike" Content="♡" HorizontalAlignment="Left" Margin="605,378.96,0,0" VerticalAlignment="Top" Width="38" Click="mod_btnLike_Click"/>
-                    <Button x:Name="mod_btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="155,0,0,0" VerticalAlignment="Top" Width="75" Click="mod_btnRefresh_Click" Height="21.96"/>
                     <ComboBox x:Name="mod_cbFilter" Margin="605,0.04,0,0" VerticalAlignment="Top" SelectionChanged="mod_cbFilter_SelectionChanged" SelectedIndex="0">
                         <ComboBoxItem Content="Standard"/>
                     </ComboBox>
@@ -70,6 +69,8 @@
                             <Button x:Name="gen_btnSave" Content="저장" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="gen_btnSave_Click"/>
                             <Button x:Name="gen_btnDebugger" Content="Debugger" HorizontalAlignment="Left" Margin="0,124.077,0,0" VerticalAlignment="Top" Width="83.577" Click="gen_btnDebugger_Click"/>
                             <Button x:Name="gen_btnCancel" Content="취소" HorizontalAlignment="Right" Margin="0,0,80,0" VerticalAlignment="Bottom" Width="75" Click="gen_btnCancel_Click"/>
+                            <Label Content="프로그램 버전 :" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,280,0"/>
+                            <Label x:Name="gen_lbBSLVer" Content="0.0.0.00" HorizontalAlignment="Right" VerticalAlignment="Top" Width="275"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="set_gbGame" Header="게임" Height="197.447" VerticalAlignment="Bottom">

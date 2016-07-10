@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using BellLib.Class.Protection;
+using System.Windows.Controls;
 
 namespace BellLib.Class.Minecraft
 {
@@ -15,15 +16,32 @@ namespace BellLib.Class.Minecraft
         #region *** FIELD ***
         
         /// <summary>
+        /// 모드팩 리스트 집합
+        /// </summary>
+        private class ModpackList
+        {
+            public string[] list;
+            public string[] filteredList;
+            public FILTER filter;
+        }
+
+        /// <summary>
         /// 모드팩정보 집합
         /// </summary>
         private class ModpackInfo
         {
             public BSN_BSL.ModPack modpack;
-
+            
             public string Name;
             public string Version;
+            public string ConvertedVersion;
             public string VersionID;
+            public bool? Like;
+
+
+            public BSN_BSL.Manager[] ManagerList;
+
+            public string[] VersionList;
         }
 
         /// <summary>
@@ -102,7 +120,8 @@ namespace BellLib.Class.Minecraft
         private bool ExceptionThrow;
 
         private Process GameProcess;
-        
+
+        private ModpackList ml;
         private ModpackInfo mi;
         private BaseInfo bi;
         private Path path;
@@ -110,19 +129,7 @@ namespace BellLib.Class.Minecraft
         private Account account;
         private Install install;
 
-        //private Pack pack;
-
         #endregion
-
-        /*public class Pack
-        {
-            public string Name { get; set; }
-            public string Version { get; set; }
-            public string Version_ID { get; set; }
-            public string Base_Version_ID { get; set; }
-            public string Path_Base { get; set; }
-            public string Path_Modpack { get; set; }
-        }*/
 
         #region *** ERROR CODE ***
 
@@ -140,6 +147,7 @@ namespace BellLib.Class.Minecraft
         {
             Success = 0,
             Version_Load_Fail,
+            Not_Input_Version,
             Error
         }
 
@@ -161,26 +169,55 @@ namespace BellLib.Class.Minecraft
 
         #endregion
 
+        #region *** CATEGORY ***
+
+        public enum FILTER
+        {
+            All,
+            Standard
+        }
+
+        #endregion
+
         #region *** 생성자 ***
 
         /// <summary>
-        /// 모드팩 사용준비를 위한 최소한의 초기화
-        /// 사용방법 : LoadModpackDetail -> SetPath -> SetOption -> SetAccount -> Login -> Launch
+        /// 모드팩 리스트 정보를 얻기 위한 최소한의 초기화
         /// </summary>
-        /// <param name="Name">모드팩 이름</param>
-        /// <param name="Version">모드팩 버전</param>
-        public Modpack(string Name, string Version, bool ExceptionThrow = false)
+        /// <param name="ExceptionThrow"></param>
+        public Modpack(bool ExceptionThrow = false)
         {
+            ml = new ModpackList();
             mi = new ModpackInfo();
             bi = new BaseInfo();
             path = new Path();
             option = new Option();
             account = new Account();
             install = new Install();
-
-            mi.Name = Name;
-            mi.Version = Version;
+            
             this.ExceptionThrow = ExceptionThrow;
+        }
+
+        /// <summary>
+        /// 모드팩 사용준비를 위한 최소한의 초기화
+        /// </summary>
+        /// <param name="Name">모드팩 이름</param>
+        /// <param name="ExceptionThrow">예외 던지기 여부</param>
+        public Modpack(string Name, bool ExceptionThrow = false) : this(ExceptionThrow)
+        {
+            mi.Name = Name;
+        }
+
+        /// <summary>
+        /// 모드팩 사용준비를 위한 초기화
+        /// 사용방법 : LoadModpackDetail -> SetPath -> SetOption -> SetAccount -> Login -> Launch
+        /// </summary>
+        /// <param name="Name">모드팩 이름</param>
+        /// <param name="Version">모드팩 버전</param>
+        /// <param name="ExceptionThrow">예외 던지기 여부</param>
+        public Modpack(string Name, string Version, bool ExceptionThrow = false) : this(Name, ExceptionThrow)
+        {
+            mi.Version = Version;
         }
 
         #endregion
@@ -191,33 +228,62 @@ namespace BellLib.Class.Minecraft
         #region ** LOAD **
 
         /// <summary>
+        /// 모드팩 리스트를 로드합니다.
+        /// </summary>
+        /// <returns>로드 에러코드</returns>
+        public ERR_LOAD LoadModpackList()
+        {
+            ml.list = BSN_BSL.LoadPackList(BSN_BSL.PACK.modpack);
+
+            return ERR_LOAD.Success;
+        }
+
+        /// <summary>
+        /// 모드팩 기본정보를 로드합니다.
+        /// </summary>
+        /// <returns>로드 에러코드</returns>
+        public ERR_LOAD LoadModpackBase()
+        {
+            // 필드
+
+
+            // 로드
+            mi.VersionList = BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, mi.Name, BSN_BSL.STATE.ACTIVATE); // 모드팩 버전 리스트
+            mi.modpack = BSN_BSL.LoadModPackDetail(mi.Name); // 모드팩 정보 로드
+            mi.ManagerList = BSN_BSL.LoadPackManager(BSN_BSL.PACK.modpack, mi.Name); // 모드팩 매니저 리스트 로드
+
+            return ERR_LOAD.Success;
+        }
+
+        /// <summary>
         /// 모드팩 상세정보를 로드합니다.
         /// </summary>
         /// <returns>로드 에러코드</returns>
-        public ERR_LOAD LoadModpackDetail()
+        public ERR_LOAD LoadModpackDetail(bool loadBase = true)
         {
+            if (loadBase)
+                LoadModpackBase();
+
+            if (mi.Version == string.Empty) // 버전정보가 없으면 상세정보 로드 불가
+                return ERR_LOAD.Not_Input_Version;
+
             // 필드
-            string[] verList;
             string modVerData, baseVerData;
-
-            // 로드
-            verList = BSN_BSL.LoadPackVersionList(BSN_BSL.PACK.modpack, mi.Name, BSN_BSL.STATE.ACTIVATE); // 모드팩 버전 리스트
-            mi.modpack = BSN_BSL.LoadModPackDetail(mi.Name); // 모드팩 정보 로드
-
+            
             // 버전정보 검증
-            if (mi.Version == "Recommended") // 권장버전을 선택했을경우,
-                mi.Version = mi.modpack.recommended; // 공식 권장버전을 대입
-            foreach (string verData in verList)
-            {
-                if (mi.Version == "Latest") // 선택한 버전이 최신버전일경우,
-                    if (mi.VersionID == null) // 버전id 설정이 안되어있을경우 (foreach 처음 진입일경우)
-                        mi.Version = Common.getElement(verData, "version"); // 최신버전값을 넣어준다.
-                if (mi.Version == Common.getElement(verData, "version")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
+            mi.ConvertedVersion = mi.Version; // 변환할 버전값을 넣음
+            if (mi.ConvertedVersion == "Recommended") // 권장버전을 선택했을경우,
+                mi.ConvertedVersion = mi.modpack.recommended; // 공식 권장버전을 대입
+            if (mi.ConvertedVersion == "Latest") // 최신버전을 선택했을경우,
+                mi.ConvertedVersion = mi.modpack.latest; // 공식 최신버전을 대입
+
+            foreach (string verData in mi.VersionList)
+                if (mi.ConvertedVersion == Common.getElement(verData, "version")) // 루프를 돌다가 선택버전과 서버버전이 일치할경우,
                 {
                     mi.VersionID = Common.getElement(verData, ("id")); // 해당 버전 id를 로드한다.
+
                     break; // 원하는걸 구했으니 빠져나온다
                 }
-            }
 
             // 데이터 유효성 검증
             if (mi.VersionID == null) // 예상치 못한 오류로 모드 버전 id를 받지 못하였을경우 실행 중단
@@ -232,12 +298,312 @@ namespace BellLib.Class.Minecraft
             bi.basepack = BSN_BSL.LoadBasePackDetail(mi.modpack.baseid, true);
             bi.Name = bi.basepack.name;
 
+            mi.Like = BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, mi.modpack.id); // 모드팩 좋아요 정보 로드
+            
+
             return ERR_LOAD.Success;
         }
 
         #endregion
-        
+
+        #region ** GET **
+
+        /// <summary>
+        /// 마지막에 선택한 모드팩 이름을 반환합니다.
+        /// </summary>
+        /// <returns>모드팩 이름</returns>
+        public static string GetLastModpack()
+        {
+            return DataProtect.DataLoad(DataPath.BSL.Modpacks, "Modpack"); // 마지막에 선택했던 팩
+        }
+
+        /// <summary>
+        /// 마지막에 선택한 필터 이름을 반환합니다.
+        /// </summary>
+        /// <returns>필터 이름</returns>
+        public static string GetLastFilter()
+        {
+            return DataProtect.DataLoad(DataPath.BSL.Modpacks, "Filter");
+        }
+
+        /// <summary>
+        /// 마지막에 실행한 버전을 가져옵니다.
+        /// </summary>
+        /// <returns>모드팩 버전</returns>
+        public string GetLastVersion()
+        {
+            if (path.ModPack == null)
+                if (ExceptionThrow)
+                    throw new Exception("경로 설정 안됨");
+
+            return DataProtect.DataLoad(path.ModPack + "data.bdx", "LastVersion");
+        }
+
+        /// <summary>
+        /// 필터링된 모드팩 리스트를 반환합니다.
+        /// </summary>
+        /// <returns>모드팩 리스트</returns>
+        public string[] GetModpackList()
+        {
+            if (ExceptionThrow)
+                if (ml.filteredList == null)
+                    throw new Exception("리스트가 필터링되지 않음.");
+
+            return ml.filteredList;
+        }
+
+        /// <summary>
+        /// 모드팩 경로를 반환합니다.
+        /// </summary>
+        /// <param name="PackPath">팩 폴더 반환여부 (default : 버전 폴더)</param>
+        /// <returns>경로</returns>
+        public string GetPath(bool PackPath = false)
+        {
+            if (PackPath)
+                return path.ModPack;
+            else
+                return path.ModpackVersion;
+        }
+
+        /// <summary>
+        /// 현재 모드팩 좋아요 여부를 반환합니다.
+        /// </summary>
+        /// <returns>좋아요 여부</returns>
+        public bool GetLike()
+        {
+            if (mi.Like == null)
+            {
+                if (ExceptionThrow)
+                    throw new Exception("좋아요 정보가 로드되지 않음.");
+                return false;
+            }
+
+            return (bool)mi.Like;
+        }
+
+        /// <summary>
+        /// 모드팩 공지사항을 가져옵니다.
+        /// </summary>
+        /// <returns>모드팩 공지사항 HTML</returns>
+        public string GetNotice()
+        {
+            try
+            {
+                string strNotice = Common.getStringFromWeb(mi.modpack.notice, Encoding.UTF8);
+                string[] strTemp = Common.stringSplit(strNotice, "<article");
+                strNotice = strTemp[1];
+                strTemp = Common.stringSplit(strNotice, "article>");
+                strNotice = "<meta charset=\"utf-8\"><article" + strTemp[0].Replace("target=\"_blank\"", "") + "article >";
+
+                return strNotice;
+            }
+            catch
+            {
+                // 공지사항 로드 에러
+                return "<meta charset=\"utf-8\"><strong abp=\"4668\"><span style=\"font-family: 돋움; \"abp=\"4670\"><font color=\"#ff0000\">공지사항이 존재하지 않거나 불러오는 중 문제가 발생하였습니다.</font></span></strong>";
+            }
+        }
+
+        /// <summary>
+        /// 버전 리스트를 가져옵니다.
+        /// </summary>
+        /// <returns>버전 리스트</returns>
+        public string[] GetVersionList()
+        {
+            // 유효성 검증
+            if (mi.VersionList == null)
+                if (ExceptionThrow)
+                    throw new Exception("버전 리스트가 로드되지 않음.");
+
+            return mi.VersionList;
+        }
+
+        /// <summary>
+        /// 정리된 모드팩 상세정보를 가져옵니다.
+        /// </summary>
+        /// <returns>모드팩 상세정보 배열</returns>
+        public string[] GetDetailInfo()
+        {
+            // 필드
+            List<string> list = new List<string>();
+
+            // 로드
+            list.Add("Detail : " + mi.modpack.detail);
+            list.Add("Like : " + mi.modpack.like.ToString());
+            list.Add("Recommended : " + mi.modpack.recommended);
+            list.Add("Latest : " + mi.modpack.latest);
+            list.Add("Basepack : " + mi.modpack.BaseName);
+            if (bi.Version != string.Empty)
+                list.Add("Basepack Version : " + bi.Version);
+
+            foreach (BSN_BSL.Manager member in mi.ManagerList)
+                if (member.permission == "4")
+                {
+                    list.Add("Producer : " + member.email); // 팩 제작자
+
+                    break; // 필요한 정보 구했으니 빠져나옴
+                }
+
+            list.Add("Made : " + mi.modpack.made);
+            list.Add("Modification : " + mi.modpack.modification);
+            try
+            {
+                list.Add("Plan : " + BSN_BSL.GetPlanName((BSN_BSL.PLAN)Convert.ToInt32(mi.modpack.plan)));
+            }
+            catch
+            {
+                list.Add("Plan : " + BSN_BSL.GetPlanName(BSN_BSL.PLAN.Basic));
+            }
+
+            return list.ToArray();
+        }
+
+        #endregion
+
         #region ** SET **
+
+        /// <summary>
+        /// 마지막에 선택한 모드팩을 저장합니다.
+        /// </summary>
+        /// <param name="Name">모드팩 이름</param>
+        /// <returns></returns>
+        public static bool SetLastModpack(string Name)
+        {
+            return DataProtect.DataSave(DataPath.BSL.Modpacks, "Modpack", Name);
+        }
+
+        /// <summary>
+        /// 마지막 선택한 필터를 저장합니다.
+        /// </summary>
+        /// <param name="Name">필터 이름</param>
+        /// <returns>저장 성공 여부</returns>
+        public static bool SetLastFilter(string Name)
+        {
+            return DataProtect.DataSave(DataPath.BSL.Modpacks, "Filter", Name);
+        }
+
+        /// <summary>
+        /// 모드팩 마지막 실행 버전을 저장합니다.
+        /// </summary>
+        /// <returns>저장 성공 여부</returns>
+        public bool SetLastVersion()
+        {
+            if (path.ModPack == null)
+                if (ExceptionThrow)
+                    throw new Exception("경로 설정 안됨");
+
+            return DataProtect.DataSave(path.ModPack + "data.bdx", "LastVersion", mi.Version);
+        }
+
+        /// <summary>
+        /// 필터를 설정합니다.
+        /// </summary>
+        /// <param name="filter">필터 옵션</param>
+        /// <returns>성공 여부</returns>
+        public bool SetFilter(FILTER filter)
+        {
+            // 필드
+            Dictionary<string, int> BasicPlan = new Dictionary<string, int>();
+            Dictionary<string, int> PremiumPlan = new Dictionary<string, int>();
+            Dictionary<string, int> PartnerPlan = new Dictionary<string, int>();
+            Dictionary<string, int> BSN_SpecialPlan = new Dictionary<string, int>();
+
+            List<string> list = new List<string>();
+            object[] plans;
+
+            //초기화
+            BasicPlan.Clear();
+            PremiumPlan.Clear();
+            PartnerPlan.Clear();
+            BSN_SpecialPlan.Clear();
+
+            ml.filter = filter;
+
+            // 요금제별 분류
+            foreach (string value in ml.list)
+            {
+                switch (Common.getElement(value, "plan"))
+                {
+                    case "0":
+                        BasicPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
+                        break;
+
+                    case "1":
+                        PremiumPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
+                        break;
+
+                    case "2":
+                        PartnerPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
+                        break;
+
+                    case "10":
+                        BSN_SpecialPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
+                        break;
+
+                    default:
+                        BasicPlan.Add(value, Convert.ToInt32(Common.getElement(value, "like")));
+                        break;
+                }
+            }
+
+            // 필터 옵션 설정
+            switch (ml.filter)
+            {
+                case FILTER.All:
+                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan, BasicPlan };
+                    break;
+
+                case FILTER.Standard:
+                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan };
+                    break;
+
+                /*case "BSN_Special":
+                    plans = new object[] { BSN_SpecialPlan };
+                    break;
+
+                case "Partner":
+                    plans = new object[] { PartnerPlan };
+                    break;
+
+                case "Premium":
+                    plans = new object[] { PremiumPlan };
+                    break;
+
+                case "Basic":
+                    plans = new object[] { BasicPlan };
+                    break;*/
+
+                default:
+                    plans = new object[] { BSN_SpecialPlan, PartnerPlan, PremiumPlan };
+                    break;
+            }
+
+            // 최종 리스트 로드
+            foreach (Dictionary<string, int> plan in plans)
+            {
+                var plan_desc = from pack in plan orderby pack.Value descending select pack;
+
+                foreach (var plan_value in plan_desc)
+                    list.Add(Common.getElement(plan_value.Key, "name"));
+            }
+
+            // 필터링된 리스트
+            ml.filteredList = list.ToArray();
+
+            return true;
+        }
+
+        /// <summary>
+        /// 모드팩 버전을 설정합니다.
+        /// </summary>
+        /// <param name="Version">버전</param>
+        /// <returns>설정 성공여부</returns>
+        public bool SetVersion(string Version)
+        {
+            mi.Version = Version;
+
+            return true;
+        }
 
         /// <summary>
         /// 추가 정보를 설정합니다.
@@ -258,21 +624,37 @@ namespace BellLib.Class.Minecraft
         }
 
         /// <summary>
-        /// 경로를 설정합니다.
+        /// 모드팩 경로를 설정합니다.
+        /// </summary>
+        /// <param name="InstallPath">설치 경로</param>
+        /// <returns>에러코드</returns>
+        public ERR_PATH SetPath(string InstallPath)
+        {
+            if (mi.Name == string.Empty)
+                return ERR_PATH.Not_Load_Data;
+
+            path.Install = InstallPath;
+            path.ModPack = path.Install + "\\ModPack\\" + mi.Name.Replace(" ", "_") + "\\";
+
+            return ERR_PATH.Success;
+        }
+
+        /// <summary>
+        /// 전체 경로를 설정합니다.
         /// </summary>
         /// <param name="InstallPath">설치 경로</param>
         /// <param name="JavaPath">자바 경로</param>
         /// <returns>에러코드</returns>
         public ERR_PATH SetPath(string InstallPath, string JavaPath)
         {
-            if (mi.Name == string.Empty || mi.Version == string.Empty || bi.Name == string.Empty || bi.VersionID == string.Empty)
+            if (mi.Name == string.Empty || mi.ConvertedVersion == string.Empty || bi.Name == string.Empty || bi.VersionID == string.Empty)
                 return ERR_PATH.Not_Load_Data;
 
             path.Install = InstallPath;
             path.BasePack = path.Install + "\\Base\\" + bi.Name.Replace(" ", "_") + "\\";
             path.BaseVersion = path.BasePack + bi.Version.Replace(" ", "_") + "\\";
             path.ModPack = path.Install + "\\ModPack\\" + mi.Name.Replace(" ", "_") + "\\";
-            path.ModpackVersion = path.ModPack + mi.Version.Replace(" ", "_") + "\\";
+            path.ModpackVersion = path.ModPack + mi.ConvertedVersion.Replace(" ", "_") + "\\";
             path.Java = JavaPath + "\\bin\\java.exe";
 
             return ERR_PATH.Success;
@@ -293,6 +675,37 @@ namespace BellLib.Class.Minecraft
             account.MC_PW = MC_PW;
 
             return true;
+        }
+
+        /// <summary>
+        /// 좋아요 정보를 설정합니다.
+        /// </summary>
+        /// <param name="Like">좋아요 등록/제거</param>
+        /// <returns>좋아요 성공 여부</returns>
+        public bool SetLike(bool Like)
+        {
+            if (Like)
+            {
+                if (BSN_BSL.setLikePack(BSN_BSL.PACK.modpack, mi.modpack.id))
+                {
+                    mi.Like = BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, mi.modpack.id); // 모드팩 좋아요 정보 로드
+                    mi.modpack.like += 1;
+
+                    return true;
+                }
+            }
+            else
+            {
+                if (BSN_BSL.delLikePack(BSN_BSL.PACK.modpack, mi.modpack.id))
+                {
+                    mi.Like = BSN_BSL.isLikedPack(BSN_BSL.PACK.modpack, mi.modpack.id); // 모드팩 좋아요 정보 로드
+                    mi.modpack.like -= 1;
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion
@@ -324,7 +737,7 @@ namespace BellLib.Class.Minecraft
             {
                 case BSN_BSL.PACK.modpack:
                     Name = mi.Name;
-                    Version = mi.Version;
+                    Version = mi.ConvertedVersion;
 
                     PathPackData = path.Install + "\\ModPack\\" + Name.Replace(" ", "_") + "\\";
 
@@ -458,7 +871,7 @@ namespace BellLib.Class.Minecraft
                     id.PathVersion = path.ModpackVersion;
                     id.PathPack = path.ModPack;
                     id.Name = mi.Name;
-                    id.Version = mi.Version;
+                    id.Version = mi.ConvertedVersion;
 
                     break;
             }
@@ -492,15 +905,19 @@ namespace BellLib.Class.Minecraft
         public ERR_LAUNCH Launch()
         {
             // 필드 검사
-            if (mi.Version == string.Empty || bi.Version == string.Empty || path.BaseVersion == string.Empty || path.ModpackVersion == string.Empty || account.UUID == string.Empty || account.AccessToken == string.Empty)
+            if (mi.ConvertedVersion == string.Empty || bi.Version == string.Empty || path.BaseVersion == string.Empty || path.ModpackVersion == string.Empty || account.UUID == string.Empty || account.AccessToken == string.Empty)
                 return ERR_LAUNCH.No_Input_Data;
 
             if (!GetInstalled(BSN_BSL.PACK.basepack) || !GetInstalled(BSN_BSL.PACK.modpack))
                 return ERR_LAUNCH.Not_Installed;
 
             if (GameProcess != null)
-                if (!GameProcess.HasExited) // 게임이 실행중이라면,
-                    return ERR_LAUNCH.Already_Running;
+                try
+                {
+                    if (!GameProcess.HasExited) // 게임이 실행중이라면,
+                        return ERR_LAUNCH.Already_Running;
+                }
+                catch { }
 
             try
             {
@@ -537,8 +954,8 @@ namespace BellLib.Class.Minecraft
             finally
             {
                 // 실행 정보 저장
-                DataProtect.DataSave(DataPath.BSL.Modpacks, "Modpack", mi.Name); // 선택 모드팩이 바뀌었으므로 설정값 저장!
-                DataProtect.DataSave(DataPath.BSL.Modpacks, "Version", mi.Version);
+                SetLastModpack(mi.Name); // 선택 모드팩이 바뀌었으므로 설정값 저장!
+                //DataProtect.DataSave(DataPath.BSL.Modpacks, "Version", mi.Version);
             }
 
             return ERR_LAUNCH.Success;
@@ -564,7 +981,7 @@ namespace BellLib.Class.Minecraft
 
             sb.Append(" net.minecraft.launchwrapper.Launch "); // 실행 클래스
 
-            sb.Append(ReplaceParameter(option.BaseParameter, account.NickName, mi.Version, path.ModpackVersion, path.BaseVersion, account.UUID, account.AccessToken));
+            sb.Append(ReplaceParameter(option.BaseParameter, account.NickName, mi.ConvertedVersion, path.ModpackVersion, path.BaseVersion, account.UUID, account.AccessToken));
 
             return sb.ToString();
         }
