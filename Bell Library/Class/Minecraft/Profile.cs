@@ -131,7 +131,7 @@ namespace BellLib.Class.Minecraft
         /// <returns>프로필 데이터</returns>
         public string GetData(Data Value)
         {
-            string strTemp = string.Empty;
+            string strTemp = null;
 
             switch (Value)
             {

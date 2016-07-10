@@ -349,59 +349,80 @@ namespace Bell_Smart_Launcher.Source.Frame
                 else
                 {
                     // 게임 플레이 후 크래시발생 또는 사용자가 직접 종료한것으로 판단.
+                    
+                    // 필드
+                    string[] CrashReports;
+                    string[] Screenshots;
+
                     // *** 크래시 리포트 폴더 검사 ***
-                    string[] CrashReports = Directory.GetFiles(GameInfo.GetPath() + "crash-reports\\", "crash-*-client.txt");
-                    string[] Screenshots = Directory.GetFiles(GameInfo.GetPath() + "screenshots\\", "*.png");
-
-                    if (CrashReports.Length > 0)
+                    try
                     {
-                        // 크래시 리포트 발견
-                        // 필드
-                        string ReportFile = null;
+                        CrashReports = Directory.GetFiles(GameInfo.GetPath() + "crash-reports\\", "crash-*-client.txt");
 
-                        // 크래시 리포트 서버에 전송
-
-
-                        // 크래시 리포트 전송 확인
-                        foreach(string value in CrashReports)
+                        if (CrashReports.Length > 0)
                         {
-                            try
+                            // 크래시 리포트 발견
+                            // 필드
+                            string ReportFile = null;
+
+                            // 크래시 리포트 서버에 전송
+
+
+                            // 크래시 리포트 전송 확인
+                            foreach (string value in CrashReports)
                             {
-                                if (value == CrashReports[CrashReports.Length - 1])
+                                try
                                 {
-                                    ReportFile = value.Replace("client.txt", "client-confirm.txt");
-                                    File.Move(value, ReportFile);
+                                    if (value == CrashReports[CrashReports.Length - 1])
+                                    {
+                                        ReportFile = value.Replace("client.txt", "client-confirm.txt");
+                                        File.Move(value, ReportFile);
+                                    }
+                                    else
+                                        File.Move(value, value.Replace("client.txt", "client-ignore.txt"));
                                 }
-                                else
-                                    File.Move(value, value.Replace("client.txt", "client-ignore.txt"));
+                                catch
+                                {
+                                    // 파일 이동중 문제 발생
+                                }
                             }
-                            catch
-                            {
-                                // 파일 이동중 문제 발생
-                            }
-                        }
 
-                        // 크래시 알림
-                        if (WPFCom.Message("게임 실행중 충돌이 발생하였습니다." + Environment.NewLine + "충돌 보고서를 확인하시겠습니까?" + Environment.NewLine + "지속적으로 충돌이 일어날경우 해당 모드팩 관리자에게 문의하시기 바랍니다.", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        {
-                            try
+                            // 크래시 알림
+                            if (WPFCom.Message("게임 실행중 충돌이 발생하였습니다." + Environment.NewLine + "충돌 보고서를 확인하시겠습니까?" + Environment.NewLine + "지속적으로 충돌이 일어날경우 해당 모드팩 관리자에게 문의하시기 바랍니다.", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
-                                Process.Start(ReportFile);
-                            }
-                            catch
-                            {
-                                WPFCom.Message("충돌 보고서 파일을 실행하는 중 문제가 발생하였습니다." + Environment.NewLine + "보고서 파일 위치 : " + ReportFile);
+                                try
+                                {
+                                    Process.Start(ReportFile);
+                                }
+                                catch
+                                {
+                                    WPFCom.Message("충돌 보고서 파일을 실행하는 중 문제가 발생하였습니다." + Environment.NewLine + "보고서 파일 위치 : " + ReportFile);
+                                }
                             }
                         }
                     }
-
-                    if (Screenshots.Length > 0)
+                    catch
                     {
-                        // 사용자 직접 종료
-                        // 스크린샷 파일 이동
+                        // 크래시 리포트 없음
+                    }
 
-                        // 스크린샷 파일 이동 알림
-                        //WPFCom.Message("게임 플레이 스크린샷이 발견되었습니다.");
+                    // *** 스크린샷 폴더 검사 ***
+                    try
+                    {
+                        Screenshots = Directory.GetFiles(GameInfo.GetPath() + "screenshots\\", "*.png");
+
+                        if (Screenshots.Length > 0)
+                        {
+                            // 사용자 직접 종료
+                            // 스크린샷 파일 이동
+
+                            // 스크린샷 파일 이동 알림
+                            //WPFCom.Message("게임 플레이 스크린샷이 발견되었습니다.");
+                        }
+                    }
+                    catch
+                    {
+                        // 스크린샷 없음
                     }
                 }
 
@@ -484,7 +505,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 return;
             }
 
-            if (MC_PW == string.Empty)
+            if (MC_PW == null)
             {
                 Password pass = new Password();
                 pass.ShowDialog();
@@ -504,6 +525,12 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 case Modpack.ERR_LOGIN.No_Input_PW:
                     WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.");
+                    mod_btnEnjoy.IsEnabled = true;
+
+                    return;
+
+                case Modpack.ERR_LOGIN.Login_Fail:
+                    WPFCom.Message("마인크래프트 로그인에 실패했습니다." + Environment.NewLine + "프로필에 아이디 또는 비밀번호를 정상적으로 저장했는지 확인 해 보시기 바랍니다.");
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
@@ -571,6 +598,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             else
                 WPFCom.Message("실행중인 게임이 없습니다.");
             mod_btnForceKill.IsEnabled = false;
+            mod_btnEnjoy.IsEnabled = true;
         }
 
         #endregion

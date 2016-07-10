@@ -905,7 +905,7 @@ namespace BellLib.Class.Minecraft
         public ERR_LAUNCH Launch()
         {
             // 필드 검사
-            if (mi.ConvertedVersion == string.Empty || bi.Version == string.Empty || path.BaseVersion == string.Empty || path.ModpackVersion == string.Empty || account.UUID == string.Empty || account.AccessToken == string.Empty)
+            if (mi.ConvertedVersion == null || bi.Version == null || path.BaseVersion == null || path.ModpackVersion == null || account.UUID == null || account.AccessToken == null)
                 return ERR_LAUNCH.No_Input_Data;
 
             if (!GetInstalled(BSN_BSL.PACK.basepack) || !GetInstalled(BSN_BSL.PACK.modpack))
@@ -1065,7 +1065,7 @@ namespace BellLib.Class.Minecraft
         public ERR_LOGIN Login(string Password = null)
         {
             // 유효성 검사
-            if (account.MC_ID == string.Empty) // ID 정보가 저장되어있지 않으면,
+            if (account.MC_ID == string.Empty || account.MC_ID == null) // ID 정보가 저장되어있지 않으면,
                 return ERR_LOGIN.No_Input_ID; // ID 정보 요청
 
             // 필드
@@ -1074,7 +1074,7 @@ namespace BellLib.Class.Minecraft
             MCLogin.MC_Account MCA;
 
             // 초기화
-            if (account.MC_PW == string.Empty) // 비밀번호 저장을 하지 않았을 경우,
+            if (account.MC_PW == string.Empty || account.MC_PW == null) // 비밀번호 저장을 하지 않았을 경우,
                 if (Password == null) // 비밀번호 값이 없을경우,
                     return ERR_LOGIN.No_Input_PW; // 비밀번호 정보 요청
                 else
