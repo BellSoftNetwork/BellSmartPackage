@@ -11,8 +11,57 @@ namespace Bell_Smart_Launcher.Source.Management
 {
     public class Controller
     {
-        public static int LockFlag;
+        /// <summary>
+        /// 비트 단위로 잠금 여부 설정
+        /// 0000 0000 0000 0000 0000 0000 0000 0000
+        /// ~ 000* : 게임 실행 여부
+        /// ~ 00*0 : 게임 설치중
+        /// ~ 0*00 : 
+        /// </summary>
+        private static int LockFlag;
         private DispatcherTimer tmr_Update = new DispatcherTimer();
+
+        /// <summary>
+        /// 잠금 플래그 설정을 위한 잠금 비트 열거형.
+        /// </summary>
+        public enum LockBit
+        {
+            UnLock = 0x0,
+            AllLock = ~UnLock,
+            Running_Game = 0x1,
+            Install_Game = 0x2,
+            Install_Runtime = 0x4
+        }
+
+        public static void SetLockFlag(LockBit lb, bool Lock = true)
+        {
+            if (Lock)
+            {
+                // 잠금비트 설정
+                LockFlag |= (int)lb; // 락 비트를 OR 연산
+            }
+            else
+            {
+                // 잠금비트 해제
+                LockFlag &= (int)~lb; // 락 비트를 반전시켜서 AND 연산
+            }
+        }
+
+        public static LockBit[] GetLockFlag()
+        {
+            List<LockBit> currentLock = new List<LockBit>();
+            int temp = 1;
+
+            // 한비트씩 이동하면서 AND 연산으로 잠금여부를 가져옴
+            for (int i = 1; i < 32; i++)
+            {
+                if ((temp & LockFlag) == temp)
+                    currentLock.Add((LockBit)temp);
+                temp <<= 1;
+            }
+
+            return currentLock.ToArray();
+        }
 
         /// <summary>
         /// 런처 컨트롤러를 생성합니다.

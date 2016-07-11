@@ -1,4 +1,5 @@
-﻿using BellLib.Class;
+﻿using Bell_Smart_Launcher.Source.Management;
+using BellLib.Class;
 using BellLib.Class.BSN;
 using BellLib.Class.Minecraft;
 using BellLib.Class.Protection;
@@ -81,7 +82,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void SetState(string Log)
         {
             lbLog.Content = Log;
-            WPFCom.DoEvents();
+            Common.DoEvents();
         }
 
         /// <summary>
@@ -92,6 +93,12 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (installing)
                 return;
             installing = true;
+            while (Controller.GetLockFlag().Contains(Controller.LockBit.Install_Game))
+            {
+                SetState("현재 다른 모드팩이 설치중입니다.");
+                Common.Delay(1000);
+            }
+            Controller.SetLockFlag(Controller.LockBit.Install_Game); // 업데이트 잠금
 
             // 기본 필드
             long startTime = DateTime.Now.Ticks; // 시작시간
@@ -158,6 +165,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 팩 상태 저장
             DataProtect.DataSave(install.PathPack + "data.bdx", "State", "Installed");
             DataProtect.DataSave(install.PathVersion + "config.bdx", "State", "Installed");
+            Controller.SetLockFlag(Controller.LockBit.Install_Game, false); // 업데이트 잠금해제
 
             SetState("설치완료");
 
@@ -207,6 +215,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (installing)
                 return;
             installing = true;
+            Controller.SetLockFlag(Controller.LockBit.Install_Runtime); // 업데이트 잠금
 
             // 기본 필드
             long startTime = DateTime.Now.Ticks; // 시작시간
@@ -260,6 +269,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 }
             }
             SetState("런타임 설치완료");
+            Controller.SetLockFlag(Controller.LockBit.Install_Runtime, false); // 업데이트 잠금해제
 
             long endTime = DateTime.Now.Ticks; // 종료시간
             long installTime = (endTime - startTime) / 10000000; // 1틱은 천만분의 1초

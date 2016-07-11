@@ -21,6 +21,7 @@ using Bell_Smart_Launcher.Source.Data;
 using System.Reflection;
 using BellLib.Class.Protection;
 using System.Windows.Threading;
+using Bell_Smart_Launcher.Source.Management;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -429,6 +430,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                     }
                 }
 
+                Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                 mod_btnEnjoy.IsEnabled = true; // 에러 처리가 끝났으니 실행가능
             }
             else
@@ -455,6 +457,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             // 중복실행 방지
             mod_btnEnjoy.IsEnabled = false;
+            Controller.SetLockFlag(Controller.LockBit.Running_Game); // 업데이트 잠금
 
             // 경로 설정
             pathResult = GameInfo.SetPath(Game.BSL_Root, Game.JAVA_Path);
@@ -462,6 +465,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 case Modpack.ERR_PATH.Not_Load_Data:
                     WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
@@ -494,6 +498,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!GameInfo.SetOption(Game.Memory_Allocate, Game.JAVA_Parameter, Game.ConsoleRun))
             {
                 WPFCom.Message("옵션 설정에 실패했습니다.");
+                Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                 mod_btnEnjoy.IsEnabled = true;
 
                 return;
@@ -503,6 +508,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!GameInfo.SetAccount(MC_ID, MC_PW))
             {
                 WPFCom.Message("계정정보 설정에 실패했습니다.");
+                Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                 mod_btnEnjoy.IsEnabled = true;
 
                 return;
@@ -522,18 +528,21 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 case Modpack.ERR_LOGIN.No_Input_ID:
                     WPFCom.Message("마인크래프트 계정 ID가 설정되지 않아 로그인할 수 없습니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LOGIN.No_Input_PW:
                     WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LOGIN.Login_Fail:
                     WPFCom.Message("마인크래프트 로그인에 실패했습니다." + Environment.NewLine + "프로필에 아이디 또는 비밀번호를 정상적으로 저장했는지 확인 해 보시기 바랍니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
@@ -550,6 +559,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 case Modpack.ERR_LAUNCH.No_Input_Data:
                     WPFCom.Message("실행에 필요한 데이터가 정상적으로 수집되지 않아 실행할 수 없습니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
@@ -560,18 +570,21 @@ namespace Bell_Smart_Launcher.Source.Frame
                         tc_Main.SelectedIndex = 4;
                         game_txtJAVAPath.Focus();
                     }
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LAUNCH.Not_Installed:
                     WPFCom.Message("모드팩이 정상적으로 설치되지 않아, 실행할 수 없습니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LAUNCH.Error:
                     WPFCom.Message("예상하지 못한 문제가 발생하여 실행하지 못했습니다.");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;

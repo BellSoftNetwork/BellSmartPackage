@@ -44,7 +44,7 @@
                 <Label x:Name="lbUploadURL" Content="C:\BSN\Upload\ModPack\" HorizontalAlignment="Left" Margin="81.066,155.76,0,0" VerticalAlignment="Top"/>
                 <Button x:Name="btnRefresh" Content="업로드 폴더 로드" Margin="0,158.759,0,0" HorizontalAlignment="Right" Width="98.067" Click="btnRefresh_Click" VerticalAlignment="Top"/>
                 <ListBox x:Name="lstFile" Height="76.105" VerticalAlignment="Top" Margin="0,186.72,0,0"/>
-                <ProgressBar x:Name="pbUpload" Height="10.934" VerticalAlignment="Bottom"/>
+                <ProgressBar x:Name="pbUpload" Height="10.934" VerticalAlignment="Bottom" Foreground="#FF063CB0"/>
                 <Button x:Name="btnUpload" Content="업로드" HorizontalAlignment="Right" Margin="0,0,0,15.934" VerticalAlignment="Bottom" Width="75" Click="btnUpload_Click"/>
                 <RadioButton x:Name="rbClient" Content="클라이언트" HorizontalAlignment="Left" Margin="74.066,31.96,0,0" VerticalAlignment="Top" IsChecked="True" Checked="LoadUploadPath"/>
                 <RadioButton x:Name="rbServer" Content="서버" HorizontalAlignment="Left" Margin="158.066,31.96,0,0" VerticalAlignment="Top" Checked="LoadUploadPath"/>
