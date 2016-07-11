@@ -22,6 +22,27 @@ namespace BellLib.Class
     public class Common
     {
         /// <summary>
+        /// WPF 또는 WinForm의 처리되지 않은 UI 작업을 일괄적으로 처리합니다.
+        /// </summary>
+        public static void DoEvents()
+        {
+            if (System.Windows.Application.Current != null)
+            {
+                // WPF
+                System.Windows.Application.Current.Dispatcher.Invoke
+                    (
+                    System.Windows.Threading.DispatcherPriority.Background,
+                    new Action(delegate { })
+                    );
+            }
+            else
+            {
+                // WinForm
+                System.Windows.Forms.Application.DoEvents();
+            }
+        }
+
+        /// <summary>
         /// 해당 웹 텍스트를 전부 가져옵니다.
         /// </summary>
         /// <param name="URL">웹 주소</param>

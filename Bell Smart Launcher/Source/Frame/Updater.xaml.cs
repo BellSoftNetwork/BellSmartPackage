@@ -38,7 +38,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         void ad_UpdateProgressChanged(object sender, DeploymentProgressChangedEventArgs e)
         {
-            String progressText = String.Format("{0:D}MB out of {1:D}MB downloaded - {2:D}% complete", e.BytesCompleted / (1024 << 10), e.BytesTotal / (1024 << 10), e.ProgressPercentage);
+            String progressText = String.Format("총 {0:D}MB 중 {1:D}MB 다운로드됨 - {2:D}% 업데이트 완료", e.BytesTotal / (1024 << 10), e.BytesCompleted / (1024 << 10), e.ProgressPercentage);
             pb_Down.Maximum = (int)e.BytesTotal;
             pb_Down.Value = (int)e.BytesCompleted;
             downloadStatus.Content = progressText;
@@ -62,9 +62,10 @@ namespace Bell_Smart_Launcher.Source.Frame
             WPFCom.End(true);
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_ContentRendered(object sender, EventArgs e)
         {
             BeginUpdate();
+            lbUpdateStatus.Content = Deploy.CurrentVersion + " -> " + Deploy.LatestVersion + " 업데이트 진행중";
         }
     }
 }

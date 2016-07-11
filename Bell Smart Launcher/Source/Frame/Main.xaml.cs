@@ -36,6 +36,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         private Modpack GameInfo;
         private bool noticeLock = true;
+        private bool isAllInit;
 
         #endregion
 
@@ -86,10 +87,12 @@ namespace Bell_Smart_Launcher.Source.Frame
         }
 
         /// <summary>
-        /// 런처창이 로드된 후 사용할 수 있게 초기화합니다.
+        /// 런처창이 로드된 후 사용할 수 있게 모든 기능을 초기화합니다.
         /// </summary>
-        private void Initialize()
+        public void Initialize(bool forceInit = false)
         {
+            if (!forceInit && isAllInit) // 이미 한번 전체 초기화했을때는 다시 초기화하지 않음.
+                return;
             //Common
 
 
@@ -1146,11 +1149,11 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         #region *** MAIN ***
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_ContentRendered(object sender, EventArgs e)
         {
-            Initialize();
+            //Initialize();
         }
-        
+
         private void Window_Closed(object sender, EventArgs e)
         {
             WPFCom.End();

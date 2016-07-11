@@ -11,6 +11,7 @@ namespace Bell_Smart_Launcher.Source.Management
 {
     public class Controller
     {
+        public static int LockFlag;
         private DispatcherTimer tmr_Update = new DispatcherTimer();
 
         /// <summary>
@@ -28,23 +29,21 @@ namespace Bell_Smart_Launcher.Source.Management
         public void Initialize()
         {
             tmr_Update.Start();
-            Update_Tick(null, null);
+            //Update_Tick(null, null);
         }
 
         private int errCount = 0;
         private void Update_Tick(object sender, EventArgs e)
         {
+            if (LockFlag > 0)
+                return;
+
             if (User.BSP_AutoUpdate)
             {
                 try
                 {
-                    if (Deploy.UpdateAvailable())
-                    {
-                        Updater Upd = new Updater();
-                        Upd.Show();
-
+                    if (UpdateCheck())
                         tmr_Update.Stop(); // 업데이트 실행 후 타이머 중단
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -62,6 +61,26 @@ namespace Bell_Smart_Launcher.Source.Management
                 }
                 errCount = 0;
             }
+        }
+
+        public static bool UpdateCheck()
+        {
+            try
+            {
+                if (Deploy.UpdateAvailable())
+                {
+                    Updater Upd = new Updater();
+                    Upd.Show();
+
+                    return true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return false;
         }
     }
 }
