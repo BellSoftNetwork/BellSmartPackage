@@ -106,6 +106,7 @@
                             <Label x:Name="set_lbCurrentVersion" Content="현재버전 : 0.0.0.00" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180"/>
                             <Label x:Name="set_lbLatestVersion" Content="최신버전 : 0.0.0.00" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25.96,0,0" Width="180"/>
                             <Label x:Name="set_lbUpdateLock" Content="업데이트 잠금 : 잠금해제" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,51.92,0,0" Width="180"/>
+                            <Button x:Name="btnUpdate" Content="업데이트" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="180,30.96,0,0" Click="btnUpdate_Click" IsEnabled="False"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

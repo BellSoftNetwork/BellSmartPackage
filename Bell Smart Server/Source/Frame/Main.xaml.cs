@@ -34,6 +34,7 @@ namespace Bell_Smart_Server.Source.Frame
         private DispatcherTimer tmr_ServerControl;
         private Process ServerProc;
         private long StartTime;
+        private bool AutoRestart;
         //private bool listLoading;
 
         /// <summary>
@@ -173,6 +174,13 @@ namespace Bell_Smart_Server.Source.Frame
             ServerProc.ErrorDataReceived += new DataReceivedEventHandler(ServerProc_ErrorDataReceived);
             ServerProc.Exited += new EventHandler(ServerProc_Exited);
 
+            SetState("서버 상세 설정 로드");
+            ServerDetail sd = new ServerDetail((string)cbServer.SelectedItem);
+            if (sd.GetData(ServerDetail.Data.AutoRestart) == "True")
+                AutoRestart = true;
+            else
+                AutoRestart = false;
+
             SetState("서버 가동 시작");
             ServerProc.Start();
             ServerProc.BeginOutputReadLine();
@@ -187,20 +195,40 @@ namespace Bell_Smart_Server.Source.Frame
         }
 
         /// <summary>
-        /// 서버를 종료합니다.
+        /// 서버를 종료합니다
         /// </summary>
-        private void btnStop_Click(object sender, RoutedEventArgs e)
+        /// <returns>종료 성공여부</returns>
+        private bool ServerStop(bool restart = false)
         {
             SendCommand("list");
 
             string players = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
             if (players != "0")
                 if (WPFCom.Message("현재 접속중인 플레이어가 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
-                    return;
+                    return false;
 
+            AutoRestart = restart;
             SetState("서버 종료 요청 전송");
             SendCommand("stop");
             btnForceStop.IsEnabled = true;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 서버를 재시작합니다.
+        /// </summary>
+        private void btnRestart_Click(object sender, RoutedEventArgs e)
+        {
+            ServerStop(true);
+        }
+
+        /// <summary>
+        /// 서버를 종료합니다.
+        /// </summary>
+        private void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            ServerStop();
         }
 
         /// <summary>
@@ -225,23 +253,6 @@ namespace Bell_Smart_Server.Source.Frame
             SetState("서버 저장 요청 전송");
         }
 
-        /// <summary>
-        /// 서버를 재시작합니다.
-        /// </summary>
-        private void btnRestart_Click(object sender, RoutedEventArgs e)
-        {
-            SendCommand("list");
-
-            string players = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
-            if (players != "0")
-                if (WPFCom.Message("현재 접속중인 플레이어가 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
-                    return;
-
-            SetState("서버 중단");
-
-            SetState("서버 가동");
-        }
-
         #region ** EVENT **
 
         /// <summary>
@@ -257,6 +268,14 @@ namespace Bell_Smart_Server.Source.Frame
                 lbPlayers.Content = "접속자 : 0/?";
                 lbTPS.Content = "TPS : ?";
                 Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
+
+                if (AutoRestart)
+                {
+                    SetState("서버 재시작 대기");
+                    Common.DoEvents();
+                    Common.Delay(3000); // 3초 딜레이
+                    btnStart_Click(sender, null);
+                }
             }));
         }
 
@@ -311,6 +330,7 @@ namespace Bell_Smart_Server.Source.Frame
             cbServer.IsEnabled = !State;
             btnEdit.IsEnabled = !State;
             btnStart.IsEnabled = !State;
+            btnServerSetting.IsEnabled = !State;
 
             btnPlayerRefresh.IsEnabled = State;
             btnStop.IsEnabled = State;
@@ -738,7 +758,10 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnServerSetting_Click(object sender, RoutedEventArgs e)
         {
-            ServerSetting ss = new ServerSetting();
+            if (cbServer.SelectedIndex < 2)
+                return;
+
+            ServerSetting ss = new ServerSetting((string)cbServer.SelectedItem);
             ss.ShowDialog();
         }
 
@@ -768,6 +791,9 @@ namespace Bell_Smart_Server.Source.Frame
 
         #region *** SETTING ***
 
+        /// <summary>
+        /// 온라인 데이터를 로드하여 서버와 싱크를 맞춥니다.
+        /// </summary>
         private void Sync_Tick(object sender, EventArgs e)
         {
             try
@@ -776,11 +802,17 @@ namespace Bell_Smart_Server.Source.Frame
                 set_lbUpdateLock.Content = "업데이트 잠금 : " + Controller.GetLockFlag()[0];
 
                 if (Deploy.UpdateAvailable())
-                    set_lbUpdateLock.ToolTip = "최신버전이 발견되었습니다. 업데이트 잠금이 해제되면 자동으로 업데이트 됩니다.";
+                {
+                    set_lbUpdateLock.ToolTip = "최신버전이 발견되었습니다. 업데이트 잠금이 해제되면 업데이트 할 수 있습니다.";
+                    btnUpdate.IsEnabled = false;
+                }
             }
             catch
             {
                 set_lbUpdateLock.Content = "업데이트 잠금 : 잠금해제";
+                
+                if (Deploy.UpdateAvailable())
+                    btnUpdate.IsEnabled = true;
             }
         }
 
@@ -981,6 +1013,22 @@ namespace Bell_Smart_Server.Source.Frame
             foreach (Player player in lstPlayers.Items)
                 player.select = false;
             lstPlayers.Items.Refresh();
+        }
+
+        /// <summary>
+        /// 프로그램 업데이트를 진행합니다.
+        /// </summary>
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Controller.UpdateCheck())
+                    btnUpdate.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                WPFCom.Message("업데이트 시도 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지 이슈트래커 게시판에 이슈를 등록 해 주시기 바랍니다." + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Base.PROJECT.Bell_Smart_Server);
+            }
         }
     }
 }

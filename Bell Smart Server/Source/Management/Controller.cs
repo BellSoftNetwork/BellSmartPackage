@@ -14,12 +14,9 @@ namespace Bell_Smart_Server.Source.Management
         /// <summary>
         /// 비트 단위로 잠금 여부 설정
         /// 0000 0000 0000 0000 0000 0000 0000 0000
-        /// ~ 000* : 게임 실행 여부
-        /// ~ 00*0 : 게임 설치중
-        /// ~ 0*00 : 
+        /// ~ 000* : 서버 가동 여부
         /// </summary>
         private static int LockFlag;
-        private DispatcherTimer tmr_Update = new DispatcherTimer();
 
         /// <summary>
         /// 잠금 플래그 설정을 위한 잠금 비트 열거형.
@@ -62,56 +59,14 @@ namespace Bell_Smart_Server.Source.Management
         }
 
         /// <summary>
-        /// 런처 컨트롤러를 생성합니다.
+        /// 업데이트가 가능하면 업데이트를 시행합니다.
         /// </summary>
-        public Controller()
-        {
-            tmr_Update.Interval = TimeSpan.FromSeconds(30);
-            tmr_Update.Tick += new EventHandler(Update_Tick);
-        }
-
-        /// <summary>
-        /// 런처 컨트롤러를 초기화합니다.
-        /// </summary>
-        public void Initialize()
-        {
-            tmr_Update.Start();
-            //Update_Tick(null, null);
-        }
-
-        private int errCount = 0;
-        private void Update_Tick(object sender, EventArgs e)
-        {
-            if (LockFlag > 0)
-                return;
-
-            if (User.BSP_AutoUpdate)
-            {
-                try
-                {
-                    if (UpdateCheck())
-                        tmr_Update.Stop(); // 업데이트 실행 후 타이머 중단
-                }
-                catch (Exception ex)
-                {
-                    if (errCount > 2)
-                    {
-                        WPFCom.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + "errCount = " + errCount + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Base.PROJECT.Bell_Smart_Server);
-                        errCount = 0;
-                    }
-                    else
-                    {
-                        errCount += 1;
-                    }
-
-                    return;
-                }
-                errCount = 0;
-            }
-        }
-
+        /// <returns>업데이트 진행여부</returns>
         public static bool UpdateCheck()
         {
+            if (LockFlag > 0)
+                return false;
+
             try
             {
                 if (Deploy.UpdateAvailable())

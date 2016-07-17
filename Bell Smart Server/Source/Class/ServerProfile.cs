@@ -8,6 +8,9 @@ using System.Text;
 
 namespace Bell_Smart_Server.Source.Class
 {
+    /// <summary>
+    /// 서버 프로필 제어 클래스
+    /// </summary>
     public class ServerProfile
     {
         // 필드

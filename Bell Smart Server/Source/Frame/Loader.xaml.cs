@@ -23,22 +23,18 @@ namespace Bell_Smart_Server.Source.Frame
         public Loader()
         {
             InitializeComponent();
-            pbLoad.Maximum = 13;
+            pbLoad.Maximum = 9;
             pbLoad.Value = 0;
 
             SetStatus("Initialize Component", 1);
         }
 
+        /// <summary>
+        /// 로더를 초기화 합니다.
+        /// </summary>
+        /// <returns>성공여부</returns>
         private bool Initialize()
         {
-            // 컨트롤러 실행
-            SetStatus("매니저 컨트롤러 생성 시작", 1);
-            Controller Cont = new Controller();
-            SetStatus("매니저 컨트롤러 생성 완료", 1);
-
-            SetStatus("매니저 컨트롤러 초기화 시작", 1);
-            Cont.Initialize();
-            SetStatus("매니저 컨트롤러 초기화 완료", 1);
 
             return true;
         }
