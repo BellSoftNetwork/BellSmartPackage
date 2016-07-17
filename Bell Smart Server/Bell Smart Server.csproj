@@ -41,8 +41,8 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -76,7 +76,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Bell Smart Server_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Bell Smart Server_Key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>F096DB135DB837744B6C62F5225CF45FB36C3DEE</ManifestCertificateThumbprint>
@@ -116,6 +116,30 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Library\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Library\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Library\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Library\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Library\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resource\Library\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -126,73 +150,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Source\BSS\BSS_Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Login.Designer.cs">
-      <DependentUpon>BSS_Login.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Management.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Management.Designer.cs">
-      <DependentUpon>BSS_Management.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Updater.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Updater.Designer.cs">
-      <DependentUpon>BSS_Updater.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Loader.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Loader.Designer.cs">
-      <DependentUpon>BSS_Loader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSS\BSS_Main.Designer.cs">
-      <DependentUpon>BSS_Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_ModManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_ModManager.Designer.cs">
-      <DependentUpon>BSU_ModManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_PackMaker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_PackMaker.Designer.cs">
-      <DependentUpon>BSU_PackMaker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_RuntimeManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_RuntimeManager.Designer.cs">
-      <DependentUpon>BSU_RuntimeManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_InputBox.Designer.cs">
-      <DependentUpon>BSU_InputBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_ServerManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BSU\BSU_ServerManager.Designer.cs">
-      <DependentUpon>BSU_ServerManager.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Source\Class\ServerProfile.cs" />
     <Compile Include="Source\Frame\Loader.xaml.cs">
       <DependentUpon>Loader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Source\Frame\ServerEditor.xaml.cs">
+      <DependentUpon>ServerEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\ServerSetting.xaml.cs">
+      <DependentUpon>ServerSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\Updater.xaml.cs">
+      <DependentUpon>Updater.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Management\Controller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -212,38 +189,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSS\BSS_Login.resx">
-      <DependentUpon>BSS_Login.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSS\BSS_Management.resx">
-      <DependentUpon>BSS_Management.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSS\BSS_Updater.resx">
-      <DependentUpon>BSS_Updater.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSS\BSS_Loader.resx">
-      <DependentUpon>BSS_Loader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSS\BSS_Main.resx">
-      <DependentUpon>BSS_Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSU\BSU_ModManager.resx">
-      <DependentUpon>BSU_ModManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSU\BSU_PackMaker.resx">
-      <DependentUpon>BSU_PackMaker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSU\BSU_RuntimeManager.resx">
-      <DependentUpon>BSU_RuntimeManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSU\BSU_InputBox.resx">
-      <DependentUpon>BSU_InputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BSU\BSU_ServerManager.resx">
-      <DependentUpon>BSU_ServerManager.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Bell Smart Server_TemporaryKey.pfx" />
+    <None Include="Bell Smart Server_Key.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -289,9 +236,15 @@
     <Resource Include="Resource\Photo\Logo_BSN2.png" />
     <Resource Include="Resource\Photo\Logo_BSN3.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Source\Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Source\Frame\Loader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,6 +252,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Source\Frame\ServerEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\ServerSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\Updater.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Library\Xceed.Wpf.Toolkit.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

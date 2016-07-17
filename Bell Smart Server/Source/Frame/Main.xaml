@@ -5,10 +5,88 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
         mc:Ignorable="d"
-        Title="Main" Height="375" Width="579.267" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Bell Smart Server" Height="471.879" Width="1026.654" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid>
-        <TextBox x:Name="textBox" TextWrapping="Wrap" Text="TextBox" Margin="0,0,283.934,0"/>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Right" Margin="0,36.666,97.934,0" VerticalAlignment="Top" Width="75"/>
+        <TabControl x:Name="tcServer">
+            <TabItem Header="메인">
+                <Grid>
+                    <TabControl x:Name="tcLog" Margin="1.382,0,505,28">
+                        <TabItem Header="정보">
+                            <Grid>
+                                <TextBox x:Name="txtInfo" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="경고" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+                            <Grid>
+                                <TextBox x:Name="txtWarn" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="에러">
+                            <Grid>
+                                <TextBox x:Name="txtError" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <GroupBox x:Name="gbStatus" Header="상황" HorizontalAlignment="Right" VerticalAlignment="Top" Height="180" Width="250" Margin="0,0,250,0">
+                        <Grid>
+                            <Label x:Name="lbState" Content="상태 : 초기화 되지 않음" VerticalAlignment="Top"/>
+                            <Label x:Name="lbStartTime" Content="시작 시간 : 시작 안함" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25.96,0,0"/>
+                            <Label x:Name="lbOperatingTime" Content="가동 시간 : 0일 0시간 0분 0초" HorizontalAlignment="Left" Margin="0,51.92,0,0" Width="232.041" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment"/>
+                            <Label x:Name="lbPlayers" Content="접속자 : 0/?" Margin="0,77.88,0,53.2" d:LayoutOverrides="Width, Height"/>
+                            <Label x:Name="lbTPS" Content="TPS : ?" Margin="0,0,0,27.24" d:LayoutOverrides="Width" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="gbGeneral" Header="일반" HorizontalAlignment="Right" Width="250" Margin="0,2,0,0" Height="178" VerticalAlignment="Top">
+                        <Grid>
+                            <ComboBox x:Name="cbServer" Margin="0,8,35,0" VerticalAlignment="Top" SelectionChanged="cbServer_SelectionChanged" SelectedIndex="0">
+                                <ComboBoxItem Content="Select Server"/>
+                            </ComboBox>
+                            <Button x:Name="btnEdit" Content="수정" HorizontalAlignment="Right" VerticalAlignment="Top" Width="30" Margin="0,8,0,0" Height="21.96" Click="btnEdit_Click"/>
+                            <Button x:Name="btnStart" Content="서버 시작" Click="btnStart_Click" Margin="0,34.96,0,0" IsEnabled="False" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment"/>
+                            <Button x:Name="btnRestart" Content="서버 재시작" Margin="0,59.92,0,75.16" Click="btnRestart_Click" IsEnabled="False" d:LayoutOverrides="Height" HorizontalAlignment="Left" Width="115"/>
+                            <Button x:Name="btnStop" Content="서버 종료" Margin="0,59.92,0,0" VerticalAlignment="Top" IsEnabled="False" Width="115" Click="btnStop_Click" HorizontalAlignment="Right" d:LayoutOverrides="Width"/>
+                            <Button x:Name="btnSave" Content="강제 저장" HorizontalAlignment="Left" Width="115" Margin="0,84.88,0,0" VerticalAlignment="Top" Click="btnSave_Click" IsEnabled="False"/>
+                            <Button x:Name="btnForceStop" Content="서버 강제 종료" VerticalAlignment="Top" Margin="0,84.88,0,0" Click="btnForceStop_Click" IsEnabled="False" HorizontalAlignment="Right" Width="115"/>
+                            <Button x:Name="btnServerSetting" Content="상세 설정" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="115" Margin="0,0,0,25.24" Click="btnServerSetting_Click"/>
+                            <Button x:Name="btnClear" Content="로그 초기화" HorizontalAlignment="Right" VerticalAlignment="Top" Width="115" Margin="0,109.84,0,0" Click="btnClear_Click"/>
+                        </Grid>
+                    </GroupBox>
+                    <TextBox x:Name="txtCommand" Height="23" Margin="47.927,0,80,0" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyUp="txtCommand_KeyUp" TextChanged="txtCommand_TextChanged"/>
+                    <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="btnSend_Click" IsEnabled="False" Height="23"/>
+                    <TabControl x:Name="tcAdditional" HorizontalAlignment="Right" Width="500" Margin="0,185,0,28">
+                        <TabItem Header="플레이어">
+                            <Grid>
+                                <TextBox x:Name="txtNickName" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="238.261"/>
+                                <ListBox x:Name="lstPlayer" Margin="0,0,243.261,0"/>
+                                <Button x:Name="btnKick" Content="추방" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,163.261,0" IsEnabled="False"/>
+                                <Button x:Name="btnBan" Content="영구 정지" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,83.261,0" IsEnabled="False"/>
+                                <Button x:Name="btnWhispers" Content="귓속말" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,0,0" IsEnabled="False"/>
+                                <Button x:Name="btnWarn" Content="경고" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,52.96,0,0" IsEnabled="False"/>
+                                <TextBox x:Name="txtItemID" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="75" Margin="0,0,163.261,0"/>
+                                <TextBox x:Name="txtItemAmount" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Bottom" Width="75" Margin="0,0,83.261,0"/>
+                                <Button x:Name="btnGive" Content="주기" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,3.04" IsEnabled="False"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="이벤트">
+                            <Grid/>
+                        </TabItem>
+                    </TabControl>
+                    <CheckBox x:Name="cbSay" Content="say " HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,3.381"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Sub">
+                <Grid/>
+            </TabItem>
+            <TabItem Header="설정" Margin="-2,-2,-2,0">
+                <Grid>
+                    <GroupBox x:Name="set_gbGeneral" Header="일반">
+                        <Grid>
+                            <Label x:Name="set_lbVersion" Content="프로그램 버전 : 0.0.0.00" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Window>

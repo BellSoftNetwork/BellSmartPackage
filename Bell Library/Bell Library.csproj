@@ -67,7 +67,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class\Minecraft\Profile.cs" />
     <Compile Include="Class\Protection\DataProtect.cs" />
     <Compile Include="Class\BSN\BSN_BSL.cs" />
     <Compile Include="Class\BSN\BSN.cs" />
@@ -78,8 +77,6 @@
     <Compile Include="Class\Deploy.cs" />
     <Compile Include="Class\FileSystem.cs" />
     <Compile Include="Class\FTPUtil.cs" />
-    <Compile Include="Class\Minecraft\MCLogin.cs" />
-    <Compile Include="Class\Minecraft\Modpack.cs" />
     <Compile Include="Class\PackAnalysis.cs" />
     <Compile Include="Class\Protection\Protect.cs" />
     <Compile Include="Class\ReflectionExample.cs" />
@@ -116,7 +113,6 @@
     <Content Include="Resource\Photo\Photo_Bell.ico" />
     <Content Include="Resource\Photo\Photo_Random.ico" />
     <Content Include="Resource\Photo\Photo_RedBell.ico" />
-    <Content Include="Resource\Library\Newtonsoft.Json.dll" />
     <Content Include="Resource\Sound\Sound_alarm.wav" />
     <Content Include="Resource\Sound\Sound_end.wav" />
     <Content Include="Resource\Sound\Sound_error.wav" />

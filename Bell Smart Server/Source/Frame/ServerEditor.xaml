@@ -1,0 +1,26 @@
+﻿<Window x:Class="Bell_Smart_Server.Source.Frame.ServerEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
+        mc:Ignorable="d"
+        Title="Server Editor" Height="230.862" Width="424.449" ResizeMode="NoResize" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label Content="서버 이름 :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26"/>
+        <TextBox x:Name="txtName" Height="23" Margin="84.067,13,103.186,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Label Content="서버 경로 :" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Height="26"/>
+        <TextBox x:Name="txtPath" Height="23" Margin="84.067,39,103.186,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+        <Label Content="서버 파일 :" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Height="26" d:LayoutOverrides="VerticalAlignment"/>
+        <TextBox x:Name="txtFile" Margin="84.067,65,103.186,0" TextWrapping="Wrap" Height="23" VerticalAlignment="Top"/>
+        <Button x:Name="btnSetPath" Content="서버 경로 설정" HorizontalAlignment="Right" Width="88.186" Margin="0,41,10,0" Click="btnSetPath_Click" Height="47" VerticalAlignment="Top"/>
+        <Label Content="자바 경로 :" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtJavaPath" TextWrapping="Wrap" Margin="84.067,90.96,103.186,0" Height="23" VerticalAlignment="Top"/>
+        <Label Content="매개변수 :" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14.22,113.96,0,0"/>
+        <TextBox x:Name="txtParameter" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="84.067,116.92,103.186,0"/>
+        <Button x:Name="btnSave" Content="저장" HorizontalAlignment="Left" Width="75" Margin="127.215,0,0,10" Click="btnSave_Click" Height="22.405" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment"/>
+        <Button x:Name="btnRemove" Content="삭제" Margin="207.215,0,0,10" Click="btnRemove_Click" HorizontalAlignment="Left" Width="75" Height="22.405" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment"/>
+
+    </Grid>
+</Window>

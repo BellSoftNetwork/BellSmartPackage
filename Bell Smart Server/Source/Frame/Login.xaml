@@ -1,8 +1,12 @@
-﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.Login"
+﻿<Window x:Class="Bell_Smart_Server.Source.Frame.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="방울소프트네트워크 관리자인증" Height="145.683" Width="439.209" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered">
-    <Grid>
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
+        mc:Ignorable="d"
+        Title="방울소프트네트워크 관리자인증" Height="145" Width="440" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" ContentRendered="Window_ContentRendered" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0.791,-0.683">
         <Label x:Name="lbBSNLogin" Content="Bell Soft Network 관리자 인증을 위해 로그인이 필요합니다." HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand" Foreground="Blue" MouseLeftButtonDown="lbBSNLogin_MouseLeftButtonDown"/>
         <Label Content="이메일 :" HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top"/>
         <Label Content="비밀번호 :" HorizontalAlignment="Left" Margin="0,57,0,0" VerticalAlignment="Top"/>

@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using BellLib.Class;
 using BellLib.Data;
 
-namespace BellLib.Class.Minecraft
+namespace Bell_Smart_Launcher.Class
 {
     /// <summary>
     /// 마인크래프트 로그인 관련 메서드와 필드, 열거형 목록을 가지고 있는 클래스입니다.

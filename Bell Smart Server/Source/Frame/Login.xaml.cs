@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Bell_Smart_Manager.Source.Frame
+namespace Bell_Smart_Server.Source.Frame
 {
     /// <summary>
     /// Login.xaml에 대한 상호 작용 논리
@@ -108,7 +108,7 @@ namespace Bell_Smart_Manager.Source.Frame
         {
             cbAuto.IsChecked = false;
         }
-
+        
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             if (cbAuto.IsChecked == true)

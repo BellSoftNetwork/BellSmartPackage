@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
         mc:Ignorable="d"
-        Title="Loader" Height="191.4" Width="355.8" ContentRendered="Window_ContentRendered" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="Bell Smart Server Loader" Height="288" Width="350" ContentRendered="Window_ContentRendered" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" ShowInTaskbar="False">
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="/Bell Smart Server;component/Resource/Photo/Logo_BSN3.png"/>
+    </Window.Background>
+    <Grid d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+        <ProgressBar x:Name="pbLoad" Height="16" VerticalAlignment="Bottom" Margin="10,0,10,10" BorderBrush="Black">
+            <ProgressBar.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF001932" Offset="0"/>
+                    <GradientStop Color="#FF005AAA" Offset="0.5"/>
+                    <GradientStop Color="#FF001932" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Foreground>
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF191919" Offset="0.5"/>
+                    <GradientStop Color="#FF323232" Offset="1"/>
+                    <GradientStop Color="#FF323232" Offset="0.011"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+        </ProgressBar>
+        <Label x:Name="lbStatus" Content="로더 초기화중" VerticalAlignment="Bottom" Margin="10,0,10,31" Foreground="White" HorizontalContentAlignment="Center"/>
 
     </Grid>
 </Window>

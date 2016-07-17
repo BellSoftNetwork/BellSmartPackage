@@ -8,8 +8,9 @@ using System.Linq;
 using System.Text;
 using BellLib.Class.Protection;
 using System.Windows.Controls;
+using BellLib.Class;
 
-namespace BellLib.Class.Minecraft
+namespace Bell_Smart_Launcher.Class
 {
     public class Modpack
     {

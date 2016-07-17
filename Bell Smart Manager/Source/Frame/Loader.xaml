@@ -1,8 +1,29 @@
-﻿<Window x:Class="Bell_Smart_Manager.Source.Frame.Loader"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="BSM 로더" Height="183.813" Width="571.583" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Bell_Smart_Manager.Source.Frame.Loader"
+        Title="Bell Smart Manager Loader" Height="288" Width="350" Icon="/Bell Smart Manager;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" ShowInTaskbar="False" ContentRendered="Window_ContentRendered">
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="/Bell Smart Manager;component/Resource/Photo/Logo_BSN3.png"/>
+    </Window.Background>
+    <Grid d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+        <ProgressBar x:Name="pbLoad" Height="16" VerticalAlignment="Bottom" Margin="10,0,10,10" BorderBrush="Black">
+            <ProgressBar.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FF001932" Offset="0"/>
+                    <GradientStop Color="#FF005AAA" Offset="0.5"/>
+                    <GradientStop Color="#FF001932" Offset="1"/>
+                </LinearGradientBrush>
+            </ProgressBar.Foreground>
+            <ProgressBar.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF191919" Offset="0.5"/>
+                    <GradientStop Color="#FF323232" Offset="1"/>
+                    <GradientStop Color="#FF323232" Offset="0.011"/>
+                </LinearGradientBrush>
+            </ProgressBar.Background>
+        </ProgressBar>
+        <Label x:Name="lbStatus" Content="로더 초기화중" VerticalAlignment="Bottom" Margin="10,0,10,31" Foreground="White" HorizontalContentAlignment="Center"/>
 
     </Grid>
 </Window>

@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BellLib.Class.BSN;
-using BellLib.Class.Minecraft;
 using System.IO;
 using System.Net;
 using System.Diagnostics;
@@ -22,6 +21,7 @@ using System.Reflection;
 using BellLib.Class.Protection;
 using System.Windows.Threading;
 using Bell_Smart_Launcher.Source.Management;
+using Bell_Smart_Launcher.Class;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {

@@ -1,4 +1,4 @@
-﻿using Bell_Smart_Manager.Source.Frame;
+﻿using Bell_Smart_Server.Source.Frame;
 using BellLib.Class;
 using BellLib.Data;
 using System;
@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Threading;
 
-namespace Bell_Smart_Manager.Source.Management
+namespace Bell_Smart_Server.Source.Management
 {
-    class Controller
+    public class Controller
     {
         /// <summary>
         /// 비트 단위로 잠금 여부 설정
@@ -28,9 +28,7 @@ namespace Bell_Smart_Manager.Source.Management
         {
             UnLock = 0x0,
             AllLock = ~UnLock,
-            Running_Game = 0x1,
-            Install_Game = 0x2,
-            Install_Runtime = 0x4
+            Running_Server = 0x1
         }
 
         public static void SetLockFlag(LockBit lb, bool Lock = true)

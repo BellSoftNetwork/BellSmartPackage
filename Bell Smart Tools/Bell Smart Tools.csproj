@@ -84,7 +84,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Bell Smart Tools_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Bell Smart Tools_Key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>B83B593DAF83FB532B1335244C6C3BD8AF7FE97E</ManifestCertificateThumbprint>
@@ -249,7 +249,7 @@
       <DependentUpon>BST_Runtime.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Bell Smart Tools_TemporaryKey.pfx" />
+    <None Include="Bell Smart Tools_Key.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -296,6 +296,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Photo\Tarjetas042%282%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Source\Class\" />
+    <Folder Include="Source\Data\" />
+    <Folder Include="Source\Frame\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

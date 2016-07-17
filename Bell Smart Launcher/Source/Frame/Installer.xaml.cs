@@ -1,7 +1,7 @@
-﻿using Bell_Smart_Launcher.Source.Management;
+﻿using Bell_Smart_Launcher.Class;
+using Bell_Smart_Launcher.Source.Management;
 using BellLib.Class;
 using BellLib.Class.BSN;
-using BellLib.Class.Minecraft;
 using BellLib.Class.Protection;
 using BellLib.Data;
 using System;

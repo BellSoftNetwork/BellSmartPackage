@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace BellLib.Class.Minecraft
+namespace Bell_Smart_Launcher.Class
 {
     /// <summary>
     /// 마인크래프트 프로필 파일 제어 클래스
@@ -19,7 +19,7 @@ namespace BellLib.Class.Minecraft
         private string PW;
         
         /// <summary>
-        /// 프로필 데이터 종류 리스트
+        /// 프로필 데이터 종류 열거형
         /// </summary>
         public enum Data
         {

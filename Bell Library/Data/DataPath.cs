@@ -82,5 +82,44 @@ namespace BellLib.Data
                 }
             }
         }
+
+        /// <summary>
+        /// Bell Smart Server 관련 데이터 파일 경로
+        /// </summary>
+        public class BSS
+        {
+            /// <summary>
+            /// 일반 설정 bdx 파일 경로입니다.
+            /// </summary>
+            public static string General
+            {
+                get
+                {
+                    return User.BSN_Path + "Data\\BSS\\General.bdx";
+                }
+            }
+
+            /// <summary>
+            /// 서버 설정 bdx 파일 경로입니다.
+            /// </summary>
+            public static string Server
+            {
+                get
+                {
+                    return User.BSN_Path + "Data\\BSS\\Server.bdx";
+                }
+            }
+
+            /// <summary>
+            /// 서버설정 폴더 경로입니다.
+            /// </summary>
+            public static string ServerProfiles
+            {
+                get
+                {
+                    return User.BSN_Path + "Data\\BSS\\Server\\";
+                }
+            }
+        }
     }
 }
