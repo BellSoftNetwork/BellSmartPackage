@@ -30,7 +30,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (txtAddress.Text == string.Empty || txtName.Text == string.Empty || txtPort.Text == string.Empty)
             {
-                WPFCom.Message("모든 항목을 입력해주세요.");
+                WPFCom.Message("모든 항목을 입력해주세요.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
@@ -42,9 +42,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
             }
             if (BSN_BSM.RegisterServer(txtName.Text, cbType.SelectedIndex.ToString(), cbUpload.SelectedIndex.ToString(), cbDownload.SelectedIndex.ToString(), txtAddress.Text, txtPort.Text, require_plan, User.BSN_member_srl))
-                WPFCom.Message("서버정보가 정상적으로 등록되었습니다.");
+                WPFCom.Message("서버정보가 정상적으로 등록되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("서버정보 등록에 실패했습니다.");
+                WPFCom.Message("서버정보 등록에 실패했습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
     }
 }

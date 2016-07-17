@@ -113,7 +113,7 @@ namespace Bell_Smart_Launcher.Class
             }
             catch (WebException ex)
             {
-                WinCom.Message("모장 계정서버에 접속할 수 없습니다." + Environment.NewLine + ex.Message);
+                WPFCom.Message("모장 계정서버에 접속할 수 없습니다." + Environment.NewLine + ex.Message, Base.PROJECT.Bell_Smart_Launcher);
                 return false;
             }
             dataStream.Write(byteBuffer, 0, byteBuffer.Length);

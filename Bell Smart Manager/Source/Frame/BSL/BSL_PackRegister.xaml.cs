@@ -64,7 +64,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             //필드 검사
             if (txtModName.Text == "" || txtModNotice.Text == "" || cbBasePack.SelectedIndex == -1)
             {
-                WPFCom.Message("항목을 전부 입력해주세요.");
+                WPFCom.Message("항목을 전부 입력해주세요.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
             /*if (!BSN_BSM.CheckUID(txtModUID.Text))
@@ -78,9 +78,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             btnModRegister.IsEnabled = false;
             string baseid = cbBasePack.Tag.ToString().Split('|')[cbBasePack.SelectedIndex];
             if (BSN_BSM.RegisterModPack(txtModName.Text, baseid, txtModDetail.Text, txtModNotice.Text, User.BSN_member_srl))
-                WPFCom.Message("정상적으로 신청되었습니다.");
+                WPFCom.Message("정상적으로 신청되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("등록에 실패하였습니다.");
+                WPFCom.Message("등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnModRegister.IsEnabled = true;
         }
 
@@ -89,7 +89,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             //필드 검사
             if (txtBaseName.Text == "" || cbBaseMCVer.SelectedIndex == -1)
             {
-                WPFCom.Message("항목을 전부 입력해주세요.");
+                WPFCom.Message("항목을 전부 입력해주세요.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
             /*if (!BSN_BSM.CheckUID(txtBaseUID.Text))
@@ -101,9 +101,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             //등록 시작
             btnBaseRegister.IsEnabled = false;
             if (BSN_BSM.RegisterBasePack(txtBaseName.Text, (string)((ComboBoxItem)cbBaseMCVer.SelectedItem).Content, User.BSN_member_srl))
-                WPFCom.Message("정상적으로 신청되었습니다.");
+                WPFCom.Message("정상적으로 신청되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("등록에 실패하였습니다.");
+                WPFCom.Message("등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnBaseRegister.IsEnabled = true;
         }
 
@@ -112,7 +112,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 필드검사
             if (txtResNotice.Text == "" || txtResName.Text == "" || cbResMCVer.SelectedIndex == -1 || txtResDetail.Text == "")
             {
-                WPFCom.Message("항목을 전부 입력해주세요.");
+                WPFCom.Message("항목을 전부 입력해주세요.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
             /*if (!BSN_BSM.CheckUID(txtResUID.Text))
@@ -128,9 +128,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (rbMapPack.IsChecked == true)
                 type = "mappack";
             if (BSN_BSM.RegisterResourcePack(type, txtResName.Text, (string)((ComboBoxItem)cbResMCVer.SelectedItem).Content, txtResDetail.Text, txtModNotice.Text, User.BSN_member_srl))
-                WPFCom.Message("정상적으로 신청되었습니다.");
+                WPFCom.Message("정상적으로 신청되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("등록에 실패하였습니다.");
+                WPFCom.Message("등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnResRegister.IsEnabled = true;
         }
 
@@ -139,16 +139,16 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 필드검사
             if (txtRunName.Text == "")
             {
-                WPFCom.Message("항목을 전부 입력해주세요.");
+                WPFCom.Message("항목을 전부 입력해주세요.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             // 등록 시작
             btnRunRegister.IsEnabled = false;
             if (BSN_BSM.RegisterRuntime(txtRunName.Text, User.BSN_member_srl))
-                WPFCom.Message("정상적으로 신청되었습니다.");
+                WPFCom.Message("정상적으로 신청되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("등록에 실패하였습니다.");
+                WPFCom.Message("등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnRunRegister.IsEnabled = true;
         }
     }

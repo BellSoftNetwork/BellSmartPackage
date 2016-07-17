@@ -101,7 +101,7 @@ namespace Bell_Smart_Server.Source.Frame
                     if (list[list.Count - 1] != tmp)
                         strTemp += ", ";
                 }
-                WinCom.Message(strTemp + " 값을 입력해주세요.");
+                WPFCom.Message(strTemp + " 값을 입력해주세요.", BellLib.Data.Base.PROJECT.Bell_Smart_Server);
                 return;
             }
 

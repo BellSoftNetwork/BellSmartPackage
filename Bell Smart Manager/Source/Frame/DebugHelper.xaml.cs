@@ -36,7 +36,7 @@ namespace Bell_Smart_Manager.Source.Frame
             if ((string)btnReload.Content == "Load")
                 btnReload.Content = "Reload";
             else
-                WPFCom.Message("Debug data reloaded.");
+                WPFCom.Message("Debug data reloaded.", Base.PROJECT.Bell_Smart_Manager);
         }
     }
 }

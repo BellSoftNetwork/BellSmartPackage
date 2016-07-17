@@ -91,7 +91,7 @@ namespace BellLib.Class.BSN
             }
             catch (Exception ex)
             {
-                WinCom.Message(ex.Message);
+                WPFCom.Message(ex.Message, Base.PROJECT.Bell_Smart_Package);
                 return false;
             }
 

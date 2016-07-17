@@ -103,6 +103,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             InitResources(); // 리소스탭 초기화
             InitMaps(); // 맵탭 초기화
             InitSetting(); // 세팅탭 초기화
+
+            isAllInit = true;
         }
 
         /// <summary>
@@ -340,13 +342,13 @@ namespace Bell_Smart_Launcher.Source.Frame
                     {
                         // 오토컨트롤 이용중, 런타임 자바팩을 이용중일경우
                         if (!JavaIntegrityCheck(true)) // 자바 무결성 체크 자동진행
-                            WPFCom.Message("게임 실행중 예상치 못한 문제가 발생하여 종료된 것을 탐지하였습니다." + Environment.NewLine + "자바 경로 혹은 자바 파일에 문제가 있는지 확인하시기 바랍니다.");
+                            WPFCom.Message("게임 실행중 예상치 못한 문제가 발생하여 종료된 것을 탐지하였습니다." + Environment.NewLine + "자바 경로 혹은 자바 파일에 문제가 있는지 확인하시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher);
                         else
-                            WPFCom.Message("자바 무결성 체크결과 문제가 없는 것을 확인하였습니다." + Environment.NewLine + "이 에러메시지가 계속 발생한다면 해당 모드팩 관리자에게 문의하시기 바랍니다.");
+                            WPFCom.Message("자바 무결성 체크결과 문제가 없는 것을 확인하였습니다." + Environment.NewLine + "이 에러메시지가 계속 발생한다면 해당 모드팩 관리자에게 문의하시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher);
                     }
                     else
                     {
-                        if (WPFCom.Message("게임 실행중 예상치 못한 문제가 발생하여 종료된 것을 탐지하였습니다." + Environment.NewLine + "유력한 해결방안인 자바 무결성 체크를 진행하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (WPFCom.Message("게임 실행중 예상치 못한 문제가 발생하여 종료된 것을 탐지하였습니다." + Environment.NewLine + "유력한 해결방안인 자바 무결성 체크를 진행하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             game_btnJAVAIntegrity_Click(sender, null); // 자바 무결성 체크 반자동 진행
                     }
                 }
@@ -392,7 +394,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                             }
 
                             // 크래시 알림
-                            if (WPFCom.Message("게임 실행중 충돌이 발생하였습니다." + Environment.NewLine + "충돌 보고서를 확인하시겠습니까?" + Environment.NewLine + "지속적으로 충돌이 일어날경우 해당 모드팩 관리자에게 문의하시기 바랍니다.", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            if (WPFCom.Message("게임 실행중 충돌이 발생하였습니다." + Environment.NewLine + "충돌 보고서를 확인하시겠습니까?" + Environment.NewLine + "지속적으로 충돌이 일어날경우 해당 모드팩 관리자에게 문의하시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
                                 try
                                 {
@@ -400,7 +402,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                                 }
                                 catch
                                 {
-                                    WPFCom.Message("충돌 보고서 파일을 실행하는 중 문제가 발생하였습니다." + Environment.NewLine + "보고서 파일 위치 : " + ReportFile);
+                                    WPFCom.Message("충돌 보고서 파일을 실행하는 중 문제가 발생하였습니다." + Environment.NewLine + "보고서 파일 위치 : " + ReportFile, Base.PROJECT.Bell_Smart_Launcher);
                                 }
                             }
                         }
@@ -464,7 +466,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             switch (pathResult)
             {
                 case Modpack.ERR_PATH.Not_Load_Data:
-                    WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.");
+                    WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
@@ -497,7 +499,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 옵션 설정
             if (!GameInfo.SetOption(Game.Memory_Allocate, Game.JAVA_Parameter, Game.ConsoleRun))
             {
-                WPFCom.Message("옵션 설정에 실패했습니다.");
+                WPFCom.Message("옵션 설정에 실패했습니다.", Base.PROJECT.Bell_Smart_Launcher);
                 Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                 mod_btnEnjoy.IsEnabled = true;
 
@@ -507,7 +509,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 계정 정보 설정
             if (!GameInfo.SetAccount(MC_ID, MC_PW))
             {
-                WPFCom.Message("계정정보 설정에 실패했습니다.");
+                WPFCom.Message("계정정보 설정에 실패했습니다.", Base.PROJECT.Bell_Smart_Launcher);
                 Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                 mod_btnEnjoy.IsEnabled = true;
 
@@ -527,21 +529,21 @@ namespace Bell_Smart_Launcher.Source.Frame
             switch (loginResult)
             {
                 case Modpack.ERR_LOGIN.No_Input_ID:
-                    WPFCom.Message("마인크래프트 계정 ID가 설정되지 않아 로그인할 수 없습니다.");
+                    WPFCom.Message("마인크래프트 계정 ID가 설정되지 않아 로그인할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LOGIN.No_Input_PW:
-                    WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.");
+                    WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LOGIN.Login_Fail:
-                    WPFCom.Message("마인크래프트 로그인에 실패했습니다." + Environment.NewLine + "프로필에 아이디 또는 비밀번호를 정상적으로 저장했는지 확인 해 보시기 바랍니다.");
+                    WPFCom.Message("마인크래프트 로그인에 실패했습니다." + Environment.NewLine + "프로필에 아이디 또는 비밀번호를 정상적으로 저장했는지 확인 해 보시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
@@ -553,19 +555,19 @@ namespace Bell_Smart_Launcher.Source.Frame
             switch (launchResult)
             {
                 case Modpack.ERR_LAUNCH.Already_Running:
-                    WPFCom.Message("게임이 이미 실행중 입니다.");
+                    WPFCom.Message("게임이 이미 실행중 입니다.", Base.PROJECT.Bell_Smart_Launcher);
 
                     return;
 
                 case Modpack.ERR_LAUNCH.No_Input_Data:
-                    WPFCom.Message("실행에 필요한 데이터가 정상적으로 수집되지 않아 실행할 수 없습니다.");
+                    WPFCom.Message("실행에 필요한 데이터가 정상적으로 수집되지 않아 실행할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LAUNCH.Java_Not_Found:
-                    if (WPFCom.Message("자바 경로가 비 정상적으로 설정되었습니다." + Environment.NewLine + "자바 경로 설정화면으로 이동하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (WPFCom.Message("자바 경로가 비 정상적으로 설정되었습니다." + Environment.NewLine + "자바 경로 설정화면으로 이동하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         tc_Main.SelectedIndex = 4;
                         game_txtJAVAPath.Focus();
@@ -576,14 +578,14 @@ namespace Bell_Smart_Launcher.Source.Frame
                     return;
 
                 case Modpack.ERR_LAUNCH.Not_Installed:
-                    WPFCom.Message("모드팩이 정상적으로 설치되지 않아, 실행할 수 없습니다.");
+                    WPFCom.Message("모드팩이 정상적으로 설치되지 않아, 실행할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
                     return;
 
                 case Modpack.ERR_LAUNCH.Error:
-                    WPFCom.Message("예상하지 못한 문제가 발생하여 실행하지 못했습니다.");
+                    WPFCom.Message("예상하지 못한 문제가 발생하여 실행하지 못했습니다.", Base.PROJECT.Bell_Smart_Launcher);
                     Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                     mod_btnEnjoy.IsEnabled = true;
 
@@ -609,10 +611,10 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 GameInfo.Kill(); // 게임 종료
                 tmr_GameCheck.Stop(); // 게임 관리 프로세스 중단
-                WPFCom.Message("성공적으로 강제종료되었습니다.");
+                WPFCom.Message("성공적으로 강제종료되었습니다.", Base.PROJECT.Bell_Smart_Launcher);
             }
             else
-                WPFCom.Message("실행중인 게임이 없습니다.");
+                WPFCom.Message("실행중인 게임이 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
             mod_btnForceKill.IsEnabled = false;
             mod_btnEnjoy.IsEnabled = true;
         }
@@ -739,7 +741,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             switch (pathResult)
             {
                 case Modpack.ERR_PATH.Not_Load_Data:
-                    WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.");
+                    WPFCom.Message("데이터가 로드되지 않아 경로를 설정할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
 
                     return;
             }
@@ -795,7 +797,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void mod_btnLike_Click(object sender, RoutedEventArgs e)
         {
             if (!GameInfo.SetLike(!GameInfo.GetLike())) // 좋아요 설정 반전
-                WPFCom.Message("좋아요 설정에 실패했습니다.");
+                WPFCom.Message("좋아요 설정에 실패했습니다.", Base.PROJECT.Bell_Smart_Launcher);
 
             mod_LoadLike(); // 새로고침
             RefreshDetail(); // 상세정보 로드
@@ -836,12 +838,12 @@ namespace Bell_Smart_Launcher.Source.Frame
             switch (loadResult)
             {
                 case Modpack.ERR_LOAD.Version_Load_Fail:
-                    WPFCom.Message("버전정보를 불러오는중 문제가 발생했습니다.");
+                    WPFCom.Message("버전정보를 불러오는중 문제가 발생했습니다.", Base.PROJECT.Bell_Smart_Launcher);
 
                     return;
 
                 case Modpack.ERR_LOAD.Not_Input_Version:
-                    WPFCom.Message("버전정보가 설정되지 않았습니다.");
+                    WPFCom.Message("버전정보가 설정되지 않았습니다.", Base.PROJECT.Bell_Smart_Launcher);
 
                     return;
             }
@@ -885,7 +887,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             string runtimePath = Game.BSL_Root + "Runtime\\Java\\";
 
-            if (WPFCom.Message("자동제어기능을 이용하면 복잡한 설정 없이 간편하게 이용할 수 있습니다." + Environment.NewLine + "런처 자동제어기능을 이용하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (WPFCom.Message("자동제어기능을 이용하면 복잡한 설정 없이 간편하게 이용할 수 있습니다." + Environment.NewLine + "런처 자동제어기능을 이용하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             { // 자동제어 사용
                 // 기본값 자동설정을 위해
                 SystemInfo.MemoryInfo mi = SystemInfo.GetMemoryInfo();
@@ -915,11 +917,11 @@ namespace Bell_Smart_Launcher.Source.Frame
             { // 수동제어 사용
                 Game.AutoControl = false;
                 if (!Directory.Exists(runtimePath))
-                    if (WPFCom.Message("자바 런타임팩을 설치하면 간편하게 게임제어가 가능합니다." + Environment.NewLine + "설치하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (WPFCom.Message("자바 런타임팩을 설치하면 간편하게 게임제어가 가능합니다." + Environment.NewLine + "설치하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         InstallJava(runtimePath);
                     else
                     {
-                        if (WPFCom.Message("런타임자바 미 설치시 자바경로를 수동으로 설정해야합니다." + Environment.NewLine + "자바 경로설정창으로 이동하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        if (WPFCom.Message("런타임자바 미 설치시 자바경로를 수동으로 설정해야합니다." + Environment.NewLine + "자바 경로설정창으로 이동하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Setting"))
                                 tc_Main.SelectedIndex = 4;
                     }
@@ -1020,7 +1022,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             if (Java32bit)
                 if (game_sdJAVA.Value > 1)
-                    if (WPFCom.Message("32비트 자바에서는 메모리 할당량 1GB 초과시 에러가 발생하며 실행되지 않습니다." + Environment.NewLine + "그래도 저장하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    if (WPFCom.Message("32비트 자바에서는 메모리 할당량 1GB 초과시 에러가 발생하며 실행되지 않습니다." + Environment.NewLine + "그래도 저장하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.No)
                         return false;
 
             Game.Memory_Allocate = game_sdJAVA.Value;
@@ -1054,7 +1056,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void gen_btnSave_Click(object sender, RoutedEventArgs e)
         {
             SaveGeneral();
-            WPFCom.Message("일반설정 저장에 성공하였습니다.");
+            WPFCom.Message("일반설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
         }
 
         /// <summary>
@@ -1063,7 +1065,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void game_btnSave_Click(object sender, RoutedEventArgs e)
         {
             SaveGame();
-            WPFCom.Message("게임설정 저장에 성공하였습니다.");
+            WPFCom.Message("게임설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
         }
 
         /// <summary>
@@ -1074,10 +1076,10 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (Game.JAVA_Path.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
             {
                 if (!JavaIntegrityCheck())
-                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.");
+                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.", Base.PROJECT.Bell_Smart_Launcher);
             }
             else
-                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.");
+                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
         }
 
         /// <summary>
@@ -1122,8 +1124,8 @@ namespace Bell_Smart_Launcher.Source.Frame
                     }
                     if (!AutoControl)
                     {
-                        WPFCom.Message("런타임팩에 문제가 발생하였습니다." + Environment.NewLine + "설치되지 않았거나 변경된 파일 : " + Environment.NewLine + sb);
-                        if (WPFCom.Message("런타임 자바를 재설치 하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        WPFCom.Message("런타임팩에 문제가 발생하였습니다." + Environment.NewLine + "설치되지 않았거나 변경된 파일 : " + Environment.NewLine + sb, Base.PROJECT.Bell_Smart_Launcher);
+                        if (WPFCom.Message("런타임 자바를 재설치 하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             InstallJava(Game.JAVA_Path);
                     }
                     else
@@ -1181,7 +1183,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!GameInfo.Feasibility())
-                if (WPFCom.Message("현재 게임이 실행중입니다." + Environment.NewLine + "런처에 종속성을 가진 게임은 런처종료 후 문제가 발생할 수 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", "Bell Smart Launcher", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                if (WPFCom.Message("현재 게임이 실행중입니다." + Environment.NewLine + "런처에 종속성을 가진 게임은 런처종료 후 문제가 발생할 수 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                     e.Cancel = true;
         }
 

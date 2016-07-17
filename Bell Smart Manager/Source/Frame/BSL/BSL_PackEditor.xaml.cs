@@ -57,7 +57,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (cbModName.Items.IsEmpty && cbBaseName.Items.IsEmpty && cbResName.Items.IsEmpty && cbRunName.Items.IsEmpty)
             {
                 Hide();
-                WPFCom.Message("수정 가능한 데이터가 없습니다.");
+                WPFCom.Message("수정 가능한 데이터가 없습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             if (cbModName.Items.IsEmpty)
                 tiModPack.Visibility = Visibility.Collapsed;
@@ -262,10 +262,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem, (string)cbModRecommended.SelectedItem, (bool)cbModActivate.IsChecked))
             {
                 btnModLoad_Click(sender, e);
-                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("기본정보 수정에 실패하였습니다.");
+                WPFCom.Message("기본정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnModDel_Click(object sender, RoutedEventArgs e)
@@ -277,10 +277,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.modpack, lstModVersion.Tag.ToString().Split('|')[lstModVersion.SelectedIndex], (bool)cbModSelActivate.IsChecked, cbBaseVer.Tag.ToString().Split('|')[cbBaseVer.SelectedIndex]))
             {
-                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("버전정보 수정에 실패하였습니다.");
+                WPFCom.Message("버전정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnModAuthAdd_Click(object sender, RoutedEventArgs e)
@@ -288,17 +288,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string member_srl = BSN_Info.GetMember_srl(txtModEmail.Text);
             if (member_srl == null)
             {
-                WPFCom.Message("존재하지 않는 회원입니다.");
+                WPFCom.Message("존재하지 않는 회원입니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.AddPackManager(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem, member_srl, cbModPermission.SelectedIndex.ToString()))
             {
                 btnModAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 등록되었습니다.");
+                WPFCom.Message("정상적으로 등록되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 정보등록에 실패하였습니다.");
+                WPFCom.Message("관리자 정보등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnModSelDel_Click(object sender, RoutedEventArgs e)
@@ -314,17 +314,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             if (permission == "4")
             {
-                WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
+                WPFCom.Message("제작자권한은 삭제할 수 없습니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.DelPackManager(BSN_BSL.PACK.modpack, (string)cbModName.SelectedItem, member_srl, permission))
             {
                 btnModAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 삭제되었습니다.");
+                WPFCom.Message("정상적으로 삭제되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 삭제에 실패하였습니다.");
+                WPFCom.Message("관리자 삭제에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnModAuthRefresh_Click(object sender, RoutedEventArgs e)
@@ -363,10 +363,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, (string)cbBaseRecommended.SelectedItem, (bool)cbBaseActivate.IsChecked))
             {
                 btnBaseLoad_Click(sender, e);
-                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("기본정보 수정에 실패하였습니다.");
+                WPFCom.Message("기본정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnBaseDel_Click(object sender, RoutedEventArgs e)
@@ -378,10 +378,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.basepack, lstBaseVersion.Tag.ToString().Split('|')[lstBaseVersion.SelectedIndex], (bool)cbBaseSelActivate.IsChecked))
             {
-                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("버전정보 수정에 실패하였습니다.");
+                WPFCom.Message("버전정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnBaseSelDel_Click(object sender, RoutedEventArgs e)
@@ -394,17 +394,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string member_srl = BSN_Info.GetMember_srl(txtBaseEmail.Text);
             if (member_srl == null)
             {
-                WPFCom.Message("존재하지 않는 회원입니다.");
+                WPFCom.Message("존재하지 않는 회원입니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.AddPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, member_srl, cbBasePermission.SelectedIndex.ToString()))
             {
                 btnBaseAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 등록되었습니다.");
+                WPFCom.Message("정상적으로 등록되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 정보등록에 실패하였습니다.");
+                WPFCom.Message("관리자 정보등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnBaseAuthDel_Click(object sender, RoutedEventArgs e)
@@ -417,21 +417,21 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
                 if (permission == "4")
                 {
-                    WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
+                    WPFCom.Message("제작자권한은 삭제할 수 없습니다.", Base.PROJECT.Bell_Smart_Manager);
                     return;
                 }
 
                 if (BSN_BSM.DelPackManager(BSN_BSL.PACK.basepack, (string)cbBaseName.SelectedItem, member_srl, permission))
                 {
                     btnBaseAuthRefresh_Click(sender, e);
-                    WPFCom.Message("정상적으로 삭제되었습니다.");
+                    WPFCom.Message("정상적으로 삭제되었습니다.", Base.PROJECT.Bell_Smart_Manager);
                 }
                 else
-                    WPFCom.Message("관리자 삭제에 실패하였습니다.");
+                    WPFCom.Message("관리자 삭제에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             catch
             {
-                WPFCom.Message("권한을 삭제할 회원을 선택 해 주세요.");
+                WPFCom.Message("권한을 삭제할 회원을 선택 해 주세요.", Base.PROJECT.Bell_Smart_Manager);
             }
         }
 
@@ -461,10 +461,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem, (string)cbResRecommended.SelectedItem, (bool)cbResActivate.IsChecked))
             {
                 btnResLoad_Click(sender, e);
-                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("기본정보 수정에 실패하였습니다.");
+                WPFCom.Message("기본정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnResDel_Click(object sender, RoutedEventArgs e)
@@ -476,10 +476,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.resource, lstResVersion.Tag.ToString().Split('|')[lstResVersion.SelectedIndex], (bool)cbResSelActivate.IsChecked))
             {
-                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("버전정보 수정에 실패하였습니다.");
+                WPFCom.Message("버전정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnResSelDel_Click(object sender, RoutedEventArgs e)
@@ -492,17 +492,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string member_srl = BSN_Info.GetMember_srl(txtResEmail.Text);
             if (member_srl == null)
             {
-                WPFCom.Message("존재하지 않는 회원입니다.");
+                WPFCom.Message("존재하지 않는 회원입니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.AddPackManager(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem, member_srl, cbResPermission.SelectedIndex.ToString()))
             {
                 btnResAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 등록되었습니다.");
+                WPFCom.Message("정상적으로 등록되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 정보등록에 실패하였습니다.");
+                WPFCom.Message("관리자 정보등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnResAuthDel_Click(object sender, RoutedEventArgs e)
@@ -513,17 +513,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             if (permission == "4")
             {
-                WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
+                WPFCom.Message("제작자권한은 삭제할 수 없습니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.DelPackManager(BSN_BSL.PACK.resource, (string)cbResName.SelectedItem, member_srl, permission))
             {
                 btnResAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 삭제되었습니다.");
+                WPFCom.Message("정상적으로 삭제되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 삭제에 실패하였습니다.");
+                WPFCom.Message("관리자 삭제에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnResAuthRefresh_Click(object sender, RoutedEventArgs e)
@@ -667,10 +667,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             if (BSN_BSM.ModifyPackBasic(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem, (string)cbRunRecommended.SelectedItem, (bool)cbRunActivate.IsChecked))
             {
                 btnRunLoad_Click(sender, e);
-                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("기본정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("기본정보 수정에 실패하였습니다.");
+                WPFCom.Message("기본정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnRunSelDel_Click(object sender, RoutedEventArgs e)
@@ -682,10 +682,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (BSN_BSM.ModifyPackVersion(BSN_BSL.PACK.runtime, lstRunVersion.Tag.ToString().Split('|')[lstRunVersion.SelectedIndex], (bool)cbRunSelActivate.IsChecked))
             {
-                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.");
+                WPFCom.Message("버전정보가 성공적으로 수정되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("버전정보 수정에 실패하였습니다.");
+                WPFCom.Message("버전정보 수정에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnRunAuthRefresh_Click(object sender, RoutedEventArgs e)
@@ -714,17 +714,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             string member_srl = BSN_Info.GetMember_srl(txtRunEmail.Text);
             if (member_srl == null)
             {
-                WPFCom.Message("존재하지 않는 회원입니다.");
+                WPFCom.Message("존재하지 않는 회원입니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.AddPackManager(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem, member_srl, cbRunPermission.SelectedIndex.ToString()))
             {
                 btnRunAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 등록되었습니다.");
+                WPFCom.Message("정상적으로 등록되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 정보등록에 실패하였습니다.");
+                WPFCom.Message("관리자 정보등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnRunAuthDel_Click(object sender, RoutedEventArgs e)
@@ -735,17 +735,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             if (permission == "4")
             {
-                WPFCom.Message("제작자권한은 삭제할 수 없습니다.");
+                WPFCom.Message("제작자권한은 삭제할 수 없습니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.DelPackManager(BSN_BSL.PACK.runtime, (string)cbRunName.SelectedItem, member_srl, permission))
             {
                 btnRunAuthRefresh_Click(sender, e);
-                WPFCom.Message("정상적으로 삭제되었습니다.");
+                WPFCom.Message("정상적으로 삭제되었습니다.", Base.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("관리자 삭제에 실패하였습니다.");
+                WPFCom.Message("관리자 삭제에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
         }
     }
 }

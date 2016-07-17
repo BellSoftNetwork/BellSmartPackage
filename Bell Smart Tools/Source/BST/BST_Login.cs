@@ -74,7 +74,7 @@ namespace Bell_Smart_Tools.Source.BSS
                 BSP.Show(); // BSP_Selector 실행
                 this.Hide(); // BST_Login 숨김
             } else {
-                WinCom.Message("인증 실패");
+                WinCom.Message("인증 실패", Base.PROJECT.Bell_Smart_Tools);
             }
             FormEnable(true);
         }

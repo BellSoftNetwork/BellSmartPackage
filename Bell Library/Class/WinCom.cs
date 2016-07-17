@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BellLib.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,43 @@ namespace BellLib.Class
         /// <param name="icon">메시지박스 아이콘</param>
         /// <param name="defaultButton">메시지박스 기본 버튼</param>
         /// <returns>선택한 버튼값</returns>
+        public static DialogResult Message(string Text, Base.PROJECT project, MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+        {
+            string title = "Bell Smart Package";
+
+            switch (project)
+            {
+                case Base.PROJECT.Bell_Smart_Launcher:
+                    title = "Bell Smart Launcher";
+                    break;
+
+                case Base.PROJECT.Bell_Smart_Manager:
+                    title = "Bell Smart Manager";
+                    break;
+
+                case Base.PROJECT.Bell_Smart_Server:
+                    title = "Bell Smart Server";
+                    break;
+
+                case Base.PROJECT.Bell_Smart_Tools:
+                    title = "Bell Smart Tools";
+                    break;
+            }
+
+            Debug.Message(Debug.Level.Log, Text, title, buttons, icon, defaultButton, "MessageBox");
+            return MessageBox.Show(Text, title, buttons, icon, defaultButton);
+        }
+
+        /// <summary>
+        /// 메시지 박스를 띄웁니다.
+        /// </summary>
+        /// <param name="Text">메시지박스 내용</param>
+        /// <param name="Caption">메시지박스 제목</param>
+        /// <param name="buttons">메시지박스 버튼</param>
+        /// <param name="icon">메시지박스 아이콘</param>
+        /// <param name="defaultButton">메시지박스 기본 버튼</param>
+        /// <returns>선택한 버튼값</returns>
+        [Obsolete]
         public static DialogResult Message(string Text, string Caption = "Bell Smart Package", MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
             Debug.Message(Debug.Level.Log, Text, Caption, buttons, icon, defaultButton, "MessageBox");

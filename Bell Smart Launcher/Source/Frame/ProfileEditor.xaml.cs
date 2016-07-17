@@ -96,7 +96,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                     if (list[list.Count - 1] != tmp)
                         strTemp += ", ";
                 }
-                WinCom.Message(strTemp + " 값을 입력해주세요.");
+                WPFCom.Message(strTemp + " 값을 입력해주세요.", Base.PROJECT.Bell_Smart_Launcher);
                 return;
             }
 

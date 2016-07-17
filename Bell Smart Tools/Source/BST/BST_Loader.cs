@@ -35,7 +35,7 @@ namespace Bell_Smart_Tools.Source.BSS
             // 실패하면 프로그램 종료
             if (!success)
             {
-                WinCom.Message("BST가 이미 실행중입니다." + Environment.NewLine + "BST는 중복실행이 불가능 합니다.");
+                WinCom.Message("BST가 이미 실행중입니다." + Environment.NewLine + "BST는 중복실행이 불가능 합니다.", Base.PROJECT.Bell_Smart_Tools);
                 WinCom.End();
                 return false;
             }

@@ -49,7 +49,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             SaveDebug();
-            WPFCom.Message("디버그설정 저장에 성공하였습니다.");
+            WPFCom.Message("디버그설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
         }
     }
 }

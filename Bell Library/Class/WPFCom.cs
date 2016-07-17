@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BellLib.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,54 @@ namespace BellLib.Class
     /// </summary>
     public class WPFCom
     {
-        public static MessageBoxResult Message(string messageBoxText, string caption = "Bell Smart Launcher", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information, MessageBoxResult defaultResult = MessageBoxResult.OK, MessageBoxOptions options = MessageBoxOptions.None)
+        /// <summary>
+        /// WPF 프로젝트 공통 메시지박스 함수입니다.
+        /// </summary>
+        /// <param name="messageBoxText">메시지박스 내용</param>
+        /// <param name="project">프로젝트</param>
+        /// <param name="button">버튼</param>
+        /// <param name="icon">아이콘</param>
+        /// <param name="defaultResult">기본 포커스</param>
+        /// <param name="options">옵션</param>
+        /// <returns>선택값</returns>
+        public static MessageBoxResult Message(string messageBoxText, Base.PROJECT project, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information, MessageBoxResult defaultResult = MessageBoxResult.OK, MessageBoxOptions options = MessageBoxOptions.None)
+        {
+            string title = "Bell Smart Package";
+
+            switch(project)
+            {
+                case Base.PROJECT.Bell_Smart_Launcher:
+                    title = "Bell Smart Launcher";
+                    break;
+
+                case Base.PROJECT.Bell_Smart_Manager:
+                    title = "Bell Smart Manager";
+                    break;
+
+                case Base.PROJECT.Bell_Smart_Server:
+                    title = "Bell Smart Server";
+                    break;
+
+                case Base.PROJECT.Bell_Smart_Tools:
+                    title = "Bell Smart Tools";
+                    break;
+            }
+
+            return WPFCom.Message(messageBoxText, title, button, icon, defaultResult, options);
+        }
+
+        /// <summary>
+        /// WPF 프로젝트 공통 메시지박스 함수입니다.
+        /// 캡션을 직접 설정할 수 있습니다.
+        /// </summary>
+        /// <param name="messageBoxText">메시지박스 내용</param>
+        /// <param name="caption">캡션</param>
+        /// <param name="button">버튼</param>
+        /// <param name="icon">아이콘</param>
+        /// <param name="defaultResult">기본 포커스</param>
+        /// <param name="options">옵션</param>
+        /// <returns>선택값</returns>
+        public static MessageBoxResult Message(string messageBoxText, string caption, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information, MessageBoxResult defaultResult = MessageBoxResult.OK, MessageBoxOptions options = MessageBoxOptions.None)
         {
             return MessageBox.Show(messageBoxText, caption, button, icon, defaultResult, options);
         }

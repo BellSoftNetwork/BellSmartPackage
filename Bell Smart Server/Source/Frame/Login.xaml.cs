@@ -83,7 +83,7 @@ namespace Bell_Smart_Server.Source.Frame
             }
             else
             {
-                WinCom.Message("인증 실패");
+                WPFCom.Message("인증 실패", Base.PROJECT.Bell_Smart_Server);
             }
             FormEnable(true);
         }

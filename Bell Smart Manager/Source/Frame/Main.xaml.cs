@@ -81,7 +81,7 @@ namespace Bell_Smart_Manager.Source.Frame
             long start = DateTime.Now.Ticks;
             Common.Delay(100);
             long end = DateTime.Now.Ticks;
-            WPFCom.Message("소요 시간 : " + ((end - start)/10000));
+            WPFCom.Message("소요 시간 : " + ((end - start)/10000), Base.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnServerMaker_Click(object sender, RoutedEventArgs e)

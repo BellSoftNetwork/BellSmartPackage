@@ -25,7 +25,7 @@ namespace Bell_Smart_Manager.Source.Frame
         public Loader()
         {
             InitializeComponent();
-            pbLoad.Maximum = 12;
+            pbLoad.Maximum = 13;
             pbLoad.Value = 0;
 
             SetStatus("Initialize Component", 1);

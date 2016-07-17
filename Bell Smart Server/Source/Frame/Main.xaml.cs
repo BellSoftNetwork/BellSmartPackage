@@ -29,10 +29,12 @@ namespace Bell_Smart_Server.Source.Frame
     {
         #region *** FIELD ***
 
+        private DispatcherTimer tmr_Sync;
         private DispatcherTimer tmr_OperatingTime;
         private DispatcherTimer tmr_ServerControl;
         private Process ServerProc;
         private long StartTime;
+        //private bool listLoading;
 
         /// <summary>
         /// 로그 기록 타입 열거형
@@ -42,6 +44,18 @@ namespace Bell_Smart_Server.Source.Frame
             INFO,
             WARN,
             ERROR
+        }
+
+        /// <summary>
+        /// 플레이어 데이터
+        /// </summary>
+        public class Player
+        {
+            public bool select { get; set; }
+            public string nickname { get; set; }
+            public string ip { get; set; }
+            public string jointime { get; set; }
+            public string suspects { get; set; }
         }
 
         #endregion
@@ -65,6 +79,7 @@ namespace Bell_Smart_Server.Source.Frame
             this.MinHeight = 400;
             this.MinWidth = 900;
 
+            tmr_Sync = new DispatcherTimer(); // 싱크 타이머 초기화
             tmr_OperatingTime = new DispatcherTimer(); // 가동시간 타이머 초기화
             tmr_ServerControl = new DispatcherTimer(); // 서버 제어 타이머 초기화
         }
@@ -74,6 +89,9 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void Initialize()
         {
+            tmr_Sync.Interval = TimeSpan.FromSeconds(5); // 5초간격
+            tmr_Sync.Tick += new EventHandler(Sync_Tick);
+
             tmr_OperatingTime.Interval = TimeSpan.FromSeconds(1); // 1초간격
             tmr_OperatingTime.Tick += new EventHandler(OperatingTime_Tick);
 
@@ -97,7 +115,11 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void InitSetting()
         {
-            set_lbVersion.Content = "프로그램 버전 : " + Deploy.CurrentVersion;
+            set_lbCurrentVersion.Content = "현재버전 : " + Deploy.CurrentVersion;
+            set_lbLatestVersion.Content = "최신버전 : " + Deploy.LatestVersion;
+
+            tmr_Sync.Start();
+            Sync_Tick(null, null);
         }
 
         /// <summary>
@@ -169,6 +191,13 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
+            SendCommand("list");
+
+            string players = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
+            if (players != "0")
+                if (WPFCom.Message("현재 접속중인 플레이어가 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                    return;
+
             SetState("서버 종료 요청 전송");
             SendCommand("stop");
             btnForceStop.IsEnabled = true;
@@ -179,7 +208,7 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnForceStop_Click(object sender, RoutedEventArgs e)
         {
-            if (WPFCom.Message("이 기능은 일반적인 종료요청에 서버가 응답하지 않을때 사용하는 기능입니다." + Environment.NewLine + "서버를 강제 종료하실경우 서버 중요파일에 문제가 생길 수 있습니다." + Environment.NewLine + Environment.NewLine + "정말로 강제종료 하시겠습니까?", "Bell Smart Server", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+            if (WPFCom.Message("이 기능은 일반적인 종료요청에 서버가 응답하지 않을때 사용하는 기능입니다." + Environment.NewLine + "서버를 강제 종료하실경우 서버 중요파일에 문제가 생길 수 있습니다." + Environment.NewLine + Environment.NewLine + "정말로 강제종료 하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                 return;
 
             SetState("서버 강제종료 요청");
@@ -201,6 +230,13 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnRestart_Click(object sender, RoutedEventArgs e)
         {
+            SendCommand("list");
+
+            string players = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
+            if (players != "0")
+                if (WPFCom.Message("현재 접속중인 플레이어가 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                    return;
+
             SetState("서버 중단");
 
             SetState("서버 가동");
@@ -276,9 +312,18 @@ namespace Bell_Smart_Server.Source.Frame
             btnEdit.IsEnabled = !State;
             btnStart.IsEnabled = !State;
 
+            btnPlayerRefresh.IsEnabled = State;
             btnStop.IsEnabled = State;
             btnSave.IsEnabled = State;
             tcAdditional.IsEnabled = State;
+            btnKick.IsEnabled = State;
+            btnBan.IsEnabled = State;
+            btnWhispers.IsEnabled = State;
+            btnWarn.IsEnabled = State;
+            btnGive.IsEnabled = State;
+            btnPlayerRefresh.IsEnabled = State;
+            btnSelectAll.IsEnabled = State;
+            btnSelectCancelAll.IsEnabled = State;
         }
 
         /// <summary>
@@ -348,10 +393,27 @@ namespace Bell_Smart_Server.Source.Frame
             if (output.Contains(" INFO]"))
             {
                 // 정보 분석 함수
+                /*if (listLoading)
+                {
+                    // 기본 : [02:19:49 INFO]: Usage: /tell <player> <message>
+                    // 에센셜 : [02:19:51 INFO]: /tell <to> <message>
+                    if (output.Contains("Usage: /tell <player> <message>") || output.Contains("/tell <to> <message>"))
+                    {
+
+                    }
+
+                    return;
+                }*/
+
+
                 if (output.Contains("TPS from last"))
                     CheckForTPS(output);
                 else if (output.Contains(" players online:") || output.Contains("명의 플레이어가 접속중입니다."))
                     CheckForPlayerList(output);
+                else if (output.Contains("] logged in with entity id "))
+                    ConnectPlayer(output);
+                else if (output.Contains(" lost connection: "))
+                    DisconnectPlayer(output);
                 else if (output.Contains(" INFO]: Done ("))
                     CheckForDone(output);
 
@@ -441,6 +503,71 @@ namespace Bell_Smart_Server.Source.Frame
 
             // 출력
             lbTPS.Content = "TPS : " + tps;
+        }
+
+        /// <summary>
+        /// 플레이어 접속을 분석하여 리스트를 정리합니다.
+        /// </summary>
+        /// <param name="output">로그 출력 데이터</param>
+        private void ConnectPlayer(string output)
+        {
+            // [23:57:59 INFO]: Bell_[/127.0.0.1:14409] logged in with entity id 146 at ([world] -93.5, 64.0, 251.5)
+            // [00:40:55 INFO]: SeA_13[/222.233.12.212:49496] logged in with entity id 1866579 at ([world] 579.9313052379114, 66.0, 953.5839232426342)
+            string[] temp;
+            Player player = new Player();
+
+            try
+            {
+                temp = Common.stringSplit(output, " INFO]: ");
+                temp = Common.stringSplit(temp[1], "] logged in with entity id ");
+                temp = temp[0].Split('[');
+
+                player.nickname = temp[0];
+                player.ip = temp[1].Split(':')[0].Remove(0, 1);
+                player.jointime = DateTime.Now.ToString();
+                player.suspects = "0"; // 의심수치
+
+                lstPlayers.Items.Add(player);
+            }
+            catch
+            {
+                AddLog("플레이어 접속 리스트 추가 실패 (" + output + ")", LOG.ERROR);
+            }
+        }
+
+        /// <summary>
+        /// 플레이어 접속종료를 분석하여 리스트를 정리합니다.
+        /// </summary>
+        /// <param name="output">로그 출력 데이터</param>
+        private void DisconnectPlayer(string output)
+        {
+            // [23:59:12 INFO]: Bell_ lost connection: Server closed
+            // [00:52:33 INFO]: abnavv lost connection: Disconnected
+            // [00:51:51 INFO]: SeA_13 lost connection: Internal Exception: java.io.IOException: 현재 연결은 사용자의 호스트 시스템의 소프트웨어의 의해 중단되었습니다
+            string[] temp;
+            string reason;
+            Player player = new Player();
+
+            try
+            {
+                temp = Common.stringSplit(output, " INFO]: ");
+                temp = Common.stringSplit(temp[1], " lost connection: ");
+
+                player.nickname = temp[0];
+                reason = temp[1];
+
+                foreach (Player pr in lstPlayers.Items)
+                    if (pr.nickname == player.nickname)
+                    {
+                        player = pr;
+                        break;
+                    }
+                lstPlayers.Items.Remove(player);
+            }
+            catch
+            {
+                AddLog("플레이어 접속종료 분석 실패 (" + output + ")", LOG.ERROR);
+            }
         }
 
         /// <summary>
@@ -548,6 +675,11 @@ namespace Bell_Smart_Server.Source.Frame
                 btnSend.IsEnabled = true;
         }
 
+        private void btnPlayerRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            SendCommand("list");
+        }
+
         #endregion
 
         #region *** PROFILE ***
@@ -614,7 +746,7 @@ namespace Bell_Smart_Server.Source.Frame
         {
             if (ServerProc != null && !ServerProc.HasExited)
             {
-                if (WPFCom.Message("현재 서버가 가동중입니다." + Environment.NewLine + "정말로 서버를 종료하시겠습니까?", "Bell Smart Server", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                if (WPFCom.Message("현재 서버가 가동중입니다." + Environment.NewLine + "정말로 서버를 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                 {
                     e.Cancel = true;
                     return;
@@ -626,12 +758,229 @@ namespace Bell_Smart_Server.Source.Frame
                     ServerProc.WaitForExit(10000);
                     if (!ServerProc.HasExited)
                     {
-                        WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", "Bell Smart Server");
+                        WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", Base.PROJECT.Bell_Smart_Server);
                         e.Cancel = true;
                     }
                 }
                 catch { }
             }
+        }
+
+        #region *** SETTING ***
+
+        private void Sync_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                set_lbLatestVersion.Content = "최신버전 : " + Deploy.LatestVersion;
+                set_lbUpdateLock.Content = "업데이트 잠금 : " + Controller.GetLockFlag()[0];
+
+                if (Deploy.UpdateAvailable())
+                    set_lbUpdateLock.ToolTip = "최신버전이 발견되었습니다. 업데이트 잠금이 해제되면 자동으로 업데이트 됩니다.";
+            }
+            catch
+            {
+                set_lbUpdateLock.Content = "업데이트 잠금 : 잠금해제";
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 선택한 플레이어를 추방합니다.
+        /// </summary>
+        private void btnKick_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Player player in lstPlayers.Items)
+                if (player.select)
+                {
+                    list.Add(player.nickname);
+                    sb.Append(player.nickname + ", ");
+                }
+            try
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
+            catch { }
+
+            if (list.Count > 0)
+            {
+                if (WPFCom.Message(sb.ToString() + " 플레이어를 추방하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                    return;
+
+                foreach (string nickname in list)
+                    SendCommand("kick " + nickname);
+            }
+            else
+                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+        }
+
+        /// <summary>
+        /// 선택한 플레이어를 영구정지합니다.
+        /// </summary>
+        private void btnBan_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Player player in lstPlayers.Items)
+                if (player.select)
+                {
+                    list.Add(player.nickname);
+                    sb.Append(player.nickname + ", ");
+                }
+            try
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
+            catch { }
+
+            if (list.Count > 0)
+            {
+                if (WPFCom.Message(sb.ToString() + " 플레이어를 영구정지 하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                    return;
+
+                foreach (string nickname in list)
+                    SendCommand("ban " + nickname);
+            }
+            else
+                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+        }
+
+        /// <summary>
+        /// 선택한 플레이어에게 귓속말합니다.
+        /// </summary>
+        private void btnWhispers_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> list = new List<string>();
+
+            foreach (Player player in lstPlayers.Items)
+                if (player.select)
+                {
+                    list.Add(player.nickname);
+                }
+
+            if (list.Count != 1)
+            {
+                WPFCom.Message("귓속말은 한명에게만 할 수 있습니다.", Base.PROJECT.Bell_Smart_Server);
+                return;
+            }
+
+            txtCommand.Text = "tell " + list[0] + " ";
+        }
+
+        /// <summary>
+        /// 선택한 플레이어에게 경고를 부여합니다.
+        /// </summary>
+        private void btnWarn_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Player player in lstPlayers.Items)
+                if (player.select)
+                {
+                    list.Add(player.nickname);
+                    sb.Append(player.nickname + ", ");
+                }
+            try
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
+            catch { }
+
+            if (list.Count > 0)
+            {
+                if (WPFCom.Message(sb.ToString() + " 플레이어에게 경고하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                    return;
+                ItemCollection playerList = lstPlayers.Items;
+                foreach (string nickname in list)
+                    try
+                    {
+                        foreach (Player player in playerList)
+                        {
+                            if (player.nickname == nickname)
+                            {
+                                int index = lstPlayers.Items.IndexOf(player);
+                                lstPlayers.Items.Remove(player);
+                                player.suspects = (Convert.ToInt32(player.suspects) + 1).ToString();
+                                lstPlayers.Items.Insert(index, player);
+                                SendCommand("say " + nickname + " 경고 누적");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AddLog("경고 누적중 에러 발생" + Environment.NewLine + ex.Message, LOG.ERROR);
+                    }
+            }
+            else
+                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+        }
+
+        /// <summary>
+        /// 선택한 플레이어에게 아이템을 증정합니다.
+        /// </summary>
+        private void btnGive_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Convert.ToInt32(txtItemAmount.Text);
+            }
+            catch
+            {
+                WPFCom.Message("아이템 수량은 숫자만 입력할 수 있습니다.", Base.PROJECT.Bell_Smart_Server);
+                return;
+            }
+
+            List<string> list = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Player player in lstPlayers.Items)
+                if (player.select)
+                {
+                    list.Add(player.nickname);
+                    sb.Append(player.nickname + ", ");
+                }
+            try
+            {
+                sb.Remove(sb.Length - 2, 2);
+            }
+            catch { }
+
+            if (list.Count > 0)
+            {
+                if (WPFCom.Message(sb.ToString() + " 플레이어에게 " + txtItemID.Text + " 아이템을 " + txtItemAmount.Text + "개 지급하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                    return;
+
+                foreach (string nickname in list)
+                    SendCommand("give " + nickname + " " + txtItemID.Text + " " + txtItemAmount.Text);
+            }
+            else
+                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+        }
+
+        /// <summary>
+        /// 리스트에서 모든 플레이어를 선택합니다.
+        /// </summary>
+        private void btnSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Player player in lstPlayers.Items)
+                player.select = true;
+            lstPlayers.Items.Refresh();
+        }
+
+        /// <summary>
+        /// 리스트에서 모든 플레이어를 선택해제합니다.
+        /// </summary>
+        private void btnSelectCancelAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (Player player in lstPlayers.Items)
+                player.select = false;
+            lstPlayers.Items.Refresh();
         }
     }
 }

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
         mc:Ignorable="d"
-        Title="ServerSetting" Height="300" Width="300">
+        Title="서버 상세설정" Height="327.473" Width="439.054" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+
     </Grid>
 </Window>

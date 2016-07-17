@@ -115,7 +115,7 @@ namespace Bell_Smart_Tools.Source.BSS
                         }
                         catch
                         {
-                            WinCom.Message("다운로드에 실패하였습니다." + Environment.NewLine + "File=" + tmp);
+                            WinCom.Message("다운로드에 실패하였습니다." + Environment.NewLine + "File=" + tmp, Base.PROJECT.Bell_Smart_Tools);
                         }
                     pb_Down.PerformStep(); // 진행
                     Application.DoEvents();

@@ -212,7 +212,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 검사
             if (cbName.SelectedItem == null)
             {
-                WPFCom.Message("수정할 팩을 선택해주세요.");
+                WPFCom.Message("수정할 팩을 선택해주세요.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
@@ -257,7 +257,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
             catch (Exception ex)
             {
-                WPFCom.Message("업로드 폴더 로드중 문제가 발생하였습니다." + Environment.NewLine + ex.Message);
+                WPFCom.Message("업로드 폴더 로드중 문제가 발생하였습니다." + Environment.NewLine + ex.Message, Base.PROJECT.Bell_Smart_Manager);
             }
 
             // 업로드된 파일정보 로드
@@ -277,26 +277,26 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     list.Add(sv.id);
             if (list.Count == 0)
             {
-                WPFCom.Message("1개 이상의 서버에 클라이언트 파일을 업로드 해야합니다.");
+                WPFCom.Message("1개 이상의 서버에 클라이언트 파일을 업로드 해야합니다.", Base.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
             if (BSN_BSM.RegisterFile(GetSelectType(), GetSelectKind(), "id", "pw", GetSelectVerid(), (string)lbUploadURL.Content, File, list.ToArray()))
-                WPFCom.Message("성공적으로 등록하였습니다.");
+                WPFCom.Message("성공적으로 등록하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("등록에 실패하였습니다.");
+                WPFCom.Message("등록에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnRefresh_Click(sender, e); // 업로드 된 파일 상태 재 로드
         }
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            if (WPFCom.Message("정보 수정을 마감하면 더 이상 해당 버전의 정보를 수정할 수 없습니다." + Environment.NewLine + "정말로 마감하시겠습니까?", "Bell Smart Manager", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+            if (WPFCom.Message("정보 수정을 마감하면 더 이상 해당 버전의 정보를 수정할 수 없습니다." + Environment.NewLine + "정말로 마감하시겠습니까?", Base.PROJECT.Bell_Smart_Manager, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                 return;
 
             if (BSN_BSM.SubmitVersion(GetSelectType(), "id", "pw", GetSelectVerid()))
-                WPFCom.Message("검토 요청에 성공하였습니다.");
+                WPFCom.Message("검토 요청에 성공하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("검토 요청에 실패하였습니다.");
+                WPFCom.Message("검토 요청에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnLoad_Click(sender, e);
         }
 
@@ -312,9 +312,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (BSN_BSM.ResetVersion(GetSelectType(), GetSelectKind(), "id", "pw", GetSelectVerid()))
-                WPFCom.Message("초기화에 성공하였습니다.");
+                WPFCom.Message("초기화에 성공하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("초기화에 실패하였습니다.");
+                WPFCom.Message("초기화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
             btnRefresh_Click(sender, e); // 업로드 된 파일 상태 재 로드
         }
     }
