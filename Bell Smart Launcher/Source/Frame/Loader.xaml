@@ -23,7 +23,7 @@
                 </LinearGradientBrush>
             </ProgressBar.Background>
         </ProgressBar>
-        <Label x:Name="lbState" Content="로더 초기화중" VerticalAlignment="Bottom" Margin="10,0,10,31" Foreground="White" HorizontalContentAlignment="Center"/>
+        <Label x:Name="lbStatus" Content="로더 초기화중" VerticalAlignment="Bottom" Margin="10,0,10,31" Foreground="White" HorizontalContentAlignment="Center"/>
 
     </Grid>
 </Window>

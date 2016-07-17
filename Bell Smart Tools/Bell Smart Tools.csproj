@@ -84,13 +84,13 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Bell Smart Tools_Key.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Bell Smart Tools_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>02750704AAD61300336D2C209B21596319858718</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B83B593DAF83FB532B1335244C6C3BD8AF7FE97E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Bell Smart Tools_Key.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Bell Smart Tools_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Bell_Smart_Tools.Program</StartupObject>
@@ -249,7 +249,7 @@
       <DependentUpon>BST_Runtime.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Bell Smart Tools_Key.pfx" />
+    <None Include="Bell Smart Tools_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

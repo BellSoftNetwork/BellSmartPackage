@@ -79,7 +79,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// 진행상황 설명을 설정합니다.
         /// </summary>
         /// <param name="Log">로그</param>
-        private void SetState(string Log)
+        private void SetStatus(string Log)
         {
             lbLog.Content = Log;
             Common.DoEvents();
@@ -95,7 +95,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             installing = true;
             while (Controller.GetLockFlag().Contains(Controller.LockBit.Install_Game))
             {
-                SetState("현재 다른 모드팩이 설치중입니다.");
+                SetStatus("현재 다른 모드팩이 설치중입니다.");
                 Common.Delay(1000);
             }
             Controller.SetLockFlag(Controller.LockBit.Install_Game); // 업데이트 잠금
@@ -110,7 +110,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             pbTotal.Value = 0;
             pbTotal.Maximum = install.FullCapacity;
 
-            SetState("설치준비 완료");
+            SetStatus("설치준비 완료");
 
             // 팩 정보 저장
             DataProtect.DataSave(install.PathPack + "data.bdx", "Name", install.Name);
@@ -119,7 +119,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             DataProtect.DataSave(install.PathVersion + "config.bdx", "State", "Setup");
 
             // 파일 다운로드
-            SetState("설치 시작");
+            SetStatus("설치 시작");
             foreach (BSN_BSL.Install value in install.File)
             {
                 WebClient WC = new WebClient();
@@ -141,21 +141,21 @@ namespace Bell_Smart_Launcher.Source.Frame
                     if (Overwrite || !File.Exists(install.PathVersion + value.url)) // 덮어쓰기를 허용했거나 로컬디스크에 파일이 없을때
                     {
                         WC.DownloadFile(serverURL, install.PathVersion + value.url); // 파일 다운로드
-                        SetState("다운로드 : " + value.url);
+                        SetStatus("다운로드 : " + value.url);
                     }
                     else // 파일이 있을때
                         if (pro.MD5Hash(install.PathVersion + value.url) != value.hash) // 서버에 등록된 MD5해시와 이미 설치된 파일의 해시가 다르면,
                         {
                             WC.DownloadFile(serverURL, install.PathVersion + value.url); // 파일 다운로드
-                            SetState("변경된 파일 다운로드 : " + value.url);
+                            SetStatus("변경된 파일 다운로드 : " + value.url);
                         }
                         else // 같으면 이미 설치된걸로 판단, 재 다운로드를 하지 않음으로 네트워크 사용량을 줄임
-                            SetState("이미 설치됨 : " + value.url);
+                            SetStatus("이미 설치됨 : " + value.url);
                     pbTotal.Value += Convert.ToDouble(value.size); // 진행바 설정
                 }
                 catch
                 {
-                    SetState("다운로드 실패 : " + value.url);
+                    SetStatus("다운로드 실패 : " + value.url);
                     failList.Add(value.url);
                     failSize += Convert.ToInt32(value.size);
                     Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
@@ -167,13 +167,13 @@ namespace Bell_Smart_Launcher.Source.Frame
             DataProtect.DataSave(install.PathVersion + "config.bdx", "State", "Installed");
             Controller.SetLockFlag(Controller.LockBit.Install_Game, false); // 업데이트 잠금해제
 
-            SetState("설치완료");
+            SetStatus("설치완료");
 
             // 소요시간 표시
             long endTime = DateTime.Now.Ticks; // 종료시간
             long installTime = (endTime - startTime) / 10000000; // 1틱은 천만분의 1초
 
-            SetState("설치 소요시간 : " + (installTime / 60) + "분 " + (installTime % 60) + "초");
+            SetStatus("설치 소요시간 : " + (installTime / 60) + "분 " + (installTime % 60) + "초");
 
             // 다운로드 실패 알림
             if (failSize > 0)
@@ -194,7 +194,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             Common.Delay(10000); // 소요시간 확인할 시간좀 주고
             for (int i = 10; i > 0; i--)
             {
-                SetState(i + "초 후 설치기가 자동으로 닫힙니다.");
+                SetStatus(i + "초 후 설치기가 자동으로 닫힙니다.");
                 Common.Delay(1000);
             }
 
@@ -229,7 +229,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             /// 런타임 설치유무확인
             foreach (BSN_BSL.Install value in runtimeInstall)
                 pbTotal.Maximum += Convert.ToDouble(value.size);
-            SetState("런타임 설치준비 완료");
+            SetStatus("런타임 설치준비 완료");
             
             // 원활한 파일서버 탐색
             BSN_BSL.Server runtimeServer = null; // 파일서버정보
@@ -238,10 +238,10 @@ namespace Bell_Smart_Launcher.Source.Frame
                 BSN_BSL.Server server = BSN_BSL.LoadServerDetail(serverid);
                 runtimeServer = server;
             }
-            SetState("최적의 런타임 파일 서버 탐색완료");
+            SetStatus("최적의 런타임 파일 서버 탐색완료");
 
             // 파일 다운로드
-            SetState("런타임 설치 시작");
+            SetStatus("런타임 설치 시작");
             foreach (BSN_BSL.Install value in runtimeInstall)
             {
                 WebClient WC = new WebClient();
@@ -260,21 +260,21 @@ namespace Bell_Smart_Launcher.Source.Frame
                         Directory.CreateDirectory(createPath); // 디렉토리 생성
                     WC.DownloadFile(serverURL, basePath + value.url); // 파일 다운로드
                     pbTotal.Value += Convert.ToDouble(value.size); // 진행바 설정
-                    SetState("다운로드 : " + value.url);
+                    SetStatus("다운로드 : " + value.url);
                 }
                 catch
                 {
-                    SetState("다운로드 실패 : " + value.url);
+                    SetStatus("다운로드 실패 : " + value.url);
                     Common.Delay(1000); // 뭐가 실패인지 사용자에게 알려주기 위해 잠시 멈춤
                 }
             }
-            SetState("런타임 설치완료");
+            SetStatus("런타임 설치완료");
             Controller.SetLockFlag(Controller.LockBit.Install_Runtime, false); // 업데이트 잠금해제
 
             long endTime = DateTime.Now.Ticks; // 종료시간
             long installTime = (endTime - startTime) / 10000000; // 1틱은 천만분의 1초
 
-            SetState("설치 소요시간 : " + (installTime / 60) + "분 " + (installTime % 60) + "초");
+            SetStatus("설치 소요시간 : " + (installTime / 60) + "분 " + (installTime % 60) + "초");
         }
     }
 }

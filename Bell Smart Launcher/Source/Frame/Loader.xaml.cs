@@ -29,48 +29,48 @@ namespace Bell_Smart_Launcher.Source.Frame
             pbLoad.Maximum = 30;
             pbLoad.Value = 0;
 
-            SetState("Initialize Component");
+            SetStatus("Initialize Component");
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             // 진행률 20 추가
 
-            SetState("로더 실행 완료", 1);
+            SetStatus("로더 실행 완료", 1);
 
-            SetState("런처 최신버전 체크", 1);
+            SetStatus("런처 최신버전 체크", 1);
             if (Controller.UpdateCheck())
             {
-                SetState("업데이트 시작", 1);
+                SetStatus("업데이트 시작", 1);
                 this.Close();
 
                 return;
             }
 
-            SetState("로더 초기화 시작", 1);
+            SetStatus("로더 초기화 시작", 1);
             if (Initialize())
             {
-                SetState("로더 초기화 완료", 1);
+                SetStatus("로더 초기화 완료", 1);
 
-                SetState("런처 메인 생성중", 1);
+                SetStatus("런처 메인 생성중", 1);
                 Main Main = new Main();
-                SetState("런처 메인 생성 완료", 2);
+                SetStatus("런처 메인 생성 완료", 2);
 
-                SetState("런처 초기화 시작", 1);
+                SetStatus("런처 초기화 시작", 1);
                 Main.Initialize();
-                SetState("런처 초기화 완료", 10);
+                SetStatus("런처 초기화 완료", 10);
 
-                SetState("런처 실행", 1);
+                SetStatus("런처 실행", 1);
                 Main.Show();
-                SetState("런처 실행 완료", 1);
+                SetStatus("런처 실행 완료", 1);
             }
 
             this.Close();
         }
 
-        private void SetState(string value, double addProgress = 0)
+        private void SetStatus(string value, double addProgress = 0)
         {
-            lbState.Content = value;
+            lbStatus.Content = value;
             pbLoad.Value += addProgress;
             Common.DoEvents();
         }
@@ -80,26 +80,26 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 진행률 10 추가
 
             // 주요정보 로드
-            SetState("일반 설정을 불러오는중", 1);
+            SetStatus("일반 설정을 불러오는중", 1);
             GeneralSettingLoad();
-            SetState("일반 설정 로드 완료", 1);
+            SetStatus("일반 설정 로드 완료", 1);
 
-            SetState("게임 설정을 불러오는중", 1);
+            SetStatus("게임 설정을 불러오는중", 1);
             GameSettingLoad();
-            SetState("게임 설정 로드 완료", 1);
+            SetStatus("게임 설정 로드 완료", 1);
 
-            SetState("디버그 설정을 불러오는중", 1);
+            SetStatus("디버그 설정을 불러오는중", 1);
             DebugSettingLoad();
-            SetState("디버그 설정 로드 완료", 1);
+            SetStatus("디버그 설정 로드 완료", 1);
 
             // 컨트롤러 실행
-            SetState("런처 컨트롤러 생성시작", 1);
+            SetStatus("런처 컨트롤러 생성시작", 1);
             Controller Cont = new Controller();
-            SetState("런처 컨트롤러 생성 완료", 1);
+            SetStatus("런처 컨트롤러 생성 완료", 1);
 
-            SetState("런처 컨트롤러 초기화 시작", 1);
+            SetStatus("런처 컨트롤러 초기화 시작", 1);
             Cont.Initialize();
-            SetState("런처 컨트롤러 초기화 완료", 1);
+            SetStatus("런처 컨트롤러 초기화 완료", 1);
 
             return true;
         }
