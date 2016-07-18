@@ -29,12 +29,14 @@ namespace Bell_Smart_Server.Source.Frame
     {
         #region *** FIELD ***
 
-        private DispatcherTimer tmr_Sync;
-        private DispatcherTimer tmr_OperatingTime;
-        private DispatcherTimer tmr_ServerControl;
+        private DispatcherTimer tmr_SecondControl; // 빠른 업데이트 주기로 계속 제어
+        private DispatcherTimer tmr_Sync; // 온라인과 연결하여 싱크 제어
+        private DispatcherTimer tmr_OperatingTime; // 가동시간 제어
+        private DispatcherTimer tmr_ServerControl; // 서버 제어
         private Process ServerProc;
         private long StartTime;
         private bool AutoRestart;
+        private int LogLimit = 3000; // 로그 제한 줄
         //private bool listLoading;
 
         /// <summary>
@@ -42,9 +44,11 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private enum LOG
         {
+            NOTIFY,
             INFO,
             WARN,
             ERROR,
+            LOG,
             OTHER
         }
 
@@ -78,9 +82,10 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void PreInitialize()
         {
-            this.MinHeight = 400;
-            this.MinWidth = 900;
+            this.MinHeight = 450;
+            this.MinWidth = 1000;
 
+            tmr_SecondControl = new DispatcherTimer(); // 초 제어 타이머 초기화
             tmr_Sync = new DispatcherTimer(); // 싱크 타이머 초기화
             tmr_OperatingTime = new DispatcherTimer(); // 가동시간 타이머 초기화
             tmr_ServerControl = new DispatcherTimer(); // 서버 제어 타이머 초기화
@@ -91,14 +96,20 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void Initialize()
         {
-            tmr_Sync.Interval = TimeSpan.FromSeconds(5); // 5초간격
+            tmr_SecondControl.Interval = TimeSpan.FromSeconds(1); // 1초 간격
+            tmr_SecondControl.Tick += new EventHandler(SecondControl_Tick);
+
+            tmr_Sync.Interval = TimeSpan.FromSeconds(5); // 5초 간격
             tmr_Sync.Tick += new EventHandler(Sync_Tick);
 
-            tmr_OperatingTime.Interval = TimeSpan.FromSeconds(1); // 1초간격
+            tmr_OperatingTime.Interval = TimeSpan.FromSeconds(1); // 1초 간격
             tmr_OperatingTime.Tick += new EventHandler(OperatingTime_Tick);
 
-            tmr_ServerControl.Interval = TimeSpan.FromSeconds(60); // 60초간격
+            tmr_ServerControl.Interval = TimeSpan.FromSeconds(60); // 60초 간격
             tmr_ServerControl.Tick += new EventHandler(ServerControl_Tick);
+
+            tmr_SecondControl.Start(); // 1초 타이머 시작
+            SecondControl_Tick(null, null);
 
             InitServer();
             InitSetting();
@@ -394,6 +405,14 @@ namespace Bell_Smart_Server.Source.Frame
         }
 
         /// <summary>
+        /// 1초간격으로 제어합니다.
+        /// </summary>
+        private void SecondControl_Tick(object sender, EventArgs e)
+        {
+            lbNowTime.Content = "현재 시간 : " + DateTime.Now.ToString();
+        }
+
+        /// <summary>
         /// 서버 출력 로그를 분석합니다.
         /// </summary>
         /// <param name="output">출력 텍스트</param>
@@ -437,6 +456,14 @@ namespace Bell_Smart_Server.Source.Frame
                     DisconnectPlayer(output);
                 else if (output.Contains(" INFO]: Done ("))
                     CheckForDone(output);
+                
+                if (output.Contains(" Client attempting to join with "))
+                {
+                    // [20:44:34 INFO]: Client attempting to join with 132 mods : BuildCraft|
+                    // 긴 출력문인 서버접속시 플레이어 모드리스트는 로그탭에 기록함.
+                    AddLog(output, LOG.LOG);
+                    return;
+                }
 
                 AddLog(output, LOG.INFO);
             }
@@ -547,13 +574,26 @@ namespace Bell_Smart_Server.Source.Frame
                 player.ip = temp[1].Split(':')[0].Remove(0, 1);
                 player.jointime = DateTime.Now.ToString();
                 player.suspects = "0"; // 의심수치
-
+                
                 lstPlayers.Items.Add(player);
             }
             catch
             {
                 AddLog("플레이어 접속 리스트 추가 실패 (" + output + ")", LOG.ERROR);
             }
+
+            try
+            {
+                string nowPlayer = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
+                int convertPlayer = Convert.ToInt32(nowPlayer); // 숫자가 아니면 catch로 이동됨
+                lbPlayers.Content = lbPlayers.Content.ToString().Replace(nowPlayer + "/", (convertPlayer + 1).ToString() + "/");
+            }
+            catch
+            {
+                AddLog("접속자 추가 실패 (" + output + ")", LOG.ERROR);
+            }
+
+            lstPlayers.Items.Refresh();
         }
 
         /// <summary>
@@ -589,6 +629,19 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 AddLog("플레이어 접속종료 분석 실패 (" + output + ")", LOG.ERROR);
             }
+
+            try
+            {
+                string nowPlayer = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
+                int convertPlayer = Convert.ToInt32(nowPlayer); // 숫자가 아니면 catch로 이동됨
+                lbPlayers.Content = lbPlayers.Content.ToString().Replace(nowPlayer + "/", (convertPlayer - 1).ToString() + "/");
+            }
+            catch
+            {
+                AddLog("접속자 제거 실패 (" + output + ")", LOG.ERROR);
+            }
+
+            lstPlayers.Items.Refresh();
         }
 
         /// <summary>
@@ -598,29 +651,53 @@ namespace Bell_Smart_Server.Source.Frame
         /// <param name="type">로그 기록 타입</param>
         private void AddLog(string Data, LOG type)
         {
+            // 필드
+            TextBox tb;
+
             switch (type)
             {
-                case LOG.INFO:
-                    txtInfo.Text += Data + Environment.NewLine;
-                    txtInfo.ScrollToEnd();
-                    txtInfo.CaretIndex = txtInfo.Text.Length;
+                case LOG.NOTIFY:
+                    tb = txtNotify;
+                    break;
 
+                case LOG.INFO:
+                    tb = txtInfo;
                     break;
 
                 case LOG.WARN:
-                    txtWarn.Text += Data + Environment.NewLine;
-                    txtWarn.ScrollToEnd();
-                    txtWarn.CaretIndex = txtWarn.Text.Length;
-
+                    tb = txtWarn;
                     break;
 
                 case LOG.ERROR:
-                    txtError.Text += Data + Environment.NewLine;
-                    txtError.ScrollToEnd();
-                    txtError.CaretIndex = txtError.Text.Length;
+                    tb = txtError;
+                    break;
 
+                case LOG.LOG:
+                    tb = txtLog;
+                    break;
+
+                case LOG.OTHER:
+                    tb = txtOther;
+                    break;
+
+                default:
+                    tb = txtOther;
                     break;
             }
+
+            // 출력
+            tb.Text += Data + Environment.NewLine;
+
+            // 스크롤
+            if ((bool)cbAutoScroll.IsChecked)
+            {
+                tb.ScrollToEnd();
+                tb.CaretIndex = tb.Text.Length;
+            }
+
+            // 오래된 로그 삭제
+            while (tb.LineCount > LogLimit)
+                tb.Text = tb.Text.Remove(0, tb.GetLineLength(0));
         }
 
         #endregion
@@ -680,21 +757,29 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            switch (tcLog.SelectedIndex)
+            switch ((string)tcLog.SelectedItem)
             {
-                case 0:
+                case "알림":
+                    txtNotify.Clear();
+                    break;
+
+                case "정보":
                     txtInfo.Clear();
                     break;
 
-                case 1:
+                case "경고":
                     txtWarn.Clear();
                     break;
 
-                case 2:
+                case "에러":
                     txtError.Clear();
                     break;
 
-                case 3:
+                case "로그":
+                    txtLog.Clear();
+                    break;
+
+                case "기타":
                     txtOther.Clear();
                     break;
             }
@@ -714,6 +799,7 @@ namespace Bell_Smart_Server.Source.Frame
         private void btnPlayerRefresh_Click(object sender, RoutedEventArgs e)
         {
             SendCommand("list");
+            lstPlayers.Items.Refresh();
         }
 
         #endregion
@@ -917,6 +1003,7 @@ namespace Bell_Smart_Server.Source.Frame
                 return;
             }
 
+            cbSay.IsChecked = false;
             txtCommand.Text = "tell " + list[0] + " ";
         }
 

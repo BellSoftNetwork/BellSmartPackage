@@ -5,12 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
         mc:Ignorable="d"
-        Title="Bell Smart Server" Height="527.119" Width="1059.423" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing">
+        Title="Bell Smart Server" Height="500" Width="1100" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing">
     <Grid>
         <TabControl x:Name="tcServer">
             <TabItem Header="메인서버">
                 <Grid>
                     <TabControl x:Name="tcLog" Margin="1.382,0,605,28">
+                        <TabItem Header="알림">
+                            <Grid>
+                                <TextBox x:Name="txtNotify" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                            </Grid>
+                        </TabItem>
                         <TabItem Header="정보">
                             <Grid>
                                 <TextBox x:Name="txtInfo" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
@@ -31,14 +36,20 @@
                                 <TextBox x:Name="txtOther" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
                             </Grid>
                         </TabItem>
+                        <TabItem Header="로그" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+                            <Grid>
+                                <TextBox x:Name="txtLog" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+                            </Grid>
+                        </TabItem>
                     </TabControl>
                     <GroupBox x:Name="gbStatus" Header="상황" HorizontalAlignment="Right" VerticalAlignment="Top" Height="180" Width="300" Margin="0,2,300,0">
                         <Grid>
                             <Label x:Name="lbState" Content="상태 : 초기화 되지 않음" VerticalAlignment="Top"/>
-                            <Label x:Name="lbStartTime" Content="시작 시간 : 시작 안함" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25.96,0,0"/>
-                            <Label x:Name="lbOperatingTime" Content="가동 시간 : 0일 0시간 0분 0초" HorizontalAlignment="Left" Margin="0,51.92,0,0" Width="232.041" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment"/>
-                            <Label x:Name="lbPlayers" Content="접속자 : 0/?" Margin="0,77.88,0,53.2" d:LayoutOverrides="Width, Height"/>
-                            <Label x:Name="lbTPS" Content="TPS : ?" Margin="0,0,0,27.24" d:LayoutOverrides="Width" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lbNowTime" Content="현재 시간 : 2016-07-18 오후 05:02:30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25.96,0,0" Width="288"/>
+                            <Label x:Name="lbStartTime" Content="시작 시간 : 시작 안함" Margin="0,51.92,0,0" VerticalAlignment="Top" d:LayoutOverrides="Width"/>
+                            <Label x:Name="lbOperatingTime" Content="가동 시간 : 0일 0시간 0분 0초" HorizontalAlignment="Left" Margin="0,77.88,0,0" Width="288" VerticalAlignment="Top"/>
+                            <Label x:Name="lbPlayers" Content="접속자 : 0/?" Margin="0,0,0,27.24" d:LayoutOverrides="Width" VerticalAlignment="Bottom"/>
+                            <Label x:Name="lbTPS" Content="TPS : ?" d:LayoutOverrides="Width" VerticalAlignment="Bottom" Margin="0,0,0,1.28"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="gbGeneral" Header="일반" HorizontalAlignment="Right" Width="300" Margin="0,2,0,0" Height="178" VerticalAlignment="Top">
@@ -54,12 +65,13 @@
                             <Button x:Name="btnForceStop" Content="서버 강제 종료" VerticalAlignment="Top" Margin="0,84.88,0,0" Click="btnForceStop_Click" IsEnabled="False" HorizontalAlignment="Right" Width="140"/>
                             <Button x:Name="btnServerSetting" Content="상세 설정" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="140" Margin="0,0,0,25.24" Click="btnServerSetting_Click"/>
                             <Button x:Name="btnClear" Content="로그 초기화" HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Margin="0,109.84,0,0" Click="btnClear_Click"/>
+                            <CheckBox x:Name="cbAutoScroll" Content="로그 자동 스크롤" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,5.141" Width="140" IsChecked="True"/>
                         </Grid>
                     </GroupBox>
                     <TextBox x:Name="txtCommand" Height="23" Margin="47.927,0,80,0" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyUp="txtCommand_KeyUp" TextChanged="txtCommand_TextChanged"/>
                     <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Click="btnSend_Click" IsEnabled="False" Height="23"/>
                     <TabControl x:Name="tcAdditional" Margin="0,185,0,28" HorizontalAlignment="Right" Width="600">
-                        <TabItem Header="플레이어">
+                        <TabItem Header="접속자">
                             <Grid>
                                 <ListView x:Name="lstPlayers" Margin="0,0,243.261,28">
                                     <ListView.View>
@@ -91,6 +103,9 @@
                                 <Button x:Name="btnSelectCancelAll" Content="모두 선택해제" VerticalAlignment="Bottom" Margin="264.504,0,243.261,3.04" Click="btnSelectCancelAll_Click" IsEnabled="False"/>
                             </Grid>
                         </TabItem>
+                        <TabItem Header="사용자">
+                            <Grid/>
+                        </TabItem>
                         <TabItem Header="이벤트">
                             <Grid/>
                         </TabItem>
@@ -104,7 +119,7 @@
             <TabItem Header="보조서버">
                 <Grid/>
             </TabItem>
-            <TabItem Header="설정">
+            <TabItem Header="설정" Height="21.96" VerticalAlignment="Bottom">
                 <Grid>
                     <GroupBox x:Name="set_gbGeneral" Header="일반">
                         <Grid>
@@ -112,9 +127,9 @@
                             <Label x:Name="set_lbLatestVersion" Content="최신버전 : 0.0.0.00" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25.96,0,0" Width="180"/>
                             <Label x:Name="set_lbUpdateLock" Content="업데이트 잠금 : 잠금해제" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,51.92,0,0" Width="180"/>
                             <Button x:Name="btnUpdate" Content="업데이트" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="180,30.96,0,0" Click="btnUpdate_Click" IsEnabled="False"/>
-                            <CheckBox x:Name="cbRemoveOldLog" Content="오래된 로그 자동삭제" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,101,0,0" IsEnabled="False"/>
-                            <CheckBox x:Name="cbLimitLogLine" Content="로그 최대 기록 줄 수 제한" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,121.098,0,0" IsEnabled="False"/>
-                            <TextBox x:Name="txtLimitLogLine" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1000" VerticalAlignment="Top" Width="120" Margin="166.075,119.098,0,0" IsEnabled="False"/>
+                            <CheckBox x:Name="cbRemoveOldLog" Content="오래된 로그 자동삭제" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,101,0,0" IsEnabled="False" IsChecked="True"/>
+                            <CheckBox x:Name="cbLimitLogLine" Content="로그 최대 기록 줄 수 제한" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,121.098,0,0" IsEnabled="False" IsChecked="True"/>
+                            <TextBox x:Name="txtLimitLogLine" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="3000" VerticalAlignment="Top" Width="120" Margin="166.075,119.098,0,0" IsEnabled="False"/>
                         </Grid>
                     </GroupBox>
                 </Grid>
