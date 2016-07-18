@@ -44,7 +44,8 @@ namespace Bell_Smart_Server.Source.Frame
         {
             INFO,
             WARN,
-            ERROR
+            ERROR,
+            OTHER
         }
 
         /// <summary>
@@ -452,7 +453,7 @@ namespace Bell_Smart_Server.Source.Frame
                     return;
                 }
 
-                AddLog(output, LOG.INFO);
+                AddLog(output, LOG.OTHER);
             }
         }
 
@@ -496,10 +497,10 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 temp = Common.stringSplit(output, " INFO]: 최대 ");
                 temp = Common.stringSplit(temp[1], "명이 접속 가능하고, ");
-                Now = temp[0];
+                Max = temp[0];
 
                 temp = Common.stringSplit(temp[1], "명의 플레이어가 접속중입니다.");
-                Max = temp[0];
+                Now = temp[0];
             }
 
             lbPlayers.Content = "접속자 : " + Now + "/" + Max;
@@ -679,9 +680,24 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            txtInfo.Clear();
-            txtWarn.Clear();
-            txtError.Clear();
+            switch (tcLog.SelectedIndex)
+            {
+                case 0:
+                    txtInfo.Clear();
+                    break;
+
+                case 1:
+                    txtWarn.Clear();
+                    break;
+
+                case 2:
+                    txtError.Clear();
+                    break;
+
+                case 3:
+                    txtOther.Clear();
+                    break;
+            }
         }
 
         /// <summary>

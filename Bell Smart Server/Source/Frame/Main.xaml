@@ -26,6 +26,11 @@
                                 <TextBox x:Name="txtError" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
                             </Grid>
                         </TabItem>
+                        <TabItem Header="기타">
+                            <Grid>
+                                <TextBox x:Name="txtOther" TextWrapping="Wrap" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
+                            </Grid>
+                        </TabItem>
                     </TabControl>
                     <GroupBox x:Name="gbStatus" Header="상황" HorizontalAlignment="Right" VerticalAlignment="Top" Height="180" Width="300" Margin="0,2,300,0">
                         <Grid>
@@ -107,6 +112,9 @@
                             <Label x:Name="set_lbLatestVersion" Content="최신버전 : 0.0.0.00" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,25.96,0,0" Width="180"/>
                             <Label x:Name="set_lbUpdateLock" Content="업데이트 잠금 : 잠금해제" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,51.92,0,0" Width="180"/>
                             <Button x:Name="btnUpdate" Content="업데이트" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="180,30.96,0,0" Click="btnUpdate_Click" IsEnabled="False"/>
+                            <CheckBox x:Name="cbRemoveOldLog" Content="오래된 로그 자동삭제" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,101,0,0" IsEnabled="False"/>
+                            <CheckBox x:Name="cbLimitLogLine" Content="로그 최대 기록 줄 수 제한" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,121.098,0,0" IsEnabled="False"/>
+                            <TextBox x:Name="txtLimitLogLine" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="1000" VerticalAlignment="Top" Width="120" Margin="166.075,119.098,0,0" IsEnabled="False"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

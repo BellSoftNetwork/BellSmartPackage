@@ -10,6 +10,7 @@
         <GroupBox x:Name="gbGeneral" Header="일반" d:LayoutOverrides="Width" Height="200" VerticalAlignment="Top">
             <Grid>
                 <CheckBox x:Name="cbAutoRestart" Content="자동 재시작" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                <TextBox x:Name="txtRestartDelay" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="50" Margin="99.195,8,0,0" IsEnabled="False"/>
             </Grid>
         </GroupBox>
         <GroupBox x:Name="gbAdvance" Header="고급" d:LayoutOverrides="Width, Height" Margin="0,205,0,0" Height="200" VerticalAlignment="Top">
