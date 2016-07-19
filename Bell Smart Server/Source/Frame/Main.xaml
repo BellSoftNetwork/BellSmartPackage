@@ -66,6 +66,7 @@
                             <Button x:Name="btnServerSetting" Content="상세 설정" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="140" Margin="0,0,0,25.24" Click="btnServerSetting_Click"/>
                             <Button x:Name="btnClear" Content="로그 초기화" HorizontalAlignment="Right" VerticalAlignment="Top" Width="140" Margin="0,109.84,0,0" Click="btnClear_Click"/>
                             <CheckBox x:Name="cbAutoScroll" Content="로그 자동 스크롤" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,5.141" Width="140" IsChecked="True"/>
+                            <Button x:Name="btnOldLogRemove" Content="오래된 로그 삭제" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="140" Margin="0,0,0,0.28" Click="btnOldLogRemove_Click"/>
                         </Grid>
                     </GroupBox>
                     <TextBox x:Name="txtCommand" Height="23" Margin="47.927,0,80,0" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyUp="txtCommand_KeyUp" TextChanged="txtCommand_TextChanged"/>

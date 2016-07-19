@@ -377,6 +377,107 @@ namespace Bell_Smart_Server.Source.Frame
         }
         
         /// <summary>
+        /// 선택된 로그 탭을 반환합니다.
+        /// </summary>
+        /// <returns>로그 탭</returns>
+        private LOG GetCurrentLogType()
+        {
+            try
+            {
+                int LogIndex = tcLog.SelectedIndex;
+
+                switch (LogIndex)
+                {
+                    case 0: // 알림
+                        return LOG.NOTIFY;
+
+                    case 1: // 정보
+                        return LOG.INFO;
+
+                    case 2: // 경고
+                        return LOG.WARN;
+
+                    case 3: // 에러
+                        return LOG.ERROR;
+
+                    case 4: // 기타
+                        return LOG.OTHER;
+
+                    case 5: // 로그
+                        return LOG.LOG;
+                }
+            }
+            catch (Exception ex)
+            {
+                AddLog("현재 로그탭을 반환하는 중 오류가 발생하였습니다." + Environment.NewLine + "에러내용 : " + ex.Message, LOG.ERROR);
+            }
+
+            return LOG.OTHER;
+        }
+
+        /// <summary>
+        /// 로그타입에 맞는 로그 텍스트박스를 반환합니다.
+        /// </summary>
+        /// <returns>텍스트박스</returns>
+        private TextBox GetLogBox(LOG log)
+        {
+            try
+            {
+                switch (log)
+                {
+                    case LOG.NOTIFY:
+                        return txtNotify;
+
+                    case LOG.INFO:
+                        return txtInfo;
+
+                    case LOG.WARN:
+                        return txtWarn;
+
+                    case LOG.ERROR:
+                        return txtError;
+
+                    case LOG.LOG:
+                        return txtLog;
+
+                    case LOG.OTHER:
+                        return txtOther;
+                }
+            }
+            catch (Exception ex)
+            {
+                AddLog("현재 로그박스를 반환하는 중 오류가 발생하였습니다." + Environment.NewLine + "에러내용 : " + ex.Message, LOG.ERROR);
+            }
+
+            return txtOther;
+        }
+
+        /// <summary>
+        /// 오래된 로그를 삭제합니다.
+        /// </summary>
+        /// <param name="log">로그 타입</param>
+        /// <param name="Limit">제한 줄 수</param>
+        /// <returns>성공여부</returns>
+        private bool RemoveOldLog(LOG log, int Limit)
+        {
+            try
+            {
+                TextBox tb = GetLogBox(log);
+
+                while (tb.LineCount > Limit)
+                    tb.Text = tb.Text.Remove(0, tb.GetLineLength(0));
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AddLog("오래된 로그 삭제중 에러 발생" + Environment.NewLine + "에러 내용 : " + ex.Message, LOG.ERROR);
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 타이머를 통해 시작시간을 기준으로 가동시간을 계산합니다.
         /// </summary>
         private void OperatingTime_Tick(object sender, EventArgs e)
@@ -456,7 +557,7 @@ namespace Bell_Smart_Server.Source.Frame
                     DisconnectPlayer(output);
                 else if (output.Contains(" INFO]: Done ("))
                     CheckForDone(output);
-                
+
                 if (output.Contains(" Client attempting to join with "))
                 {
                     // [20:44:34 INFO]: Client attempting to join with 132 mods : BuildCraft|
@@ -471,6 +572,8 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 AddLog(output, LOG.WARN);
             }
+            else if (output.Contains(" ERROR]"))
+                AddLog(output, LOG.ERROR);
             else
             {
                 if (output.Contains("WARN Unable to instantiate org.fusesource.jansi.WindowsAnsiOutputStream"))
@@ -651,39 +754,7 @@ namespace Bell_Smart_Server.Source.Frame
         /// <param name="type">로그 기록 타입</param>
         private void AddLog(string Data, LOG type)
         {
-            // 필드
-            TextBox tb;
-
-            switch (type)
-            {
-                case LOG.NOTIFY:
-                    tb = txtNotify;
-                    break;
-
-                case LOG.INFO:
-                    tb = txtInfo;
-                    break;
-
-                case LOG.WARN:
-                    tb = txtWarn;
-                    break;
-
-                case LOG.ERROR:
-                    tb = txtError;
-                    break;
-
-                case LOG.LOG:
-                    tb = txtLog;
-                    break;
-
-                case LOG.OTHER:
-                    tb = txtOther;
-                    break;
-
-                default:
-                    tb = txtOther;
-                    break;
-            }
+            TextBox tb = GetLogBox(type);
 
             // 출력
             tb.Text += Data + Environment.NewLine;
@@ -696,8 +767,7 @@ namespace Bell_Smart_Server.Source.Frame
             }
 
             // 오래된 로그 삭제
-            while (tb.LineCount > LogLimit)
-                tb.Text = tb.Text.Remove(0, tb.GetLineLength(0));
+            RemoveOldLog(type, LogLimit);
         }
 
         #endregion
@@ -726,6 +796,20 @@ namespace Bell_Smart_Server.Source.Frame
             // 마무으리
             txtCommand.Clear();
             btnSend.IsEnabled = false;
+            
+            // 명령어 유지기능
+            try
+            {
+                string[] temp = Command.Split(' ');
+
+                // 귓속말 유지기능
+                if (temp[0] == "tell")
+                    txtCommand.Text = "tell " + temp[1] + " ";
+
+                // 마지막 위치로 입력 설정
+                txtCommand.CaretIndex = txtCommand.Text.Length;
+            }
+            catch { }
         }
 
         /// <summary>
@@ -757,31 +841,13 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            switch ((string)tcLog.SelectedItem)
+            try
             {
-                case "알림":
-                    txtNotify.Clear();
-                    break;
-
-                case "정보":
-                    txtInfo.Clear();
-                    break;
-
-                case "경고":
-                    txtWarn.Clear();
-                    break;
-
-                case "에러":
-                    txtError.Clear();
-                    break;
-
-                case "로그":
-                    txtLog.Clear();
-                    break;
-
-                case "기타":
-                    txtOther.Clear();
-                    break;
+                GetLogBox(GetCurrentLogType()).Clear();
+            }
+            catch (Exception ex)
+            {
+                AddLog("로그 초기화중 오류가 발생하였습니다." + Environment.NewLine + "에러내용 : " + ex.Message, LOG.ERROR);
             }
         }
 
@@ -1132,6 +1198,21 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 WPFCom.Message("업데이트 시도 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지 이슈트래커 게시판에 이슈를 등록 해 주시기 바랍니다." + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Base.PROJECT.Bell_Smart_Server);
             }
+        }
+
+        /// <summary>
+        /// Log Limit에 따라 오래된 로그를 삭제합니다.
+        /// </summary>
+        private void btnOldLogRemove_Click(object sender, RoutedEventArgs e)
+        {
+            int OldCriteria = 1000;
+
+            RemoveOldLog(LOG.NOTIFY, OldCriteria);
+            RemoveOldLog(LOG.INFO, OldCriteria);
+            RemoveOldLog(LOG.WARN, OldCriteria);
+            RemoveOldLog(LOG.ERROR, OldCriteria);
+            RemoveOldLog(LOG.OTHER, OldCriteria);
+            RemoveOldLog(LOG.LOG, OldCriteria);
         }
     }
 }
