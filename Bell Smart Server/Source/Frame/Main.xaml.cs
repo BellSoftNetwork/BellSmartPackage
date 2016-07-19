@@ -465,7 +465,10 @@ namespace Bell_Smart_Server.Source.Frame
                 TextBox tb = GetLogBox(log);
 
                 while (tb.LineCount > Limit)
+                {
                     tb.Text = tb.Text.Remove(0, tb.GetLineLength(0));
+                    Common.DoEvents(); // 로그가 많으면 삭제하는데 오래걸리므로 UI 스레드 렉으로 인한 셧다운 방지
+                }
 
                 return true;
             }
@@ -1205,6 +1208,8 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnOldLogRemove_Click(object sender, RoutedEventArgs e)
         {
+            btnOldLogRemove.IsEnabled = false; // 중복클릭 방지
+
             int OldCriteria = 1000;
 
             RemoveOldLog(LOG.NOTIFY, OldCriteria);
@@ -1213,6 +1218,9 @@ namespace Bell_Smart_Server.Source.Frame
             RemoveOldLog(LOG.ERROR, OldCriteria);
             RemoveOldLog(LOG.OTHER, OldCriteria);
             RemoveOldLog(LOG.LOG, OldCriteria);
+
+            btnOldLogRemove.IsEnabled = true;
+            WPFCom.Message("모든탭의 오래된로그를 전부 삭제했습니다!", Base.PROJECT.Bell_Smart_Server);
         }
     }
 }
