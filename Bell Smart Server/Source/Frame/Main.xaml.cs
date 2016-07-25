@@ -1,4 +1,5 @@
 ﻿using Bell_Smart_Server.Source.Class;
+using Bell_Smart_Server.Source.Data;
 using Bell_Smart_Server.Source.Management;
 using BellLib.Class;
 using BellLib.Class.Protection;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -35,8 +37,6 @@ namespace Bell_Smart_Server.Source.Frame
         private DispatcherTimer tmr_ServerControl; // 서버 제어
         private Process ServerProc;
         private long StartTime;
-        private bool AutoRestart;
-        private int LogLimit = 3000; // 로그 제한 줄
         //private bool listLoading;
 
         /// <summary>
@@ -126,13 +126,42 @@ namespace Bell_Smart_Server.Source.Frame
         /// <summary>
         /// 세팅탭을 초기화합니다.
         /// </summary>
-        private void InitSetting()
+        private void InitSetting(int flag = 0x03)
         {
-            set_lbCurrentVersion.Content = "현재버전 : " + Deploy.CurrentVersion;
-            set_lbLatestVersion.Content = "최신버전 : " + Deploy.LatestVersion;
+            // 정보 (0x01)
+            if ((flag & 0x01) != 0)
+            {
+                set_lbCurrentVersion.Content = "현재버전 : " + Deploy.CurrentVersion;
+                set_lbLatestVersion.Content = "최신버전 : " + Deploy.LatestVersion;
 
-            tmr_Sync.Start();
-            Sync_Tick(null, null);
+                tmr_Sync.Start();
+                Sync_Tick(null, null);
+            }
+
+            // 일반 (0x02)
+            if ((flag & 0x02) != 0)
+            {
+                cbRemoveOldLog.IsChecked = true;
+                cbLimitLogLine.IsChecked = true;
+                
+                try
+                {
+                    Server.LimitLogLine = Convert.ToInt32(DataProtect.DataLoad(DataPath.BSS.General, "LimitLogLine"));
+                    txtLimitLogLine.Text = Server.LimitLogLine.ToString();
+                }
+                catch { }
+                finally
+                {
+                    if (string.IsNullOrWhiteSpace(txtLimitLogLine.Text))
+                        Server.LimitLogLine = 1000;
+                }
+
+                if (DataProtect.DataLoad(DataPath.BSS.General, "StartLogClear") == "True")
+                    Server.StartLogClear = true;
+                else
+                    Server.StartLogClear = false;
+                cbStartLogClear.IsChecked = Server.StartLogClear;
+            }
         }
 
         /// <summary>
@@ -171,6 +200,11 @@ namespace Bell_Smart_Server.Source.Frame
             string JavaPath = profile.GetData(ServerProfile.Data.JavaPath);
             string Parameter = profile.GetData(ServerProfile.Data.Parameter);
 
+            // 로그 초기화
+            if (Server.StartLogClear)
+                foreach (LOG log in LogList())
+                    GetLogBox(log).Clear();
+
             SetState("서버 가동 준비");
             var startInfo = new ProcessStartInfo(JavaPath, Parameter + " -jar " + ServerFile + " nogui");
             startInfo.WorkingDirectory = ServerPath;
@@ -189,9 +223,9 @@ namespace Bell_Smart_Server.Source.Frame
             SetState("서버 상세 설정 로드");
             ServerDetail sd = new ServerDetail((string)cbServer.SelectedItem);
             if (sd.GetData(ServerDetail.Data.AutoRestart) == "True")
-                AutoRestart = true;
+                Server.AutoRestart = true;
             else
-                AutoRestart = false;
+                Server.AutoRestart = false;
 
             SetState("서버 가동 시작");
             ServerProc.Start();
@@ -219,7 +253,7 @@ namespace Bell_Smart_Server.Source.Frame
                 if (WPFCom.Message("현재 접속중인 플레이어가 있습니다." + Environment.NewLine + "정말로 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                     return false;
 
-            AutoRestart = restart;
+            Server.AutoRestart = restart;
             SetState("서버 종료 요청 전송");
             SendCommand("stop");
             btnForceStop.IsEnabled = true;
@@ -281,7 +315,7 @@ namespace Bell_Smart_Server.Source.Frame
                 lbTPS.Content = "TPS : ?";
                 Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
 
-                if (AutoRestart)
+                if (Server.AutoRestart)
                 {
                     SetState("서버 재시작 대기");
                     Common.DoEvents();
@@ -463,13 +497,19 @@ namespace Bell_Smart_Server.Source.Frame
             try
             {
                 TextBox tb = GetLogBox(log);
+                int length = 0;
+                int removeLine = tb.LineCount - Limit;
+                
+                if (removeLine > 0)
+                    for (int i = 0; i < removeLine; i++)
+                    {
+                        length += tb.GetLineLength(i);
+                        Common.DoEvents(); // 로그가 많으면 삭제하는데 오래걸리므로 UI 스레드 렉으로 인한 셧다운 방지
+                    }
 
-                while (tb.LineCount > Limit)
-                {
-                    tb.Text = tb.Text.Remove(0, tb.GetLineLength(0));
-                    Common.DoEvents(); // 로그가 많으면 삭제하는데 오래걸리므로 UI 스레드 렉으로 인한 셧다운 방지
-                }
-
+                if (length >= 0)
+                    tb.Text = tb.Text.Remove(0, length);
+                
                 return true;
             }
             catch (Exception ex)
@@ -524,7 +564,7 @@ namespace Bell_Smart_Server.Source.Frame
         private void AnalysisOutput(string output, bool errorData = false)
         {
             // 유효성 검사
-            if (output == null)
+            if (string.IsNullOrWhiteSpace(output))
                 return;
 
             // 출력
@@ -533,7 +573,7 @@ namespace Bell_Smart_Server.Source.Frame
                 AddLog(output, LOG.ERROR);
                 return;
             }
-
+            
             if (output.Contains(" INFO]"))
             {
                 // 정보 분석 함수
@@ -757,10 +797,19 @@ namespace Bell_Smart_Server.Source.Frame
         /// <param name="type">로그 기록 타입</param>
         private void AddLog(string Data, LOG type)
         {
+            if (string.IsNullOrWhiteSpace(Data))
+                return;
+
             TextBox tb = GetLogBox(type);
 
             // 출력
-            tb.Text += Data + Environment.NewLine;
+            //tb.Text += Data + Environment.NewLine;
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Send, (ThreadStart)delegate ()
+            {
+                tb.AppendText(Data + Environment.NewLine);
+                //tb.Text = Data + Environment.NewLine;
+                this.InvalidateVisual();
+            });
 
             // 스크롤
             if ((bool)cbAutoScroll.IsChecked)
@@ -770,7 +819,7 @@ namespace Bell_Smart_Server.Source.Frame
             }
 
             // 오래된 로그 삭제
-            RemoveOldLog(type, LogLimit);
+            RemoveOldLog(type, Server.LimitLogLine);
         }
 
         #endregion
@@ -840,10 +889,37 @@ namespace Bell_Smart_Server.Source.Frame
         }
 
         /// <summary>
+        /// 로그 타입 배열을 반환합니다.
+        /// </summary>
+        /// <returns>로그 타입</returns>
+        private LOG[] LogList()
+        {
+            List<LOG> list = new List<LOG>();
+
+            list.Add(LOG.NOTIFY);
+            list.Add(LOG.INFO);
+            list.Add(LOG.WARN);
+            list.Add(LOG.ERROR);
+            list.Add(LOG.OTHER);
+            list.Add(LOG.LOG);
+
+            return list.ToArray();
+        }
+
+        /// <summary>
         /// 서버 로그를 지웁니다.
         /// </summary>
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(GetLogBox(GetCurrentLogType()).Text))
+                if (WPFCom.Message("정말로 모든탭의 로그를 초기화하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    foreach (LOG log in LogList())
+                        GetLogBox(log).Clear();
+
+                    WPFCom.Message("모든 로그 초기화에 성공했습니다.", Base.PROJECT.Bell_Smart_Server);
+                }
+
             try
             {
                 GetLogBox(GetCurrentLogType()).Clear();
@@ -1212,15 +1288,44 @@ namespace Bell_Smart_Server.Source.Frame
 
             int OldCriteria = 1000;
 
-            RemoveOldLog(LOG.NOTIFY, OldCriteria);
-            RemoveOldLog(LOG.INFO, OldCriteria);
-            RemoveOldLog(LOG.WARN, OldCriteria);
-            RemoveOldLog(LOG.ERROR, OldCriteria);
-            RemoveOldLog(LOG.OTHER, OldCriteria);
-            RemoveOldLog(LOG.LOG, OldCriteria);
+            foreach (LOG log in LogList())
+                RemoveOldLog(log, OldCriteria);
 
             btnOldLogRemove.IsEnabled = true;
             WPFCom.Message("모든탭의 오래된로그를 전부 삭제했습니다!", Base.PROJECT.Bell_Smart_Server);
+        }
+
+        /// <summary>
+        /// 설정값을 저장합니다.
+        /// </summary>
+        private void set_btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //LogLimit = Convert.ToInt32(txtLimitLogLine.Text);
+                Server.LimitLogLine = Convert.ToInt32(txtLimitLogLine.Text);
+                DataProtect.DataSave(DataPath.BSS.General, "LimitLogLine", txtLimitLogLine.Text);
+            }
+            catch
+            {
+                WPFCom.Message("로그 제한 줄 수는 정수만 입력할 수 있습니다.", Base.PROJECT.Bell_Smart_Server);
+                return;
+            }
+
+            Server.StartLogClear = (bool)cbStartLogClear.IsChecked;
+            DataProtect.DataSave(DataPath.BSS.General, "StartLogClear", Server.StartLogClear.ToString());
+
+            WPFCom.Message("저장이 완료되었습니다.", Base.PROJECT.Bell_Smart_Server);
+        }
+
+        /// <summary>
+        /// 설정값 변경을 취소합니다.
+        /// </summary>
+        private void set_btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            InitSetting(0x02);
+
+            WPFCom.Message("취소되었습니다.", Base.PROJECT.Bell_Smart_Server);
         }
     }
 }
