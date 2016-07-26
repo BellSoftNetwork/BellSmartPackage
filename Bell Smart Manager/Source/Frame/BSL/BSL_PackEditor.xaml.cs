@@ -108,7 +108,14 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbModRecommended.SelectedItem = mp.recommended; // 권장버전 선택
             lbModBaseName.Content = mp.BaseName;
             lbModState.Content = mp.state;
-            lbModPlan.Content = mp.plan;
+
+            string planName = mp.plan;
+            try
+            {
+                planName = BSN_BSL.GetPlanName((BSN_BSL.PLAN)Convert.ToInt32(mp.plan));
+            }
+            catch { }
+            lbModPlan.Content = planName;
             if (mp.state == "활성화")
                 cbModActivate.IsChecked = true;
 
