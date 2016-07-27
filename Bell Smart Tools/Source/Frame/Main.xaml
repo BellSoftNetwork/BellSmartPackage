@@ -1,0 +1,13 @@
+﻿<Window x:Class="Bell_Smart_Tools.Source.Frame.Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Tools.Source.Frame"
+        mc:Ignorable="d"
+        Title="Bell Smart Tools" Height="300" Width="300" Icon="/Bell Smart Tools;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="btnTCP" Content="TCP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="16.49,29.809,0,0" Click="btnTCP_Click"/>
+
+    </Grid>
+</Window>

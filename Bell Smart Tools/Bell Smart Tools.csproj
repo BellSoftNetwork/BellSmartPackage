@@ -93,7 +93,7 @@
     <ManifestKeyFile>Bell Smart Tools_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Bell_Smart_Tools.Program</StartupObject>
+    <StartupObject>Bell_Smart_Tools.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resource\Photo\Photo_Bell.ico</ApplicationIcon>
@@ -194,6 +194,12 @@
     </Compile>
     <Compile Include="Source\BST\BST_Runtime.Designer.cs">
       <DependentUpon>BST_Runtime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\Loader.xaml.cs">
+      <DependentUpon>Loader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Source\Frame\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -300,7 +306,16 @@
   <ItemGroup>
     <Folder Include="Source\Class\" />
     <Folder Include="Source\Data\" />
-    <Folder Include="Source\Frame\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Source\Frame\Loader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Source\Frame\Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

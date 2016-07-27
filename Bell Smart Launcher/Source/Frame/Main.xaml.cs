@@ -22,6 +22,8 @@ using BellLib.Class.Protection;
 using System.Windows.Threading;
 using Bell_Smart_Launcher.Source.Management;
 using Bell_Smart_Launcher.Class;
+using System.Net.Sockets;
+using BellLib.Class.Minecraft;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -36,8 +38,8 @@ namespace Bell_Smart_Launcher.Source.Frame
         private bool GameNormal;
 
         private Modpack GameInfo;
+        private BellSmartController bsc;
         private bool noticeLock = true;
-        private bool isAllInit;
 
         #endregion
 
@@ -46,13 +48,12 @@ namespace Bell_Smart_Launcher.Source.Frame
         public Main()
         {
             InitializeComponent();
-            PreInitialize();
         }
 
         /// <summary>
         /// 런처창을 보여주기 전에 먼저 1회 초기화합니다.
         /// </summary>
-        private void PreInitialize()
+        public void PreInitialize()
         {
             //Common
             // 마지막에 열었던 탭 활성화
@@ -88,29 +89,9 @@ namespace Bell_Smart_Launcher.Source.Frame
         }
 
         /// <summary>
-        /// 런처창이 로드된 후 사용할 수 있게 모든 기능을 초기화합니다.
-        /// </summary>
-        public void Initialize(bool forceInit = false)
-        {
-            if (!forceInit && isAllInit) // 이미 한번 전체 초기화했을때는 다시 초기화하지 않음.
-                return;
-            //Common
-
-
-            //Individual
-            InitNews(); // 뉴스탭 초기화
-            InitModpacks(); // 모드팩탭 초기화
-            InitResources(); // 리소스탭 초기화
-            InitMaps(); // 맵탭 초기화
-            InitSetting(); // 세팅탭 초기화
-
-            isAllInit = true;
-        }
-
-        /// <summary>
         /// 뉴스탭 관련 기능을 초기화합니다.
         /// </summary>
-        private void InitNews()
+        public void InitNews()
         {
             //NEWS
 
@@ -189,7 +170,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <summary>
         /// 모드팩 리스트를 초기화합니다.
         /// </summary>
-        private void InitListModpack()
+        public void InitListModpack()
         {
             //초기화
             mod_lstPackList.Items.Clear(); // 팩 리스트 초기화!
@@ -218,7 +199,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <summary>
         /// 모드팩탭 관련 기능을 초기화합니다.
         /// </summary>
-        private void InitModpacks()
+        public void InitModpacks()
         {
             //MODPACKS
             // 프로필 로드
@@ -251,7 +232,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <summary>
         /// 리소스탭 관련 기능을 초기화합니다.
         /// </summary>
-        private void InitResources()
+        public void InitResources()
         {
 
         }
@@ -259,7 +240,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <summary>
         /// 맵탭 관련 기능을 초기화합니다.
         /// </summary>
-        private void InitMaps()
+        public void InitMaps()
         {
 
         }
@@ -267,7 +248,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// <summary>
         /// 세팅탭 관련 기능을 초기화합니다.
         /// </summary>
-        private void InitSetting()
+        public void InitSetting()
         {
             SystemInfo.MemoryInfo mi = SystemInfo.GetMemoryInfo();
 
@@ -438,7 +419,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             else
                 GameNormal = true; // 게임 정상 실행중
         }
-
+        
         /// <summary>
         /// 게임 자동설치 후 실행합니다.
         /// </summary>
@@ -550,6 +531,15 @@ namespace Bell_Smart_Launcher.Source.Frame
                     return;
             }
 
+            // BSC 초기화
+            bsc = new BellSmartController();
+            if (!bsc.BSC_Init(GameInfo.GetPath() + "\\mods\\"))
+            {
+                WPFCom.Message("BSC 시스템 초기화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+
+                return;
+            }
+
             // 실행
             launchResult = GameInfo.Launch();
             switch (launchResult)
@@ -597,6 +587,14 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 정보 저장
             GameInfo.SetLastVersion();
 
+            // BSC 구동
+            
+            bsc.BSC_Set(GameInfo.GetProcessID().ToString());
+            if (!bsc.BSC_Start())
+            {
+                WPFCom.Message("BSC 시스템 연동에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+            }
+
             // 게임 관리 프로세스 시작
             GameNormal = false;
             tmr_GameCheck.Start();
@@ -610,6 +608,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!GameInfo.Feasibility())
             {
                 GameInfo.Kill(); // 게임 종료
+                bsc.BSC_Stop(); // BSC 시스템이 가동중일 수 있으므로 중단시킴
                 tmr_GameCheck.Stop(); // 게임 관리 프로세스 중단
                 WPFCom.Message("성공적으로 강제종료되었습니다.", Base.PROJECT.Bell_Smart_Launcher);
             }
@@ -802,6 +801,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             mod_LoadLike(); // 새로고침
             RefreshDetail(); // 상세정보 로드
         }
+
+        
 
         /// <summary>
         /// 모드팩 설정창을 엽니다.

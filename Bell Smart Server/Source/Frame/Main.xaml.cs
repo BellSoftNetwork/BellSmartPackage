@@ -2,6 +2,7 @@
 using Bell_Smart_Server.Source.Data;
 using Bell_Smart_Server.Source.Management;
 using BellLib.Class;
+using BellLib.Class.Minecraft;
 using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
@@ -36,6 +37,7 @@ namespace Bell_Smart_Server.Source.Frame
         private DispatcherTimer tmr_OperatingTime; // 가동시간 제어
         private DispatcherTimer tmr_ServerControl; // 서버 제어
         private Process ServerProc;
+        private BellSmartController bsc;
         private long StartTime;
         //private bool listLoading;
 
@@ -226,17 +228,35 @@ namespace Bell_Smart_Server.Source.Frame
                 Server.AutoRestart = true;
             else
                 Server.AutoRestart = false;
+            
+            SetState("BSC 시스템 초기화");
+            bsc = new BellSmartController();
+            if (!bsc.BSC_Init(ServerPath + "\\mods\\"))
+            {
+                SetState("BSC 시스템 초기화 실패");
+
+                return;
+            }
 
             SetState("서버 가동 시작");
             ServerProc.Start();
             ServerProc.BeginOutputReadLine();
             ServerProc.BeginErrorReadLine();
-
+            
             // 마무리
             SetControl(true);
             SetStartTime();
             tmr_OperatingTime.Start();
             SetState("서버 가동 완료");
+
+            // BSC 가동
+            SetState("BSC 시스템 가동 시작");
+            bsc.BSC_Set(ServerProc.Id.ToString());
+            if (bsc.BSC_Start())
+                SetState("BSC 시스템 연동 성공");
+            else
+                SetState("BSC 시스템 연동 실패");
+
             Controller.SetLockFlag(Controller.LockBit.Running_Server); // 업데이트 잠금
         }
 
@@ -310,6 +330,7 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 SetControl(false);
                 tmr_OperatingTime.Stop(); // 가동시간 계산 타이머 중단
+                bsc.BSC_Stop(); // BSC 시스템이 가동중일 수 있으므로 종료시킴
                 SetState("서버 종료");
                 lbPlayers.Content = "접속자 : 0/?";
                 lbTPS.Content = "TPS : ?";
@@ -372,13 +393,16 @@ namespace Bell_Smart_Server.Source.Frame
         private void SetControl(bool State)
         {
             btnForceStop.IsEnabled = false;
-
+            
+            // 서버 구동중 사용 불가 컨트롤
             cbServer.IsEnabled = !State;
             btnEdit.IsEnabled = !State;
             btnStart.IsEnabled = !State;
             btnServerSetting.IsEnabled = !State;
 
+            // 서버 구동중 사용 가능 컨트롤
             btnPlayerRefresh.IsEnabled = State;
+            btnRestart.IsEnabled = State;
             btnStop.IsEnabled = State;
             btnSave.IsEnabled = State;
             tcAdditional.IsEnabled = State;
@@ -751,6 +775,7 @@ namespace Bell_Smart_Server.Source.Frame
             // [23:59:12 INFO]: Bell_ lost connection: Server closed
             // [00:52:33 INFO]: abnavv lost connection: Disconnected
             // [00:51:51 INFO]: SeA_13 lost connection: Internal Exception: java.io.IOException: 현재 연결은 사용자의 호스트 시스템의 소프트웨어의 의해 중단되었습니다
+            // [04:15:01 INFO]: Soft_Bell lost connection: Mod rejections [FMLMod:Bell Smart Controller{1.0.0}]
             string[] temp;
             string reason;
             Player player = new Player();
@@ -762,6 +787,21 @@ namespace Bell_Smart_Server.Source.Frame
 
                 player.nickname = temp[0];
                 reason = temp[1];
+
+                if (reason.Contains("Mod rejections")) // 모드문제로 접속제한시 접속되지 않은 상태이므로 플레이어 제어 필요없음.
+                {
+                    AddLog(player.nickname + "님이 비공식 모드팩으로 접속을 시도했습니다.", LOG.NOTIFY, true);
+                    try
+                    {
+                        string[] mods = reason.Split('[');
+                        mods = mods[1].Split(']');
+
+                        AddLog(player.nickname + "님의 거부된 모드 : " + mods[0], LOG.NOTIFY);
+                    }
+                    catch { }
+                    
+                    return;
+                }
 
                 foreach (Player pr in lstPlayers.Items)
                     if (pr.nickname == player.nickname)
@@ -780,7 +820,8 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 string nowPlayer = lbPlayers.Content.ToString().Remove(0, 6).Split('/')[0];
                 int convertPlayer = Convert.ToInt32(nowPlayer); // 숫자가 아니면 catch로 이동됨
-                lbPlayers.Content = lbPlayers.Content.ToString().Replace(nowPlayer + "/", (convertPlayer - 1).ToString() + "/");
+                if (convertPlayer > 0) // 버그로 인해 접속자가 음수가 되는 상황 방지
+                    lbPlayers.Content = lbPlayers.Content.ToString().Replace(nowPlayer + "/", (convertPlayer - 1).ToString() + "/");
             }
             catch
             {
@@ -795,15 +836,20 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         /// <param name="Data">로그</param>
         /// <param name="type">로그 기록 타입</param>
-        private void AddLog(string Data, LOG type)
+        private void AddLog(string Data, LOG type, bool nowTimeShow = false)
         {
+            // 유효성 검증
             if (string.IsNullOrWhiteSpace(Data))
                 return;
 
+            // 텍스트박스 가져옴
             TextBox tb = GetLogBox(type);
 
+            // 시간 출력
+            if (nowTimeShow)
+                Data = "[" + DateTime.Now.ToString("hh:mm:ss") + "]: " + Data;
+
             // 출력
-            //tb.Text += Data + Environment.NewLine;
             this.Dispatcher.BeginInvoke(DispatcherPriority.Send, (ThreadStart)delegate ()
             {
                 tb.AppendText(Data + Environment.NewLine);

@@ -1056,6 +1056,26 @@ namespace Bell_Smart_Launcher.Class
             return false;
         }
 
+        /// <summary>
+        /// 실행중인 게임의 프로세스 id를 반환합니다.
+        /// </summary>
+        /// <returns>프로세스 id</returns>
+        public int GetProcessID()
+        {
+            try
+            {
+                if (!Feasibility())
+                    return GameProcess.Id;
+            }
+            catch
+            {
+                if (ExceptionThrow)
+                    throw;
+            }
+
+            return -1;
+        }
+
         #endregion
 
         /// <summary>

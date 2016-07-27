@@ -26,7 +26,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         public Loader()
         {
             InitializeComponent();
-            pbLoad.Maximum = 30;
+            pbLoad.Maximum = 48;
             pbLoad.Value = 0;
 
             SetStatus("Initialize Component");
@@ -52,13 +52,33 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 SetStatus("로더 초기화 완료", 1);
 
-                SetStatus("런처 메인 생성중", 1);
+                SetStatus("런처 메인 초기화 시작", 1);
                 Main Main = new Main();
-                SetStatus("런처 메인 생성 완료", 2);
+                SetStatus("런처 메인 초기화 완료", 2);
 
-                SetStatus("런처 초기화 시작", 1);
-                Main.Initialize();
-                SetStatus("런처 초기화 완료", 10);
+                SetStatus("런처 메인 기본값 초기화 시작", 1);
+                Main.PreInitialize();
+                SetStatus("런처 메인 기본값 초기화 완료", 2);
+
+                SetStatus("런처 뉴스피드 초기화 시작", 1);
+                Main.InitNews();
+                SetStatus("런처 뉴스피드 초기화 완료", 5);
+
+                SetStatus("런처 모드팩 초기화 시작", 1);
+                Main.InitModpacks();
+                SetStatus("런처 모드팩 초기화 완료", 10);
+
+                SetStatus("런처 리소스 초기화 시작", 1);
+                Main.InitResources();
+                SetStatus("런처 리소스 초기화 완료", 2);
+
+                SetStatus("런처 맵 초기화 시작", 1);
+                Main.InitMaps();
+                SetStatus("런처 맵 초기화 완료", 2);
+
+                SetStatus("런처 세팅 초기화 시작", 1);
+                Main.InitSetting();
+                SetStatus("런처 세팅 초기화 완료", 2);
 
                 SetStatus("런처 실행", 1);
                 Main.Show();
