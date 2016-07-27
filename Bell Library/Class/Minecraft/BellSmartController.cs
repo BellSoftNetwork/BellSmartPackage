@@ -196,7 +196,7 @@ namespace BellLib.Class.Minecraft
                 // 모드리스트 로드
                 string[] modsList = Directory.GetFiles(modsDir, "*.jar");
                 foreach (string mod in modsList)
-                    if (mod.Contains("Bell Smart Controller"))
+                    if (mod.Contains("BellSmartController"))
                     {
                         // Bell Smart Controller 모드가 있으면 BSC 구동
                         BSC_Use = true;
