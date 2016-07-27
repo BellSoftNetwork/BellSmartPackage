@@ -228,7 +228,7 @@ namespace Bell_Smart_Server.Source.Frame
                 Server.AutoRestart = true;
             else
                 Server.AutoRestart = false;
-            
+
             SetState("BSC 시스템 초기화");
             bsc = new BellSmartController();
             if (!bsc.BSC_Init(ServerPath + "\\mods\\"))
@@ -242,7 +242,7 @@ namespace Bell_Smart_Server.Source.Frame
             ServerProc.Start();
             ServerProc.BeginOutputReadLine();
             ServerProc.BeginErrorReadLine();
-            
+
             // 마무리
             SetControl(true);
             SetStartTime();
@@ -330,7 +330,7 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 SetControl(false);
                 tmr_OperatingTime.Stop(); // 가동시간 계산 타이머 중단
-                bsc.BSC_Stop(); // BSC 시스템이 가동중일 수 있으므로 종료시킴
+                //bsc.BSC_Stop(); // BSC 시스템이 가동중일 수 있으므로 종료시킴
                 SetState("서버 종료");
                 lbPlayers.Content = "접속자 : 0/?";
                 lbTPS.Content = "TPS : ?";
@@ -1060,26 +1060,30 @@ namespace Bell_Smart_Server.Source.Frame
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (ServerProc != null && !ServerProc.HasExited)
+            try
             {
-                if (WPFCom.Message("현재 서버가 가동중입니다." + Environment.NewLine + "정말로 서버를 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                if (ServerProc != null && !ServerProc.HasExited)
                 {
-                    e.Cancel = true;
-                    return;
-                }
-
-                try
-                {
-                    SendCommand("stop");
-                    ServerProc.WaitForExit(10000);
-                    if (!ServerProc.HasExited)
+                    if (WPFCom.Message("현재 서버가 가동중입니다." + Environment.NewLine + "정말로 서버를 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                     {
-                        WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", Base.PROJECT.Bell_Smart_Server);
                         e.Cancel = true;
+                        return;
                     }
+
+                    try
+                    {
+                        SendCommand("stop");
+                        ServerProc.WaitForExit(10000);
+                        if (!ServerProc.HasExited)
+                        {
+                            WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", Base.PROJECT.Bell_Smart_Server);
+                            e.Cancel = true;
+                        }
+                    }
+                    catch { }
                 }
-                catch { }
             }
+            catch { }
         }
 
         #region *** SETTING ***

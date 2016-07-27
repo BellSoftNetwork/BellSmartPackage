@@ -536,6 +536,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!bsc.BSC_Init(GameInfo.GetPath() + "\\mods\\"))
             {
                 WPFCom.Message("BSC 시스템 초기화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+                mod_btnEnjoy.IsEnabled = true;
 
                 return;
             }
@@ -591,9 +592,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             
             bsc.BSC_Set(GameInfo.GetProcessID().ToString());
             if (!bsc.BSC_Start())
-            {
                 WPFCom.Message("BSC 시스템 연동에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
-            }
 
             // 게임 관리 프로세스 시작
             GameNormal = false;

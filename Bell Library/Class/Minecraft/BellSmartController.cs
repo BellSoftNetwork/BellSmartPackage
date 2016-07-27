@@ -24,6 +24,7 @@ namespace BellLib.Class.Minecraft
         /// </summary>
         public BellSmartController()
         {
+            Listener = null;
             Server_Stop = false;
         }
 
@@ -51,7 +52,7 @@ namespace BellLib.Class.Minecraft
             StreamReader SR = null;
             StreamWriter SW = null;
             TcpClient client = null;
-
+            
             string GetMessage = string.Empty;
             string SendData = string.Empty;
             bool Success = false;
@@ -109,17 +110,19 @@ namespace BellLib.Class.Minecraft
             finally
             {
                 BSC_Stop();
+
+                try
+                {
+                    // 초기화 되지 않았을때 뛰쳐나올 수도 있으니 예외처리.
+                    SW.Close();
+                    SR.Close();
+                    client.Close();
+                    NS.Close();
+                }
+                catch { }
             }
 
-            try
-            {
-                // 초기화 되지 않았을때 뛰쳐나올 수도 있으니 예외처리.
-                SW.Close();
-                SR.Close();
-                client.Close();
-                NS.Close();
-            }
-            catch { }
+            
 
             return Success;
         }
@@ -218,8 +221,10 @@ namespace BellLib.Class.Minecraft
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                string temp = ex.Message;
+
                 return false;
             }
         }
@@ -234,6 +239,7 @@ namespace BellLib.Class.Minecraft
             try
             {
                 Listener.Stop();
+                Listener = null;
             }
             catch { }
         }
