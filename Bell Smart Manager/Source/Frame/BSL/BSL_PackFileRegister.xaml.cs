@@ -221,11 +221,15 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             cbVersion.Tag = null;
 
             // 선택한 팩 버전리스트 로드 (등록되지 않은 버전만 로드하게 구현필요)
-            foreach (string value in BSN_BSL.LoadPackVersionList(GetSelectType(), (string)cbName.SelectedItem, BSN_BSL.STATE.PREPARE))
+            try
             {
-                cbVersion.Items.Add(Common.getElement(value,"version"));
-                cbVersion.Tag += Common.getElement(value, "id") + "|";
+                foreach (string value in BSN_BSL.LoadPackVersionList(GetSelectType(), (string)cbName.SelectedItem, BSN_BSL.STATE.PREPARE))
+                {
+                    cbVersion.Items.Add(Common.getElement(value, "version"));
+                    cbVersion.Tag += Common.getElement(value, "id") + "|";
+                }
             }
+            catch { }
 
             // 마무으리
             if (GetSelectType() == BSN_BSL.PACK.runtime)

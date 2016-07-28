@@ -66,7 +66,7 @@ namespace BellLib.Class.Minecraft
                 {
                     long NowTime = DateTime.Now.Ticks; // 현재시간
                     long ProgressTime = (NowTime - StartTime) / 10000000;
-                    if (ProgressTime > 180) // 연결 대기상태로 180초를 경과하면,
+                    if (ProgressTime > 300) // 연결 대기상태로 300초를 경과하면,
                         // BSC_Stop(); // finally 에서 실행됨.
                         return false; // 연동 실패로 간주
                     else
@@ -199,7 +199,7 @@ namespace BellLib.Class.Minecraft
                 // 모드리스트 로드
                 string[] modsList = Directory.GetFiles(modsDir, "*.jar");
                 foreach (string mod in modsList)
-                    if (mod.Contains("BellSmartController"))
+                    if (mod.Contains("BellSmartController") || mod.Contains("Bell Smart Controller"))
                     {
                         // Bell Smart Controller 모드가 있으면 BSC 구동
                         BSC_Use = true;

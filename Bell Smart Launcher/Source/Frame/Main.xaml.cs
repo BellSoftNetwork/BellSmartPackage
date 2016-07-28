@@ -588,15 +588,14 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 정보 저장
             GameInfo.SetLastVersion();
 
-            // BSC 구동
-            
-            bsc.BSC_Set(GameInfo.GetProcessID().ToString());
-            if (!bsc.BSC_Start())
-                WPFCom.Message("BSC 시스템 연동에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
-
             // 게임 관리 프로세스 시작
             GameNormal = false;
             tmr_GameCheck.Start();
+
+            // BSC 구동
+            bsc.BSC_Set(GameInfo.GetProcessID().ToString());
+            if (!bsc.BSC_Start())
+                WPFCom.Message("BSC 시스템 연동에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
         }
 
         /// <summary>
