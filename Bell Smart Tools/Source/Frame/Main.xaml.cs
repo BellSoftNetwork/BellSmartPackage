@@ -24,9 +24,10 @@ namespace Bell_Smart_Tools.Source.Frame
             InitializeComponent();
         }
 
-        private void btnTCP_Click(object sender, RoutedEventArgs e)
+        private void btnBSC_Click(object sender, RoutedEventArgs e)
         {
-         
+            BSC bsc = new BSC();
+            bsc.Show();
         }
     }
 }

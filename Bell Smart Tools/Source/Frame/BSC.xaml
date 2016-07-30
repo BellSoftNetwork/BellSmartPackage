@@ -1,0 +1,18 @@
+﻿<Window x:Class="Bell_Smart_Tools.Source.Frame.BSC"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Tools.Source.Frame"
+        mc:Ignorable="d"
+        Title="BSC" Height="300" Width="300" ResizeMode="NoResize" Icon="/Bell Smart Tools;component/Resource/Photo/Photo_Bell.ico" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,10,0,0" Click="btnCreate_Click"/>
+
+        <Button x:Name="btnInit" Content="Init" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="btnInit_Click" Margin="10,34.96,0,0"/>
+
+        <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="10,59.92,0,0" VerticalAlignment="Top" Width="75" Click="btnStart_Click"/>
+        <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,84.88,0,0" Click="btnStop_Click"/>
+
+    </Grid>
+</Window>

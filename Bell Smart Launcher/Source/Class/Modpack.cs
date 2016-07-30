@@ -401,7 +401,7 @@ namespace Bell_Smart_Launcher.Class
             catch
             {
                 // 공지사항 로드 에러
-                return "<meta charset=\"utf-8\"><strong abp=\"4668\"><span style=\"font-family: 돋움; \"abp=\"4670\"><font color=\"#ff0000\">공지사항이 존재하지 않거나 불러오는 중 문제가 발생하였습니다.</font></span></strong>";
+                return "<meta charset=\"utf-8\"><p>공지사항을 못 찾겠어요!</p><p>제가 지속적으로 찾지 못한다면 이 모드팩 관리자에게 문의 해 주세요.</p>";
             }
         }
 

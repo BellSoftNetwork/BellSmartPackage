@@ -195,6 +195,9 @@
     <Compile Include="Source\BST\BST_Runtime.Designer.cs">
       <DependentUpon>BST_Runtime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\Frame\BSC.xaml.cs">
+      <DependentUpon>BSC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Frame\Loader.xaml.cs">
       <DependentUpon>Loader.xaml</DependentUpon>
     </Compile>
@@ -308,6 +311,10 @@
     <Folder Include="Source\Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Source\Frame\BSC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Frame\Loader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -24,6 +24,7 @@ using Bell_Smart_Launcher.Source.Management;
 using Bell_Smart_Launcher.Class;
 using System.Net.Sockets;
 using BellLib.Class.Minecraft;
+using System.Threading;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -93,78 +94,11 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         public void InitNews()
         {
-            //NEWS
+            // 기본값 초기화
+            news_wbNews.NavigateToString("<meta charset=\"utf-8\"><p>여러분에게 알려드리고 싶은 소식이 여기저기 흩어져 있어서 찾는데 오래 걸리네요.</p><p>정리되면 보여드릴게요.</p>");
 
-            // 필드
-            List<string> NewsList = new List<string>();
-            StringBuilder Newsfeed = new StringBuilder();
-            string strData;
-            string[] strUnprocessdList;
-
-
-            try
-            {
-                // 데이터 로드
-                // Bell Smart Launcher 공지 분류에 해당하는 공지만 받아옴
-                strData = Common.getStringFromWeb("http://www.softbell.net/index.php?mid=notice&category=1312", Encoding.UTF8);
-                // 문서 srl을 얻기 위한 문구로 파싱
-                strUnprocessdList = Common.stringSplit(strData, "mid=notice&amp;category=1312&amp;document_srl=");
-
-
-                // 뉴스 리스트 로드
-                for (int i = 1; i < strUnprocessdList.Length - 1; i++) // 제일 첫 집합은 관련없는 값이므로 버리고 두번째 집합부터 돌림
-                {
-                    string strDocsrl = Common.stringSplit(strUnprocessdList[i], "\"")[0]; // 뒤에 잡 내용은 버리고 앞에 숫자만 받아옴
-                    try
-                    {
-                        int intDoc = Convert.ToInt32(strDocsrl);
-                        NewsList.Add(strDocsrl); // 문서 번호를 리스트에 등록함
-                    }
-                    catch { }
-                }
-            }
-            catch
-            {
-                // 뉴스 리스트 로드 에러
-                mod_wbNotice.NavigateToString("<meta charset=\"utf-8\"><strong abp=\"4668\"><span style=\"font-family: 돋움; \"abp=\"4670\"><font color=\"#ff0000\">뉴스 리스트를 불러오는 중 문제가 발생하였습니다.</font></span></strong>");
-
-                return;
-            }
-
-            try
-            {
-                // 뉴스 내용 로드
-                foreach (string doc in NewsList)
-                {
-                    try
-                    {
-                        string strNotice = Common.getStringFromWeb(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "Notice/" + doc, Encoding.UTF8);
-                        string[] strTemp = Common.stringSplit(strNotice, "<article");
-                        // 제목 추가
-                        strNotice = Common.stringSplit(strTemp[0], "<title>")[1];
-                        strNotice = Common.stringSplit(strNotice, " - 공지사항 - 방울소프트네트워크</title>")[0];
-                        Newsfeed.Append("<p><a href=\"" + Servers.Bell_Soft_Network.WEB_BSN_ROOT + "Notice/" + doc + "\" target=\"_blank\"><strong><span style=\"font-size: 12pt;\"><font color=\"#009e25\">" + "- " + strNotice + "</font></span></strong></a></p>");
-
-                        // 내용 추가
-                        strNotice = strTemp[1];
-                        strTemp = Common.stringSplit(strNotice, "article>");
-                        Newsfeed.Append("<article" + strTemp[0] + "article>");
-                        if (doc != NewsList[NewsList.Count - 1])
-                            Newsfeed.Append("<hr style=''border:5px; color:green; width:1024px;''>"); // 공지를 구분하는 라인 html 추가필요
-                    }
-                    catch { }
-                }
-
-                // 출력
-                strData = "<meta charset=\"utf-8\">" + Newsfeed.ToString();
-
-                news_wbNews.NavigateToString(strData);
-            }
-            catch
-            {
-                // 공지사항 로드 에러
-                mod_wbNotice.NavigateToString("<meta charset=\"utf-8\"><strong abp=\"4668\"><span style=\"font-family: 돋움; \"abp=\"4670\"><font color=\"#ff0000\">뉴스 내용을 출력중에 문제가 발생하였습니다.</font></span></strong>");
-            }
+            Thread workerThread = new Thread(LoadNews);
+            workerThread.Start();
         }
 
         /// <summary>
@@ -296,6 +230,94 @@ namespace Bell_Smart_Launcher.Source.Frame
 
         #region *** NEWS ***
 
+        /// <summary>
+        /// 뉴스 목록을 불러옵니다.
+        /// </summary>
+        private void LoadNews()
+        {
+            while (true)
+            {
+                // 필드
+                List<string> NewsList = new List<string>();
+                StringBuilder Newsfeed = new StringBuilder();
+                string strData;
+                string[] strUnprocessdList;
+
+                try
+                {
+                    // 데이터 로드
+                    // Bell Smart Launcher 공지 분류에 해당하는 공지만 받아옴
+                    strData = Common.getStringFromWeb("http://www.softbell.net/index.php?mid=notice&category=1312", Encoding.UTF8);
+                    // 문서 srl을 얻기 위한 문구로 파싱
+                    strUnprocessdList = Common.stringSplit(strData, "mid=notice&amp;category=1312&amp;document_srl=");
+
+
+                    // 뉴스 리스트 로드
+                    for (int i = 1; i < strUnprocessdList.Length - 1; i++) // 제일 첫 집합은 관련없는 값이므로 버리고 두번째 집합부터 돌림
+                    {
+                        string strDocsrl = Common.stringSplit(strUnprocessdList[i], "\"")[0]; // 뒤에 잡 내용은 버리고 앞에 숫자만 받아옴
+                        try
+                        {
+                            int intDoc = Convert.ToInt32(strDocsrl);
+                            NewsList.Add(strDocsrl); // 문서 번호를 리스트에 등록함
+                        }
+                        catch { }
+                    }
+                }
+                catch
+                {
+                    // 뉴스 리스트 로드 에러
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        news_wbNews.NavigateToString("<meta charset=\"utf-8\"><p>여러분에게 알려드리고 싶은 소식이 있는데 어디있는지 잃어버린 것 같아요.</p><p>찾게되면 보여드릴게요.</p>");
+                    }));
+
+                    return;
+                }
+
+                try
+                {
+                    // 뉴스 내용 로드
+                    foreach (string doc in NewsList)
+                    {
+                        try
+                        {
+                            string strNotice = Common.getStringFromWeb(Servers.Bell_Soft_Network.WEB_BSN_ROOT + "Notice/" + doc, Encoding.UTF8);
+                            string[] strTemp = Common.stringSplit(strNotice, "<article");
+                            // 제목 추가
+                            strNotice = Common.stringSplit(strTemp[0], "<title>")[1];
+                            strNotice = Common.stringSplit(strNotice, " - 공지사항 - 방울소프트네트워크</title>")[0];
+                            Newsfeed.Append("<p><a href=\"" + Servers.Bell_Soft_Network.WEB_BSN_ROOT + "Notice/" + doc + "\" target=\"_blank\"><strong><span style=\"font-size: 12pt;\"><font color=\"#009e25\">" + "- " + strNotice + "</font></span></strong></a></p>");
+
+                            // 내용 추가
+                            strNotice = strTemp[1];
+                            strTemp = Common.stringSplit(strNotice, "article>");
+                            Newsfeed.Append("<article" + strTemp[0] + "article>");
+                            if (doc != NewsList[NewsList.Count - 1])
+                                Newsfeed.Append("<hr style=''border:5px; color:green; width:1024px;''>"); // 공지를 구분하는 라인 html 추가필요
+                        }
+                        catch { }
+                    }
+
+                    // 출력
+                    strData = "<meta charset=\"utf-8\">" + Newsfeed.ToString();
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        news_wbNews.NavigateToString(strData);
+                    }));
+                }
+                catch
+                {
+                    // 공지사항 로드 에러
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        news_wbNews.NavigateToString("<meta charset=\"utf-8\"><p>여러분에게 알려드리고 싶은 소식을 꺼내는 도중에 잃어버린 것 같아요.</p><p>찾게되면 보여드릴게요.</p>");
+                    }));
+                }
+
+                Common.Delay(5 * 60 * 1000); // 5분 딜레이
+            }
+        }
 
         #endregion
 
@@ -437,6 +459,8 @@ namespace Bell_Smart_Launcher.Source.Frame
             string MC_PW = profile.GetData(Profile.Data.PW);
             bool installModpack;
             bool installBase;
+            bool BSC_Use;
+            bool Exit = false;
 
             // 중복실행 방지
             mod_btnEnjoy.IsEnabled = false;
@@ -487,75 +511,92 @@ namespace Bell_Smart_Launcher.Source.Frame
                 return;
             }
 
+            // BSC 초기화
+            bsc = new BellSmartController();
+            BSC_Use = bsc.Feasibility(GameInfo.GetPath() + "\\mods\\");
+
+            if (BSC_Use)
+            {
+                bsc.Set_ConnectTimeout(true);
+                bsc.Set_CommunicationTimeout(true);
+
+                if (!bsc.Initialize())
+                {
+                    WPFCom.Message("BSC 시스템 초기화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+                    mod_btnEnjoy.IsEnabled = true;
+
+                    return;
+                }
+            }
+
             // 계정 정보 설정
             if (!GameInfo.SetAccount(MC_ID, MC_PW))
             {
                 WPFCom.Message("계정정보 설정에 실패했습니다.", Base.PROJECT.Bell_Smart_Launcher);
+
+                Exit = true;
+            }
+            else
+            {
+
+                if (MC_PW == null)
+                {
+                    Password pass = new Password();
+                    pass.ShowDialog();
+                    MC_PW = pass.getPassword();
+                    loginResult = GameInfo.Login(MC_PW);
+                }
+                else
+                    loginResult = GameInfo.Login();
+
+                switch (loginResult)
+                {
+                    case Modpack.ERR_LOGIN.No_Input_ID:
+                        WPFCom.Message("마인크래프트 계정 ID가 설정되지 않아 로그인할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
+                        Exit = true;
+
+                        break;
+
+                    case Modpack.ERR_LOGIN.No_Input_PW:
+                        WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
+                        Exit = true;
+
+                        break;
+
+                    case Modpack.ERR_LOGIN.Login_Fail:
+                        WPFCom.Message("마인크래프트 로그인에 실패했습니다." + Environment.NewLine + "프로필에 아이디 또는 비밀번호를 정상적으로 저장했는지 확인 해 보시기 바랍니다." + Environment.NewLine + "혹은 짧은 시간 내에 잦은 로그인 요청으로 일정시간 접속제한을 받았을 수도 있습니다." + Environment.NewLine + "이 경우, 약 5분간 기다린 후 다시 실행 해 보십시오.", Base.PROJECT.Bell_Smart_Launcher);
+                        Exit = true;
+
+                        break;
+                }
+            }
+
+            // 마인크래프트 계정 제어 중 문제 발생시 중단
+            if (Exit)
+            {
                 Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
                 mod_btnEnjoy.IsEnabled = true;
 
-                return;
+                // BSC 초기화 후 종료할시 BSC 시스템 종료 필요.
+                bsc.Stop();
             }
 
-            if (MC_PW == null)
-            {
-                Password pass = new Password();
-                pass.ShowDialog();
-                MC_PW = pass.getPassword();
-                loginResult = GameInfo.Login(MC_PW);
-            }
-            else
-                loginResult = GameInfo.Login();
-
-            switch (loginResult)
-            {
-                case Modpack.ERR_LOGIN.No_Input_ID:
-                    WPFCom.Message("마인크래프트 계정 ID가 설정되지 않아 로그인할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
-
-                    return;
-
-                case Modpack.ERR_LOGIN.No_Input_PW:
-                    WPFCom.Message("마인크래프트 계정 비밀번호가 설정되지 않아 로그인할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
-
-                    return;
-
-                case Modpack.ERR_LOGIN.Login_Fail:
-                    WPFCom.Message("마인크래프트 로그인에 실패했습니다." + Environment.NewLine + "프로필에 아이디 또는 비밀번호를 정상적으로 저장했는지 확인 해 보시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher);
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
-
-                    return;
-            }
-
-            // BSC 초기화
-            bsc = new BellSmartController();
-            if (!bsc.BSC_Init(GameInfo.GetPath() + "\\mods\\"))
-            {
-                WPFCom.Message("BSC 시스템 초기화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
-                mod_btnEnjoy.IsEnabled = true;
-
-                return;
-            }
-
-            // 실행
-            launchResult = GameInfo.Launch();
+                // 실행
+                launchResult = GameInfo.Launch();
             switch (launchResult)
             {
                 case Modpack.ERR_LAUNCH.Already_Running:
                     WPFCom.Message("게임이 이미 실행중 입니다.", Base.PROJECT.Bell_Smart_Launcher);
+                    // BSC 초기화 후 종료할시 BSC 시스템 종료 필요.
+                    bsc.Stop();
 
                     return;
 
                 case Modpack.ERR_LAUNCH.No_Input_Data:
                     WPFCom.Message("실행에 필요한 데이터가 정상적으로 수집되지 않아 실행할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
+                    Exit = true;
 
-                    return;
+                    break;
 
                 case Modpack.ERR_LAUNCH.Java_Not_Found:
                     if (WPFCom.Message("자바 경로가 비 정상적으로 설정되었습니다." + Environment.NewLine + "자바 경로 설정화면으로 이동하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -563,27 +604,34 @@ namespace Bell_Smart_Launcher.Source.Frame
                         tc_Main.SelectedIndex = 4;
                         game_txtJAVAPath.Focus();
                     }
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
+                    Exit = true;
 
-                    return;
+                    break;
 
                 case Modpack.ERR_LAUNCH.Not_Installed:
                     WPFCom.Message("모드팩이 정상적으로 설치되지 않아, 실행할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
+                    Exit = true;
 
-                    return;
+                    break;
 
                 case Modpack.ERR_LAUNCH.Error:
                     WPFCom.Message("예상하지 못한 문제가 발생하여 실행하지 못했습니다.", Base.PROJECT.Bell_Smart_Launcher);
-                    Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
-                    mod_btnEnjoy.IsEnabled = true;
+                    Exit = true;
 
-                    return;
+                    break;
             }
 
-            mod_btnForceKill.IsEnabled = true;
+                mod_btnForceKill.IsEnabled = true;
+
+            // 게임 실행중 문제 발생시 중단
+            if (Exit)
+            {
+                Controller.SetLockFlag(Controller.LockBit.Running_Game, false); // 업데이트 잠금해제
+                mod_btnEnjoy.IsEnabled = true;
+
+                // BSC 초기화 후 종료할시 BSC 시스템 종료 필요.
+                bsc.Stop();
+            }
 
             // 정보 저장
             GameInfo.SetLastVersion();
@@ -593,9 +641,14 @@ namespace Bell_Smart_Launcher.Source.Frame
             tmr_GameCheck.Start();
 
             // BSC 구동
-            bsc.BSC_Set(GameInfo.GetProcessID().ToString());
-            if (!bsc.BSC_Start())
-                WPFCom.Message("BSC 시스템 연동에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+            if (BSC_Use)
+            {
+                // PID 값 설정
+                bsc.Set_PID(GameInfo.GetProcessID().ToString());
+
+                if (!bsc.Start())
+                    WPFCom.Message("BSC 시스템 연동에 실패하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+            }
         }
 
         /// <summary>
@@ -606,7 +659,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (!GameInfo.Feasibility())
             {
                 GameInfo.Kill(); // 게임 종료
-                bsc.BSC_Stop(); // BSC 시스템이 가동중일 수 있으므로 중단시킴
+                bsc.Stop(); // BSC 시스템이 가동중일 수 있으므로 중단시킴
                 tmr_GameCheck.Stop(); // 게임 관리 프로세스 중단
                 WPFCom.Message("성공적으로 강제종료되었습니다.", Base.PROJECT.Bell_Smart_Launcher);
             }
@@ -753,10 +806,26 @@ namespace Bell_Smart_Launcher.Source.Frame
                 mod_cbVersion.SelectedIndex = 1;
 
             // 공지사항 출력
-            mod_wbNotice.NavigateToString(GameInfo.GetNotice());
+            mod_wbNotice.NavigateToString("<meta charset=\"utf-8\"><p>모드팩 공지사항을 가져오는중이에요!</p><p>정리되면 보여드릴게요.</p>");
+            Common.DoEvents();
+
+            noticeLock = false;
+            Thread workerThread = new Thread(LoadMPNotice);
+            workerThread.Start();
 
             // 좋아요 정보 로드
             mod_LoadLike();
+        }
+
+        /// <summary>
+        /// 모드팩 공지사항을 출력합니다.
+        /// </summary>
+        private void LoadMPNotice()
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                mod_wbNotice.NavigateToString(GameInfo.GetNotice());
+            }));
         }
 
         /// <summary>

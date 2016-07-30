@@ -87,6 +87,8 @@ namespace Bell_Smart_Server.Source.Frame
             this.MinHeight = 450;
             this.MinWidth = 1000;
 
+            SetControl(false);
+
             tmr_SecondControl = new DispatcherTimer(); // 초 제어 타이머 초기화
             tmr_Sync = new DispatcherTimer(); // 싱크 타이머 초기화
             tmr_OperatingTime = new DispatcherTimer(); // 가동시간 타이머 초기화
@@ -188,19 +190,25 @@ namespace Bell_Smart_Server.Source.Frame
         #endregion
 
         #region *** CONTROL ***
-
+        
         /// <summary>
         /// 서버를 가동합니다.
         /// </summary>
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
+            // 사전 초기화
             SetState("서버 초기화 시작");
+            Controller.SetLockFlag(Controller.LockBit.Running_Server); // 업데이트 잠금
+            SetControl(true);
+            
+            // 필드
             ServerProfile profile = new ServerProfile((string)cbServer.SelectedItem); // 선택한 서버로 데이터 초기화
 
             string ServerPath = profile.GetData(ServerProfile.Data.ServerPath);
             string ServerFile = profile.GetData(ServerProfile.Data.ServerFile);
             string JavaPath = profile.GetData(ServerProfile.Data.JavaPath);
             string Parameter = profile.GetData(ServerProfile.Data.Parameter);
+            bool BSC_Use = false;
 
             // 로그 초기화
             if (Server.StartLogClear)
@@ -229,13 +237,29 @@ namespace Bell_Smart_Server.Source.Frame
             else
                 Server.AutoRestart = false;
 
-            SetState("BSC 시스템 초기화");
+            SetState("BSC 시스템 사용여부 검사시작");
+            if (bsc != null)
+                bsc.Stop();
             bsc = new BellSmartController();
-            if (!bsc.BSC_Init(ServerPath + "\\mods\\"))
-            {
-                SetState("BSC 시스템 초기화 실패");
+            BSC_Use = bsc.Feasibility(ServerPath + "\\mods\\");
+            
+            if (BSC_Use)
+            {   
+                SetState("BSC 시스템 초기화 시작");
+                bsc.Set_ConnectTimeout(true);
+                bsc.Set_CommunicationTimeout(true);
 
-                return;
+                if (!bsc.Initialize())
+                {
+                    SetState("BSC 시스템 초기화 실패");
+                    Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
+                    SetControl(false);
+
+                    return;
+                }
+
+                // 초기화 시도하면서 서버가 열려있으므로 서버 닫아줌.
+                bsc.Stop();
             }
 
             SetState("서버 가동 시작");
@@ -244,20 +268,48 @@ namespace Bell_Smart_Server.Source.Frame
             ServerProc.BeginErrorReadLine();
 
             // 마무리
-            SetControl(true);
             SetStartTime();
             tmr_OperatingTime.Start();
             SetState("서버 가동 완료");
 
             // BSC 가동
+            if (BSC_Use)
+            {
+                Thread workerThread = new Thread(DoStart_BSC);
+                workerThread.Start();
+            }
+        }
+        
+        /// <summary>
+        /// 서버 다중실행을 위해 멀티스레드로 BSC 시스템 연동을 시도합니다.
+        /// </summary>
+        private void DoStart_BSC()
+        {
+            SetState("BSC 시스템 사용여부 검사시작");
+            bsc = new BellSmartController();
+
+            SetState("BSC 시스템 초기화 시작");
+            bsc.Set_ConnectTimeout(true);
+            bsc.Set_CommunicationTimeout(true);
+
+            if (!bsc.Initialize())
+            {
+                SetState("BSC 시스템 초기화 실패");
+                Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
+                SetControl(false);
+
+                return;
+            }
+
+            // BSC 가동
             SetState("BSC 시스템 가동 시작");
-            bsc.BSC_Set(ServerProc.Id.ToString());
-            if (bsc.BSC_Start())
+            // PID 값 설정
+            bsc.Set_PID(ServerProc.Id.ToString());
+
+            if (bsc.Start())
                 SetState("BSC 시스템 연동 성공");
             else
                 SetState("BSC 시스템 연동 실패");
-
-            Controller.SetLockFlag(Controller.LockBit.Running_Server); // 업데이트 잠금
         }
 
         /// <summary>
@@ -308,6 +360,7 @@ namespace Bell_Smart_Server.Source.Frame
             SetState("서버 강제종료 요청");
             if (!ServerProc.HasExited)
                 ServerProc.Kill();
+            bsc.Stop();
         }
 
         /// <summary>
@@ -330,7 +383,7 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 SetControl(false);
                 tmr_OperatingTime.Stop(); // 가동시간 계산 타이머 중단
-                //bsc.BSC_Stop(); // BSC 시스템이 가동중일 수 있으므로 종료시킴
+                bsc.Stop(); // BSC 시스템이 가동중일 수 있으므로 종료시킴
                 SetState("서버 종료");
                 lbPlayers.Content = "접속자 : 0/?";
                 lbTPS.Content = "TPS : ?";
@@ -392,28 +445,31 @@ namespace Bell_Smart_Server.Source.Frame
         /// <param name="State">서버 작동 상태</param>
         private void SetControl(bool State)
         {
-            btnForceStop.IsEnabled = false;
-            
-            // 서버 구동중 사용 불가 컨트롤
-            cbServer.IsEnabled = !State;
-            btnEdit.IsEnabled = !State;
-            btnStart.IsEnabled = !State;
-            btnServerSetting.IsEnabled = !State;
+            Dispatcher.Invoke(new Action(() =>
+            {
+                btnForceStop.IsEnabled = false;
 
-            // 서버 구동중 사용 가능 컨트롤
-            btnPlayerRefresh.IsEnabled = State;
-            btnRestart.IsEnabled = State;
-            btnStop.IsEnabled = State;
-            btnSave.IsEnabled = State;
-            tcAdditional.IsEnabled = State;
-            btnKick.IsEnabled = State;
-            btnBan.IsEnabled = State;
-            btnWhispers.IsEnabled = State;
-            btnWarn.IsEnabled = State;
-            btnGive.IsEnabled = State;
-            btnPlayerRefresh.IsEnabled = State;
-            btnSelectAll.IsEnabled = State;
-            btnSelectCancelAll.IsEnabled = State;
+                // 서버 구동중 사용 불가 컨트롤
+                cbServer.IsEnabled = !State;
+                btnEdit.IsEnabled = !State;
+                btnStart.IsEnabled = !State;
+                btnServerSetting.IsEnabled = !State;
+
+                // 서버 구동중 사용 가능 컨트롤
+                btnPlayerRefresh.IsEnabled = State;
+                btnRestart.IsEnabled = State;
+                btnStop.IsEnabled = State;
+                btnSave.IsEnabled = State;
+                tcAdditional.IsEnabled = State;
+                btnKick.IsEnabled = State;
+                btnBan.IsEnabled = State;
+                btnWhispers.IsEnabled = State;
+                btnWarn.IsEnabled = State;
+                btnGive.IsEnabled = State;
+                btnPlayerRefresh.IsEnabled = State;
+                btnSelectAll.IsEnabled = State;
+                btnSelectCancelAll.IsEnabled = State;
+            }));
         }
 
         /// <summary>
@@ -422,7 +478,10 @@ namespace Bell_Smart_Server.Source.Frame
         /// <param name="state">상태 텍스트</param>
         private void SetState(string state)
         {
-            lbState.Content = "상태 : " + state;
+            Dispatcher.Invoke(new Action(() =>
+            {
+                lbState.Content = "상태 : " + state;
+            }));
         }
 
         /// <summary>
@@ -1079,6 +1138,7 @@ namespace Bell_Smart_Server.Source.Frame
                             WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", Base.PROJECT.Bell_Smart_Server);
                             e.Cancel = true;
                         }
+                        bsc.Stop();
                     }
                     catch { }
                 }
