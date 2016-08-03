@@ -579,6 +579,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 // BSC 초기화 후 종료할시 BSC 시스템 종료 필요.
                 bsc.Stop();
+                return;
             }
 
                 // 실행
@@ -631,6 +632,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 // BSC 초기화 후 종료할시 BSC 시스템 종료 필요.
                 bsc.Stop();
+                return;
             }
 
             // 정보 저장
