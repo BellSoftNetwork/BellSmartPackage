@@ -935,21 +935,21 @@ namespace Bell_Smart_Launcher.Class
             {
                 if (ExceptionThrow)
                     throw;
-                else
+
                     return ERR_LAUNCH.Java_Not_Found;
             }
             catch (System.ComponentModel.Win32Exception)
             {
                 if (ExceptionThrow)
                     throw;
-                else
+
                     return ERR_LAUNCH.Java_Not_Found;
             }
             catch (Exception)
             {
                 if (ExceptionThrow)
                     throw;
-                else
+
                     return ERR_LAUNCH.Error;
             }
             finally
