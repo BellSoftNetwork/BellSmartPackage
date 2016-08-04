@@ -87,7 +87,7 @@ namespace Bell_Smart_Server.Source.Frame
             tmr_OperatingTime.Interval = TimeSpan.FromSeconds(1); // 1초 간격
             tmr_OperatingTime.Tick += new EventHandler(OperatingTime_Tick);
 
-            tmr_ServerControl.Interval = TimeSpan.FromSeconds(60); // 60초 간격
+            tmr_ServerControl.Interval = TimeSpan.FromSeconds(300); // 300초 간격
             tmr_ServerControl.Tick += new EventHandler(ServerControl_Tick);
 
             tmr_SecondControl.Start(); // 1초 타이머 시작

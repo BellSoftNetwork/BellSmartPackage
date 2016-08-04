@@ -16,6 +16,7 @@ namespace Bell_Smart_Server.Source.Class
         // 필드
         private string ServerName;
         private bool AutoRestart;
+        private int AutoRestartTime;
 
         /// <summary>
         /// 데이터 타입 열거형
@@ -23,7 +24,8 @@ namespace Bell_Smart_Server.Source.Class
         public enum Data
         {
             ServerName,
-            AutoRestart
+            AutoRestart,
+            AutoRestartTime
         }
 
         /// <summary>
@@ -38,14 +40,22 @@ namespace Bell_Smart_Server.Source.Class
             else
                 this.AutoRestart = false;
 
+            try
+            {
+                this.AutoRestartTime = Convert.ToInt32(DataProtect.DataLoad(DataPath.BSS.ServerProfiles + this.ServerName + ".bdx", "AutoRestartTime"));
+            }
+            catch { }
+            if (this.AutoRestartTime < 1)
+                this.AutoRestartTime = 3;
+
         }
 
         /// <summary>
-        /// 프로필 데이터를 가져옵니다.
+        /// 프로필 데이터를 string형으로 가져옵니다.
         /// </summary>
         /// <param name="Value">반환할 프로필 데이터 값</param>
-        /// <returns>프로필 데이터</returns>
-        public string GetData(Data Value)
+        /// <returns>프로필 데이터 (string)</returns>
+        public string GetDataString(Data Value)
         {
             switch (Value)
             {
@@ -55,8 +65,28 @@ namespace Bell_Smart_Server.Source.Class
                 case Data.AutoRestart:
                     return AutoRestart.ToString();
 
+                case Data.AutoRestartTime:
+                    return AutoRestartTime.ToString();
+
                 default:
                     return null;
+            }
+        }
+
+        /// <summary>
+        /// 프로필 데이터를 int형으로 가져옵니다.
+        /// </summary>
+        /// <param name="Value">반환할 프로필 데이터 값</param>
+        /// <returns>프로필 데이터 (int)</returns>
+        public int GetDataInt(Data Value)
+        {
+            switch (Value)
+            {
+                case Data.AutoRestartTime:
+                    return AutoRestartTime;
+
+                default:
+                    return 0;
             }
         }
 
@@ -64,9 +94,11 @@ namespace Bell_Smart_Server.Source.Class
         /// 프로필 데이터를 설정합니다.
         /// </summary>
         /// <param name="AutoRestart">자동 재시작</param>
-        public void SetData(bool AutoRestart)
+        /// <param name="AutoRestartTime">자동 재시작 대기시간 (초)</param>
+        public void SetData(bool AutoRestart, int AutoRestartTime)
         {
             this.AutoRestart = AutoRestart;
+            this.AutoRestartTime = AutoRestartTime;
         }
 
         /// <summary>
@@ -81,6 +113,7 @@ namespace Bell_Smart_Server.Source.Class
 
             // 저장
             DataProtect.DataSave(DataPath.BSS.ServerProfiles + ServerName + ".bdx", "AutoRestart", AutoRestart.ToString());
+            DataProtect.DataSave(DataPath.BSS.ServerProfiles + ServerName + ".bdx", "AutoRestartTime", AutoRestartTime.ToString());
 
             return true;
         }

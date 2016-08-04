@@ -1,4 +1,5 @@
 ﻿using Bell_Smart_Server.Source.Class;
+using BellLib.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,6 @@ namespace Bell_Smart_Server.Source.Frame
         // 필드
         private ServerDetail detail;
         
-
         /// <summary>
         /// 서버 이름으로 초기화합니다.
         /// </summary>
@@ -39,10 +39,17 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void Initalize()
         {
-            if (detail.GetData(ServerDetail.Data.AutoRestart) == "True")
+            if (detail.GetDataString(ServerDetail.Data.AutoRestart) == "True")
+            {
                 cbAutoRestart.IsChecked = true;
+                txtRestartDelay.IsEnabled = true;
+            }
             else
+            {
                 cbAutoRestart.IsChecked = false;
+                txtRestartDelay.IsEnabled = false;
+            }
+            txtRestartDelay.Text = detail.GetDataString(ServerDetail.Data.AutoRestartTime);
         }
 
         /// <summary>
@@ -50,7 +57,28 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            detail.SetData((bool)cbAutoRestart.IsChecked);
+            // 필드
+            int Delay;
+
+            // 유효성 검사
+            try
+            {
+                Delay = Convert.ToInt32(txtRestartDelay.Text);
+
+                if (Delay < 1)
+                {
+                    WPFCom.Message("자동 재시작 대기시간은 1초 이상으로 설정하실 수 있습니다.", BellLib.Data.Base.PROJECT.Bell_Smart_Server);
+                    return;
+                }
+            }
+            catch
+            {
+                WPFCom.Message("자동 재시작 대기시간은 정수만 입력할 수 있습니다.", BellLib.Data.Base.PROJECT.Bell_Smart_Server);
+                return;
+            }
+            
+            // 저장
+            detail.SetData((bool)cbAutoRestart.IsChecked, Delay);
 
             detail.Save();
             this.Close();

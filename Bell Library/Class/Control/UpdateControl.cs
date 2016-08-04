@@ -73,6 +73,18 @@ namespace BellLib.Class.Control
         }
 
         /// <summary>
+        /// 업데이트 잠금여부를 반환합니다.
+        /// </summary>
+        /// <returns>업데이트 잠금여부</returns>
+        public static bool IsLock()
+        {
+            if (LockFlag > 0)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
         /// 최신버전 유무를 검사합니다.
         /// </summary>
         /// <param name="loop">업데이트 발견시까지 반복여부</param>
@@ -85,7 +97,7 @@ namespace BellLib.Class.Control
 
             while (true)
             {
-                if (User.BSP_AutoUpdate && LockFlag == 0)
+                if (User.BSP_AutoUpdate && !IsLock())
                 {
                     try
                     {

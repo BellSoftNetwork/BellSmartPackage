@@ -127,4 +127,22 @@
   <data name="Photo_Bell" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resource\photo\photo_bell.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Tile_BlackCube" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\tile_blackcube.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tile_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\tile_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tile_BlueGlass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\tile_blueglass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tile_LightBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\tile_lightblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tile_NoLightBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\tile_nolightblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tile_WhiteBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resource\photo\tile_whiteblue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -91,11 +91,11 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                                <TextBox x:Name="txtNickName" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="238.261"/>
+                                <TextBox x:Name="txtMessage" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="238.261"/>
                                 <Button x:Name="btnKick" Content="추방" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,163.261,0" IsEnabled="False" Click="btnKick_Click"/>
                                 <Button x:Name="btnBan" Content="영구 정지" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,83.261,0" IsEnabled="False" Click="btnBan_Click"/>
-                                <Button x:Name="btnWhispers" Content="귓속말" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,0,0" IsEnabled="False" Click="btnWhispers_Click"/>
-                                <Button x:Name="btnWarn" Content="경고" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,52.96,0,0" IsEnabled="False" Click="btnWarn_Click"/>
+                                <Button x:Name="btnWarn" Content="경고" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,28,0,0" IsEnabled="False" Click="btnWarn_Click"/>
+                                <Button x:Name="btnWhispers" Content="귓속말" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Margin="0,52.96,163.261,0" IsEnabled="False" Click="btnWhispers_Click"/>
                                 <TextBox x:Name="txtItemID" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="75" Margin="0,0,163.261,0"/>
                                 <TextBox x:Name="txtItemAmount" HorizontalAlignment="Right" Height="23" TextWrapping="Wrap" Text="1" VerticalAlignment="Bottom" Width="75" Margin="0,0,83.261,0"/>
                                 <Button x:Name="btnGive" Content="주기" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,0,3.04" IsEnabled="False" Click="btnGive_Click"/>

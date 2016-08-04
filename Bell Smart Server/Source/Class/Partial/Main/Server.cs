@@ -36,6 +36,8 @@ namespace Bell_Smart_Server.Source.Frame
         private BellSmartController bsc;
         private long StartTime;
 
+        private sbyte AutoRestartChange; // 자동 재시작 대기시간중 변경사항
+
         /// <summary>
         /// 로그 기록 타입 열거형
         /// </summary>
@@ -187,15 +189,45 @@ namespace Bell_Smart_Server.Source.Frame
                 SetState("서버 종료");
                 lbPlayers.Content = "접속자 : 0/?";
                 lbTPS.Content = "TPS : ?";
-                UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server, false); // 업데이트 잠금해제
 
                 if (Server.AutoRestart)
                 {
+                    // 필드
+                    Task waitTask = new Task(() =>
+                    {
+                        for (int i = 0; i < Server.AutoRestaratTime; i++)
+                        {
+                            // 변화 검사
+                            if (AutoRestartChange != 0)
+                                break;
+
+                            // 출력
+                            SetState((Server.AutoRestaratTime - i) + "초 뒤 서버 자동시작");
+                            Thread.Sleep(1000); // 1초 딜레이
+                        }
+                    });
+
+                    // 시작
+                    btnStop.Content = "자동 재시작 중단";
+                    btnStop.IsEnabled = true;
                     SetState("서버 재시작 대기");
-                    Common.DoEvents();
-                    Common.Delay(3000); // 3초 딜레이
-                    btnStart_Click(sender, null);
+                    AutoRestartChange = 0;
+                    waitTask.Start();
+                    while (!waitTask.Wait(1)) // 대기시간 끝날때까지 기다림
+                        Common.DoEvents();
+
+                    UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server, false); // 업데이트 잠금해제
+                    if (AutoRestartChange == 0)
+                    {
+                        btnStop.Content = "서버 종료";
+                        btnStop.IsEnabled = false;
+                        btnStart_Click(sender, null);
+                    }
+                    else if (AutoRestartChange == -1)
+                        SetState("자동 재시작 중단됨");
                 }
+                else
+                    UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server, false); // 업데이트 잠금해제
             }));
         }
 
@@ -649,6 +681,10 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
+            // 자동 재시작 변화 설정
+            AutoRestartChange = 1;
+            btnStop.Content = "서버 종료";
+
             // 사전 초기화
             SetState("서버 초기화 시작");
             UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server); // 업데이트 잠금
@@ -685,10 +721,11 @@ namespace Bell_Smart_Server.Source.Frame
 
             SetState("서버 상세 설정 로드");
             ServerDetail sd = new ServerDetail((string)cbServer.SelectedItem);
-            if (sd.GetData(ServerDetail.Data.AutoRestart) == "True")
+            if (sd.GetDataString(ServerDetail.Data.AutoRestart) == "True")
                 Server.AutoRestart = true;
             else
                 Server.AutoRestart = false;
+            Server.AutoRestaratTime = sd.GetDataInt(ServerDetail.Data.AutoRestartTime);
 
             SetState("BSC 시스템 사용여부 검사시작");
             if (bsc != null)
@@ -774,7 +811,14 @@ namespace Bell_Smart_Server.Source.Frame
         /// </summary>
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            ServerStop();
+            if ((string)btnStop.Content == "서버 종료")
+                ServerStop();
+            else if ((string)btnStop.Content == "자동 재시작 중단")
+            {
+                AutoRestartChange = -1;
+                btnStop.Content = "서버 종료";
+                btnStop.IsEnabled = false;
+            }
         }
 
         /// <summary>

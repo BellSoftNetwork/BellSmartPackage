@@ -9,6 +9,7 @@ namespace Bell_Smart_Server.Source.Data
     {
         // 일반
         public static bool AutoRestart { get; set; }
+        public static int AutoRestaratTime { get; set; }
         public static bool RemoveOldLog { get; set; }
         //public static bool LimitLogLine { get; set; }
         public static int LimitLogLine { get; set; }

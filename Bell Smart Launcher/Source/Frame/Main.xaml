@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Bell_Smart_Launcher.Source.Frame.Main"
         Title="Bell Smart Launcher" Height="500" Width="900" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="CanMinimize" Closed="Window_Closed" Closing="Window_Closing" ContentRendered="Window_ContentRendered">
     <Window.Background>
-        <ImageBrush Stretch="UniformToFill" ImageSource="/Bell Smart Launcher;component/Resource/Photo/Photo_WhileBlueTiles.png"/>
+        <ImageBrush Stretch="UniformToFill" ImageSource="/Bell Smart Launcher;component/Resource/Photo/Tile_WhiteBlue.png" TileMode="Tile"/>
     </Window.Background>
     <Grid x:Name="gd_Main" Margin="0,0,0,0">
         <TabControl x:Name="tc_Main" Background="{x:Null}" BorderBrush="{x:Null}" SelectionChanged="tc_Main_SelectionChanged" >
             <TabItem x:Name="ti_NewsFeed" Header="NEWS FEED" Background="{x:Null}" Height="50" Margin="-2,-1,-2,1" Width="150" BorderBrush="{x:Null}">
                 <Grid>
-                    <WebBrowser x:Name="news_wbNews" Opacity="0.9"/>
+                    <WebBrowser x:Name="news_wbNews" Opacity="0.5"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ti_Modpacks" Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
@@ -22,7 +22,7 @@
                         <ListBoxItem Content="테스트1"/>
                         <ListBoxItem Content="테스트2"/>
                     </ListBox>
-                    <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="600" Margin="0,27,0,0" Navigating="mod_wbNotice_Navigating" Navigated="mod_wbNotice_Navigated" Opacity="0.9"/>
+                    <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="600" Margin="0,27,0,0" Navigating="mod_wbNotice_Navigating" Navigated="mod_wbNotice_Navigated" Opacity="0.7"/>
                     <ComboBox x:Name="mod_cbProfile" Margin="648,352,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="mod_cbProfile_SelectionChanged">
                         <ComboBoxItem Content="Select Profile"/>
                         <ComboBoxItem Content="Create Profile"/>
@@ -78,6 +78,11 @@
                             <Button x:Name="gen_btnCancel" Content="취소" HorizontalAlignment="Right" Margin="0,0,80,0" VerticalAlignment="Bottom" Width="75" Click="gen_btnCancel_Click"/>
                             <Label Content="프로그램 버전 :" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,280,0"/>
                             <Label x:Name="gen_lbBSLVer" Content="0.0.0.00" HorizontalAlignment="Right" VerticalAlignment="Top" Width="275"/>
+                            <Label Content="런처 스킨 :" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25.733,304,0"/>
+                            <ComboBox x:Name="gen_cbSkin" HorizontalAlignment="Right" VerticalAlignment="Top" Width="219.333" Margin="0,29.733,55.667,0" SelectedIndex="0" SelectionChanged="gen_cbSkin_SelectionChanged">
+                                <ComboBoxItem Content="기본"/>
+                            </ComboBox>
+                            <Button x:Name="gen_btnSkinRemove" Content="삭제" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40.667" Margin="0,30.733,10,0" Click="gen_btnSkinRemove_Click" IsEnabled="False"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="set_gbGame" Header="게임" Height="197.447" VerticalAlignment="Bottom">

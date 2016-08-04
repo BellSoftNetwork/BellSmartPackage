@@ -154,6 +154,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             Game.KeepOpen = boolDataLoad(DataPath.BSL.General, "KeepOpen", true);
             Game.AutoControl = boolDataLoad(DataPath.BSL.General, "AutoControl", true);
             Game.DebugMode = boolDataLoad(DataPath.BSL.General, "DebugMode");
+            Game.Skin = DataProtect.DataLoad(DataPath.BSL.General, "Skin");
         }
 
         /// <summary>

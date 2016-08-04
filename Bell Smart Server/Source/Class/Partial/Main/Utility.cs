@@ -180,7 +180,8 @@ namespace Bell_Smart_Server.Source.Frame
                     return;
 
                 foreach (string nickname in list)
-                    SendCommand("kick " + nickname);
+                    SendCommand("kick " + nickname + " " + txtMessage.Text);
+                txtMessage.Clear();
             }
             else
                 WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
@@ -212,7 +213,8 @@ namespace Bell_Smart_Server.Source.Frame
                     return;
 
                 foreach (string nickname in list)
-                    SendCommand("ban " + nickname);
+                    SendCommand("ban " + nickname + " " + txtMessage.Text);
+                txtMessage.Clear();
             }
             else
                 WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
@@ -277,7 +279,8 @@ namespace Bell_Smart_Server.Source.Frame
                                 lstPlayers.Items.Remove(player);
                                 player.suspects = (Convert.ToInt32(player.suspects) + 1).ToString();
                                 lstPlayers.Items.Insert(index, player);
-                                SendCommand("say " + nickname + " 경고 누적");
+                                SendCommand("say " + nickname + "님이 '" + txtMessage.Text + "' 사유로 경고가 누적되었습니다.");
+                                txtMessage.Clear();
                             }
                         }
                     }
@@ -327,6 +330,8 @@ namespace Bell_Smart_Server.Source.Frame
 
                 foreach (string nickname in list)
                     SendCommand("give " + nickname + " " + txtItemID.Text + " " + txtItemAmount.Text);
+                txtItemID.Clear();
+                txtItemAmount.Text = "1";
             }
             else
                 WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);

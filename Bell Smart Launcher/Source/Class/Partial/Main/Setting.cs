@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 
 namespace Bell_Smart_Launcher.Source.Frame
 {
@@ -36,12 +40,95 @@ namespace Bell_Smart_Launcher.Source.Frame
 
             gen_lbBSLVer.Content = Deploy.CurrentVersion.ToString();
 
-            SettingLoad();
+            gen_cbSkin.Items.Clear();
+            gen_cbSkin.Items.Add("밝은 파랑");
+            gen_cbSkin.Items.Add("파랑");
+            gen_cbSkin.Items.Add("검정 큐브");
+            gen_cbSkin.Items.Add("무광 파랑");
+            gen_cbSkin.Items.Add("광 파랑");
+            gen_cbSkin.Items.Add("파란 유리");
+            gen_cbSkin.SelectedIndex = 0;
 
+            SettingLoad(); // 세팅값 로드
             AutoControl(); // 첫 실행시 자동 세팅
         }
 
+        /// <summary>
+        /// 세팅값을 불러옵니다.
+        /// </summary>
+        /// <param name="tab">불러올 세팅 탭</param>
+        private void SettingLoad(int tab = 7) // 0111
+        {
+            if ((tab & 1) == 1) // 0001 일반
+            {
+                gen_txtInstall.Text = Game.BSL_Root;
+                if (Game.Language != null)
+                    gen_cbLanguage.SelectedItem = Game.Language;
+                gen_cbConsole.IsChecked = Game.ConsoleRun;
+                gen_cbKeep.IsChecked = Game.KeepOpen;
+                gen_cbAutoControl.IsChecked = Game.AutoControl;
+                gen_cbDebugMode.IsChecked = Game.DebugMode;
+                if (Game.Skin != null)
+                    gen_cbSkin.SelectedItem = Game.Skin;
+
+                string skinFile = "Tile_WhiteBlue.png";
+                SolidColorBrush color = new SolidColorBrush(Colors.Black);
+                switch (Game.Skin)
+                {
+                    case "밝은 파랑":
+                        skinFile = "Tile_WhiteBlue.png";
+                        break;
+
+                    case "파랑":
+                        skinFile = "Tile_Blue.png";
+                        break;
+
+                    case "검정 큐브":
+                        skinFile = "Tile_BlackCube.jpg";
+                        color = new SolidColorBrush(Colors.Magenta);
+                        break;
+
+                    case "무광 파랑":
+                        skinFile = "Tile_NoLightBlue.png";
+                        break;
+
+                    case "광 파랑":
+                        skinFile = "Tile_LightBlue.png";
+                        break;
+                        
+                    case "파란 유리":
+                        skinFile = "Tile_BlueGlass.png";
+                        break;
+                }
+                this.Background = new ImageBrush(new BitmapImage(new Uri(@"pack://application:,,,/Bell Smart Launcher;component/Resource/Photo/" + skinFile)));
+                ti_NewsFeed.Foreground = color;
+                ti_Modpacks.Foreground = color;
+                ti_Resources.Foreground = color;
+                ti_Maps.Foreground = color;
+                ti_Setting.Foreground = color;
+            }
+
+            if ((tab & 2) == 2) // 0010 게임
+            {
+                game_sdJAVA.Value = Game.Memory_Allocate;
+                game_txtJAVAPath.Text = Game.JAVA_Path;
+                game_txtParameter.Text = Game.JAVA_Parameter;
+                game_cbMultipleExe.IsChecked = Game.MultipleExe;
+
+                if (game_txtJAVAPath.Text == string.Empty)
+                    game_txtJAVAPath.Text = User.BSN_Path + @"Runtime\Java\x64"; // 임시 기본값 설정
+            }
+
+            // Default
+            if (Game.DebugMode)
+                gen_btnDebugger.Visibility = Visibility.Visible;
+            else
+                gen_btnDebugger.Visibility = Visibility.Collapsed;
+        }
+
         #endregion
+
+        #region *** CONTROL ***
 
         /// <summary>
         /// 런처 처음실행시 사용자 환경에 맞게 세팅 진행
@@ -114,146 +201,6 @@ namespace Bell_Smart_Launcher.Source.Frame
         }
 
         /// <summary>
-        /// 세팅값을 로드합니다.
-        /// </summary>
-        private void SettingLoad(int tab = 7) // 0111
-        {
-            if ((tab & 1) == 1) // 0001
-            {
-                gen_txtInstall.Text = Game.BSL_Root;
-                if (Game.Language != null)
-                    gen_cbLanguage.SelectedItem = Game.Language;
-                gen_cbConsole.IsChecked = Game.ConsoleRun;
-                gen_cbKeep.IsChecked = Game.KeepOpen;
-                gen_cbAutoControl.IsChecked = Game.AutoControl;
-                gen_cbDebugMode.IsChecked = Game.DebugMode;
-            }
-
-            if ((tab & 2) == 2) // 0010
-            {
-                game_sdJAVA.Value = Game.Memory_Allocate;
-                game_txtJAVAPath.Text = Game.JAVA_Path;
-                game_txtParameter.Text = Game.JAVA_Parameter;
-                game_cbMultipleExe.IsChecked = Game.MultipleExe;
-
-                if (game_txtJAVAPath.Text == string.Empty)
-                    game_txtJAVAPath.Text = User.BSN_Path + @"Runtime\Java\x64"; // 임시 기본값 설정
-            }
-
-            // Default
-            if (Game.DebugMode)
-                gen_btnDebugger.Visibility = Visibility.Visible;
-            else
-                gen_btnDebugger.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// 일반설정을 저장합니다.
-        /// </summary>
-        /// <returns>저장 성공여부</returns>
-        public bool SaveGeneral()
-        {
-            Game.BSL_Root = gen_txtInstall.Text;
-            Game.Language = (string)gen_cbLanguage.SelectedItem;
-            Game.ConsoleRun = (bool)gen_cbConsole.IsChecked;
-            Game.KeepOpen = (bool)gen_cbKeep.IsChecked;
-            Game.AutoControl = (bool)gen_cbAutoControl.IsChecked;
-            Game.DebugMode = (bool)gen_cbDebugMode.IsChecked;
-
-            DataProtect.DataSave(DataPath.BSL.General, "BSL_Root", Game.BSL_Root);
-            DataProtect.DataSave(DataPath.BSL.General, "Laungage", Game.Language);
-            DataProtect.DataSave(DataPath.BSL.General, "ConsoleRun", Game.ConsoleRun.ToString());
-            DataProtect.DataSave(DataPath.BSL.General, "KeepOpen", Game.KeepOpen.ToString());
-            DataProtect.DataSave(DataPath.BSL.General, "AutoControl", Game.AutoControl.ToString());
-            DataProtect.DataSave(DataPath.BSL.General, "DebugMode", Game.DebugMode.ToString());
-
-            SettingLoad(5);
-
-            return true;
-        }
-
-        /// <summary>
-        /// 게임설정을 저장합니다.
-        /// </summary>
-        /// <returns>저장 성공여부</returns>
-        public bool SaveGame()
-        {
-            bool Java32bit = false;
-            if (Environment.Is64BitOperatingSystem)
-            { // 64비트 운영체제일경우,
-                if (game_txtJAVAPath.Text.Contains("x86")) // 자바경로에 32비트 문구가 있을경우
-                    Java32bit = true; // 32비트 자바로 판정
-            }
-            else // 32비트 운영체제일경우,
-                Java32bit = true; // 필요없고 그냥 32비트
-
-            if (Java32bit)
-                if (game_sdJAVA.Value > 1)
-                    if (WPFCom.Message("32비트 자바에서는 메모리 할당량 1GB 초과시 에러가 발생하며 실행되지 않습니다." + Environment.NewLine + "그래도 저장하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.No)
-                        return false;
-
-            Game.Memory_Allocate = game_sdJAVA.Value;
-            Game.JAVA_Path = game_txtJAVAPath.Text;
-            Game.JAVA_Parameter = game_txtParameter.Text;
-            Game.MultipleExe = (bool)game_cbMultipleExe.IsChecked;
-
-            DataProtect.DataSave(DataPath.BSL.Game_Setting, "Memory_Allocate", Game.Memory_Allocate.ToString());
-            DataProtect.DataSave(DataPath.BSL.Game_Setting, "JAVA_Path", Game.JAVA_Path);
-            DataProtect.DataSave(DataPath.BSL.Game_Setting, "JAVA_Parameter", Game.JAVA_Parameter);
-            DataProtect.DataSave(DataPath.BSL.Game_Setting, "MultipleExe", Game.MultipleExe.ToString());
-
-            SettingLoad(2);
-
-            return true;
-        }
-
-        /// <summary>
-        /// 할당한 자바 용량이 몇GB인지 보여줍니다.
-        /// </summary>
-        private void game_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (!game_sdJAVA.IsInitialized)
-                return;
-            game_lbRAM.Content = game_sdJAVA.Value + " GB";
-        }
-
-        /// <summary>
-        /// 일반 설정 저장
-        /// </summary>
-        private void gen_btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            SaveGeneral();
-            WPFCom.Message("일반설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
-        }
-
-        /// <summary>
-        /// 게임 설정 저장
-        /// </summary>
-        private void game_btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            SaveGame();
-            WPFCom.Message("게임설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
-        }
-
-        /// <summary>
-        /// 자바 유효성 검증을 시행합니다.
-        /// </summary>
-        private void game_btnJAVAIntegrity_Click(object sender, RoutedEventArgs e)
-        {
-            if (Game.JAVA_Path.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
-            {
-                Task<bool> JavaCheck = Task<bool>.Factory.StartNew(() => JavaIntegrityCheck());
-                while (!JavaCheck.Wait(1))
-                    Common.DoEvents();
-
-                if (JavaCheck.Result)
-                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.", Base.PROJECT.Bell_Smart_Launcher);
-            }
-            else
-                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
-        }
-
-        /// <summary>
         /// 런타임 자바팩 무결성검증을 시행합니다.
         /// </summary>
         /// <param name="AutoControl">자동제어 사용여부 (사용시 메시지박스 출력 안함)</param>
@@ -311,6 +258,122 @@ namespace Bell_Smart_Launcher.Source.Frame
                 return false; // 런타임팩 아님
         }
 
+        #endregion
+
+        #region *** DATA ***
+
+        /// <summary>
+        /// 일반설정을 저장합니다.
+        /// </summary>
+        /// <returns>저장 성공여부</returns>
+        public bool SaveGeneral()
+        {
+            Game.BSL_Root = gen_txtInstall.Text;
+            Game.Language = (string)gen_cbLanguage.SelectedItem;
+            Game.ConsoleRun = (bool)gen_cbConsole.IsChecked;
+            Game.KeepOpen = (bool)gen_cbKeep.IsChecked;
+            Game.AutoControl = (bool)gen_cbAutoControl.IsChecked;
+            Game.DebugMode = (bool)gen_cbDebugMode.IsChecked;
+            Game.Skin = (string)gen_cbSkin.SelectedItem;
+
+            DataProtect.DataSave(DataPath.BSL.General, "BSL_Root", Game.BSL_Root);
+            DataProtect.DataSave(DataPath.BSL.General, "Laungage", Game.Language);
+            DataProtect.DataSave(DataPath.BSL.General, "ConsoleRun", Game.ConsoleRun.ToString());
+            DataProtect.DataSave(DataPath.BSL.General, "KeepOpen", Game.KeepOpen.ToString());
+            DataProtect.DataSave(DataPath.BSL.General, "AutoControl", Game.AutoControl.ToString());
+            DataProtect.DataSave(DataPath.BSL.General, "DebugMode", Game.DebugMode.ToString());
+            DataProtect.DataSave(DataPath.BSL.General, "Skin", Game.Skin);
+
+            SettingLoad(5);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 게임설정을 저장합니다.
+        /// </summary>
+        /// <returns>저장 성공여부</returns>
+        public bool SaveGame()
+        {
+            bool Java32bit = false;
+            if (Environment.Is64BitOperatingSystem)
+            { // 64비트 운영체제일경우,
+                if (game_txtJAVAPath.Text.Contains("x86")) // 자바경로에 32비트 문구가 있을경우
+                    Java32bit = true; // 32비트 자바로 판정
+            }
+            else // 32비트 운영체제일경우,
+                Java32bit = true; // 필요없고 그냥 32비트
+
+            if (Java32bit)
+                if (game_sdJAVA.Value > 1)
+                    if (WPFCom.Message("32비트 자바에서는 메모리 할당량 1GB 초과시 에러가 발생하며 실행되지 않습니다." + Environment.NewLine + "그래도 저장하시겠습니까?", Base.PROJECT.Bell_Smart_Launcher, MessageBoxButton.YesNo) == MessageBoxResult.No)
+                        return false;
+
+            Game.Memory_Allocate = game_sdJAVA.Value;
+            Game.JAVA_Path = game_txtJAVAPath.Text;
+            Game.JAVA_Parameter = game_txtParameter.Text;
+            Game.MultipleExe = (bool)game_cbMultipleExe.IsChecked;
+
+            DataProtect.DataSave(DataPath.BSL.Game_Setting, "Memory_Allocate", Game.Memory_Allocate.ToString());
+            DataProtect.DataSave(DataPath.BSL.Game_Setting, "JAVA_Path", Game.JAVA_Path);
+            DataProtect.DataSave(DataPath.BSL.Game_Setting, "JAVA_Parameter", Game.JAVA_Parameter);
+            DataProtect.DataSave(DataPath.BSL.Game_Setting, "MultipleExe", Game.MultipleExe.ToString());
+
+            SettingLoad(2);
+
+            return true;
+        }
+
+        #endregion
+
+        #region *** FORM ***
+
+        /// <summary>
+        /// 할당한 자바 용량이 몇GB인지 보여줍니다.
+        /// </summary>
+        private void game_sdJAVA_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!game_sdJAVA.IsInitialized)
+                return;
+            game_lbRAM.Content = game_sdJAVA.Value + " GB";
+        }
+
+        /// <summary>
+        /// 일반 설정 저장
+        /// </summary>
+        private void gen_btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveGeneral();
+            WPFCom.Message("일반설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+        }
+
+        /// <summary>
+        /// 게임 설정 저장
+        /// </summary>
+        private void game_btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveGame();
+            WPFCom.Message("게임설정 저장에 성공하였습니다.", Base.PROJECT.Bell_Smart_Launcher);
+        }
+
+        /// <summary>
+        /// 자바 유효성 검증을 시행합니다.
+        /// </summary>
+        private void game_btnJAVAIntegrity_Click(object sender, RoutedEventArgs e)
+        {
+            if (Game.JAVA_Path.ToUpper().Contains((Game.BSL_Root + "Runtime\\Java\\").ToUpper()))
+            {
+                Task<bool> JavaCheck = Task<bool>.Factory.StartNew(() => JavaIntegrityCheck());
+                while (!JavaCheck.Wait(1))
+                    Common.DoEvents();
+
+                if (JavaCheck.Result)
+                    WPFCom.Message("런타임팩이 정상적으로 설치되어있습니다.", Base.PROJECT.Bell_Smart_Launcher);
+            }
+            else
+                WPFCom.Message("런타임 자바팩이 아닌 외부 자바는 무결성 체크를 할 수 없습니다.", Base.PROJECT.Bell_Smart_Launcher);
+        }
+
         private void gen_btnDebugger_Click(object sender, RoutedEventArgs e)
         {
             if (WPFCom.Feasibility("Bell_Smart_Launcher.Source.Frame.Debugger"))
@@ -342,5 +405,23 @@ namespace Bell_Smart_Launcher.Source.Frame
             
             gen_txtInstall.Text = dialog.SelectedPath + "\\";
         }
+
+        private void gen_btnSkinRemove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void gen_cbSkin_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!gen_cbSkin.IsInitialized)
+                return;
+
+            if (gen_cbSkin.SelectedIndex < 7) // 기본스킨 삭제불가
+                gen_btnSkinRemove.IsEnabled = false;
+            else
+                gen_btnSkinRemove.IsEnabled = true;
+        }
+
+        #endregion
     }
 }
