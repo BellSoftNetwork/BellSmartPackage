@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Server.Source.Frame"
         mc:Ignorable="d"
-        Title="Bell Smart Server" Height="500" Width="1100" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" WindowStartupLocation="CenterScreen" ContentRendered="Window_ContentRendered" Closing="Window_Closing">
+        Title="Bell Smart Server" Height="500" Width="1100" Icon="/Bell Smart Server;component/Resource/Photo/Photo_RedBell.ico" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
         <TabControl x:Name="tcServer">
             <TabItem Header="메인서버">

@@ -4,25 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Bell_Smart_Launcher.Source.Frame.Main"
         Title="Bell Smart Launcher" Height="500" Width="900" WindowStartupLocation="CenterScreen" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" ResizeMode="CanMinimize" Closed="Window_Closed" Closing="Window_Closing" ContentRendered="Window_ContentRendered">
     <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-            <GradientStop Color="#FF34CBC4"/>
-            <GradientStop Color="#FF3E64CD" Offset="1"/>
-        </LinearGradientBrush>
+        <ImageBrush Stretch="UniformToFill" ImageSource="/Bell Smart Launcher;component/Resource/Photo/Photo_WhileBlueTiles.png"/>
     </Window.Background>
     <Grid x:Name="gd_Main" Margin="0,0,0,0">
         <TabControl x:Name="tc_Main" Background="{x:Null}" BorderBrush="{x:Null}" SelectionChanged="tc_Main_SelectionChanged" >
             <TabItem x:Name="ti_NewsFeed" Header="NEWS FEED" Background="{x:Null}" Height="50" Margin="-2,-1,-2,1" Width="150" BorderBrush="{x:Null}">
                 <Grid>
-                    <WebBrowser x:Name="news_wbNews"/>
+                    <WebBrowser x:Name="news_wbNews" Opacity="0.9"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ti_Modpacks" Header="MODPACKS" Background="{x:Null}" Margin="0,-2,0,0" Width="150" Height="50" BorderBrush="{x:Null}">
                 <Grid>
-                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" Background="#FFA6E3F9" FontWeight="Bold" FontSize="20" Margin="605,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
+                    <ListBox x:Name="mod_lstPackList" Height="320" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Margin="605,27,0,0" SelectionChanged="mod_lstPackList_SelectionChanged">
+                        <ListBox.Background>
+                            <SolidColorBrush Color="#FFBAE3FF" Opacity="0.5"/>
+                        </ListBox.Background>
                         <ListBoxItem Content="테스트1"/>
                         <ListBoxItem Content="테스트2"/>
                     </ListBox>
-                    <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="600" Margin="0,27,0,0" Navigating="mod_wbNotice_Navigating" Navigated="mod_wbNotice_Navigated"/>
+                    <WebBrowser x:Name="mod_wbNotice" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Width="600" Margin="0,27,0,0" Navigating="mod_wbNotice_Navigating" Navigated="mod_wbNotice_Navigated" Opacity="0.9"/>
                     <ComboBox x:Name="mod_cbProfile" Margin="648,352,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="mod_cbProfile_SelectionChanged">
                         <ComboBoxItem Content="Select Profile"/>
                         <ComboBoxItem Content="Create Profile"/>
@@ -36,7 +36,11 @@
                     <Expander x:Name="mod_expanderDetail" Header="Detail" HorizontalAlignment="Left" Margin="0,379,0,0" VerticalAlignment="Top" Collapsed="Mod_Expand" Expanded="Mod_Expand" IsExpanded="True">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
-                    <ListBox x:Name="mod_lstDetailList" HorizontalAlignment="Left" Height="92" Margin="0,282,0,0" VerticalAlignment="Top" Width="600"/>
+                    <ListBox x:Name="mod_lstDetailList" HorizontalAlignment="Left" Height="92" Margin="0,282,0,0" VerticalAlignment="Top" Width="600">
+                        <ListBox.Background>
+                            <SolidColorBrush Color="White" Opacity="0.9"/>
+                        </ListBox.Background>
+                    </ListBox>
                     <Button x:Name="mod_btnPackSetting" Content="Pack Setting" Margin="461,-0.04,0,0" VerticalAlignment="Top" Height="22" Click="mod_btnPackSetting_Click" HorizontalAlignment="Left" Width="139"/>
                     <Button x:Name="mod_btnForceKill" Content="Force Kill" HorizontalAlignment="Left" Margin="698.186,378.96,0,0" VerticalAlignment="Top" Width="65.814" Click="mod_btnForceKill_Click"/>
                     <Button x:Name="mod_btnLike" Content="♡" HorizontalAlignment="Left" Margin="605,378.96,0,0" VerticalAlignment="Top" Width="38" Click="mod_btnLike_Click"/>
@@ -53,6 +57,9 @@
             </TabItem>
             <TabItem x:Name="ti_Setting" Header="SETTING" Background="{x:Null}" Width="150" Height="50" BorderBrush="{x:Null}" Foreground="Black">
                 <Grid>
+                    <Grid.Background>
+                        <SolidColorBrush Color="#FF85D3FF" Opacity="0.5"/>
+                    </Grid.Background>
                     <GroupBox x:Name="set_gbGeneral" Header="일반" Margin="0,0,0,202.447">
                         <Grid>
                             <Label Content="설치 폴더 :" VerticalAlignment="Top" HorizontalAlignment="Left"/>

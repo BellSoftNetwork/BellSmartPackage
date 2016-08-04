@@ -26,20 +26,24 @@ namespace BellLib.Class
         /// </summary>
         public static void DoEvents()
         {
-            if (System.Windows.Application.Current != null)
+            try
             {
-                // WPF
-                System.Windows.Application.Current.Dispatcher.Invoke
-                    (
-                    System.Windows.Threading.DispatcherPriority.Background,
-                    new Action(delegate { })
-                    );
+                if (System.Windows.Application.Current != null)
+                {
+                    // WPF
+                    System.Windows.Application.Current.Dispatcher.Invoke
+                        (
+                        System.Windows.Threading.DispatcherPriority.Background,
+                        new Action(delegate { })
+                        );
+                }
+                else
+                {
+                    // WinForm
+                    System.Windows.Forms.Application.DoEvents();
+                }
             }
-            else
-            {
-                // WinForm
-                System.Windows.Forms.Application.DoEvents();
-            }
+            catch { }
         }
 
         /// <summary>

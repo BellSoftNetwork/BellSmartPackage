@@ -352,7 +352,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             }
 
             // 실행
-            Console console = new Console();
+            Console console = new Console(Game.ConsoleRun);
             launchResult = GameInfo.Launch(console.Game_DataReceived, console.Game_ErrorDataReceived, console.Game_Exited);
             switch (launchResult)
             {

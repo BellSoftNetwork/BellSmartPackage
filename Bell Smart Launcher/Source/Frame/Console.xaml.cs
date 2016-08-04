@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,10 +25,21 @@ namespace Bell_Smart_Launcher.Source.Frame
     /// </summary>
     public partial class Console : Window
     {
-        private bool running = true;
-        public Console()
+        // 필드
+        private bool useConsole;
+        private bool running;
+        private Queue<string> logsQue;
+        private Task SyncConsole;
+
+        public Console(bool useConsole)
         {
             InitializeComponent();
+            this.useConsole = useConsole;
+            running = true;
+            logsQue = new Queue<string>();
+            SyncConsole = new Task(SyncLogTask);
+            if (useConsole)
+                SyncConsole.Start();
         }
 
         /// <summary>
@@ -35,11 +47,11 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         public void Game_Exited(object sender, EventArgs e)
         {
+            AddLog("게임이 종료되었습니다.", true);
+            running = false;
+
             Dispatcher.Invoke(new Action(() =>
             {
-                AddLog("게임이 종료되었습니다.", true);
-                running = false;
-                
                 this.Close();
             }));
         }
@@ -49,10 +61,8 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         public void Game_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            Dispatcher.Invoke(new Action(() =>
-            {
+            if (useConsole)
                 AddLog(e.Data);
-            }));
         }
 
         /// <summary>
@@ -60,15 +70,12 @@ namespace Bell_Smart_Launcher.Source.Frame
         /// </summary>
         public void Game_DataReceived(object sender, DataReceivedEventArgs e)
         {
-            Dispatcher.Invoke(new Action(() =>
-            {
-                // e.Data is the line which was written to standard output
+            if (useConsole)
                 AddLog(e.Data);
-            }));
         }
 
         /// <summary>
-        /// 콘솔 로그를 기록합니다.
+        /// 출력 할 콘솔 로그를 대기열에 추가합니다.
         /// </summary>
         /// <param name="Data">로그</param>
         private void AddLog(string Data, bool nowTimeShow = false)
@@ -81,23 +88,39 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (nowTimeShow)
                 Data = "[" + DateTime.Now.ToString("hh:mm:ss") + "]: " + Data;
 
-            // 출력
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Send, (ThreadStart)delegate ()
-            {
-                txtLog.AppendText(Data + Environment.NewLine);
-                //tb.Text = Data + Environment.NewLine;
-                this.InvalidateVisual();
-            });
+            // 대기열에 추가
+            logsQue.Enqueue(Data);
+        }
 
-            // 스크롤
-            if (true)
+        /// <summary>
+        /// 콘솔 로그를 동기화합니다.
+        /// </summary>
+        private void SyncLogTask()
+        {
+            while (running)
             {
-                txtLog.ScrollToEnd();
-                txtLog.CaretIndex = txtLog.Text.Length;
+                string Data = null;
+
+                // 밀린 로그 수집
+                for (int i = 0; i < logsQue.Count; i++)
+                    Data += logsQue.Dequeue() + Environment.NewLine;
+
+                // 밀린 로그 한번에 출력
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Send, (ThreadStart)delegate ()
+                {
+                    txtLog.AppendText(Data);
+                    this.InvalidateVisual();
+
+                    // 오래된 로그 삭제
+                    RemoveOldLog(500);
+
+                    // 스크롤
+                    txtLog.ScrollToEnd();
+                    txtLog.CaretIndex = txtLog.Text.Length;
+                });
+                
+                Thread.Sleep(100); // 0.1초에 한번씩 동기화
             }
-
-            // 오래된 로그 삭제
-            RemoveOldLog(1000);
         }
 
         /// <summary>
@@ -114,10 +137,7 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 if (removeLine > 0)
                     for (int i = 0; i < removeLine; i++)
-                    {
                         length += txtLog.GetLineLength(i);
-                        Common.DoEvents(); // 로그가 많으면 삭제하는데 오래걸리므로 UI 스레드 렉으로 인한 셧다운 방지
-                    }
 
                 if (length >= 0)
                     txtLog.Text = txtLog.Text.Remove(0, length);
