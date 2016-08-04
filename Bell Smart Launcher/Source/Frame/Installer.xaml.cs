@@ -1,7 +1,7 @@
 ﻿using Bell_Smart_Launcher.Class;
-using Bell_Smart_Launcher.Source.Management;
 using BellLib.Class;
 using BellLib.Class.BSN;
+using BellLib.Class.Control;
 using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
@@ -93,12 +93,12 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (installing)
                 return;
             installing = true;
-            while (Controller.GetLockFlag().Contains(Controller.LockBit.Install_Game))
+            while (UpdateControl.GetLockFlag().Contains(UpdateControl.LockBit.Install_Game))
             {
                 SetStatus("현재 다른 모드팩이 설치중입니다.");
                 Common.Delay(1000);
             }
-            Controller.SetLockFlag(Controller.LockBit.Install_Game); // 업데이트 잠금
+            UpdateControl.SetLockFlag(UpdateControl.LockBit.Install_Game); // 업데이트 잠금
 
             // 기본 필드
             long startTime = DateTime.Now.Ticks; // 시작시간
@@ -165,7 +165,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             // 팩 상태 저장
             DataProtect.DataSave(install.PathPack + "data.bdx", "State", "Installed");
             DataProtect.DataSave(install.PathVersion + "config.bdx", "State", "Installed");
-            Controller.SetLockFlag(Controller.LockBit.Install_Game, false); // 업데이트 잠금해제
+            UpdateControl.SetLockFlag(UpdateControl.LockBit.Install_Game, false); // 업데이트 잠금해제
 
             SetStatus("설치완료");
 
@@ -215,7 +215,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             if (installing)
                 return;
             installing = true;
-            Controller.SetLockFlag(Controller.LockBit.Install_Runtime); // 업데이트 잠금
+            UpdateControl.SetLockFlag(UpdateControl.LockBit.Install_Runtime); // 업데이트 잠금
 
             // 기본 필드
             long startTime = DateTime.Now.Ticks; // 시작시간
@@ -269,7 +269,7 @@ namespace Bell_Smart_Launcher.Source.Frame
                 }
             }
             SetStatus("런타임 설치완료");
-            Controller.SetLockFlag(Controller.LockBit.Install_Runtime, false); // 업데이트 잠금해제
+            UpdateControl.SetLockFlag(UpdateControl.LockBit.Install_Runtime, false); // 업데이트 잠금해제
 
             long endTime = DateTime.Now.Ticks; // 종료시간
             long installTime = (endTime - startTime) / 10000000; // 1틱은 천만분의 1초

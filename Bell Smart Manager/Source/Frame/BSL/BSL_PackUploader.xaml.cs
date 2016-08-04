@@ -3,6 +3,7 @@ using BellLib.Class.BSN;
 using BellLib.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -234,7 +235,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
             catch (System.IO.DirectoryNotFoundException)
             {
-                FileSystem.CreateFolder((string)lbUploadURL.Content);
+                Directory.CreateDirectory((string)lbUploadURL.Content);
                 btnRefresh_Click(sender, e);
             }
             catch (Exception ex)

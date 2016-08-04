@@ -42,7 +42,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.10.%2a</ApplicationVersion>
+    <ApplicationVersion>1.0.11.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -171,7 +171,6 @@
     <Compile Include="Source\Frame\Updater.xaml.cs">
       <DependentUpon>Updater.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Management\Controller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

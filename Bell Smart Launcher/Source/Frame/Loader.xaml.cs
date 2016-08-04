@@ -1,12 +1,13 @@
 ﻿using Bell_Smart_Launcher.Source.Data;
-using Bell_Smart_Launcher.Source.Management;
 using BellLib.Class;
+using BellLib.Class.Control;
 using BellLib.Class.Protection;
 using BellLib.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,9 +40,12 @@ namespace Bell_Smart_Launcher.Source.Frame
             SetStatus("로더 실행 완료", 1);
 
             SetStatus("런처 최신버전 체크", 1);
-            if (Controller.UpdateCheck())
+            if (UpdateControl.UpdateCheck(false))
             {
                 SetStatus("업데이트 시작", 1);
+                Updater updater = new Updater();
+                updater.Show();
+
                 this.Close();
 
                 return;
@@ -112,16 +116,28 @@ namespace Bell_Smart_Launcher.Source.Frame
             DebugSettingLoad();
             SetStatus("디버그 설정 로드 완료", 1);
 
-            // 컨트롤러 실행
-            SetStatus("런처 컨트롤러 생성시작", 1);
-            Controller Cont = new Controller();
-            SetStatus("런처 컨트롤러 생성 완료", 1);
+            // 오토업데이트 시스템 실행
+            SetStatus("런처 자동업데이트 시스템 생성 시작", 1);
+            Task upSys = new Task(UpdateSystem);
+            SetStatus("런처 자동업데이트 시스템 생성 완료", 1);
 
-            SetStatus("런처 컨트롤러 초기화 시작", 1);
-            Cont.Initialize();
-            SetStatus("런처 컨트롤러 초기화 완료", 1);
+            SetStatus("런처 자동업데이트 시스템 가동 시작", 1);
+            upSys.Start();
+            SetStatus("런처 자동업데이트 시스템 가동 완료", 1);
 
             return true;
+        }
+
+        /// <summary>
+        /// 업데이트 시스템을 비동기 시작합니다.
+        /// </summary>
+        private static void UpdateSystem()
+        {
+            if (UpdateControl.UpdateCheck())
+            {
+                Updater updater = new Updater();
+                updater.Show();
+            }
         }
 
         /// <summary>

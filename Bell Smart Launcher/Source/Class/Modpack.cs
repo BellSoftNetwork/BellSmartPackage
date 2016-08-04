@@ -903,7 +903,7 @@ namespace Bell_Smart_Launcher.Class
         /// 게임을 실행합니다.
         /// </summary>
         /// <returns>실행 에러코드</returns>
-        public ERR_LAUNCH Launch()
+        public ERR_LAUNCH Launch(DataReceivedEventHandler output, DataReceivedEventHandler error, EventHandler exited)
         {
             // 필드 검사
             if (mi.ConvertedVersion == null || bi.Version == null || path.BaseVersion == null || path.ModpackVersion == null || account.UUID == null || account.AccessToken == null)
@@ -922,35 +922,46 @@ namespace Bell_Smart_Launcher.Class
 
             try
             {
-                //Directory.SetCurrentDirectory(PathModpack); //런처 실행경로를 방울크래프트 클라이언트 경로로 수정.
+                var startInfo = new ProcessStartInfo();
+                startInfo.RedirectStandardOutput = startInfo.RedirectStandardInput = startInfo.RedirectStandardError = true;
+                startInfo.UseShellExecute = false;
+                startInfo.CreateNoWindow = true;
+                startInfo.FileName = path.Java;
+                startInfo.Arguments = GetArguments(); // 파라메터 설정
+                startInfo.WorkingDirectory = path.ModpackVersion; // 런처 실행경로를 클라이언트 경로로 수정
+
                 GameProcess = new Process();
-                if (!option.ConsoleRun)
-                    path.Java = path.Java.Replace("java.exe", "javaw.exe");
-                GameProcess.StartInfo.FileName = path.Java;
-                GameProcess.StartInfo.Arguments = GetArguments(); // 파라메터 설정
-                GameProcess.StartInfo.WorkingDirectory = path.ModpackVersion; //런처 실행경로를 방울크래프트 클라이언트 경로로 수정.
+                GameProcess.StartInfo = startInfo;
+                GameProcess.EnableRaisingEvents = true;
+
+                GameProcess.OutputDataReceived += output;
+                GameProcess.ErrorDataReceived += error;
+                GameProcess.Exited += exited;
+
                 GameProcess.Start();
+                GameProcess.BeginOutputReadLine();
+                GameProcess.BeginErrorReadLine();
             }
             catch (FileNotFoundException)
             {
                 if (ExceptionThrow)
                     throw;
 
-                    return ERR_LAUNCH.Java_Not_Found;
+                return ERR_LAUNCH.Java_Not_Found;
             }
             catch (System.ComponentModel.Win32Exception)
             {
                 if (ExceptionThrow)
                     throw;
 
-                    return ERR_LAUNCH.Java_Not_Found;
+                return ERR_LAUNCH.Java_Not_Found;
             }
             catch (Exception)
             {
                 if (ExceptionThrow)
                     throw;
 
-                    return ERR_LAUNCH.Error;
+                return ERR_LAUNCH.Error;
             }
             finally
             {
@@ -961,7 +972,7 @@ namespace Bell_Smart_Launcher.Class
 
             return ERR_LAUNCH.Success;
         }
-
+        
         /// <summary>
         /// 게임 실행에 필요한 인자를 정리합니다.
         /// </summary>

@@ -1,5 +1,5 @@
-﻿using Bell_Smart_Server.Source.Management;
-using BellLib.Class;
+﻿using BellLib.Class;
+using BellLib.Class.Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,9 +51,12 @@ namespace Bell_Smart_Server.Source.Frame
             SetStatus("로더 실행 완료", 1);
 
             SetStatus("서버 최신버전 체크", 1);
-            if (Controller.UpdateCheck())
+            if (UpdateControl.UpdateCheck(false))
             {
                 SetStatus("업데이트 시작", 1);
+                Updater updater = new Updater();
+                updater.Show();
+
                 this.Close();
 
                 return;

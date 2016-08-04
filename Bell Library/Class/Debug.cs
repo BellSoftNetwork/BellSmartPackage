@@ -53,13 +53,13 @@ namespace BellLib.Class
             {
                 try
                 {
+                    if (!Directory.Exists(Path.Combine(Data.User.BSN_Path, logPath)))
+                        Directory.CreateDirectory(Path.Combine(Data.User.BSN_Path, logPath));
+
                     FileSystem.WriteTextFile(GetLogFileName(), "[" + DateTime.Now.ToString() + " - Initialize Bell Smart Debug Tools]" + Environment.NewLine, true);
                     // Example: [2015/6/6 01:23:45 PM - Initialize Bell Smart Debug Tools]
                 }
-                catch
-                {
-                    FileSystem.CreateDefaultFolder();
-                }
+                catch { }
             }
         }
 

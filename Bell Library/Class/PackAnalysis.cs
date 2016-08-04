@@ -50,6 +50,7 @@ namespace BellLib.Class
         public string[] Option, Directory, Hash;
     }
 
+    [Obsolete]
     /// <summary>
     /// 클라이언트 전용
     /// 웹 XML 데이터를 바탕으로 모드팩, 베이스팩, 옵션팩 정보 분석을 시행합니다.
@@ -561,6 +562,8 @@ namespace BellLib.Class
         public string Recommended, Latest, Down;
         public string[] Version;
     }
+
+    [Obsolete]
     /// <summary>
     /// 서버 전용
     /// 모드팩, 베이스팩, 옵션팩 정보 분석 및 XML 작성을 시행합니다.

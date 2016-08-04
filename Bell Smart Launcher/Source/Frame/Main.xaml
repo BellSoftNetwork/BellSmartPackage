@@ -57,7 +57,7 @@
                         <Grid>
                             <Label Content="설치 폴더 :" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                             <TextBox x:Name="gen_txtInstall" Height="23" Margin="88.577,4,0,0" TextWrapping="Wrap" Text="C:\BSN" VerticalAlignment="Top" HorizontalAlignment="Left" Width="300"/>
-                            <Button x:Name="gen_btnSearch" Content="찾기" Margin="393.577,3,407.423,0" VerticalAlignment="Top"/>
+                            <Button x:Name="gen_btnSearch" Content="찾기" Margin="393.577,3,407.423,0" VerticalAlignment="Top" Click="gen_btnSearch_Click"/>
                             <Label Content="언어 :" Margin="0,27.733,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                             <ComboBox x:Name="gen_cbLanguage" Margin="88.577,29.733,0,0" VerticalAlignment="Top" SelectedIndex="0" HorizontalAlignment="Left" Width="300">
                                 <ListBoxItem Content="한국어"/>

@@ -129,35 +129,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Program.cs" />
-    <Compile Include="Source\BST\BST_Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Login.Designer.cs">
-      <DependentUpon>BST_Login.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BST\BST_Management.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Management.Designer.cs">
-      <DependentUpon>BST_Management.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BST\BST_Updater.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Updater.Designer.cs">
-      <DependentUpon>BST_Updater.cs</DependentUpon>
-    </Compile>
     <Compile Include="Source\BST\BST_Debug.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Source\BST\BST_Debug.Designer.cs">
       <DependentUpon>BST_Debug.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BST\BST_Info.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Info.Designer.cs">
-      <DependentUpon>BST_Info.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\BST\BST_Laboratory.cs">
       <SubType>Form</SubType>
@@ -171,12 +147,6 @@
     <Compile Include="Source\BST\BST_Loader.Designer.cs">
       <DependentUpon>BST_Loader.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\BST\BST_Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Main.Designer.cs">
-      <DependentUpon>BST_Main.cs</DependentUpon>
-    </Compile>
     <Compile Include="Source\BST\BST_Preferences.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,12 +158,6 @@
     </Compile>
     <Compile Include="Source\BST\BST_Reader.Designer.cs">
       <DependentUpon>BST_Reader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\BST\BST_Runtime.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\BST\BST_Runtime.Designer.cs">
-      <DependentUpon>BST_Runtime.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Frame\BSC.xaml.cs">
       <DependentUpon>BSC.xaml</DependentUpon>
@@ -227,20 +191,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Login.resx">
-      <DependentUpon>BST_Login.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Management.resx">
-      <DependentUpon>BST_Management.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Updater.resx">
-      <DependentUpon>BST_Updater.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Debug.resx">
       <DependentUpon>BST_Debug.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Info.resx">
-      <DependentUpon>BST_Info.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Laboratory.resx">
       <DependentUpon>BST_Laboratory.cs</DependentUpon>
@@ -248,17 +200,11 @@
     <EmbeddedResource Include="Source\BST\BST_Loader.resx">
       <DependentUpon>BST_Loader.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Main.resx">
-      <DependentUpon>BST_Main.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Preferences.resx">
       <DependentUpon>BST_Preferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Source\BST\BST_Reader.resx">
       <DependentUpon>BST_Reader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\BST\BST_Runtime.resx">
-      <DependentUpon>BST_Runtime.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Bell Smart Tools_Key.pfx" />

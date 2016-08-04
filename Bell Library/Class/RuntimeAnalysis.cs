@@ -20,6 +20,7 @@ namespace BellLib.Class
         }
     }
 
+    [Obsolete]
     /// <summary>
     /// 런타임팩 데이터 읽기
     /// 1. 인스턴스 생성
@@ -118,7 +119,7 @@ namespace BellLib.Class
                 throw new System.MethodAccessException("설치 데이터가 로드되지 않았습니다.");
 
             foreach (string tmp in Directory)
-                FileSystem.CreateFolder(LocalPath + tmp);
+                System.IO.Directory.CreateDirectory(LocalPath + tmp);
         }
 
         public string[] GetInstallData(DataType DType)
@@ -139,6 +140,7 @@ namespace BellLib.Class
         }
     }
 
+    [Obsolete]
     public class RuntimeAnalysisWrite
     {
         private bool WriteAvailable = false;
@@ -199,7 +201,7 @@ namespace BellLib.Class
 
             try
             {
-                FileSystem.CreateFolder(xmlPath);
+                System.IO.Directory.CreateDirectory(xmlPath);
                 XmlTextWriter XTW = new XmlTextWriter(xmlPath + xmlName, Encoding.UTF8);
                 XTW.Formatting = Formatting.Indented;
                 XTW.WriteStartDocument();

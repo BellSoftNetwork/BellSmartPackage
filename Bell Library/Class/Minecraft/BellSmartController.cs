@@ -48,7 +48,7 @@ namespace BellLib.Class.Minecraft
         /// </summary>
         /// <param name="Timeout">타임아웃 사용여부</param>
         /// <param name="TimeoutSec">타임아웃 시간 (초)</param>
-        public void Set_ConnectTimeout(bool Timeout, int TimeoutSec = 300)
+        public void Set_ConnectTimeout(bool Timeout, int TimeoutSec = 600)
         {
             this.ConnectTimeout = Timeout;
             this.ConnectTimeoutSec = TimeoutSec;

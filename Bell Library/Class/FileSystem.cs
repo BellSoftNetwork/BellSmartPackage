@@ -40,49 +40,7 @@ namespace BellLib.Class
                 }
             }
         }
-
-        public static void CreateFolder(string folderPath)
-        {
-            Directory.CreateDirectory(folderPath);
-        }
-
-        /// <summary>
-        /// 기본적으로 존재해야하는 디렉토리를 생성합니다.
-        /// </summary>
-        [Obsolete]
-        public static void CreateDefaultFolder()
-        {
-            CreateFolder(Data.User.BSN_Path);
-            CreateFolder(Data.User.BSN_Path + "logs");
-            CreateFolder(Data.User.BSN_Path + "Temp");
-            /*CreateFolder(Data.User.BSN_Path + "Temp\\BSU");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\ModPack");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\ModPack\\Version");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\BasePack");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\BasePack\\Version");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\OptionPack");
-            CreateFolder(Data.User.BSN_Path + "Temp\\BSU\\Data\\OptionPack\\Version");*/
-
-            CreateFolder(Data.User.BSN_Path + "Upload");
-            CreateFolder(Data.User.BSN_Path + "Upload\\ModPack");
-            CreateFolder(Data.User.BSN_Path + "Upload\\BasePack");
-            CreateFolder(Data.User.BSN_Path + "Upload\\Resource");
-            CreateFolder(Data.User.BSN_Path + "Upload\\Runtime");
-            CreateFolder(Data.User.BSN_Path + "Upload\\Runtime\\JAVA");
-
-            CreateFolder(Data.User.BSN_Path + "Data");
-
-
-            /*CreateFolder(Data.User.BSL_Root + "Data");
-            CreateFolder(Data.User.BSL_Root + "Data\\BSL");
-            CreateFolder(Data.User.BSL_Root + "Data\\BSL\\Profile");
-
-            CreateFolder(Data.User.BSL_Root + "ModPack");
-            CreateFolder(Data.User.BSL_Root + "Base");
-            CreateFolder(Data.User.BSL_Root + "Runtime");*/
-        }
-
+        
         /// <summary>
         /// 해당 디렉토리의 파일 포맷을 가진 모든 파일을 삭제합니다.
         /// </summary>

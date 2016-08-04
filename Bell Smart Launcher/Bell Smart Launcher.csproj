@@ -41,7 +41,7 @@
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.5.%2a</ApplicationVersion>
+    <ApplicationVersion>1.0.6.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -133,6 +133,11 @@
     </Compile>
     <Compile Include="Source\Class\MCLogin.cs" />
     <Compile Include="Source\Class\Modpack.cs" />
+    <Compile Include="Source\Class\Partial\Main\Maps.cs" />
+    <Compile Include="Source\Class\Partial\Main\Modpacks.cs" />
+    <Compile Include="Source\Class\Partial\Main\News.cs" />
+    <Compile Include="Source\Class\Partial\Main\Resources.cs" />
+    <Compile Include="Source\Class\Partial\Main\Setting.cs" />
     <Compile Include="Source\Class\Profile.cs" />
     <Compile Include="Source\Data\DebugCategory.cs" />
     <Compile Include="Source\Data\Game.cs" />
@@ -172,7 +177,6 @@
     <Compile Include="Source\Frame\Updater.xaml.cs">
       <DependentUpon>Updater.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Source\Management\Controller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

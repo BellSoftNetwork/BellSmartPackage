@@ -1,7 +1,7 @@
 ﻿using Bell_Smart_Server.Source.Class;
 using Bell_Smart_Server.Source.Data;
-using Bell_Smart_Server.Source.Management;
 using BellLib.Class;
+using BellLib.Class.Control;
 using BellLib.Class.Minecraft;
 using BellLib.Class.Protection;
 using BellLib.Data;
@@ -144,13 +144,16 @@ namespace Bell_Smart_Server.Source.Frame
 
             // 일반 (0x02)
             if ((flag & 0x02) != 0)
-            {
-                cbRemoveOldLog.IsChecked = true;
-                cbLimitLogLine.IsChecked = true;
-                
+            {   
                 try
                 {
                     Server.LimitLogLine = Convert.ToInt32(DataProtect.DataLoad(DataPath.BSS.General, "LimitLogLine"));
+                    if (Server.LimitLogLine != -1 && Server.LimitLogLine < 100) // 100라인 미만은 금지
+                    {
+                        Server.LimitLogLine = 1000; // 기본값
+                        DataProtect.DataSave(DataPath.BSS.General, "LimitLogLine", Server.LimitLogLine.ToString());
+                    }
+
                     txtLimitLogLine.Text = Server.LimitLogLine.ToString();
                 }
                 catch { }
@@ -198,7 +201,7 @@ namespace Bell_Smart_Server.Source.Frame
         {
             // 사전 초기화
             SetState("서버 초기화 시작");
-            Controller.SetLockFlag(Controller.LockBit.Running_Server); // 업데이트 잠금
+            UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server); // 업데이트 잠금
             SetControl(true);
             
             // 필드
@@ -252,7 +255,7 @@ namespace Bell_Smart_Server.Source.Frame
                 if (!bsc.Initialize())
                 {
                     SetState("BSC 시스템 초기화 실패");
-                    Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
+                    UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server, false); // 업데이트 잠금해제
                     SetControl(false);
 
                     return;
@@ -295,7 +298,7 @@ namespace Bell_Smart_Server.Source.Frame
             if (!bsc.Initialize())
             {
                 SetState("BSC 시스템 초기화 실패");
-                Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
+                UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server, false); // 업데이트 잠금해제
                 SetControl(false);
 
                 return;
@@ -387,7 +390,7 @@ namespace Bell_Smart_Server.Source.Frame
                 SetState("서버 종료");
                 lbPlayers.Content = "접속자 : 0/?";
                 lbTPS.Content = "TPS : ?";
-                Controller.SetLockFlag(Controller.LockBit.Running_Server, false); // 업데이트 잠금해제
+                UpdateControl.SetLockFlag(UpdateControl.LockBit.Running_Server, false); // 업데이트 잠금해제
 
                 if (Server.AutoRestart)
                 {
@@ -1156,7 +1159,7 @@ namespace Bell_Smart_Server.Source.Frame
             try
             {
                 set_lbLatestVersion.Content = "최신버전 : " + Deploy.LatestVersion;
-                set_lbUpdateLock.Content = "업데이트 잠금 : " + Controller.GetLockFlag()[0];
+                set_lbUpdateLock.Content = "업데이트 잠금 : " + UpdateControl.GetLockFlag()[0];
 
                 if (Deploy.UpdateAvailable())
                 {
@@ -1380,8 +1383,13 @@ namespace Bell_Smart_Server.Source.Frame
         {
             try
             {
-                if (Controller.UpdateCheck())
+                if (UpdateControl.UpdateCheck(false))
+                {
                     btnUpdate.IsEnabled = false;
+
+                    Updater updater = new Updater();
+                    updater.Show();
+                }
             }
             catch (Exception ex)
             {
@@ -1412,8 +1420,16 @@ namespace Bell_Smart_Server.Source.Frame
         {
             try
             {
-                //LogLimit = Convert.ToInt32(txtLimitLogLine.Text);
-                Server.LimitLogLine = Convert.ToInt32(txtLimitLogLine.Text);
+                int line = Convert.ToInt32(txtLimitLogLine.Text);
+                // 유효성 검사
+                if (line != -1 && line < 100)
+                {
+                    WPFCom.Message("로그기록 100 라인 미만은 설정하실 수 없습니다.", Base.PROJECT.Bell_Smart_Server);
+
+                    return;
+                }
+
+                Server.LimitLogLine = line;
                 DataProtect.DataSave(DataPath.BSS.General, "LimitLogLine", txtLimitLogLine.Text);
             }
             catch

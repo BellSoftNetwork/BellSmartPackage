@@ -67,8 +67,8 @@ namespace Bell_Smart_Tools.Source.BSS
         {
             if (Initialize())
             {
-                BST_Login BST = new BST_Login(); //new BST_Login();
-                BST.Show();
+                /*BST_Login BST = new BST_Login(); //new BST_Login();
+                BST.Show();*/
                 this.Hide();
             }
         }
