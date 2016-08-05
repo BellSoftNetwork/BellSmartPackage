@@ -183,6 +183,7 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 running = false;
                 SetControl(false);
+                lstPlayers.Items.Clear(); // 접속자 초기화
                 tmr_OperatingTime.Stop(); // 가동시간 계산 타이머 중단
                 tmr_ServerControl.Stop(); // 서버제어 타이머 중단
                 bsc.Stop(); // BSC 시스템이 가동중일 수 있으므로 종료시킴

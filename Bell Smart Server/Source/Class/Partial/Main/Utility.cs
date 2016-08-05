@@ -180,7 +180,12 @@ namespace Bell_Smart_Server.Source.Frame
                     return;
 
                 foreach (string nickname in list)
-                    SendCommand("kick " + nickname + " " + txtMessage.Text);
+                    SendCommand("kick " + nickname + " " + txtMessage.Text); // 추방 명령어 전송
+
+                foreach (Player player in lstPlayers.Items)
+                    if (player.select)
+                        lstPlayers.Items.Remove(player); // 접속자 목록에서 제거
+
                 txtMessage.Clear();
             }
             else

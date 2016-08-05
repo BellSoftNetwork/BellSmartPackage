@@ -105,20 +105,22 @@ namespace Bell_Smart_Launcher.Source.Frame
                 for (int i = 0; i < logsQue.Count; i++)
                     Data += logsQue.Dequeue() + Environment.NewLine;
 
-                // 밀린 로그 한번에 출력
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Send, (ThreadStart)delegate ()
-                {
-                    txtLog.AppendText(Data);
-                    this.InvalidateVisual();
+                // 데이터 검사
+                if (!string.IsNullOrWhiteSpace(Data))
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Send, (ThreadStart)delegate ()
+                    {
+                        // 밀린 로그 한번에 출력
+                        txtLog.AppendText(Data);
+                        this.InvalidateVisual();
 
-                    // 오래된 로그 삭제
-                    RemoveOldLog(500);
+                        // 오래된 로그 삭제
+                        RemoveOldLog(500);
 
-                    // 스크롤
-                    txtLog.ScrollToEnd();
-                    txtLog.CaretIndex = txtLog.Text.Length;
-                });
-                
+                        // 스크롤
+                        txtLog.ScrollToEnd();
+                        txtLog.CaretIndex = txtLog.Text.Length;
+                    });
+
                 Thread.Sleep(100); // 0.1초에 한번씩 동기화
             }
         }
