@@ -8,6 +8,7 @@
         Title="Bell Smart Tools" Height="300" Width="300" Icon="/Bell Smart Tools;component/Resource/Photo/Photo_Bell.ico" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Button x:Name="btnBSC" Content="BSC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="16.49,29.809,0,0" Click="btnBSC_Click"/>
+        <Button x:Name="btnProtection" Content="Bell Data Decoder" Margin="0,10,6.452,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="115.999" Click="btnProtection_Click"/>
 
     </Grid>
 </Window>

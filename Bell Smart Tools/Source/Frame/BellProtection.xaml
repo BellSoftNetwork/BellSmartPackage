@@ -1,0 +1,13 @@
+﻿<Window x:Class="Bell_Smart_Tools.Source.Frame.BellProtection"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Tools.Source.Frame"
+        mc:Ignorable="d"
+        Title="Bell Data Decoder" Height="407.623" Width="486.323" Icon="/Bell Smart Tools;component/Resource/Photo/Photo_Bell.ico">
+    <Grid>
+        <TextBlock x:Name="txtProtect" TextWrapping="Wrap" Text="복호화 할 .bd 또는 .bdx 파일을 이곳에 드래그 &amp; 드롭하세요." DragEnter="txtProtect_DragEnter" Drop="txtProtect_Drop" DragOver="txtProtect_DragOver" AllowDrop="True"/>
+
+    </Grid>
+</Window>

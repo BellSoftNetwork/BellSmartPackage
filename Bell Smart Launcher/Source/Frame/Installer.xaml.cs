@@ -163,6 +163,7 @@ namespace Bell_Smart_Launcher.Source.Frame
             }
 
             // 팩 상태 저장
+            DataProtect.DataSave(install.PathVersion + "config.bdx", "Version", install.Version); // 설치중에 버전정보 수정하는 부분이 없는데 왜 클턴팩이 1.6.0으로 저장되는 것인가?
             DataProtect.DataSave(install.PathPack + "data.bdx", "State", "Installed");
             DataProtect.DataSave(install.PathVersion + "config.bdx", "State", "Installed");
             UpdateControl.SetLockFlag(UpdateControl.LockBit.Install_Game, false); // 업데이트 잠금해제

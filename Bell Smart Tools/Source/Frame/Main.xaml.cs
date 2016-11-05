@@ -29,5 +29,11 @@ namespace Bell_Smart_Tools.Source.Frame
             BSC bsc = new BSC();
             bsc.Show();
         }
+
+        private void btnProtection_Click(object sender, RoutedEventArgs e)
+        {
+            BellProtection bp = new BellProtection();
+            bp.Show();
+        }
     }
 }

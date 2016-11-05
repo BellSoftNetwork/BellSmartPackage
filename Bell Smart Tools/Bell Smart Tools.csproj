@@ -40,7 +40,7 @@
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -160,6 +160,9 @@
     <Compile Include="Source\BST\BST_Reader.Designer.cs">
       <DependentUpon>BST_Reader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Source\Frame\BellProtection.xaml.cs">
+      <DependentUpon>BellProtection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Source\Frame\BSC.xaml.cs">
       <DependentUpon>BSC.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
     <Folder Include="Source\Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Source\Frame\BellProtection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Source\Frame\BSC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
