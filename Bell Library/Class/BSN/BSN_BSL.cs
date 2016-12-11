@@ -416,8 +416,12 @@ namespace BellLib.Class.BSN
 
             mp.id = Common.getElement(data, "id");
             mp.name = Common.getElement(data, "name");
-            foreach (string value in LoadPackVersionList(PACK.modpack, name))
-                list.Add(Common.getElement(value, "version"));
+            try
+            {
+                foreach (string value in LoadPackVersionList(PACK.modpack, name))
+                    list.Add(Common.getElement(value, "version"));
+            }
+            catch { }
             mp.version = list.ToArray();
             try
             {
@@ -480,8 +484,12 @@ namespace BellLib.Class.BSN
             bp.id = Common.getElement(data, "id");
             bp.name = Common.getElement(data, "name");
             bp.mcversion = Common.getElement(data, "mcversion");
-            foreach (string value in LoadPackVersionList(PACK.basepack, bp.name))
-                list.Add(Common.getElement(value, "version"));
+            try
+            {
+                foreach (string value in LoadPackVersionList(PACK.basepack, bp.name))
+                    list.Add(Common.getElement(value, "version"));
+            }
+            catch { }
             bp.version = list.ToArray();
             try
             {
