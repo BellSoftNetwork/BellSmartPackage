@@ -71,7 +71,7 @@ namespace BellLib.Class.BSN
             
             // Start to Write Stream.
             StreamWriter sWriter = new StreamWriter(wRequestBSN.GetRequestStream());
-
+            
             sWriter.Write("error_return_url=%2Findex.php%3Fmid%3D" + MidURL
                 + "%26act%3DdispMemberLoginForm&mid=" + MidURL
                 + "&vid=&ruleset=%40login&success_return_url=http%3A%2F%2F" + "www." // 스바 "www." 때매 삽질 ㅡㅡ
@@ -123,7 +123,7 @@ namespace BellLib.Class.BSN
             wRequestBSN.Referer = Servers.Bell_Soft_Network.WEB_BSN_ROOT;
             wRequestBSN.ContentType = "application/x-www-form-urlencoded";
             wRequestBSN.CookieContainer = wCookie;
-            wRequestBSN.UserAgent = ".NET Application (BST Version : " + "4.0.0.0" + ")";
+            wRequestBSN.UserAgent = ".NET Application (Bell Library Version : " + Base.VERSION + ")";
 
             wRequestBSN.Timeout = 5000;
             wRequestBSN.ReadWriteTimeout = 5000;

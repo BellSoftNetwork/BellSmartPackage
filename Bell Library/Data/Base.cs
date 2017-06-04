@@ -11,6 +11,11 @@ namespace BellLib.Data
     public class Base
     {
         /// <summary>
+        /// Bell Library 버전
+        /// </summary>
+        public const string VERSION = "1.0.0";
+
+        /// <summary>
         /// 호환되는 프로프램 열거형
         /// </summary>
         public enum PROJECT
