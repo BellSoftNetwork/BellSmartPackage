@@ -1,0 +1,17 @@
+﻿<Controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="Bell_Smart_Launcher.Source.Frame.Main2"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        mc:Ignorable="d"
+        Title="Bell Smart Launcher 2" Height="600" Width="800" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" WindowStartupLocation="CenterScreen">
+    
+    <Grid>
+        <TextBox x:Name="textBox" Height="117.884" Margin="194.741,124.134,336.554,0" TextWrapping="Wrap" VerticalAlignment="Top" Controls:TextBoxHelper.Watermark="이건 텍스트 박스야!" Controls:TextBoxHelper.ClearTextButton="True"/>
+        <Custom:MetroProgressBar Margin="137.31,275.267,260.232,236.302" VerticalAlignment="Stretch" Value="50"/>
+    </Grid>
+</Controls:MetroWindow>

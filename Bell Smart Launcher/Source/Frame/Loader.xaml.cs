@@ -51,6 +51,14 @@ namespace Bell_Smart_Launcher.Source.Frame
                 return;
             }
 
+            ////////////////////////
+            Main2 main2 = new Main2();
+            main2.Show();
+            
+            this.Close();
+            return;
+            ////////////////////////
+
             SetStatus("로더 초기화 시작", 1);
             if (Initialize())
             {
