@@ -125,7 +125,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
         {
             if (cbName.SelectedItem == null)
             {
-                WPFCom.Message("수정할 팩을 선택해주세요.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("수정할 팩을 선택해주세요.", Basic.PROJECT.Bell_Smart_Manager);
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             // 검사
             if (txtVersion.Text == string.Empty)
             {
-                WPFCom.Message("모든 필드에 값을 입력 해 주세요.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("모든 필드에 값을 입력 해 주세요.", Basic.PROJECT.Bell_Smart_Manager);
                 return;
             }
             
@@ -179,9 +179,9 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
 
             // 버전정보 등록
             if (BSN_BSM.RegisterVersion(GetSelectType(), "id", "pw", (string)cbName.SelectedItem, txtVersion.Text, option))
-                WPFCom.Message("버전정보를 성공적으로 등록했습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("버전정보를 성공적으로 등록했습니다.", Basic.PROJECT.Bell_Smart_Manager);
             else
-                WPFCom.Message("버전 추가에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("버전 추가에 실패하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
         }
     }
 }

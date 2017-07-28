@@ -176,7 +176,7 @@ namespace Bell_Smart_Server.Source.Frame
 
             if (list.Count > 0)
             {
-                if (WPFCom.Message(sb.ToString() + " 플레이어를 추방하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                if (WPFCom.Message(sb.ToString() + " 플레이어를 추방하시겠습니까?", Basic.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
                     return;
 
                 foreach (string nickname in list)
@@ -189,7 +189,7 @@ namespace Bell_Smart_Server.Source.Frame
                 txtMessage.Clear();
             }
             else
-                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("선택된 플레이어가 없습니다.", Basic.PROJECT.Bell_Smart_Server);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Bell_Smart_Server.Source.Frame
 
             if (list.Count > 0)
             {
-                if (WPFCom.Message(sb.ToString() + " 플레이어를 영구정지 하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                if (WPFCom.Message(sb.ToString() + " 플레이어를 영구정지 하시겠습니까?", Basic.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
                     return;
 
                 foreach (string nickname in list)
@@ -222,7 +222,7 @@ namespace Bell_Smart_Server.Source.Frame
                 txtMessage.Clear();
             }
             else
-                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("선택된 플레이어가 없습니다.", Basic.PROJECT.Bell_Smart_Server);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Bell_Smart_Server.Source.Frame
 
             if (list.Count != 1)
             {
-                WPFCom.Message("귓속말은 한명에게만 할 수 있습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("귓속말은 한명에게만 할 수 있습니다.", Basic.PROJECT.Bell_Smart_Server);
                 return;
             }
 
@@ -270,7 +270,7 @@ namespace Bell_Smart_Server.Source.Frame
 
             if (list.Count > 0)
             {
-                if (WPFCom.Message(sb.ToString() + " 플레이어에게 경고하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                if (WPFCom.Message(sb.ToString() + " 플레이어에게 경고하시겠습니까?", Basic.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
                     return;
                 ItemCollection playerList = lstPlayers.Items;
                 foreach (string nickname in list)
@@ -295,7 +295,7 @@ namespace Bell_Smart_Server.Source.Frame
                     }
             }
             else
-                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("선택된 플레이어가 없습니다.", Basic.PROJECT.Bell_Smart_Server);
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Bell_Smart_Server.Source.Frame
             }
             catch
             {
-                WPFCom.Message("아이템 수량은 숫자만 입력할 수 있습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("아이템 수량은 숫자만 입력할 수 있습니다.", Basic.PROJECT.Bell_Smart_Server);
                 return;
             }
 
@@ -330,7 +330,7 @@ namespace Bell_Smart_Server.Source.Frame
 
             if (list.Count > 0)
             {
-                if (WPFCom.Message(sb.ToString() + " 플레이어에게 " + txtItemID.Text + " 아이템을 " + txtItemAmount.Text + "개 지급하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                if (WPFCom.Message(sb.ToString() + " 플레이어에게 " + txtItemID.Text + " 아이템을 " + txtItemAmount.Text + "개 지급하시겠습니까?", Basic.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
                     return;
 
                 foreach (string nickname in list)
@@ -339,7 +339,7 @@ namespace Bell_Smart_Server.Source.Frame
                 txtItemAmount.Text = "1";
             }
             else
-                WPFCom.Message("선택된 플레이어가 없습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("선택된 플레이어가 없습니다.", Basic.PROJECT.Bell_Smart_Server);
         }
 
         #endregion
@@ -352,12 +352,12 @@ namespace Bell_Smart_Server.Source.Frame
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(GetLogBox(GetCurrentLogType()).Text))
-                if (WPFCom.Message("정말로 모든탭의 로그를 초기화하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (WPFCom.Message("정말로 모든탭의 로그를 초기화하시겠습니까?", Basic.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     foreach (LOG log in LogList())
                         GetLogBox(log).Clear();
 
-                    WPFCom.Message("모든 로그 초기화에 성공했습니다.", Base.PROJECT.Bell_Smart_Server);
+                    WPFCom.Message("모든 로그 초기화에 성공했습니다.", Basic.PROJECT.Bell_Smart_Server);
                 }
 
             try
@@ -383,7 +383,7 @@ namespace Bell_Smart_Server.Source.Frame
                 RemoveOldLog(log, OldCriteria);
 
             btnOldLogRemove.IsEnabled = true;
-            WPFCom.Message("모든탭의 오래된로그를 전부 삭제했습니다!", Base.PROJECT.Bell_Smart_Server);
+            WPFCom.Message("모든탭의 오래된로그를 전부 삭제했습니다!", Basic.PROJECT.Bell_Smart_Server);
         }
 
         /// <summary>

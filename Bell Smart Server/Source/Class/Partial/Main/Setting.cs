@@ -112,7 +112,7 @@ namespace Bell_Smart_Server.Source.Frame
             }
             catch (Exception ex)
             {
-                WPFCom.Message("업데이트 시도 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지 이슈트래커 게시판에 이슈를 등록 해 주시기 바랍니다." + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("업데이트 시도 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지 이슈트래커 게시판에 이슈를 등록 해 주시기 바랍니다." + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Basic.PROJECT.Bell_Smart_Server);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Bell_Smart_Server.Source.Frame
                 // 유효성 검사
                 if (line != -1 && line < 100)
                 {
-                    WPFCom.Message("로그기록 100 라인 미만은 설정하실 수 없습니다.", Base.PROJECT.Bell_Smart_Server);
+                    WPFCom.Message("로그기록 100 라인 미만은 설정하실 수 없습니다.", Basic.PROJECT.Bell_Smart_Server);
 
                     return;
                 }
@@ -141,14 +141,14 @@ namespace Bell_Smart_Server.Source.Frame
             }
             catch
             {
-                WPFCom.Message("로그 제한 줄 수는 정수만 입력할 수 있습니다.", Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("로그 제한 줄 수는 정수만 입력할 수 있습니다.", Basic.PROJECT.Bell_Smart_Server);
                 return;
             }
 
             Server.StartLogClear = (bool)cbStartLogClear.IsChecked;
             DataProtect.DataSave(DataPath.BSS.General, "StartLogClear", Server.StartLogClear.ToString());
 
-            WPFCom.Message("저장이 완료되었습니다.", Base.PROJECT.Bell_Smart_Server);
+            WPFCom.Message("저장이 완료되었습니다.", Basic.PROJECT.Bell_Smart_Server);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Bell_Smart_Server.Source.Frame
         {
             InitSetting(0x02);
 
-            WPFCom.Message("취소되었습니다.", Base.PROJECT.Bell_Smart_Server);
+            WPFCom.Message("취소되었습니다.", Basic.PROJECT.Bell_Smart_Server);
         }
 
         #endregion

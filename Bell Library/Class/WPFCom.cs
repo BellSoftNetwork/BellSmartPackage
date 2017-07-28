@@ -23,25 +23,25 @@ namespace BellLib.Class
         /// <param name="defaultResult">기본 포커스</param>
         /// <param name="options">옵션</param>
         /// <returns>선택값</returns>
-        public static MessageBoxResult Message(string messageBoxText, Base.PROJECT project, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information, MessageBoxResult defaultResult = MessageBoxResult.OK, MessageBoxOptions options = MessageBoxOptions.None)
+        public static MessageBoxResult Message(string messageBoxText, Basic.PROJECT project, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information, MessageBoxResult defaultResult = MessageBoxResult.OK, MessageBoxOptions options = MessageBoxOptions.None)
         {
             string title = "Bell Smart Package";
 
             switch(project)
             {
-                case Base.PROJECT.Bell_Smart_Launcher:
+                case Basic.PROJECT.Bell_Smart_Launcher:
                     title = "Bell Smart Launcher";
                     break;
 
-                case Base.PROJECT.Bell_Smart_Manager:
+                case Basic.PROJECT.Bell_Smart_Manager:
                     title = "Bell Smart Manager";
                     break;
 
-                case Base.PROJECT.Bell_Smart_Server:
+                case Basic.PROJECT.Bell_Smart_Server:
                     title = "Bell Smart Server";
                     break;
 
-                case Base.PROJECT.Bell_Smart_Tools:
+                case Basic.PROJECT.Bell_Smart_Tools:
                     title = "Bell Smart Tools";
                     break;
             }

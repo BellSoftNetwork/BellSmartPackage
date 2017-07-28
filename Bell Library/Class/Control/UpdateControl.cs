@@ -108,7 +108,7 @@ namespace BellLib.Class.Control
                     {
                         if (errCount > 2)
                         {
-                            WPFCom.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Base.PROJECT.Bell_Smart_Package);
+                            WPFCom.Message("자동 업데이트 시스템 동작 중 문제가 발생하였습니다." + Environment.NewLine + "이 에러메시지가 자주 발생한다면 BSN 홈페이지에 피드백을 올려주시기 바랍니다." + Environment.NewLine + ex.Message + Environment.NewLine + "StackTrace : " + ex.StackTrace, Basic.PROJECT.Bell_Smart_Package);
 
                             return false;
                         }

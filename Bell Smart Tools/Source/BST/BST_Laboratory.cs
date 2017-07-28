@@ -60,7 +60,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
             byte[] responseBytes = webClient.UploadValues(txtURL.Text, "POST", formData);
             string responsefromserver = Encoding.UTF8.GetString(responseBytes);
-            WinCom.Message(responsefromserver, Base.PROJECT.Bell_Smart_Tools);
+            WinCom.Message(responsefromserver, Basic.PROJECT.Bell_Smart_Tools);
             webClient.Dispose();
         }
 
@@ -105,7 +105,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
                 byte[] result = UploadFiles(address, files, values);
                 string responsefromserver = Encoding.UTF8.GetString(result);
-                WinCom.Message(responsefromserver, Base.PROJECT.Bell_Smart_Tools);
+                WinCom.Message(responsefromserver, Basic.PROJECT.Bell_Smart_Tools);
             }
         }
         public byte[] UploadFiles(string address, IEnumerable<UploadFile> files, NameValueCollection values)

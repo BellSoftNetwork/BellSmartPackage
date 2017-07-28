@@ -3,6 +3,7 @@ using BellLib.Class;
 using BellLib.Class.Control;
 using BellLib.Class.Protection;
 using BellLib.Data;
+using MahApps.Metro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +28,35 @@ namespace Bell_Smart_Launcher.Source.Frame
         public Loader()
         {
             InitializeComponent();
+            SetTheme();
+
+            ////////////////////////
+            Main2 main2 = new Main2();
+            main2.Show();
+
+            this.Close();
+            return;
+            ////////////////////////
+
             pbLoad.Maximum = 48;
             pbLoad.Value = 0;
 
             SetStatus("Initialize Component");
         }
+
+        private void SetTheme()
+        {
+            // get the current app style (theme and accent) from the application
+            // you can then use the current theme and custom accent instead set a new theme
+            Tuple<AppTheme, Accent> appStyle = ThemeManager.DetectAppStyle(Application.Current);
+            //WPFCom.Message(appStyle.Item1.Name + Environment.NewLine + appStyle.Item2.Name, Base.PROJECT.Bell_Smart_Launcher);
+
+            // now set the Green accent and dark theme
+            ThemeManager.ChangeAppStyle(Application.Current,
+                                        ThemeManager.GetAccent("Green"),
+                                        ThemeManager.GetAppTheme("BaseDark")); // or appStyle.Item1
+        }
+
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
@@ -50,14 +75,6 @@ namespace Bell_Smart_Launcher.Source.Frame
 
                 return;
             }
-
-            ////////////////////////
-            Main2 main2 = new Main2();
-            main2.Show();
-            
-            this.Close();
-            return;
-            ////////////////////////
 
             SetStatus("로더 초기화 시작", 1);
             if (Initialize())

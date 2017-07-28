@@ -32,13 +32,13 @@ namespace Bell_Smart_Tools.Source.BSS
                 Debug.Message(Debug.Level.Log, "OpenLog_Click" + Environment.NewLine + ex.Message);
                 WinCom.Message("로그파일 실행 중 에러가 발생하였습니다." + Environment.NewLine +
                     User.BSN_Path + @"\logs 폴더를 확인하세요." + Environment.NewLine + Environment.NewLine +
-                    ex.Message, Base.PROJECT.Bell_Smart_Tools);
+                    ex.Message, Basic.PROJECT.Bell_Smart_Tools);
             }
         }
 
         private void btn_DeleteDL_Click(object sender, EventArgs e)
         {
-            if (WinCom.Message("정말로 모든 디버그 로그를 삭제하시겠습니까?", Base.PROJECT.Bell_Smart_Tools, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (WinCom.Message("정말로 모든 디버그 로그를 삭제하시겠습니까?", Basic.PROJECT.Bell_Smart_Tools, MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return; // Yes가 아니면 반환.
 
             string sDirPath = Path.Combine(User.BSN_Path, "logs");
@@ -47,7 +47,7 @@ namespace Bell_Smart_Tools.Source.BSS
 
             if (files.Length <= 0)
             {
-                WinCom.Message("삭제 할 디버그 로그가 없습니다.", Base.PROJECT.Bell_Smart_Tools);
+                WinCom.Message("삭제 할 디버그 로그가 없습니다.", Basic.PROJECT.Bell_Smart_Tools);
                 return;
             }
 

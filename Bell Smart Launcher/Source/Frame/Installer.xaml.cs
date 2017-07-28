@@ -181,14 +181,14 @@ namespace Bell_Smart_Launcher.Source.Frame
             {
                 StringBuilder sb = new StringBuilder(1024);
 
-                WPFCom.Message("파일 다운로드 중 문제가 발생하여 " + failSize + "byte 만큼 설치하지 못했습니다." + Environment.NewLine + Environment.NewLine + install.Name + " 모드팩에서 지속적으로 설치문제가 발생할 시 해당 모드팩 관리자에게 문의 해 주시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher);
+                WPFCom.Message("파일 다운로드 중 문제가 발생하여 " + failSize + "byte 만큼 설치하지 못했습니다." + Environment.NewLine + Environment.NewLine + install.Name + " 모드팩에서 지속적으로 설치문제가 발생할 시 해당 모드팩 관리자에게 문의 해 주시기 바랍니다.", Basic.PROJECT.Bell_Smart_Launcher);
                 if (failList.Count > 0)
                 {
                     sb.Clear();
                     foreach (string file in failList)
                         sb.Append(file + ", ");
                     sb.Remove(sb.Length - 2, 2);
-                    WPFCom.Message("다운로드 실패한 파일 리스트 : " + sb.ToString(), Base.PROJECT.Bell_Smart_Launcher);
+                    WPFCom.Message("다운로드 실패한 파일 리스트 : " + sb.ToString(), Basic.PROJECT.Bell_Smart_Launcher);
                 }
             }
 
@@ -209,7 +209,7 @@ namespace Bell_Smart_Launcher.Source.Frame
         {
             if (runtimeVerid == string.Empty)
             {
-                WPFCom.Message(runtimeName + " 런타임이 존재하지 않습니다." + Environment.NewLine + "이 에러가 계속 발생한다면, 관리자에게 문의하시기 바랍니다.", Base.PROJECT.Bell_Smart_Launcher);
+                WPFCom.Message(runtimeName + " 런타임이 존재하지 않습니다." + Environment.NewLine + "이 에러가 계속 발생한다면, 관리자에게 문의하시기 바랍니다.", Basic.PROJECT.Bell_Smart_Launcher);
                 this.Close();
                 return;
             }

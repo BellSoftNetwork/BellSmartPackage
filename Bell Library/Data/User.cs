@@ -9,9 +9,9 @@ namespace BellLib.Data
     public class User
     {
         public static string BSN_Email { get; set; }
-        public static string BSN_Password {get; set;}
-        public static string BSN_member_srl {get; set;}
-        public static string BSN_nick_name {get; set;}
+        public static string BSN_Password { get; set;}
+        public static string BSN_member_srl { get; set;}
+        public static string BSN_nick_name { get; set;}
         public static string BSN_is_admin { get; set; }
         public static string[] BSN_group { get; set; }
         

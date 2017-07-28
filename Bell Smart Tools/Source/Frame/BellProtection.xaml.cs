@@ -57,7 +57,7 @@ namespace Bell_Smart_Tools.Source.Frame
                 }
                 else
                 {
-                    WPFCom.Message("암호화 규칙에 어긋나는 파일입니다.", BellLib.Data.Base.PROJECT.Bell_Smart_Tools);
+                    WPFCom.Message("암호화 규칙에 어긋나는 파일입니다.", BellLib.Data.Basic.PROJECT.Bell_Smart_Tools);
                 }
             }
         }

@@ -91,7 +91,7 @@ namespace BellLib.Class.BSN
             }
             catch (Exception ex)
             {
-                WPFCom.Message(ex.Message, Base.PROJECT.Bell_Smart_Package);
+                WPFCom.Message(ex.Message, Basic.PROJECT.Bell_Smart_Package);
                 return false;
             }
 
@@ -123,7 +123,7 @@ namespace BellLib.Class.BSN
             wRequestBSN.Referer = Servers.Bell_Soft_Network.WEB_BSN_ROOT;
             wRequestBSN.ContentType = "application/x-www-form-urlencoded";
             wRequestBSN.CookieContainer = wCookie;
-            wRequestBSN.UserAgent = ".NET Application (Bell Library Version : " + Base.VERSION + ")";
+            wRequestBSN.UserAgent = ".NET Application (Bell Library Version : " + Basic.VERSION + ")";
 
             wRequestBSN.Timeout = 5000;
             wRequestBSN.ReadWriteTimeout = 5000;

@@ -150,6 +150,10 @@
     </Compile>
     <Compile Include="Source\Class\MCLogin.cs" />
     <Compile Include="Source\Class\Modpack.cs" />
+    <Compile Include="Source\Class\Partial\Main2\Home.cs" />
+    <Compile Include="Source\Class\Partial\Main2\Game.cs" />
+    <Compile Include="Source\Class\Partial\Main2\Setting.cs" />
+    <Compile Include="Source\Class\Partial\Main2\News.cs" />
     <Compile Include="Source\Class\Partial\Main\Maps.cs" />
     <Compile Include="Source\Class\Partial\Main\Modpacks.cs" />
     <Compile Include="Source\Class\Partial\Main\News.cs" />
@@ -259,6 +263,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Simple Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Source\Frame\Console.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

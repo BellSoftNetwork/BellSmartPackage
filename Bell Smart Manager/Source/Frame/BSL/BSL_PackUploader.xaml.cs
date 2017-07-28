@@ -240,7 +240,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             }
             catch (Exception ex)
             {
-                WPFCom.Message("업로드 폴더 로드중 문제가 발생하였습니다." + Environment.NewLine + ex.Message, Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("업로드 폴더 로드중 문제가 발생하였습니다." + Environment.NewLine + ex.Message, Basic.PROJECT.Bell_Smart_Manager);
             }
 
             // 서버정보 로드
@@ -267,10 +267,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     }
                     else
                     {
-                        WPFCom.Message(sv.name + "에 업로드를 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                        WPFCom.Message(sv.name + "에 업로드를 실패하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
                     }
 
-            WPFCom.Message("업로드를 마쳤습니다.", Base.PROJECT.Bell_Smart_Manager);
+            WPFCom.Message("업로드를 마쳤습니다.", Basic.PROJECT.Bell_Smart_Manager);
         }
 
         private void cbVersion_SelectionChanged(object sender, SelectionChangedEventArgs e)

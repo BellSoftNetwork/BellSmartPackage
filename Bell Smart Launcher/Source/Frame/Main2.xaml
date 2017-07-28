@@ -1,17 +1,220 @@
-﻿<Controls:MetroWindow
+﻿<Custom:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bell_Smart_Launcher.Source.Frame"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="Bell_Smart_Launcher.Source.Frame.Main2"
+        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Bell_Smart_Launcher.Source.Frame.Main2"
         GlowBrush="{DynamicResource AccentColorBrush}"
         mc:Ignorable="d"
-        Title="Bell Smart Launcher 2" Height="600" Width="800" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" WindowStartupLocation="CenterScreen">
-    
+        Title="Bell Smart Launcher 2" Height="600" Width="1100" Icon="/Bell Smart Launcher;component/Resource/Photo/Photo_Bell.ico" WindowStartupLocation="CenterScreen" MinWidth="1100" MinHeight="600">
+
     <Grid>
-        <TextBox x:Name="textBox" Height="117.884" Margin="194.741,124.134,336.554,0" TextWrapping="Wrap" VerticalAlignment="Top" Controls:TextBoxHelper.Watermark="이건 텍스트 박스야!" Controls:TextBoxHelper.ClearTextButton="True"/>
-        <Custom:MetroProgressBar Margin="137.31,275.267,260.232,236.302" VerticalAlignment="Stretch" Value="50"/>
+        <TabControl x:Name="tcMain" Custom:TabControlHelper.Underlined="TabPanel">
+            <TabItem Header="홈">
+                <Grid/>
+            </TabItem>
+            <TabItem Header="뉴스">
+                <Grid/>
+            </TabItem>
+            <TabItem Header="게임" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+                <Grid>
+                    <TabControl x:Name="tcGame" TabStripPlacement="Left" Background="{x:Null}" Custom:TabControlHelper.Underlined="TabPanel">
+                        <TabItem Header="라이브러리" Custom:ControlsHelper.HeaderFontSize="20">
+                            <Grid>
+                                <ListBox x:Name="Game_Library_lbPack">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <!-- 0열 썸네일 -->
+                                                    <ColumnDefinition MaxWidth="110" />
+                                                    <!-- 1열 다운로드 -->
+                                                    <ColumnDefinition MaxWidth="110" />
+                                                    <!-- 2열 업데이트 -->
+                                                    <ColumnDefinition MaxWidth="230" />
+                                                    <!-- 3열 게임 버전 -->
+                                                    <ColumnDefinition MaxWidth="110" />
+                                                    <!-- 4열 공백 -->
+                                                    <ColumnDefinition Width="*" />
+                                                    <!-- 5열 설치 버튼 -->
+                                                    <ColumnDefinition MaxWidth="70" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <!-- 0행 -->
+                                                    <RowDefinition MaxHeight="30" />
+                                                    <!-- 1행 -->
+                                                    <RowDefinition MaxHeight="25" />
+                                                    <!-- 2행 -->
+                                                    <RowDefinition />
+                                                    <!-- 3행 -->
+                                                    <RowDefinition Height="25" />
+                                                    <!-- 4행 -->
+                                                    <RowDefinition />
+                                                    <!-- 5행 -->
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <!-- 0행 -->
+                                                <Image Width="100" Height="100" Grid.RowSpan="5" Source="{Binding Thumbnail_URL}" />
+
+                                                <Label HorizontalAlignment="Left" Content="{Binding Name}" Grid.Column="1" Grid.ColumnSpan="4" Width="750" FontSize="18.667" />
+
+                                                <!-- 1행 -->
+                                                <Label HorizontalAlignment="Left" Content="{Binding Authors_Content}" Foreground="Gray" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" />
+
+                                                <!-- 2행 -->
+                                                <Label HorizontalAlignment="Left" Content="{Binding Selected_Version}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Width="750" />
+
+                                                <!-- 3행 -->
+                                                <Label Grid.Row="3" />
+
+                                                <!-- 4행 -->
+                                                <Label HorizontalAlignment="Left" Content="{Binding Playtime_Content}" Grid.Row="4" Grid.Column="1" />
+                                                <Label HorizontalAlignment="Left" Content="{Binding Last_Play_Content}" Grid.Row="4" Grid.Column="2" />
+                                                <Label HorizontalAlignment="Left" Content="{Binding Set_Version}" Grid.Row="4" Grid.Column="3" />
+
+                                                <Button x:Name="btnPackUpdate" Content="{Binding Update_Button_Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="30" Grid.Column="5" Grid.Row="0" Grid.RowSpan="2" />
+                                                <Button x:Name="btnPackPlay" Content="{Binding Play_Button_Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="30" Grid.Column="5" Grid.Row="2" Grid.RowSpan="2" />
+                                                <Separator Grid.Row="5" Grid.ColumnSpan="6" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="설치" Custom:ControlsHelper.HeaderFontSize="20">
+                            <Grid>
+                                <Label Content="팩타입:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="Game_Install_cbType" HorizontalAlignment="Left" Margin="53.627,-0.08,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0">
+                                    <ComboBoxItem Content="모드팩"/>
+                                    <ComboBoxItem Content="리소스팩"/>
+                                    <ComboBoxItem Content="맵"/>
+                                </ComboBox>
+                                <Label Content="카테고리:" HorizontalAlignment="Left" Margin="178.627,0,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="Game_Install_cbCategory" Margin="244.254,-0.04,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" SelectedIndex="0">
+                                    <ComboBoxItem Content="모든 카테고리"/>
+                                    <ComboBoxItem Content="하드코어"/>
+                                </ComboBox>
+                                <Label Content="버전:" HorizontalAlignment="Left" Margin="369.254,-0.04,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="Game_Install_cbVersion" Margin="410.881,-0.08,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" SelectedIndex="0">
+                                    <ComboBoxItem Content="권장버전"/>
+                                </ComboBox>
+                                <Label Content="정렬:" Margin="535.881,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                <ComboBox x:Name="Game_Install_cbSort" Margin="577.508,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="129.091" SelectedIndex="0">
+                                    <ComboBoxItem Content="다운로드 많은 순"/>
+                                    <ComboBoxItem Content="팩 이름 순"/>
+                                    <ComboBoxItem Content="제작자 이름 순"/>
+                                    <ComboBoxItem Content="좋아요 많은 순"/>
+                                    <ComboBoxItem Content="최근 업데이트 순"/>
+                                    <ComboBoxItem Content="최근 생성 순"/>
+                                </ComboBox>
+                                <TextBox x:Name="Game_Install_txtSearch" Height="23" Margin="722.205,-0.08,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Custom:TextBoxHelper.Watermark="검색"/>
+                                <ListBox x:Name="Game_Install_lbPack" Margin="0,30.96,0,0" SelectionChanged="lbInstallPack_SelectionChanged">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <!-- 0열 썸네일 -->
+                                                    <ColumnDefinition MaxWidth="110" />
+                                                    <!-- 1열 다운로드 -->
+                                                    <ColumnDefinition MaxWidth="110" />
+                                                    <!-- 2열 업데이트 -->
+                                                    <ColumnDefinition MaxWidth="230" />
+                                                    <!-- 3열 게임 버전 -->
+                                                    <ColumnDefinition MaxWidth="110" />
+                                                    <!-- 4열 공백 -->
+                                                    <ColumnDefinition Width="*" />
+                                                    <!-- 5열 설치 버튼 -->
+                                                    <ColumnDefinition MaxWidth="70" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <!-- 0행 -->
+                                                    <RowDefinition MaxHeight="30" />
+                                                    <!-- 1행 -->
+                                                    <RowDefinition MaxHeight="25" />
+                                                    <!-- 2행 -->
+                                                    <RowDefinition />
+                                                    <!-- 3행 -->
+                                                    <RowDefinition Height="25" />
+                                                    <!-- 4행 -->
+                                                    <RowDefinition />
+                                                    <!-- 5행 -->
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <!-- 0행 -->
+                                                <Image Width="100" Height="100" Grid.RowSpan="5" Source="{Binding Thumbnail_URL}" />
+
+                                                <Label HorizontalAlignment="Left" Content="{Binding Name}" Grid.Column="1" Grid.ColumnSpan="4" Width="750" FontSize="18.667" />
+
+                                                <!-- 1행 -->
+                                                <Label HorizontalAlignment="Left" Content="{Binding Authors_Content}" Foreground="Gray" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" />
+
+                                                <!-- 2행 -->
+                                                <Label HorizontalAlignment="Left" Content="{Binding Description}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" Width="750" />
+
+                                                <!-- 3행 -->
+                                                <Label Grid.Row="3" />
+
+                                                <!-- 4행 -->
+                                                <Label HorizontalAlignment="Left" Content="{Binding Downloads_Content}" Grid.Row="4" Grid.Column="1" />
+                                                <Label HorizontalAlignment="Left" Content="{Binding Updated_Content}" Grid.Row="4" Grid.Column="2" />
+                                                <Label HorizontalAlignment="Left" Content="{Binding Game_Version_Content}" Grid.Row="4" Grid.Column="3" />
+
+
+                                                <Button x:Name="btnPackIAP" Content="{Binding IAP_Button_Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="30" Click="btnPackIAP_Click" Grid.Column="5" Grid.RowSpan="5" />
+                                                <Separator Grid.Row="5" Grid.ColumnSpan="6" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Header="설정" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+                <Grid>
+                    <TabControl x:Name="tcSetting" TabStripPlacement="Left" Custom:TabControlHelper.Underlined="TabPanel">
+                        <TabItem Header="일반" Custom:ControlsHelper.HeaderFontSize="20">
+                            <Grid>
+                                <Label Content="테마:" HorizontalAlignment="Left" Margin="42.879,10.13,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="Setting_General_cbTheme" HorizontalAlignment="Left" Margin="84.506,10.09,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="Setting_General_cbTheme_SelectionChanged">
+                                    <ComboBoxItem Content="하얀색"/>
+                                    <ComboBoxItem Content="검은색"/>
+                                </ComboBox>
+                                <Label Content="강조색:" HorizontalAlignment="Left" Margin="30.879,36,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="Setting_General_cbAccent" HorizontalAlignment="Left" Margin="84.506,36.05,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="Setting_General_cbAccent_SelectionChanged">
+                                    <ComboBoxItem Content="하늘색"/>
+                                </ComboBox>
+                                <Label Content="언어:" HorizontalAlignment="Left" Margin="42.879,62.09,0,0" VerticalAlignment="Top" IsEnabled="False"/>
+                                <ComboBox x:Name="Setting_General_cbLanguage" HorizontalAlignment="Left" Margin="84.506,62.05,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" IsEnabled="False">
+                                    <ComboBoxItem Content="한국어"/>
+                                </ComboBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="계정" Custom:ControlsHelper.HeaderFontSize="20">
+                            <Grid/>
+                        </TabItem>
+                        <TabItem Header="게임" Custom:ControlsHelper.HeaderFontSize="20">
+                            <Grid>
+                                <Label Content="게임설치경로:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47.667,10,0,0"/>
+                                <TextBox x:Name="Setting_Game_txtInstallDir" HorizontalAlignment="Left" Height="25.96" Margin="137.294,9.96,0,0" TextWrapping="Wrap" Text="C:\BSN" VerticalAlignment="Top" Width="363.939" IsEnabled="False"/>
+                                <Button x:Name="Setting_Game_btnChangeDir" Content="변경" Margin="506.233,10,442.767,0" VerticalAlignment="Top" Height="25.96"/>
+                                <Label Content="게임실행시 런처:" HorizontalAlignment="Left" Margin="31.447,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="Setting_Game_cbAfterLaunch" HorizontalAlignment="Left" Margin="137.294,40.96,0,0" VerticalAlignment="Top" Width="363.939" SelectedIndex="0" Height="25.96">
+                                    <ComboBoxItem Content="런처 창 열어 두기"/>
+                                    <ComboBoxItem Content="런처 창 최소화"/>
+                                    <ComboBoxItem Content="런처 창 트레이로 전환"/>
+                                    <ComboBoxItem Content="런처를 완전히 종료"/>
+                                </ComboBox>
+                                <CheckBox x:Name="Setting_Game_cbShowConsole" Content="콘솔 실행" HorizontalAlignment="Left" Margin="137.294,71.96,0,0" VerticalAlignment="Top"/>
+                                <CheckBox x:Name="Setting_Game_MultiRun" Content="게임 다중 실행" HorizontalAlignment="Left" Margin="137.294,94.96,0,0" VerticalAlignment="Top"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
-</Controls:MetroWindow>
+</Custom:MetroWindow>

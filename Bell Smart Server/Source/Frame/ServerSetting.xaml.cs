@@ -67,13 +67,13 @@ namespace Bell_Smart_Server.Source.Frame
 
                 if (Delay < 1)
                 {
-                    WPFCom.Message("자동 재시작 대기시간은 1초 이상으로 설정하실 수 있습니다.", BellLib.Data.Base.PROJECT.Bell_Smart_Server);
+                    WPFCom.Message("자동 재시작 대기시간은 1초 이상으로 설정하실 수 있습니다.", BellLib.Data.Basic.PROJECT.Bell_Smart_Server);
                     return;
                 }
             }
             catch
             {
-                WPFCom.Message("자동 재시작 대기시간은 정수만 입력할 수 있습니다.", BellLib.Data.Base.PROJECT.Bell_Smart_Server);
+                WPFCom.Message("자동 재시작 대기시간은 정수만 입력할 수 있습니다.", BellLib.Data.Basic.PROJECT.Bell_Smart_Server);
                 return;
             }
             

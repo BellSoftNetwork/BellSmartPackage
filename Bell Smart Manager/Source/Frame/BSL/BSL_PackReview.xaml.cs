@@ -296,7 +296,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 default:
-                    WPFCom.Message("비정상적인 접근입니다.", Base.PROJECT.Bell_Smart_Manager);
+                    WPFCom.Message("비정상적인 접근입니다.", Basic.PROJECT.Bell_Smart_Manager);
                     return;
             }
 
@@ -304,10 +304,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             {
                 //btnInfoRefresh_Click(sender, e);
                 Initialize();
-                WPFCom.Message("성공적으로 활성화 하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("성공적으로 활성화 하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("팩 활성화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("팩 활성화에 실패하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnInfoRefusal_Click(object sender, RoutedEventArgs e)
@@ -334,7 +334,7 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 default:
-                    WPFCom.Message("비정상적인 접근입니다.", Base.PROJECT.Bell_Smart_Manager);
+                    WPFCom.Message("비정상적인 접근입니다.", Basic.PROJECT.Bell_Smart_Manager);
                     return;
             }
 
@@ -342,10 +342,10 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
             {
                 //btnInfoRefresh_Click(sender, e);
                 Initialize();
-                WPFCom.Message("성공적으로 비활성화 하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("성공적으로 비활성화 하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("팩 비활성화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("팩 비활성화에 실패하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnVerRefresh_Click(object sender, RoutedEventArgs e)
@@ -407,17 +407,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 default:
-                    WPFCom.Message("비정상적인 접근입니다.", Base.PROJECT.Bell_Smart_Manager);
+                    WPFCom.Message("비정상적인 접근입니다.", Basic.PROJECT.Bell_Smart_Manager);
                     return;
             }
 
             if (BSN_BSM.ApprovalVersion(kind, lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-')[2], true))
             {
                 Initialize();
-                WPFCom.Message("성공적으로 활성화 하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("성공적으로 활성화 하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("버전 활성화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("버전 활성화에 실패하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
         }
 
         private void btnVerRefusal_Click(object sender, RoutedEventArgs e)
@@ -444,17 +444,17 @@ namespace Bell_Smart_Manager.Source.Frame.BSL
                     break;
 
                 default:
-                    WPFCom.Message("비정상적인 접근입니다.", Base.PROJECT.Bell_Smart_Manager);
+                    WPFCom.Message("비정상적인 접근입니다.", Basic.PROJECT.Bell_Smart_Manager);
                     return;
             }
 
             if (BSN_BSM.ApprovalVersion(kind, lstVerList.Tag.ToString().Split('|')[lstVerList.SelectedIndex].Split('-')[2], false))
             {
                 Initialize();
-                WPFCom.Message("성공적으로 비활성화 하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("성공적으로 비활성화 하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
             }
             else
-                WPFCom.Message("버전 비활성화에 실패하였습니다.", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("버전 비활성화에 실패하였습니다.", Basic.PROJECT.Bell_Smart_Manager);
         }
 
         private void cbVerType_SelectionChanged(object sender, SelectionChangedEventArgs e)

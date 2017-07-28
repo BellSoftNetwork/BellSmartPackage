@@ -25,25 +25,25 @@ namespace BellLib.Class
         /// <param name="icon">메시지박스 아이콘</param>
         /// <param name="defaultButton">메시지박스 기본 버튼</param>
         /// <returns>선택한 버튼값</returns>
-        public static DialogResult Message(string Text, Base.PROJECT project, MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
+        public static DialogResult Message(string Text, Basic.PROJECT project, MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information, MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.Button1)
         {
             string title = "Bell Smart Package";
 
             switch (project)
             {
-                case Base.PROJECT.Bell_Smart_Launcher:
+                case Basic.PROJECT.Bell_Smart_Launcher:
                     title = "Bell Smart Launcher";
                     break;
 
-                case Base.PROJECT.Bell_Smart_Manager:
+                case Basic.PROJECT.Bell_Smart_Manager:
                     title = "Bell Smart Manager";
                     break;
 
-                case Base.PROJECT.Bell_Smart_Server:
+                case Basic.PROJECT.Bell_Smart_Server:
                     title = "Bell Smart Server";
                     break;
 
-                case Base.PROJECT.Bell_Smart_Tools:
+                case Basic.PROJECT.Bell_Smart_Tools:
                     title = "Bell Smart Tools";
                     break;
             }

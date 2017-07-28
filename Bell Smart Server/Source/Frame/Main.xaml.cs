@@ -126,7 +126,7 @@ namespace Bell_Smart_Server.Source.Frame
             {
                 if (ServerProc != null && !ServerProc.HasExited)
                 {
-                    if (WPFCom.Message("현재 서버가 가동중입니다." + Environment.NewLine + "정말로 서버를 종료하시겠습니까?", Base.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
+                    if (WPFCom.Message("현재 서버가 가동중입니다." + Environment.NewLine + "정말로 서버를 종료하시겠습니까?", Basic.PROJECT.Bell_Smart_Server, MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.No)
                     {
                         e.Cancel = true;
                         return;
@@ -138,7 +138,7 @@ namespace Bell_Smart_Server.Source.Frame
                         ServerProc.WaitForExit(10000);
                         if (!ServerProc.HasExited)
                         {
-                            WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", Base.PROJECT.Bell_Smart_Server);
+                            WPFCom.Message("서버가 종료되지 않았습니다." + Environment.NewLine + "서버를 종료하신 후 다시 시도해 주세요.", Basic.PROJECT.Bell_Smart_Server);
                             e.Cancel = true;
                         }
                         bsc.Stop();

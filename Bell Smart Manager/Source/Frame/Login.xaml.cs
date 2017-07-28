@@ -83,7 +83,7 @@ namespace Bell_Smart_Manager.Source.Frame
             }
             else
             {
-                WPFCom.Message("인증 실패", Base.PROJECT.Bell_Smart_Manager);
+                WPFCom.Message("인증 실패", Basic.PROJECT.Bell_Smart_Manager);
             }
             FormEnable(true);
         }
